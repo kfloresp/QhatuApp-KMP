@@ -1,7 +1,5 @@
 package com.rgk.qhatu.domain.model
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class AuditLog(
     val id: String,
     val entidad: String,

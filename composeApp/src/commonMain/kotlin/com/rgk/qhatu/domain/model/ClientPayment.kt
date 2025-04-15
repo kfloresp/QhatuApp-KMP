@@ -1,7 +1,5 @@
 package com.rgk.qhatu.domain.model
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class ClientPayment(
     val id: String,
     val cliente_id: String,

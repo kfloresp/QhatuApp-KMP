@@ -3,10 +3,10 @@ package com.rgk.qhatu.data.database.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "configurations")
 data class ConfigurationEntity(
     @PrimaryKey(autoGenerate = true)
-    val idConfiguration: Int,
+    val idInternal: Int,
     val id : String,
     val tipo : String,
     val nombre : String,

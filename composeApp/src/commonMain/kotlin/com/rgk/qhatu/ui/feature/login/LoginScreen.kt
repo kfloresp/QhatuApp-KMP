@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.rgk.qhatu.di.AppModule
 import com.rgk.qhatu.ui.components.AlertMessageDialog
 import com.rgk.qhatu.ui.components.EmailField
 import com.rgk.qhatu.ui.components.LoadingProgress
@@ -36,13 +35,14 @@ import com.rgk.qhatu.ui.components.LoginButton
 import com.rgk.qhatu.ui.components.PasswordField
 import com.rgk.qhatu.utils.FirebaseAuthErrorHandler
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.ic_leaf
 
 @Composable
 fun LoginScreen(
     navController: NavController,
-    authViewModel: AuthViewModel = AppModule.authViewModel
+    authViewModel: AuthViewModel = koinViewModel()
 ) {
     val email by authViewModel.email
     val password by authViewModel.password

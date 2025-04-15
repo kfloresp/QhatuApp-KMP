@@ -1,13 +1,10 @@
 package com.rgk.qhatu.data.remote
 
-import com.rgk.qhatu.domain.model.UserModel
-import dev.gitlive.firebase.Firebase
+import com.rgk.qhatu.data.remote.model.UserModel
+import dev.gitlive.firebase.auth.FirebaseAuth
 import dev.gitlive.firebase.auth.FirebaseUser
-import dev.gitlive.firebase.auth.auth
 
-class AuthRemoteDataSource {
-    val firebaseAuth = Firebase.auth
-
+class AuthRemoteDataSource(private val firebaseAuth : FirebaseAuth) {
     suspend fun login(
         email: String,
         password: String

@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.googleServices)
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidxRoom)
+    kotlin("plugin.serialization") version "1.9.0"
 }
 
 kotlin {
@@ -33,6 +34,7 @@ kotlin {
         sourceSets.androidMain.dependencies {
                 implementation(compose.preview)
                 implementation(libs.androidx.activity.compose)
+                implementation(libs.koin.android)
         }
         sourceSets.commonMain.dependencies {
                 implementation(compose.runtime)
@@ -50,6 +52,12 @@ kotlin {
                 implementation(libs.androidx.room.runtime)
                 implementation(libs.androidx.sqlite.bundled)
                 implementation(libs.kotlinx.serialization.json)
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.core)
+                implementation(libs.koin.viewmodel)
+                implementation(libs.kotlinx.datetime)
+
         }
     }
 

@@ -4,22 +4,33 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.rgk.qhatu.data.database.entity.ConfigurationEntity
+import com.rgk.qhatu.domain.common.SyncStats
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ConfigurationDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entity: ConfigurationEntity)
+    suspend fun save(entity: ConfigurationEntity)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun update(entity: ConfigurationEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entity: List<ConfigurationEntity>)
+    suspend fun save(entity: List<ConfigurationEntity>)
 
-    @Query("SELECT * FROM ConfigurationEntity")
-    fun fetchAll(): Flow<List<ConfigurationEntity>>
+    @Query("SELECT * FROM configurations")
+    suspend fun fetchAll(): List<ConfigurationEntity>
 
-    @Query("SELECT COUNT(*) as count FROM ConfigurationEntity")
-    suspend fun count(): Int
+    @Query("SELECT COUNT(*) as count, MAX(fecha_sincronizado) as lastUpdated FROM configurations")
+    suspend fun getStats(): SyncStats
+
+    @Query("SELECT id FROM configurations WHERE flag_sincronizado = 1")
+    suspend fun getSyncedIds(): List<String>
+
+    @Query("DELETE FROM configurations WHERE flag_sincronizado != 1")
+    suspend fun deleteUnsynced()
 
 }

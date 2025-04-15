@@ -15,17 +15,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.rgk.qhatu.di.AppModule
 import com.rgk.qhatu.ui.feature.login.AuthViewModel
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.app_name
 import qhatuapp.composeapp.generated.resources.ic_leaf
 
 @Composable
-fun SplashScreen(navController: NavController, viewModel: AuthViewModel = AppModule.authViewModel) {
+fun SplashScreen(navController: NavController, viewModel: AuthViewModel = koinViewModel()) {
     LaunchedEffect(Unit) {
         delay(2000)
         if (viewModel.getCurrentUser() != null) {

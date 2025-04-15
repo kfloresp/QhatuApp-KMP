@@ -9,6 +9,8 @@ compose-multiplatform = "1.7.0"
 firebase = "2.1.0"
 kotlin = "2.1.10"
 gservices = "4.4.1"
+kotlinxCoroutinesCore = "1.10.2"
+kotlinxDatetime = "0.6.0"
 kotlinxSerializationJson = "1.7.1"
 navigationCompose = "2.8.0-alpha10"
 foundationLayoutAndroid = "1.7.8"
@@ -19,11 +21,15 @@ uiTextAndroid = "1.7.8"
 kspVersion = "2.1.10-1.0.30"
 androidx-room = "2.7.0"
 androidx-sqliteBundled = "2.5.0"
+koin = "4.0.3"
+
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
@@ -36,6 +42,11 @@ firebase-firestore = { module = "dev.gitlive:firebase-firestore", version.ref = 
 androidx-room-runtime = {group="androidx.room", name="room-runtime" ,version.ref = "androidx-room"}
 androidx-room-compiler = {group="androidx.room", name="room-compiler", version.ref = "androidx-room"}
 androidx-sqlite-bundled = {group="androidx.sqlite", name = "sqlite-bundled", version.ref = "androidx-sqliteBundled"}
+koin-bom = {group = "io.insert-koin", name = "koin-bom", version.ref = "koin"}
+koin-core = { module = "io.insert-koin:koin-core" }
+koin-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel" }
+koin-compose = { module = "io.insert-koin:koin-compose" }
+koin-android = { module = "io.insert-koin:koin-android" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

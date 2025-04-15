@@ -15,11 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.rgk.qhatu.ui.feature.sync.SyncItem
 
 @Composable
 fun SyncItemCard(
-    item: SyncItem,
+    table: String,
+    count: Int,
+    lastUpdated: String,
+    isSyncing: Boolean,
     onSyncClick: () -> Unit
 ) {
     Row(
@@ -31,21 +33,19 @@ fun SyncItemCard(
         Column(
             modifier = Modifier.weight(1f)
         ) {
-            Text(text = item.table.label , fontWeight = FontWeight.Bold)
-            Text(text = "Registros: ${item.count}")
-            Text(text = "Última actualización: ${item.lastUpdated}")
+            Text(text = table, fontWeight = FontWeight.Bold)
+            Text(text = "Registros: $count")
+            Text(text = "Sincronizado: $lastUpdated")
         }
 
-        if (item.isSyncing) {
+        if (isSyncing) {
             CircularProgressIndicator(
                 modifier = Modifier.size(24.dp),
                 strokeWidth = 2.dp
             )
         } else {
             IconButton(
-                onClick = {
-                    onSyncClick()
-                }
+                onClick = { onSyncClick() }
             ) {
                 Icon(
                     imageVector = Icons.Filled.Sync,

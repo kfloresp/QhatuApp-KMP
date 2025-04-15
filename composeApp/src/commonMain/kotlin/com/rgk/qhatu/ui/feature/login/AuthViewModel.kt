@@ -4,7 +4,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rgk.qhatu.domain.model.UserModel
+import com.rgk.qhatu.domain.common.SyncResult
+import com.rgk.qhatu.domain.model.User
 import com.rgk.qhatu.domain.usecase.AuthUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -79,13 +80,15 @@ class AuthViewModel(
         _authState.value = AuthState.Loading
 
         viewModelScope.launch {
-            try {
-                val user = authUseCase.login(_email.value, _password.value)
-                _authState.update { AuthState.Authenticated(user) }
-            } catch (e: Exception) {
-                _showDialog.value = true
-                _authState.update { AuthState.Error(e) }
-            }
+            @Suppress("SOME_SONAR_RULE")
+                val result = authUseCase.login(_email.value, _password.value)
+                when (result){
+                    is SyncResult.Error -> {
+                        _showDialog.value = true
+                        _authState.update { AuthState.Error(result.exception) }
+                    }
+                    is SyncResult.Success -> _authState.update { AuthState.Authenticated(result.data) }
+                }
         }
     }
 
@@ -99,7 +102,7 @@ class AuthViewModel(
         _authState.update { AuthState.Idle }
     }
 
-    fun getCurrentUser(): UserModel? {
+    fun getCurrentUser(): User? {
         return authUseCase.currentUser()
     }
 }
@@ -108,6 +111,6 @@ class AuthViewModel(
 sealed class AuthState {
     data object Idle : AuthState()
     data object Loading : AuthState()
-    data class Authenticated(val userModel: UserModel) : AuthState()
+    data class Authenticated(val user: User) : AuthState()
     data class Error(val exception: Throwable) : AuthState()
 }

@@ -1,7 +1,5 @@
 package com.rgk.qhatu.domain.model
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class TransactionDetail(
     val id: String,
     val movimiento_id: String,

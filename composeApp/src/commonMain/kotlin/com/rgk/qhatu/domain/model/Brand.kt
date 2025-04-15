@@ -1,8 +1,5 @@
 package com.rgk.qhatu.domain.model
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class Brand(
     val id: String,
     val nombre: String,
