@@ -10,6 +10,8 @@ import com.rgk.qhatu.domain.mapper.toModel
 import com.rgk.qhatu.domain.model.Product
 import com.rgk.qhatu.domain.repository.ProductRepository
 import com.rgk.qhatu.domain.util.TimeUtils
+import com.rgk.qhatu.ui.feature.search.SearchType
+import com.rgk.qhatu.utils.QhatuException
 
 class ProductRepositoryImpl(
     private val sourceRemote: ProductRemoteDataSource,
@@ -93,6 +95,40 @@ class ProductRepositoryImpl(
             })
             SyncResult.Success(true)
         } catch (e: Exception) {
+            SyncResult.Error(e)
+        }
+    }
+
+    override suspend fun getProductFromQuery(
+        query: String,
+        searchType: Int
+    ): SyncResult<List<Product>> {
+        return try{
+            when (searchType) {
+                SearchType.Ean.code ->{
+                    val source = sourceLocal.queryByEan(query).map {
+                        it.toDomain()
+                    }
+                    SyncResult.Success(source)
+                }
+                SearchType.Code.code -> {
+                    val source = sourceLocal.queryByCode(query).map{
+                        it.toDomain()
+                    }
+                    SyncResult.Success(source)
+                }
+                SearchType.Name.code -> {
+                    val source = sourceLocal.queryByName(query).map {
+                        it.toDomain()
+                    }
+                    SyncResult.Success(source)
+                }
+
+                else -> {
+                    SyncResult.Error(QhatuException.Unexpected("Tipo de búsqueda no válida"))
+                }
+            }
+        }catch (e: Exception){
             SyncResult.Error(e)
         }
     }

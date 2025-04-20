@@ -20,6 +20,8 @@ import com.rgk.qhatu.domain.usecase.paymentTransaction.*
 import com.rgk.qhatu.domain.usecase.product.*
 import com.rgk.qhatu.domain.usecase.transactionDetail.*
 import com.rgk.qhatu.ui.feature.login.AuthViewModel
+import com.rgk.qhatu.ui.feature.search.SearchViewModel
+import com.rgk.qhatu.ui.feature.search.advancedsearch.AdvancedSearchViewModel
 import com.rgk.qhatu.ui.feature.sync.*
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.FirebaseAuth
@@ -104,8 +106,7 @@ val domainModule = module {
     factoryOf(::SyncTransactionUseCase)
     factoryOf(::SyncTransactionDetailUseCase)
     factoryOf(::SyncUnitMeasureUseCase)
-
-
+    factoryOf(::GetProductFromQueryUseCase)
 }
 
 val viewModelModule = module {
@@ -121,6 +122,8 @@ val viewModelModule = module {
     viewModelOf(::SyncTransactionViewModel)
     viewModelOf(::SyncTransactionDetailViewModel)
     viewModelOf(::SyncUnitMeasureViewModel)
+    viewModelOf(::SearchViewModel)
+    viewModelOf(::AdvancedSearchViewModel)
 }
 
 expect val nativeModule: Module

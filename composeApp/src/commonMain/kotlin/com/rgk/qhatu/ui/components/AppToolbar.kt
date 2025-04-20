@@ -24,7 +24,7 @@ fun AppToolbar(
     navigationIcon: (@Composable (() -> Unit))? = null,
     actions: @Composable RowScope.() -> Unit = {},
     backgroundColor: Color = MaterialTheme.colorScheme.primary,
-    contentColor: Color = MaterialTheme.colorScheme.onPrimary,
+    contentColor: Color = Color.White,
     elevation: Dp = 4.dp
 ) {
     Surface(

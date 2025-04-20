@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.NewLabel
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
@@ -70,10 +71,10 @@ fun rememberMenuItems(navController: NavController): List<MenuItem> {
                 title = "Búsqueda",
                 icon = Icons.Default.Search,
                 color = Color(0xFF4CAF50),
-                onClick = { }
+                onClick = { navController.navigate("search"){ popUpTo("home")}  }
             ),MenuItem(
                 title = "Movimientos",
-                icon = Icons.Default.Sync,
+                icon = Icons.Default.History,
                 color = Color(0xFF9C27B0),
                 onClick = {  }
             ),

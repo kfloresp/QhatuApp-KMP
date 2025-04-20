@@ -1,4 +1,4 @@
-package com.rgk.qhatu.ui.components
+package com.rgk.qhatu.ui.feature.sync
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

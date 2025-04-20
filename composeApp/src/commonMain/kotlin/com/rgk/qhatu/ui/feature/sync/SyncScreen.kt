@@ -21,7 +21,6 @@ import androidx.navigation.NavController
 import com.rgk.qhatu.domain.common.SyncTable
 import com.rgk.qhatu.ui.components.AppToolbar
 import com.rgk.qhatu.ui.components.OutlineButton
-import com.rgk.qhatu.ui.components.SyncItemCard
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -99,7 +98,7 @@ fun SyncScreen(
                     else -> 0
                 },
                 lastUpdated = when (syncStateAuditLog) {
-                    is SyncState.Success -> (syncStateAuditLog as SyncState.Success).lastUpdated.toString()
+                    is SyncState.Success -> (syncStateAuditLog as SyncState.Success).lastUpdated
                     else -> "—"
                 },
                 isSyncing = syncStateAuditLog is SyncState.Loading,
@@ -121,7 +120,7 @@ fun SyncScreen(
                     else -> 0
                 },
                 lastUpdated = when (syncStateBrand) {
-                    is SyncState.Success -> (syncStateBrand as SyncState.Success).lastUpdated.toString()
+                    is SyncState.Success -> (syncStateBrand as SyncState.Success).lastUpdated
                     else -> "—"
                 },
                 isSyncing = syncStateBrand is SyncState.Loading,
@@ -143,7 +142,7 @@ fun SyncScreen(
                     else -> 0
                 },
                 lastUpdated = when (syncStateCategory) {
-                    is SyncState.Success -> (syncStateCategory as SyncState.Success).lastUpdated.toString()
+                    is SyncState.Success -> (syncStateCategory as SyncState.Success).lastUpdated
                     else -> "—"
                 },
                 isSyncing = syncStateCategory is SyncState.Loading,
@@ -165,7 +164,7 @@ fun SyncScreen(
                     else -> 0
                 },
                 lastUpdated = when (syncStateClient) {
-                    is SyncState.Success -> (syncStateClient as SyncState.Success).lastUpdated.toString()
+                    is SyncState.Success -> (syncStateClient as SyncState.Success).lastUpdated
                     else -> "—"
                 },
                 isSyncing = syncStateClient is SyncState.Loading,
@@ -186,7 +185,7 @@ fun SyncScreen(
                     else -> 0
                 },
                 lastUpdated = when (syncStateClientPayment) {
-                    is SyncState.Success -> (syncStateClientPayment as SyncState.Success).lastUpdated.toString()
+                    is SyncState.Success -> (syncStateClientPayment as SyncState.Success).lastUpdated
                     else -> "—"
                 },
                 isSyncing = syncStateClientPayment is SyncState.Loading,
@@ -208,7 +207,7 @@ fun SyncScreen(
                     else -> 0
                 },
                 lastUpdated = when (syncStateConfiguration) {
-                    is SyncState.Success -> (syncStateConfiguration as SyncState.Success).lastUpdated.toString()
+                    is SyncState.Success -> (syncStateConfiguration as SyncState.Success).lastUpdated
                     else -> "—"
                 },
                 isSyncing = syncStateConfiguration is SyncState.Loading,
@@ -230,7 +229,7 @@ fun SyncScreen(
                     else -> 0
                 },
                 lastUpdated = when (syncStatePaymentTransaction) {
-                    is SyncState.Success -> (syncStatePaymentTransaction as SyncState.Success).lastUpdated.toString()
+                    is SyncState.Success -> (syncStatePaymentTransaction as SyncState.Success).lastUpdated
                     else -> "—"
                 },
                 isSyncing = syncStatePaymentTransaction is SyncState.Loading,
@@ -252,7 +251,7 @@ fun SyncScreen(
                     else -> 0
                 },
                 lastUpdated = when (syncStateProduct) {
-                    is SyncState.Success -> (syncStateProduct as SyncState.Success).lastUpdated.toString()
+                    is SyncState.Success -> (syncStateProduct as SyncState.Success).lastUpdated
                     else -> "—"
                 },
                 isSyncing = syncStateProduct is SyncState.Loading,
@@ -273,7 +272,7 @@ fun SyncScreen(
                     else -> 0
                 },
                 lastUpdated = when (syncStateTransaction) {
-                    is SyncState.Success -> (syncStateTransaction as SyncState.Success).lastUpdated.toString()
+                    is SyncState.Success -> (syncStateTransaction as SyncState.Success).lastUpdated
                     else -> "—"
                 },
                 isSyncing = syncStateTransaction is SyncState.Loading,
@@ -294,7 +293,7 @@ fun SyncScreen(
                     else -> 0
                 },
                 lastUpdated = when (syncStateTransactionDetail) {
-                    is SyncState.Success -> (syncStateTransactionDetail as SyncState.Success).lastUpdated.toString()
+                    is SyncState.Success -> (syncStateTransactionDetail as SyncState.Success).lastUpdated
                     else -> "—"
                 },
                 isSyncing = syncStateTransactionDetail is SyncState.Loading,
@@ -315,7 +314,7 @@ fun SyncScreen(
                     else -> 0
                 },
                 lastUpdated = when (syncStateUnitMeasure) {
-                    is SyncState.Success -> (syncStateUnitMeasure as SyncState.Success).lastUpdated.toString()
+                    is SyncState.Success -> (syncStateUnitMeasure as SyncState.Success).lastUpdated
                     else -> "—"
                 },
                 isSyncing = syncStateUnitMeasure is SyncState.Loading,

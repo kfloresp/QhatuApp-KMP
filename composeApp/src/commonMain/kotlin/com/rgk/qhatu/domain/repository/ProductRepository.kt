@@ -13,4 +13,5 @@ interface ProductRepository {
     suspend fun saveLocal(registers: List<Product>) : SyncResult<Boolean>
     suspend fun syncLocalToRemote(): SyncResult<Boolean>
     suspend fun syncRemoteToLocal(): SyncResult<Boolean>
+    suspend fun getProductFromQuery(query: String, searchType: Int): SyncResult<List<Product>>
 }

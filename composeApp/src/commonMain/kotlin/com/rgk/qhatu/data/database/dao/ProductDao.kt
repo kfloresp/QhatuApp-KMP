@@ -32,4 +32,13 @@ interface ProductDao {
     @Query("DELETE FROM products WHERE flag_sincronizado != 1")
     suspend fun deleteUnsynced()
 
+    @Query("SELECT * FROM products WHERE ean LIKE '%' || :query || '%' COLLATE NOCASE")
+    suspend fun queryByEan(query: String): List<ProductEntity>
+
+    @Query("SELECT * FROM products WHERE id LIKE '%' || :query || '%' COLLATE NOCASE")
+    suspend fun queryByCode(query: String): List<ProductEntity>
+
+    @Query("SELECT * FROM products WHERE nombre LIKE '%' || :query || '%' COLLATE NOCASE")
+    suspend fun queryByName(query: String): List<ProductEntity>
+
 }
