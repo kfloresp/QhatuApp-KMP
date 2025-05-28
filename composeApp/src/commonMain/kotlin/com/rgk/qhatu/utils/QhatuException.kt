@@ -18,6 +18,10 @@ sealed class QhatuException : Throwable() {
         override val message: String = "Acceso no autorizado"
     }
 
+    data class Exception(val errorMessage: String) : QhatuException() {
+        override val message: String = errorMessage
+    }
+
     data class Unexpected(val errorMessage: String) : QhatuException() {
         override val message: String = errorMessage
     }

@@ -1,4 +1,4 @@
-package com.rgk.qhatu.ui.components
+package com.rgk.qhatu.ui.feature.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -74,11 +74,5 @@ data class MenuItemCardParams(
     val backgroundColor: Color = Color.Black,
     val iconTint: Color = Color.White,
     val textColor: Color = Color.White,
-    val onClick: () -> Unit
-)
-data class MenuItem(
-    val title: String,
-    val icon: ImageVector,
-    val color: Color,
     val onClick: () -> Unit
 )

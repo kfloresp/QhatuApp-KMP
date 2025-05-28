@@ -4,9 +4,11 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.rgk.qhatu.domain.common.SyncResult
 import com.rgk.qhatu.domain.model.User
 import com.rgk.qhatu.domain.usecase.AuthUseCase
+import com.rgk.qhatu.ui.navigation.RouteNavigation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -104,6 +106,12 @@ class AuthViewModel(
 
     fun getCurrentUser(): User? {
         return authUseCase.currentUser()
+    }
+
+    fun goToHome(navController: NavController) {
+        navController.navigate(RouteNavigation.Home.src) {
+            popUpTo(RouteNavigation.Login.src) { inclusive = true }
+        }
     }
 }
 

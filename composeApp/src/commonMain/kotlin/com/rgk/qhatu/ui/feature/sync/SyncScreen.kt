@@ -20,8 +20,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.rgk.qhatu.domain.common.SyncTable
 import com.rgk.qhatu.ui.components.AppToolbar
-import com.rgk.qhatu.ui.components.OutlineButton
+import com.rgk.qhatu.ui.components.SecondaryButton
+import com.rgk.qhatu.ui.feature.home.HomeItem
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_back
 
 @Composable
 fun SyncScreen(
@@ -58,21 +62,21 @@ fun SyncScreen(
             .fillMaxSize()
             .verticalScroll(scrollState)
     ) {
-        AppToolbar(title = "Sincronización",
+        AppToolbar(title = stringResource(HomeItem.Sync.title),
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBackIosNew,
-                        contentDescription = "Volver"
+                        contentDescription = stringResource(Res.string.tx_back)
                     )
                 }
             },
             backgroundColor = Color(0xFF2196F3)
         )
 
-        Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp,top = 8.dp)) {
+        Column (modifier = Modifier.padding(start = 16.dp, end = 16.dp,top = 8.dp)) {
 
-            OutlineButton(
+            SecondaryButton(
                 text = "Sincronizar Todos",
                 onClick = {
                     syncAuditLogViewModel.sync()

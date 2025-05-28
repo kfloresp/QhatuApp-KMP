@@ -17,12 +17,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.rgk.qhatu.ui.components.AppToolbar
-import com.rgk.qhatu.ui.components.ErrorMessageView
-import com.rgk.qhatu.ui.components.LoadingProgress
+import com.rgk.qhatu.ui.components.ErrorView
+import com.rgk.qhatu.ui.components.LoadingView
+import com.rgk.qhatu.ui.feature.home.HomeItem
+import org.jetbrains.compose.resources.stringResource
+import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_back
 
 @Composable
 fun AdvancedSearchScreen(
@@ -34,16 +37,16 @@ fun AdvancedSearchScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             AppToolbar(
-                title = "Búsqueda Avanzada",
+                title = stringResource(HomeItem.Search.AdvancedSearch.title),
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBackIosNew,
-                            contentDescription = "Volver"
+                            contentDescription = stringResource(Res.string.tx_back)
                         )
                     }
                 },
-                backgroundColor = Color(0xFF4CAF50)
+                backgroundColor = HomeItem.Search.color
             )
 
             if (uiState is AdvancedSearchUiState.Success) {
@@ -74,11 +77,11 @@ fun AdvancedSearchScreen(
         }
 
         if (uiState is AdvancedSearchUiState.Loading) {
-            LoadingProgress()
+            LoadingView()
         }
 
         if (uiState is AdvancedSearchUiState.Error) {
-            ErrorMessageView(
+            ErrorView(
                 message = uiState.message,
                 modifier = Modifier
                     .align(Alignment.Center)

@@ -26,18 +26,21 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.rgk.qhatu.ui.components.AlertMessageDialog
 import com.rgk.qhatu.ui.components.EmailField
-import com.rgk.qhatu.ui.components.LoadingProgress
-import com.rgk.qhatu.ui.components.LoginButton
+import com.rgk.qhatu.ui.components.LoadingView
+import com.rgk.qhatu.ui.components.PrimaryButton
 import com.rgk.qhatu.ui.components.PasswordField
-import com.rgk.qhatu.utils.FirebaseAuthErrorHandler
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.bt_start_login
 import qhatuapp.composeapp.generated.resources.ic_leaf
+import qhatuapp.composeapp.generated.resources.tx_acept
+import qhatuapp.composeapp.generated.resources.tx_error
+import qhatuapp.composeapp.generated.resources.tx_title_login
 
 @Composable
 fun LoginScreen(
@@ -55,22 +58,7 @@ fun LoginScreen(
     val emailFocusRequester = remember { FocusRequester() }
     val passwordFocusRequester = remember { FocusRequester() }
     val scrollState = rememberScrollState()
-    LaunchedEffect(authState) {
-        if (authState is AuthState.Authenticated) {
-            navController.navigate("home") {
-                popUpTo("login") { inclusive = true }
-            }
-            authViewModel.clearCredentials()
-        }
-    }
-    if (authState is AuthState.Error && showDialog) {
-        AlertMessageDialog(
-            title = "Error",
-            message = FirebaseAuthErrorHandler.handleException((authState as AuthState.Error).exception),
-            confirmText = "Aceptar",
-            onConfirm = { authViewModel.hideDialog() }
-        )
-    }
+
     Column(
         modifier = Modifier
             .verticalScroll(scrollState)
@@ -88,7 +76,7 @@ fun LoginScreen(
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Iniciar Sesión",
+            text = stringResource(Res.string.tx_title_login),
             fontSize = 18.sp,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -101,27 +89,42 @@ fun LoginScreen(
         )
         Spacer(modifier = Modifier.height(8.dp))
         PasswordField(
-            password,
-            passwordError,
-            showPassword,
-            authViewModel::onPasswordChange,
-            authViewModel::togglePasswordVisibility,
-            passwordFocusRequester,
+            value = password,
+            error = passwordError,
+            onValueChange = authViewModel::onPasswordChange,
+            visible = showPassword,
+            onToggleVisibility = authViewModel::togglePasswordVisibility,
+            focusRequester = passwordFocusRequester,
             keyboardActions = KeyboardActions(onDone = {
                 keyboardController?.hide()
                 authViewModel.onLoginClick()
             })
         )
         Spacer(modifier = Modifier.height(16.dp))
-        LoginButton(
+        PrimaryButton(
+            text = stringResource(Res.string.bt_start_login),
             onClick = {
                 keyboardController?.hide()
                 authViewModel.onLoginClick()
             }
         )
     }
+    LaunchedEffect(authState) {
+        if (authState is AuthState.Authenticated) {
+            authViewModel.goToHome(navController)
+            authViewModel.clearCredentials()
+        }
+    }
+    if (authState is AuthState.Error && showDialog) {
+        AlertMessageDialog(
+            title = stringResource(Res.string.tx_error),
+            message = (authState as AuthState.Error).exception.message.orEmpty(),
+            confirmText = stringResource(Res.string.tx_acept),
+            onConfirm = { authViewModel.hideDialog() }
+        )
+    }
     if (authState is AuthState.Loading) {
-        LoadingProgress()
+        LoadingView()
     }
 }
 

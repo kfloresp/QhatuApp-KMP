@@ -19,7 +19,9 @@ import com.rgk.qhatu.domain.usecase.configuration.SyncConfigurationUseCase
 import com.rgk.qhatu.domain.usecase.paymentTransaction.*
 import com.rgk.qhatu.domain.usecase.product.*
 import com.rgk.qhatu.domain.usecase.transactionDetail.*
+import com.rgk.qhatu.ui.feature.home.HomeViewModel
 import com.rgk.qhatu.ui.feature.login.AuthViewModel
+import com.rgk.qhatu.ui.feature.receipt.ReceiptViewModel
 import com.rgk.qhatu.ui.feature.search.SearchViewModel
 import com.rgk.qhatu.ui.feature.search.advancedsearch.AdvancedSearchViewModel
 import com.rgk.qhatu.ui.feature.sync.*
@@ -107,9 +109,11 @@ val domainModule = module {
     factoryOf(::SyncTransactionDetailUseCase)
     factoryOf(::SyncUnitMeasureUseCase)
     factoryOf(::GetProductFromQueryUseCase)
+    factoryOf(::GetClientProviderUseCase)
 }
 
 val viewModelModule = module {
+    viewModelOf(::HomeViewModel)
     viewModelOf(::AuthViewModel)
     viewModelOf(::SyncAuditLogViewModel)
     viewModelOf(::SyncBrandViewModel)
@@ -124,6 +128,7 @@ val viewModelModule = module {
     viewModelOf(::SyncUnitMeasureViewModel)
     viewModelOf(::SearchViewModel)
     viewModelOf(::AdvancedSearchViewModel)
+    viewModelOf(::ReceiptViewModel)
 }
 
 expect val nativeModule: Module

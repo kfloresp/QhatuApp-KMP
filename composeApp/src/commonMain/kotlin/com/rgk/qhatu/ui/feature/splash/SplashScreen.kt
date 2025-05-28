@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.rgk.qhatu.ui.feature.login.AuthViewModel
+import com.rgk.qhatu.ui.navigation.RouteNavigation
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -29,12 +30,12 @@ fun SplashScreen(navController: NavController, viewModel: AuthViewModel = koinVi
     LaunchedEffect(Unit) {
         delay(2000)
         if (viewModel.getCurrentUser() != null) {
-            navController.navigate("home") {
-                popUpTo("splash") { inclusive = true }
+            navController.navigate(RouteNavigation.Home.src) {
+                popUpTo(RouteNavigation.Splash.src) { inclusive = true }
             }
         } else {
-            navController.navigate("login") {
-                popUpTo("splash") { inclusive = true }
+            navController.navigate(RouteNavigation.Login.src) {
+                popUpTo(RouteNavigation.Splash.src) { inclusive = true }
             }
         }
     }
@@ -48,7 +49,7 @@ fun SplashScreen(navController: NavController, viewModel: AuthViewModel = koinVi
         ) {
             Image(
                 painterResource(Res.drawable.ic_leaf),
-                contentDescription = "",
+                contentDescription = null,
                 modifier = Modifier.size(150.dp)
             )
             Spacer(modifier = Modifier.size(16.dp))

@@ -96,4 +96,18 @@ class ClientRepositoryImpl(
             SyncResult.Error(e)
         }
     }
+
+    override suspend fun fetchClientProvider(
+        query: String,
+        isProvider: Int
+    ): SyncResult<List<Client>> {
+        return try {
+            val data = sourceLocal.fetchClientProvider(query, isProvider).map {
+                it.toDomain()
+            }
+            SyncResult.Success(data)
+        } catch (e: Exception) {
+            SyncResult.Error(e)
+        }
+    }
 }

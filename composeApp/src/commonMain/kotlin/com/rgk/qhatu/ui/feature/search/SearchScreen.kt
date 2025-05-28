@@ -1,28 +1,23 @@
 package com.rgk.qhatu.ui.feature.search
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.QrCodeScanner
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,26 +25,32 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.rgk.qhatu.ui.components.AppToolbar
-import com.rgk.qhatu.ui.components.ErrorMessageView
-import com.rgk.qhatu.ui.components.LoadingProgress
+import com.rgk.qhatu.ui.components.ErrorView
+import com.rgk.qhatu.ui.components.LoadingView
+import com.rgk.qhatu.ui.components.SearchInputBar
+import com.rgk.qhatu.ui.components.SearchTypeSelector
+import com.rgk.qhatu.ui.feature.home.HomeItem
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_back
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(navController: NavController, viewModel: SearchViewModel = koinViewModel()) {
     val searchQuery = remember { mutableStateOf("") }
     val selectedSearchType = remember { mutableStateOf<SearchType>(SearchType.Ean) }
-    val focusManager = LocalFocusManager.current
     val searchTypes = listOf(SearchType.Ean, SearchType.Name, SearchType.Code)
     val sheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
+    val keyboardController = LocalSoftwareKeyboardController.current
     val uiState by viewModel.uiState
     val selectedProductId = navController.currentBackStackEntry
         ?.savedStateHandle
@@ -93,79 +94,44 @@ fun SearchScreen(navController: NavController, viewModel: SearchViewModel = koin
         }
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier =
+            Modifier.fillMaxSize()
+                .verticalScroll(scrollState)
+                .pointerInput(Unit) { detectTapGestures { keyboardController?.hide() } },
+    ) {
         AppToolbar(
-            title = "Búsqueda de producto", navigationIcon = {
+            title = stringResource(HomeItem.Search.title), navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBackIosNew,
-                        contentDescription = "Volver"
+                        contentDescription = stringResource(Res.string.tx_back)
                     )
                 }
             },
-            backgroundColor = Color(0xFF4CAF50)
+            backgroundColor = HomeItem.Search.color
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            searchTypes.forEach { type ->
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.clickable {
-                        selectedSearchType.value = type
-                    }
-                ) {
-                    RadioButton(
-                        selected = selectedSearchType.value::class == type::class,
-                        onClick = {
-                            selectedSearchType.value = type
-                        }
-                    )
-                    Text(
-                        text = type.label,
-                        modifier = Modifier.padding(start = 4.dp)
-                    )
-                }
-            }
-        }
+        SearchTypeSelector(
+            items = searchTypes,
+            selectedItem = selectedSearchType.value,
+            onItemSelected = { selectedSearchType.value = it },
+            labelSelector = { it.label }
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            TextField(
-                value = searchQuery.value,
-                onValueChange = { searchQuery.value = it },
-                modifier = Modifier.weight(1f),
-                placeholder = { Text("Ingresar código, nombre o EAN...") },
-                singleLine = true,
-                keyboardActions = KeyboardActions(onDone = {
-                    focusManager.clearFocus()
-                    viewModel.searchProducts(searchQuery.value, selectedSearchType.value.code)
-                })
-            )
-            IconButton(onClick = {
-                focusManager.clearFocus()
-                //onScanClick()
-            }) {
-                Icon(Icons.Default.QrCodeScanner, contentDescription = "Escanear QR")
-            }
-            IconButton(onClick = {
-                focusManager.clearFocus()
+        SearchInputBar(
+            query = searchQuery.value,
+            onQueryChange = { searchQuery.value = it },
+            onSearch = {
                 viewModel.searchProducts(searchQuery.value, selectedSearchType.value.code)
-            }) {
-                Icon(Icons.Default.Search, contentDescription = "Buscar")
+            },
+            onScanClick = {
+
             }
-        }
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -173,22 +139,24 @@ fun SearchScreen(navController: NavController, viewModel: SearchViewModel = koin
             ProductSearchItem((uiState as SearchResultState.SingleResult).product)
         }
         if (uiState is SearchResultState.Error) {
-            ErrorMessageView(
+            ErrorView(
                 message = (uiState as SearchResultState.Error).message,
                 modifier = Modifier.fillMaxSize()
             )
         }
-
-
     }
 
     if (uiState is SearchResultState.Loading) {
-        LoadingProgress()
+        LoadingView()
     }
 
     LaunchedEffect(uiState) {
         if (uiState is SearchResultState.MultipleResults) {
             showBottomSheet = true
+        }
+        if (uiState is SearchResultState.SingleResult) {
+            searchQuery.value = ""
+            keyboardController?.hide()
         }
     }
     LaunchedEffect(searchQuery.value) {

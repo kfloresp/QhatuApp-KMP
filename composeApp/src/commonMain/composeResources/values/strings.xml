@@ -1,4 +1,30 @@
 <resources>
     <string name="app_name">QhatuApp</string>
     <string name="theme">Is light theme</string>
+    <string name="tx_title_login">Welcome!</string>
+    <string name="bt_start_login">Start</string>
+    <string name="tx_error">Error</string>
+    <string name="tx_acept">Acept</string>
+    <string name="tx_loading">Loading..</string>
+    <string name="tx_email">Email</string>
+    <string name="tx_password">Password</string>
+    <string name="tx_search">Search</string>
+    <string name="title_search">Search</string>
+    <string name="title_advanced_search">Advanced search</string>
+    <string name="title_movement">Movements</string>
+    <string name="title_receipt">Receipts</string>
+    <string name="title_sale">Sales</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_sync">Sync</string>
+    <string name="title_setting">Settings</string>
+    <string name="title_exit">Exit</string>
+    <string name="tx_back">Back</string>
+    <string name="tx_code_provider">Code provider:</string>
+    <string name="tx_provider">Provider:</string>
+    <string name="tx_address">Address:</string>
+    <string name="tx_phone">Phone:</string>
+    <string name="tx_date">Date</string>
+    <string name="tx_selected_date">Selected date</string>
+    <string name="tx_active">Active</string>
+    <string name="tx_inactive">Inactive</string>
 </resources>

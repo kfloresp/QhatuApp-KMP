@@ -4,8 +4,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.rgk.qhatu.data.database.entity.CategoryEntity
-import kotlinx.coroutines.flow.Flow
 import com.rgk.qhatu.data.database.entity.ClientEntity
 import com.rgk.qhatu.domain.common.SyncStats
 
@@ -31,5 +29,8 @@ interface ClientDao {
 
     @Query("DELETE FROM clients WHERE flag_sincronizado != 1")
     suspend fun deleteUnsynced()
+
+    @Query("SELECT * FROM clients WHERE nombre LIKE '%' || :query || '%' AND flag_proveedor = :provider")
+    suspend fun fetchClientProvider(query: String, provider: Int): List<ClientEntity>
 
 }

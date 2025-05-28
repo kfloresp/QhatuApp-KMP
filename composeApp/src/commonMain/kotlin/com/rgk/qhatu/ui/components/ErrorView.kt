@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ErrorMessageView(message: String, modifier: Modifier = Modifier) {
+fun ErrorView(message: String, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -29,7 +29,7 @@ fun ErrorMessageView(message: String, modifier: Modifier = Modifier) {
         ) {
             Icon(
                 imageVector = Icons.Default.Error,
-                contentDescription = "Error",
+                contentDescription = null,
                 modifier = Modifier.size(64.dp),
                 tint = MaterialTheme.colorScheme.error
             )
