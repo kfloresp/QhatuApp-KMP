@@ -2,17 +2,18 @@ package com.rgk.qhatu.domain.model
 
 data class Client(
     val id: String,
-    val nombre: String,
-    val apellido_paterno: String,
-    val apellido_materno: String,
-    val tipo_documento: String? = null,
-    val numero_documento: String? = null,
+    val nombre: String? = null,
+    val razonSocial: String? = null,
+    val apellidoPaterno: String? = null,
+    val apellidoMaterno: String? = null,
+    val tipoDocumento: String,
+    val numeroDocumento: String,
     val celular: String? = null,
     val direccion: String? = null,
     val correo: String? = null,
-    val saldo_pendiente: Double = 0.0,
-    val flag_proveedor: Int = 0,
-    val flag_activo: Int = 1,
-    val fecha_sincronizado: Long = 0,
-    val flag_sincronizado: Int = 0
+    val saldoPendiente: Double? = 0.0,
+    val flagProveedor: Int = 0,
+    val flagActivo: Int = 1,
+    val fechaSincronizado: Long = 0,
+    val flagSincronizado: Int = 0
 )

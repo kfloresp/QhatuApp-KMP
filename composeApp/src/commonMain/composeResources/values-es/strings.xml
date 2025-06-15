@@ -26,4 +26,7 @@
     <string name="tx_selected_date">Seleccionar Fecha</string>
     <string name="tx_active">Activo</string>
     <string name="tx_inactive">Inactivo</string>
+    <string name="tx_provider_only">Proveedor</string>
+    <string name="title_receipt_detail">Detalle del recibo</string>
+    <string name="title_advanced_search_provider">Búsqueda avanzada de proveedores</string>
 </resources>

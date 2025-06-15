@@ -20,6 +20,7 @@ import qhatuapp.composeapp.generated.resources.title_exit
 import qhatuapp.composeapp.generated.resources.title_movement
 import qhatuapp.composeapp.generated.resources.title_profile
 import qhatuapp.composeapp.generated.resources.title_receipt
+import qhatuapp.composeapp.generated.resources.title_receipt_detail
 import qhatuapp.composeapp.generated.resources.title_sale
 import qhatuapp.composeapp.generated.resources.title_search
 import qhatuapp.composeapp.generated.resources.title_sync
@@ -56,6 +57,14 @@ sealed class HomeItem(
             Icons.Default.Receipt,
             Color(0xFFF44336),
             RouteNavigation.Receipt.src
+        )
+
+    data object ReceiptDetail :
+        HomeItem(
+            Res.string.title_receipt_detail,
+            Icons.Default.Receipt,
+            Color(0xFFF44336),
+            RouteNavigation.ReceiptDetail.src
         )
 
     data object Sale :

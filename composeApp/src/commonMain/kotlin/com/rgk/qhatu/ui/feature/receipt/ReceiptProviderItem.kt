@@ -52,7 +52,7 @@ fun ReceiptProviderItem(
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(
-            text = product.nombre,
+            text = product.nombre.orEmpty(),
             style = MaterialTheme.typography.headlineSmall,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
@@ -65,7 +65,7 @@ fun ReceiptProviderItem(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        val isActivo = product.flag_activo != 0
+        val isActivo = product.flagActivo != 0
         val statusColor = if (isActivo) Color(0xFF4CAF50) else Color(0xFFD32F2F)
         val statusText = if (isActivo) "Activo" else "Inactivo"
 

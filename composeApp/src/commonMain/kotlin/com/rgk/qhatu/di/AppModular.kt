@@ -22,6 +22,7 @@ import com.rgk.qhatu.domain.usecase.transactionDetail.*
 import com.rgk.qhatu.ui.feature.home.HomeViewModel
 import com.rgk.qhatu.ui.feature.login.AuthViewModel
 import com.rgk.qhatu.ui.feature.receipt.ReceiptViewModel
+import com.rgk.qhatu.ui.feature.receipt.receiptdetail.ReceiptDetailViewModel
 import com.rgk.qhatu.ui.feature.search.SearchViewModel
 import com.rgk.qhatu.ui.feature.search.advancedsearch.AdvancedSearchViewModel
 import com.rgk.qhatu.ui.feature.sync.*
@@ -129,6 +130,7 @@ val viewModelModule = module {
     viewModelOf(::SearchViewModel)
     viewModelOf(::AdvancedSearchViewModel)
     viewModelOf(::ReceiptViewModel)
+    viewModelOf(::ReceiptDetailViewModel)
 }
 
 expect val nativeModule: Module

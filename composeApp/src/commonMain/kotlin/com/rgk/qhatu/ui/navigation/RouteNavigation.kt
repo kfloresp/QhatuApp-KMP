@@ -18,7 +18,7 @@ sealed class RouteNavigation(val src: String) {
     }
     data object Sync : RouteNavigation("sync")
     data object Receipt : RouteNavigation("receipt")
-    data object ReceiptDetail : RouteNavigation("receipt/{id}") {
+    data object ReceiptDetail : RouteNavigation("receipt-detail") {
         fun createRoute(id: String) = "receipt/$id"
     }
 }

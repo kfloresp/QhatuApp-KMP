@@ -27,4 +27,7 @@
     <string name="tx_selected_date">Selected date</string>
     <string name="tx_active">Active</string>
     <string name="tx_inactive">Inactive</string>
+    <string name="tx_provider_only">Provider</string>
+    <string name="title_receipt_detail">Receipt Detail</string>
+    <string name="title_advanced_search_provider">Advanced search for providers</string>
 </resources>

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -30,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -39,9 +41,11 @@ import androidx.navigation.NavController
 import com.rgk.qhatu.ui.components.AppToolbar
 import com.rgk.qhatu.ui.components.ErrorView
 import com.rgk.qhatu.ui.components.LoadingView
+import com.rgk.qhatu.ui.components.PrimaryButton
 import com.rgk.qhatu.ui.components.SimpleDatePicker
 import com.rgk.qhatu.ui.components.toFormat
 import com.rgk.qhatu.ui.feature.home.HomeItem
+import com.rgk.qhatu.ui.navigation.RouteNavigation
 import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -49,6 +53,7 @@ import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_back
 import qhatuapp.composeapp.generated.resources.tx_date
 import qhatuapp.composeapp.generated.resources.tx_provider
+import qhatuapp.composeapp.generated.resources.tx_provider_only
 import qhatuapp.composeapp.generated.resources.tx_selected_date
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,7 +83,7 @@ fun ReceiptScreen(
             Column(modifier = Modifier.padding(16.dp)) {
                 result.providers.forEach { provider ->
                     ListItem(
-                        headlineContent = { Text(provider.nombre) },
+                        headlineContent = { Text(provider.nombre.orEmpty()) },
                         supportingContent = { Text("${stringResource(Res.string.tx_provider)} ${provider.id}") },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -86,7 +91,7 @@ fun ReceiptScreen(
                                 showBottomSheet = false
                                 searchQuery.value = ""
                                 viewModel.clearSearch()
-                                viewModel.searchProvider(provider.nombre)
+                                viewModel.searchProvider(provider.nombre.orEmpty())
                             }
                     )
                 }
@@ -151,7 +156,7 @@ fun ReceiptScreen(
         OutlinedTextField(
             value = searchQuery.value,
             onValueChange = { searchQuery.value = it },
-            label = { Text(stringResource(Res.string.tx_provider)) },
+            label = { Text(stringResource(Res.string.tx_provider_only)) },
             singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(onSearch = {
@@ -176,6 +181,10 @@ fun ReceiptScreen(
         if (uiState is ReceiptState.Single) {
             val provider = (uiState as ReceiptState.Single).provider
             ReceiptProviderItem(provider)
+            PrimaryButton("Continuar",
+                onClick = {navController.navigate(RouteNavigation.ReceiptDetail.src)},
+                modifier = Modifier
+                    .padding(20.dp))
         }
 
         if (uiState is ReceiptState.Error) {

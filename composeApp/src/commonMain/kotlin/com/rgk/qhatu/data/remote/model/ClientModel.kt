@@ -1,20 +1,21 @@
 package com.rgk.qhatu.data.remote.model
+
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class ClientModel(
     val id: String,
-    val nombre: String,
-    val apellido_paterno: String,
-    val apellido_materno: String,
-    val tipo_documento: String? = null,
-    val numero_documento: String? = null,
+    val nombre: String? = null,
+    @SerialName("apellido_paterno") val apellidoPaterno: String? = null,
+    @SerialName("apellido_materno") val apellidoMaterno: String? = null,
+    @SerialName("tipo_documento") val tipoDocumento: String,
+    @SerialName("numero_documento") val numeroDocumento: String,
     val celular: String? = null,
     val direccion: String? = null,
     val correo: String? = null,
-    val saldo_pendiente: Double = 0.0,
-    val flag_proveedor: Int = 0,
-    val flag_activo: Int = 1,
-    val fecha_sincronizado: Long = 0,
-    val flag_sincronizado: Int = 0
+    @SerialName("saldo_pendiente") val saldoPendiente: Double? = 0.0,
+    @SerialName("flag_proveedor") val flagProveedor: Int = 0,
+    @SerialName("flag_activo") val flagActivo: Int = 1,
+    @SerialName("razon_social") val razonSocial: String? = null
 )

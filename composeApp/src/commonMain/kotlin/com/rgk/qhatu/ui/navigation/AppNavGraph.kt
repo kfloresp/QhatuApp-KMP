@@ -11,6 +11,7 @@ import com.rgk.qhatu.ui.feature.home.HomeScreen
 import com.rgk.qhatu.ui.feature.movement.MovementScreen
 import com.rgk.qhatu.ui.feature.profile.ProfileScreen
 import com.rgk.qhatu.ui.feature.receipt.ReceiptScreen
+import com.rgk.qhatu.ui.feature.receipt.receiptdetail.ReceiptDetailScreen
 import com.rgk.qhatu.ui.feature.sale.SaleScreen
 import com.rgk.qhatu.ui.feature.search.SearchScreen
 import com.rgk.qhatu.ui.feature.search.advancedsearch.AdvancedSearchScreen
@@ -65,6 +66,9 @@ fun AppNavGraph() {
                 viewModel = koinViewModel(parameters = { parametersOf(query, searchType) }),
                 navController = navController
             )
+        }
+        composable(RouteNavigation.ReceiptDetail.src) {
+            ReceiptDetailScreen(navController)
         }
     }
 }

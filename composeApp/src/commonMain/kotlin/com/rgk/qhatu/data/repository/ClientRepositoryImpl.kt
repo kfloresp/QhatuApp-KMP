@@ -89,7 +89,10 @@ class ClientRepositoryImpl(
             sourceLocal.deleteUnsynced()
             val newClients = remoteClients.filterNot { it.id in localSyncedIds }
             sourceLocal.save(newClients.map {
-                it.toEntity().copy(fecha_sincronizado = TimeUtils.getCurrentTimestamp())
+                it.toEntity().copy(
+                    fechaSincronizado = TimeUtils.getCurrentTimestamp(),
+                    flagSincronizado = 1
+                )
             })
             SyncResult.Success(true)
         } catch (e: Exception) {
@@ -102,10 +105,17 @@ class ClientRepositoryImpl(
         isProvider: Int
     ): SyncResult<List<Client>> {
         return try {
-            val data = sourceLocal.fetchClientProvider(query, isProvider).map {
-                it.toDomain()
+            if (isProvider == 1) {
+                val data = sourceLocal.fetchProvider(query).map {
+                    it.toDomain()
+                }
+                return SyncResult.Success(data)
+            } else {
+                val data = sourceLocal.fetchClient(query).map {
+                    it.toDomain()
+                }
+                return SyncResult.Success(data)
             }
-            SyncResult.Success(data)
         } catch (e: Exception) {
             SyncResult.Error(e)
         }
