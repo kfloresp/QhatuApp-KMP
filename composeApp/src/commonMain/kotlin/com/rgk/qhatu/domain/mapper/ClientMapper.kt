@@ -77,6 +77,7 @@ fun ClientModel.toEntity(): ClientEntity = ClientEntity(
     idInternal = 0,
     id = id,
     nombre = nombre,
+    razonSocial = razonSocial,
     apellidoPaterno = apellidoPaterno,
     apellidoMaterno = apellidoMaterno,
     tipoDocumento = tipoDocumento,

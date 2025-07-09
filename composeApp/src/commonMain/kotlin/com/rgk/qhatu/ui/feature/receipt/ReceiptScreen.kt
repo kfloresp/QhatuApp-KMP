@@ -45,7 +45,9 @@ import com.rgk.qhatu.ui.components.PrimaryButton
 import com.rgk.qhatu.ui.components.SimpleDatePicker
 import com.rgk.qhatu.ui.components.toFormat
 import com.rgk.qhatu.ui.feature.home.HomeItem
+import com.rgk.qhatu.ui.feature.search.SearchType
 import com.rgk.qhatu.ui.navigation.RouteNavigation
+import com.rgk.qhatu.ui.navigation.RouteNavigation.SearchProvider.Args.SELECTED_PROVIDER_ID
 import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -70,6 +72,9 @@ fun ReceiptScreen(
     val keyboardController = LocalSoftwareKeyboardController.current
     var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
     var showPicker by remember { mutableStateOf(false) }
+    val selectedProviderId = navController.currentBackStackEntry
+        ?.savedStateHandle
+        ?.get<String>(SELECTED_PROVIDER_ID)
 
     if (showBottomSheet && uiState is ReceiptState.Multiple) {
         val result = uiState as ReceiptState.Multiple
@@ -81,9 +86,9 @@ fun ReceiptScreen(
             sheetState = sheetState
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                result.providers.forEach { provider ->
+                result.providers.take(4).forEach { provider ->
                     ListItem(
-                        headlineContent = { Text(provider.nombre.orEmpty()) },
+                        headlineContent = { Text(provider.razonSocial.orEmpty()) },
                         supportingContent = { Text("${stringResource(Res.string.tx_provider)} ${provider.id}") },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -91,10 +96,24 @@ fun ReceiptScreen(
                                 showBottomSheet = false
                                 searchQuery.value = ""
                                 viewModel.clearSearch()
-                                viewModel.searchProvider(provider.nombre.orEmpty())
+                                viewModel.searchProvider(provider.razonSocial.orEmpty())
                             }
                     )
+
                 }
+                if (result.providers.size > 4){
+                    Text(
+                        text = "Mostrar más...",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                showBottomSheet = false
+                                navController.navigate(RouteNavigation.SearchProvider.createRoute(searchQuery.value))
+                            }
+                            .padding(16.dp)
+                    )
+                }
+
             }
         }
     }
@@ -214,6 +233,12 @@ fun ReceiptScreen(
             viewModel.uiState.value !is ReceiptState.Loading
         ) {
             viewModel.clearSearch()
+        }
+    }
+
+    LaunchedEffect(selectedProviderId) {
+        selectedProviderId?.let {
+            viewModel.searchProvider(it)
         }
     }
 }

@@ -22,9 +22,9 @@ import com.rgk.qhatu.domain.usecase.transactionDetail.*
 import com.rgk.qhatu.ui.feature.home.HomeViewModel
 import com.rgk.qhatu.ui.feature.login.AuthViewModel
 import com.rgk.qhatu.ui.feature.receipt.ReceiptViewModel
+import com.rgk.qhatu.ui.feature.receipt.searchprovider.SearchProviderViewModel
 import com.rgk.qhatu.ui.feature.receipt.receiptdetail.ReceiptDetailViewModel
 import com.rgk.qhatu.ui.feature.search.SearchViewModel
-import com.rgk.qhatu.ui.feature.search.advancedsearch.AdvancedSearchViewModel
 import com.rgk.qhatu.ui.feature.sync.*
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.FirebaseAuth
@@ -110,7 +110,8 @@ val domainModule = module {
     factoryOf(::SyncTransactionDetailUseCase)
     factoryOf(::SyncUnitMeasureUseCase)
     factoryOf(::GetProductFromQueryUseCase)
-    factoryOf(::GetClientProviderUseCase)
+    factoryOf(::GetClientUseCase)
+    factoryOf(::GetProviderUseCase)
 }
 
 val viewModelModule = module {
@@ -128,7 +129,7 @@ val viewModelModule = module {
     viewModelOf(::SyncTransactionDetailViewModel)
     viewModelOf(::SyncUnitMeasureViewModel)
     viewModelOf(::SearchViewModel)
-    viewModelOf(::AdvancedSearchViewModel)
+    viewModelOf(::SearchProviderViewModel)
     viewModelOf(::ReceiptViewModel)
     viewModelOf(::ReceiptDetailViewModel)
 }

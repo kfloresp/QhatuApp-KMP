@@ -9,7 +9,8 @@
     <string name="tx_password">Contraseña</string>
     <string name="tx_search">Buscar</string>
     <string name="title_search">Búsqueda</string>
-    <string name="title_advanced_search">Búsqueda avanzada</string>
+    <string name="title_search_product">Búsqueda de productos</string>
+    <string name="title_search_provider">Búsqueda de proveedores</string>
     <string name="title_movement">Movimientos</string>
     <string name="title_receipt">Recibos</string>
     <string name="title_sale">Ventas</string>

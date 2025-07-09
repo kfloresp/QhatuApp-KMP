@@ -6,19 +6,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.domain.common.SyncResult
 import com.rgk.qhatu.domain.model.Client
-import com.rgk.qhatu.domain.usecase.client.GetClientProviderUseCase
+import com.rgk.qhatu.domain.usecase.client.GetProviderUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 
-class ReceiptViewModel(private val clientProviderUseCase: GetClientProviderUseCase): ViewModel() {
+class ReceiptViewModel(private val clientProviderUseCase: GetProviderUseCase): ViewModel() {
     private val _uiState = mutableStateOf<ReceiptState>(ReceiptState.Idle)
     val uiState: State<ReceiptState> = _uiState
 
     fun searchProvider(query: String) {
         _uiState.value = ReceiptState.Loading
         viewModelScope.launch(Dispatchers.IO) {
-                when (val results = clientProviderUseCase(query, isProvider = 1)){
+                when (val results = clientProviderUseCase(query)){
                     is SyncResult.Error -> _uiState.value = ReceiptState.Error(results.exception.message.orEmpty())
                     is SyncResult.Success<List<Client>> -> _uiState.value = when {
                         results.data.isEmpty() -> ReceiptState.Error("No se encontraron proveedores")

@@ -9,16 +9,14 @@ sealed class RouteNavigation(val src: String) {
     data object Sale : RouteNavigation("sale")
     data object Profile : RouteNavigation("profile")
     data object Setting : RouteNavigation("setting")
-    data object AdvancedSearch : RouteNavigation("advanced-search/{query}/{searchType}"){
+    data object SearchProvider : RouteNavigation("search-provider/{query}"){
         object Args {
-            const val Query = "query"
-            const val SearchType = "searchType"
+            const val QUERY = "query"
+            const val SELECTED_PROVIDER_ID = "selected_provider_id"
         }
-        fun createRoute(query: String, searchType: Int) = "advanced-search/$query/$searchType"
+        fun createRoute(query: String) = "search-provider/$query"
     }
     data object Sync : RouteNavigation("sync")
     data object Receipt : RouteNavigation("receipt")
-    data object ReceiptDetail : RouteNavigation("receipt-detail") {
-        fun createRoute(id: String) = "receipt/$id"
-    }
+    data object ReceiptDetail : RouteNavigation("receipt-detail")
 }

@@ -13,5 +13,6 @@ interface ClientRepository {
     suspend fun saveLocal(registers: List<Client>) : SyncResult<Boolean>
     suspend fun syncLocalToRemote(): SyncResult<Boolean>
     suspend fun syncRemoteToLocal(): SyncResult<Boolean>
-    suspend fun fetchClientProvider(query:String, isProvider:Int): SyncResult<List<Client>>
+    suspend fun fetchClient(query:String): SyncResult<List<Client>>
+    suspend fun fetchProvider(query:String): SyncResult<List<Client>>
 }

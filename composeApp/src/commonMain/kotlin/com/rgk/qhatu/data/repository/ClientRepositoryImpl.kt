@@ -100,22 +100,23 @@ class ClientRepositoryImpl(
         }
     }
 
-    override suspend fun fetchClientProvider(
-        query: String,
-        isProvider: Int
-    ): SyncResult<List<Client>> {
+    override suspend fun fetchClient(query: String): SyncResult<List<Client>> {
         return try {
-            if (isProvider == 1) {
-                val data = sourceLocal.fetchProvider(query).map {
-                    it.toDomain()
-                }
-                return SyncResult.Success(data)
-            } else {
                 val data = sourceLocal.fetchClient(query).map {
                     it.toDomain()
                 }
                 return SyncResult.Success(data)
-            }
+        } catch (e: Exception) {
+            SyncResult.Error(e)
+        }
+    }
+
+    override suspend fun fetchProvider(query: String): SyncResult<List<Client>> {
+        return try {
+                val data = sourceLocal.fetchProvider(query).map {
+                    it.toDomain()
+                }
+                return SyncResult.Success(data)
         } catch (e: Exception) {
             SyncResult.Error(e)
         }

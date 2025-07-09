@@ -1,4 +1,4 @@
-package com.rgk.qhatu.ui.feature.search
+package com.rgk.qhatu.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -71,7 +71,6 @@ fun ProductSearchItem(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Estado del producto
         val isActivo = product.flag_activo != 0
         val statusColor = if (isActivo) Color(0xFF4CAF50) else Color(0xFFD32F2F)
         val statusText = if (isActivo) "Activo" else "Inactivo"

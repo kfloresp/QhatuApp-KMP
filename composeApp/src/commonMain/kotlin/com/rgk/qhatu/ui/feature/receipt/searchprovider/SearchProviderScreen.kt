@@ -1,4 +1,5 @@
-package com.rgk.qhatu.ui.feature.search.advancedsearch
+package com.rgk.qhatu.ui.feature.receipt.searchprovider
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,13 +24,14 @@ import com.rgk.qhatu.ui.components.AppToolbar
 import com.rgk.qhatu.ui.components.ErrorView
 import com.rgk.qhatu.ui.components.LoadingView
 import com.rgk.qhatu.ui.feature.home.HomeItem
+import com.rgk.qhatu.ui.navigation.RouteNavigation.SearchProvider.Args.SELECTED_PROVIDER_ID
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_back
 
 @Composable
-fun AdvancedSearchScreen(
-    viewModel: AdvancedSearchViewModel,
+fun SearchProviderScreen(
+    viewModel: SearchProviderViewModel,
     navController: NavController
 ) {
     val uiState = viewModel.uiState.value
@@ -37,7 +39,7 @@ fun AdvancedSearchScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             AppToolbar(
-                title = stringResource(HomeItem.Search.AdvancedSearch.title),
+                title = stringResource(HomeItem.Receipt.SearchProvider.title),
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -46,27 +48,27 @@ fun AdvancedSearchScreen(
                         )
                     }
                 },
-                backgroundColor = HomeItem.Search.color
+                backgroundColor = HomeItem.Receipt.SearchProvider.color
             )
 
-            if (uiState is AdvancedSearchUiState.Success) {
+            if (uiState is SearchProviderUiState.Success) {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(8.dp)
                 ) {
-                    items(uiState.products) { product ->
+                    items(uiState.clients) { provider ->
                         ListItem(
-                            headlineContent = { Text(product.nombre) },
+                            headlineContent = { Text(provider.razonSocial.orEmpty()) },
                             supportingContent = {
-                                Text("Código: ${product.id} - EAN: ${product.ean}")
+                                Text("Código: ${provider.id}")
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
                                     navController.previousBackStackEntry
                                         ?.savedStateHandle
-                                        ?.set("selected_product_id", product.id)
+                                        ?.set(SELECTED_PROVIDER_ID, provider.razonSocial)
                                     navController.popBackStack()
                                 }
                                 .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -76,11 +78,11 @@ fun AdvancedSearchScreen(
             }
         }
 
-        if (uiState is AdvancedSearchUiState.Loading) {
+        if (uiState is SearchProviderUiState.Loading) {
             LoadingView()
         }
 
-        if (uiState is AdvancedSearchUiState.Error) {
+        if (uiState is SearchProviderUiState.Error) {
             ErrorView(
                 message = uiState.message,
                 modifier = Modifier

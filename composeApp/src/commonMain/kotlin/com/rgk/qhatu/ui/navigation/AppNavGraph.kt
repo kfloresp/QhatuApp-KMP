@@ -12,9 +12,9 @@ import com.rgk.qhatu.ui.feature.movement.MovementScreen
 import com.rgk.qhatu.ui.feature.profile.ProfileScreen
 import com.rgk.qhatu.ui.feature.receipt.ReceiptScreen
 import com.rgk.qhatu.ui.feature.receipt.receiptdetail.ReceiptDetailScreen
+import com.rgk.qhatu.ui.feature.receipt.searchprovider.SearchProviderScreen
 import com.rgk.qhatu.ui.feature.sale.SaleScreen
 import com.rgk.qhatu.ui.feature.search.SearchScreen
-import com.rgk.qhatu.ui.feature.search.advancedsearch.AdvancedSearchScreen
 import com.rgk.qhatu.ui.feature.settings.SettingsScreen
 import com.rgk.qhatu.ui.feature.splash.SplashScreen
 import com.rgk.qhatu.ui.feature.sync.SyncScreen
@@ -43,6 +43,9 @@ fun AppNavGraph() {
         composable(RouteNavigation.Receipt.src) {
             ReceiptScreen(navController)
         }
+        composable(RouteNavigation.ReceiptDetail.src) {
+            ReceiptDetailScreen(navController)
+        }
         composable(RouteNavigation.Setting.src) {
             SettingsScreen(navController)
         }
@@ -56,19 +59,14 @@ fun AppNavGraph() {
             ProfileScreen(navController)
         }
         composable(
-            route = RouteNavigation.AdvancedSearch.src,
-            arguments = listOf(navArgument(RouteNavigation.AdvancedSearch.Args.Query) { type = NavType.StringType },
-                navArgument(RouteNavigation.AdvancedSearch.Args.SearchType) { type = NavType.IntType })
+            route = RouteNavigation.SearchProvider.src,
+            arguments = listOf(navArgument(RouteNavigation.SearchProvider.Args.QUERY) { type = NavType.StringType })
         ) { backstackEntry ->
-            val query = checkNotNull(backstackEntry.arguments?.getString(RouteNavigation.AdvancedSearch.Args.Query))
-            val searchType = checkNotNull(backstackEntry.arguments?.getInt(RouteNavigation.AdvancedSearch.Args.SearchType))
-            AdvancedSearchScreen(
-                viewModel = koinViewModel(parameters = { parametersOf(query, searchType) }),
+            val query = checkNotNull(backstackEntry.arguments?.getString(RouteNavigation.SearchProvider.Args.QUERY))
+            SearchProviderScreen(
+                viewModel = koinViewModel(parameters = { parametersOf(query) }),
                 navController = navController
             )
-        }
-        composable(RouteNavigation.ReceiptDetail.src) {
-            ReceiptDetailScreen(navController)
         }
     }
 }

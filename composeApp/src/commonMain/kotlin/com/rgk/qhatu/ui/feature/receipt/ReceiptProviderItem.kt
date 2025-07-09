@@ -25,7 +25,7 @@ import com.rgk.qhatu.domain.model.Product
 
 @Composable
 fun ReceiptProviderItem(
-    product: Client,
+    provider: Client,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -52,20 +52,20 @@ fun ReceiptProviderItem(
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(
-            text = product.nombre.orEmpty(),
+            text = provider.razonSocial.orEmpty(),
             style = MaterialTheme.typography.headlineSmall,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
         Spacer(modifier = Modifier.height(10.dp))
 
-        Text("Código Proveedor: ${product.id}", style = MaterialTheme.typography.titleMedium)
-        Text("Dirección: ${product.direccion}", style = MaterialTheme.typography.titleMedium)
-        Text("Teléfono: ${product.celular}", style = MaterialTheme.typography.titleMedium)
+        Text("Código Proveedor: ${provider.id}", style = MaterialTheme.typography.titleMedium)
+        Text("Dirección: ${provider.direccion}", style = MaterialTheme.typography.titleMedium)
+        Text("Teléfono: ${provider.celular}", style = MaterialTheme.typography.titleMedium)
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        val isActivo = product.flagActivo != 0
+        val isActivo = provider.flagActivo != 0
         val statusColor = if (isActivo) Color(0xFF4CAF50) else Color(0xFFD32F2F)
         val statusText = if (isActivo) "Activo" else "Inactivo"
 

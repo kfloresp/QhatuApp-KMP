@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.rgk.qhatu.ui.navigation.RouteNavigation
 import org.jetbrains.compose.resources.StringResource
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.title_advanced_search
 import qhatuapp.composeapp.generated.resources.title_setting
 import qhatuapp.composeapp.generated.resources.title_exit
 import qhatuapp.composeapp.generated.resources.title_movement
@@ -23,6 +22,7 @@ import qhatuapp.composeapp.generated.resources.title_receipt
 import qhatuapp.composeapp.generated.resources.title_receipt_detail
 import qhatuapp.composeapp.generated.resources.title_sale
 import qhatuapp.composeapp.generated.resources.title_search
+import qhatuapp.composeapp.generated.resources.title_search_provider
 import qhatuapp.composeapp.generated.resources.title_sync
 
 sealed class HomeItem(
@@ -36,13 +36,7 @@ sealed class HomeItem(
         Icons.Default.Search,
         Color(0xFF4CAF50),
         RouteNavigation.Search.src
-    ){
-        data object AdvancedSearch : HomeItem(
-            Res.string.title_advanced_search,
-            Icons.Default.Search,
-            Color(0xFF4CAF50),
-            RouteNavigation.AdvancedSearch.src)
-    }
+    )
 
     data object Movement : HomeItem(
         Res.string.title_movement,
@@ -57,15 +51,23 @@ sealed class HomeItem(
             Icons.Default.Receipt,
             Color(0xFFF44336),
             RouteNavigation.Receipt.src
+        ) {
+        data object SearchProvider : HomeItem(
+            Res.string.title_search_provider,
+            Icons.Default.Search,
+            Color(0xFFF44336),
+            RouteNavigation.SearchProvider.src
         )
 
-    data object ReceiptDetail :
-        HomeItem(
-            Res.string.title_receipt_detail,
-            Icons.Default.Receipt,
-            Color(0xFFF44336),
-            RouteNavigation.ReceiptDetail.src
-        )
+        data object ReceiptDetail :
+            HomeItem(
+                Res.string.title_receipt_detail,
+                Icons.Default.Receipt,
+                Color(0xFFF44336),
+                RouteNavigation.ReceiptDetail.src
+            )
+
+    }
 
     data object Sale :
         HomeItem(

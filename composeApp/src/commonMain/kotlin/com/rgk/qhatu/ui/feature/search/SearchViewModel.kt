@@ -42,6 +42,10 @@ class SearchViewModel(
         _uiState.value = SearchResultState.Idle
     }
 
+    fun setSelectedProduct(product: Product) {
+        _uiState.value = SearchResultState.SingleResult(product)
+    }
+
 }
 
 sealed class SearchResultState {

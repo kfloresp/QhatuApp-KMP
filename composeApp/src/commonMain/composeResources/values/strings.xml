@@ -10,7 +10,8 @@
     <string name="tx_password">Password</string>
     <string name="tx_search">Search</string>
     <string name="title_search">Search</string>
-    <string name="title_advanced_search">Advanced search</string>
+    <string name="title_search_product">Search Product</string>
+    <string name="title_search_provider">Search Provider</string>
     <string name="title_movement">Movements</string>
     <string name="title_receipt">Receipts</string>
     <string name="title_sale">Sales</string>
