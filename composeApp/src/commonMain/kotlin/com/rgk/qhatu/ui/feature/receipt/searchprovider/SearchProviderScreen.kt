@@ -23,7 +23,6 @@ import androidx.navigation.NavController
 import com.rgk.qhatu.ui.components.AppToolbar
 import com.rgk.qhatu.ui.components.ErrorView
 import com.rgk.qhatu.ui.components.LoadingView
-import com.rgk.qhatu.ui.navigation.RouteNavigation.SearchProvider.Args.SELECTED_PROVIDER_ID
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_back
@@ -66,7 +65,7 @@ fun SearchProviderScreen(
                                 .clickable {
                                     navController.previousBackStackEntry
                                         ?.savedStateHandle
-                                        ?.set(SELECTED_PROVIDER_ID, provider.razonSocial)
+                                        ?.set("provider_id", provider.razonSocial)
                                     navController.popBackStack()
                                 }
                                 .padding(horizontal = 16.dp, vertical = 8.dp)

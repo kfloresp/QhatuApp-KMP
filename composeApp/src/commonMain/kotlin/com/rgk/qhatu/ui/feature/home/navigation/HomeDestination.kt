@@ -10,9 +10,7 @@ import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 
 @Serializable
-data object HomeDestination {
-
-}
+data object HomeDestination
 
 internal fun NavGraphBuilder.homeDestination(
     navigateToSearch: () -> Unit,
@@ -27,7 +25,6 @@ internal fun NavGraphBuilder.homeDestination(
         val uiState by viewModel.uiState.collectAsState()
         HomeScreen(
             uiState = uiState,
-            //menus = viewModel.getMenuItems(),
             navigateToSearch = navigateToSearch,
             navigateToSale = navigateToSale,
             navigateToPayment = navigateToPayment,

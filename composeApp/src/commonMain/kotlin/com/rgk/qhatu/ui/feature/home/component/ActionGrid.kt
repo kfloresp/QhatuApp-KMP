@@ -39,7 +39,10 @@ fun ActionGrid(actions: List<Action>) {
     ) {
         items(actions) { action ->
             ActionItemCard(
-                text = stringResource(action.text), icon = action.icon, onClick = { })
+                text = stringResource(action.text),
+                icon = action.icon,
+                onClick = action.navigateTo
+            )
         }
     }
 }

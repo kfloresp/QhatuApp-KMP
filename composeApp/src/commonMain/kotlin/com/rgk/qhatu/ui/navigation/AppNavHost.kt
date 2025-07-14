@@ -11,6 +11,8 @@ import androidx.navigation.compose.rememberNavController
 import com.rgk.qhatu.ui.feature.auth.navigation.authGraph
 import com.rgk.qhatu.ui.feature.home.navigation.homeGraph
 import com.rgk.qhatu.ui.feature.home.navigation.navigateToHomeGraph
+import com.rgk.qhatu.ui.feature.search.navigation.navigateToSearchGraph
+import com.rgk.qhatu.ui.feature.search.navigation.searchGraph
 import com.rgk.qhatu.ui.feature.splash.navigation.SplashGraph
 import com.rgk.qhatu.ui.feature.splash.navigation.splashGraph
 import com.rgk.qhatu.utils.navigateToAuthGraphWithPopUp
@@ -38,13 +40,17 @@ fun AppNavHost(
             navigateToHomeGraph = { navController.navigateToHomeGraph() }
         )
         homeGraph(
+            navigateToSearch = { navController.navigateToSearchGraph() },
             navigateToSale = {},
             navigateToConfiguration = {},
             navigateToPayment = {},
             navigateToProduct = {},
             navigateToClient = {},
-            navigateToSearch = {}
         )
+        searchGraph(
+            navigateToHome = {},
+            navigateToCart = {},
+            openScanQR = {})
     }
 }
 
@@ -71,3 +77,15 @@ fun AppNavGraph(
         )
     }
 }
+
+//        composable(
+//            route = RouteNavigation.SearchProvider.src,
+//            arguments = listOf(navArgument(RouteNavigation.SearchProvider.Args.QUERY) { type = NavType.StringType })
+//        ) { backstackEntry ->
+//            val query = checkNotNull(backstackEntry.arguments?.getString(RouteNavigation.SearchProvider.Args.QUERY))
+//            SearchProviderScreen(
+//                viewModel = koinViewModel(parameters = { parametersOf(query) }),
+//                navController = navController
+//            )
+//        }
+//    }

@@ -42,8 +42,6 @@ import com.rgk.qhatu.ui.components.LoadingView
 import com.rgk.qhatu.ui.components.PrimaryButton
 import com.rgk.qhatu.ui.components.SimpleDatePicker
 import com.rgk.qhatu.ui.components.toFormat
-import com.rgk.qhatu.ui.navigation.RouteNavigation
-import com.rgk.qhatu.ui.navigation.RouteNavigation.SearchProvider.Args.SELECTED_PROVIDER_ID
 import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -70,7 +68,7 @@ fun ReceiptScreen(
     var showPicker by remember { mutableStateOf(false) }
     val selectedProviderId = navController.currentBackStackEntry
         ?.savedStateHandle
-        ?.get<String>(SELECTED_PROVIDER_ID)
+        ?.get<String>("SELECTED_PROVIDER")
 
     if (showBottomSheet && uiState is ReceiptState.Multiple) {
         val result = uiState as ReceiptState.Multiple
@@ -104,7 +102,7 @@ fun ReceiptScreen(
                             .fillMaxWidth()
                             .clickable {
                                 showBottomSheet = false
-                                navController.navigate(RouteNavigation.SearchProvider.createRoute(searchQuery.value))
+                                //navController.navigate(RouteNavigation.SearchProvider.createRoute(searchQuery.value))
                             }
                             .padding(16.dp)
                     )
@@ -196,7 +194,7 @@ fun ReceiptScreen(
             val provider = (uiState as ReceiptState.Single).provider
             ReceiptProviderItem(provider)
             PrimaryButton("Continuar",
-                onClick = {navController.navigate(RouteNavigation.ReceiptDetail.src)},
+                onClick = {},
                 modifier = Modifier
                     .padding(20.dp))
         }
