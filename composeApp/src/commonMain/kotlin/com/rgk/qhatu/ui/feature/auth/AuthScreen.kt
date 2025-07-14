@@ -1,11 +1,13 @@
-package com.rgk.qhatu.ui.feature.login
+package com.rgk.qhatu.ui.feature.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
@@ -43,22 +45,26 @@ import qhatuapp.composeapp.generated.resources.tx_error
 import qhatuapp.composeapp.generated.resources.tx_title_login
 
 @Composable
-fun LoginScreen(
-    navController: NavController,
-    authViewModel: AuthViewModel = koinViewModel()
+fun AuthScreen(
+    uiState: AuthState,
+    emailValue: String,
+    passwordValue: String,
+    emailError: String?,
+    passwordError: String?,
+    showPassword: Boolean,
+    showDialog: Boolean,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    togglePasswordVisibility: () -> Unit,
+    toggleDialogVisibility: () -> Unit,
+    onLoginClick: () -> Unit,
+    navigateToHome: () -> Unit,
 ) {
-    val email by authViewModel.email
-    val password by authViewModel.password
-    val emailError by authViewModel.emailError
-    val passwordError by authViewModel.passwordError
-    val showPassword by authViewModel.showPassword
-    val showDialog by authViewModel.showDialog
-    val authState by authViewModel.authState.collectAsState()
+
     val keyboardController = LocalSoftwareKeyboardController.current
     val emailFocusRequester = remember { FocusRequester() }
     val passwordFocusRequester = remember { FocusRequester() }
     val scrollState = rememberScrollState()
-
     Column(
         modifier = Modifier
             .verticalScroll(scrollState)
@@ -81,23 +87,23 @@ fun LoginScreen(
             modifier = Modifier.padding(bottom = 16.dp)
         )
         EmailField(
-            email,
+            emailValue,
             emailError,
-            authViewModel::onEmailChange,
+            onEmailChange,
             emailFocusRequester,
             keyboardActions = KeyboardActions(onNext = { passwordFocusRequester.requestFocus() })
         )
         Spacer(modifier = Modifier.height(8.dp))
         PasswordField(
-            value = password,
+            value = passwordValue,
             error = passwordError,
-            onValueChange = authViewModel::onPasswordChange,
+            onValueChange = onPasswordChange,
             visible = showPassword,
-            onToggleVisibility = authViewModel::togglePasswordVisibility,
+            onToggleVisibility = togglePasswordVisibility,
             focusRequester = passwordFocusRequester,
             keyboardActions = KeyboardActions(onDone = {
                 keyboardController?.hide()
-                authViewModel.onLoginClick()
+                onLoginClick.invoke()
             })
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -105,25 +111,24 @@ fun LoginScreen(
             text = stringResource(Res.string.bt_start_login),
             onClick = {
                 keyboardController?.hide()
-                authViewModel.onLoginClick()
+                onLoginClick.invoke()
             }
         )
     }
-    LaunchedEffect(authState) {
-        if (authState is AuthState.Authenticated) {
-            authViewModel.goToHome(navController)
-            authViewModel.clearCredentials()
+    LaunchedEffect(uiState) {
+        if (uiState is AuthState.Authenticated) {
+            navigateToHome.invoke()
         }
     }
-    if (authState is AuthState.Error && showDialog) {
+    if (uiState is AuthState.Error && showDialog) {
         AlertMessageDialog(
             title = stringResource(Res.string.tx_error),
-            message = (authState as AuthState.Error).exception.message.orEmpty(),
+            message = uiState.exception.message.orEmpty(),
             confirmText = stringResource(Res.string.tx_acept),
-            onConfirm = { authViewModel.hideDialog() }
+            onConfirm = { toggleDialogVisibility() }
         )
     }
-    if (authState is AuthState.Loading) {
+    if (uiState is AuthState.Loading) {
         LoadingView()
     }
 }

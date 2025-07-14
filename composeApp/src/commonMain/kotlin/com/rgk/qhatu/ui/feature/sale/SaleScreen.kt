@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.rgk.qhatu.ui.components.AppToolbar
-import com.rgk.qhatu.ui.feature.home.HomeItem
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_back
@@ -23,7 +22,7 @@ import qhatuapp.composeapp.generated.resources.tx_back
 fun SaleScreen(navController: NavController) {
     Column(modifier = Modifier.fillMaxSize()) {
         AppToolbar(
-            title = stringResource(HomeItem.Sale.title),
+            title = "",
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
@@ -31,8 +30,7 @@ fun SaleScreen(navController: NavController) {
                         contentDescription = stringResource(Res.string.tx_back)
                     )
                 }
-            },
-            backgroundColor = HomeItem.Sale.color
+            }
         )
 
         Column(

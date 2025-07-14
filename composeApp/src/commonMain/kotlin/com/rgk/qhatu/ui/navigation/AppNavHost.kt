@@ -1,0 +1,73 @@
+package com.rgk.qhatu.ui.navigation
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.rgk.qhatu.ui.feature.auth.navigation.authGraph
+import com.rgk.qhatu.ui.feature.home.navigation.homeGraph
+import com.rgk.qhatu.ui.feature.home.navigation.navigateToHomeGraph
+import com.rgk.qhatu.ui.feature.splash.navigation.SplashGraph
+import com.rgk.qhatu.ui.feature.splash.navigation.splashGraph
+import com.rgk.qhatu.utils.navigateToAuthGraphWithPopUp
+import com.rgk.qhatu.utils.navigateToHomeWithPopUp
+
+@Composable
+fun AppNavHost(
+    modifier: Modifier,
+    navController: NavHostController
+) {
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = SplashGraph
+    ) {
+        splashGraph(
+            navigateToAuthGraph = {
+                navController.navigateToAuthGraphWithPopUp()
+            },
+            navigateToHomeGraph = {
+                navController.navigateToHomeWithPopUp()
+            }
+        )
+        authGraph(
+            navigateToHomeGraph = { navController.navigateToHomeGraph() }
+        )
+        homeGraph(
+            navigateToSale = {},
+            navigateToConfiguration = {},
+            navigateToPayment = {},
+            navigateToProduct = {},
+            navigateToClient = {},
+            navigateToSearch = {}
+        )
+    }
+}
+
+@Composable
+fun AppNavGraph(
+    navController: NavHostController = rememberNavController()
+) {
+    Scaffold(
+        modifier = Modifier.safeDrawingPadding(),
+        topBar = {
+            TopBarApp(
+                navController = navController
+            )
+        },
+        bottomBar = {
+            BottomBarApp(
+                navController = navController
+            )
+        },
+    ) { innerPadding ->
+        AppNavHost(
+            modifier = Modifier.padding(innerPadding),
+            navController = navController
+        )
+    }
+}

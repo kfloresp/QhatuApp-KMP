@@ -21,7 +21,6 @@ import androidx.navigation.NavController
 import com.rgk.qhatu.domain.common.SyncTable
 import com.rgk.qhatu.ui.components.AppToolbar
 import com.rgk.qhatu.ui.components.SecondaryButton
-import com.rgk.qhatu.ui.feature.home.HomeItem
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
@@ -62,7 +61,7 @@ fun SyncScreen(
             .fillMaxSize()
             .verticalScroll(scrollState)
     ) {
-        AppToolbar(title = stringResource(HomeItem.Sync.title),
+        AppToolbar("Sincronizar",
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(

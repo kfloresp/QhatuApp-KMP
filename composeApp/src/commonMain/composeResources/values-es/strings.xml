@@ -1,33 +1,35 @@
 <resources>
-    <string name="app_name">Bodega</string>
-    <string name="tx_title_login">Biernvenido!</string>
-    <string name="bt_start_login">Iniciar</string>
+    <string name="app_name">QhatuApp</string>
+    <string name="theme">Tema claro</string>
+    <string name="tx_title_login">¡Bienvenido!</string>
+    <string name="bt_start_login">Comenzar</string>
     <string name="tx_error">Error</string>
     <string name="tx_acept">Aceptar</string>
-    <string name="tx_loading">Cargando..</string>
-    <string name="tx_email">Correo electronico</string>
+    <string name="tx_loading">Cargando...</string>
+    <string name="tx_email">Correo electrónico</string>
     <string name="tx_password">Contraseña</string>
     <string name="tx_search">Buscar</string>
-    <string name="title_search">Búsqueda</string>
-    <string name="title_search_product">Búsqueda de productos</string>
-    <string name="title_search_provider">Búsqueda de proveedores</string>
-    <string name="title_movement">Movimientos</string>
-    <string name="title_receipt">Recibos</string>
-    <string name="title_sale">Ventas</string>
-    <string name="title_profile">Perfil</string>
-    <string name="title_sync">Sincronización</string>
-    <string name="title_setting">Configuracion</string>
-    <string name="title_exit">Salir</string>
-    <string name="tx_back">Volver</string>
-    <string name="tx_code_provider">Código proveedor:</string>
+    <string name="tx_back">Atrás</string>
+    <string name="tx_code_provider">Código del proveedor:</string>
     <string name="tx_provider">Proveedor:</string>
     <string name="tx_address">Dirección:</string>
     <string name="tx_phone">Teléfono:</string>
     <string name="tx_date">Fecha</string>
-    <string name="tx_selected_date">Seleccionar Fecha</string>
+    <string name="tx_selected_date">Fecha seleccionada</string>
     <string name="tx_active">Activo</string>
     <string name="tx_inactive">Inactivo</string>
     <string name="tx_provider_only">Proveedor</string>
-    <string name="title_receipt_detail">Detalle del recibo</string>
-    <string name="title_advanced_search_provider">Búsqueda avanzada de proveedores</string>
+
+    <!-- Títulos de pantallas -->
+    <string name="title_search">Buscar</string>
+    <string name="title_sales">Ventas</string>
+    <string name="title_payments">Pagos</string>
+    <string name="title_customers">Clientes</string>
+    <string name="title_products">Productos</string>
+    <string name="title_setting">Configuración</string>
+
+    <!-- Text label for HOME -->
+    <string name="tx_greeting">Hola, %1$s</string>
+    <string name="tx_question">¿Qué haremos hoy?</string>
+
 </resources>

@@ -23,7 +23,6 @@ import com.rgk.qhatu.ui.components.ErrorView
 import com.rgk.qhatu.ui.components.LoadingView
 import com.rgk.qhatu.ui.components.ProductSearch
 import com.rgk.qhatu.ui.components.ProductSearchItem
-import com.rgk.qhatu.ui.feature.home.HomeItem
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
@@ -42,15 +41,14 @@ fun SearchScreen(navController: NavController, viewModel: SearchViewModel = koin
                 .pointerInput(Unit) { detectTapGestures { keyboardController?.hide() } },
     ) {
         AppToolbar(
-            title = stringResource(HomeItem.Search.title), navigationIcon = {
+            title = "Search", navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBackIosNew,
                         contentDescription = stringResource(Res.string.tx_back)
                     )
                 }
-            },
-            backgroundColor = HomeItem.Search.color
+            }
         )
         Spacer(modifier = Modifier.height(8.dp))
 

@@ -1,14 +1,9 @@
-package com.rgk.qhatu.ui.feature.login
-
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+package com.rgk.qhatu.ui.feature.auth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.rgk.qhatu.domain.common.SyncResult
 import com.rgk.qhatu.domain.model.User
 import com.rgk.qhatu.domain.usecase.AuthUseCase
-import com.rgk.qhatu.ui.navigation.RouteNavigation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -17,23 +12,23 @@ import kotlinx.coroutines.launch
 class AuthViewModel(
     private val authUseCase: AuthUseCase
 ) : ViewModel() {
-    private val _email = mutableStateOf("")
-    val email: State<String> = _email
+    private val _email = MutableStateFlow("")
+    val email: StateFlow<String> = _email
 
-    private val _password = mutableStateOf("")
-    val password: State<String> = _password
+    private val _password = MutableStateFlow("")
+    val password: StateFlow<String> = _password
 
-    private val _emailError = mutableStateOf<String?>(null)
-    val emailError: State<String?> = _emailError
+    private val _emailError = MutableStateFlow<String?>(null)
+    val emailError: StateFlow<String?> = _emailError
 
-    private val _passwordError = mutableStateOf<String?>(null)
-    val passwordError: State<String?> = _passwordError
+    private val _passwordError = MutableStateFlow<String?>(null)
+    val passwordError: StateFlow<String?> = _passwordError
 
-    private val _showPassword = mutableStateOf(false)
-    val showPassword: State<Boolean> = _showPassword
+    private val _showPassword = MutableStateFlow(false)
+    val showPassword: StateFlow<Boolean> = _showPassword
 
-    private val _showDialog = mutableStateOf(false)
-    val showDialog: State<Boolean> = _showDialog
+    private val _showDialog = MutableStateFlow(false)
+    val showDialog: StateFlow<Boolean> = _showDialog
 
     private val _authState = MutableStateFlow<AuthState>(AuthState.Idle)
     val authState: StateFlow<AuthState> = _authState
@@ -52,8 +47,8 @@ class AuthViewModel(
         _showPassword.value = !_showPassword.value
     }
 
-    fun hideDialog() {
-        _showDialog.value = false
+    fun toggleDialogVisibility() {
+        _showDialog.value = !_showDialog.value
     }
 
     fun clearCredentials() {
@@ -96,22 +91,6 @@ class AuthViewModel(
 
     private fun isValidEmail(email: String): Boolean {
         return email.contains("@") && email.contains(".")
-    }
-
-    suspend fun logout() {
-        clearCredentials()
-        authUseCase.logout()
-        _authState.update { AuthState.Idle }
-    }
-
-    fun getCurrentUser(): User? {
-        return authUseCase.currentUser()
-    }
-
-    fun goToHome(navController: NavController) {
-        navController.navigate(RouteNavigation.Home.src) {
-            popUpTo(RouteNavigation.Login.src) { inclusive = true }
-        }
     }
 }
 

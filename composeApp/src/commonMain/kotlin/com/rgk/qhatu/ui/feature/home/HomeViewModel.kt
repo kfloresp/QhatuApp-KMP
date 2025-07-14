@@ -1,27 +1,12 @@
 package com.rgk.qhatu.ui.feature.home
 
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
-import com.rgk.qhatu.ui.navigation.RouteNavigation
+import com.rgk.qhatu.ui.feature.splash.SplashUiState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class HomeViewModel: ViewModel() {
-
-    fun onMenuItemClick(item: HomeItem, navController: NavController) {
-        when (item) {
-            is HomeItem.Logout -> {
-                navController.navigate(item.routeNavigation) {
-                    popUpTo(RouteNavigation.Login.src){
-                        inclusive = true
-                    }
-                }
-            }
-            else -> {
-                navController.navigate(item.routeNavigation) {
-                   popUpTo(RouteNavigation.Home.src)
-                }
-            }
-        }
-    }
-
-    fun getMenuItems(): List<HomeItem> = HomeItem.allItems
+    private val _uiState = MutableStateFlow<SplashUiState>(SplashUiState.Loading)
+    val uiState: StateFlow<SplashUiState> = _uiState.asStateFlow()
 }

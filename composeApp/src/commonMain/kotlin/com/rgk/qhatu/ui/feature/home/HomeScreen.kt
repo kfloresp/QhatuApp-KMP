@@ -1,62 +1,46 @@
 package com.rgk.qhatu.ui.feature.home
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Logout
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.PointOfSale
-import androidx.compose.material.icons.filled.Receipt
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Sync
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.viewmodel.koinViewModel
+import com.rgk.qhatu.ui.feature.home.component.ActionGrid
+import com.rgk.qhatu.ui.feature.home.component.HomeHeader
+import com.rgk.qhatu.ui.feature.home.component.provideMenu
+import com.rgk.qhatu.ui.feature.splash.SplashUiState
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
-    viewModel: HomeViewModel = koinViewModel(),
+    uiState: SplashUiState,
+    navigateToSearch: () -> Unit,
+    navigateToSale: () -> Unit,
+    navigateToPayment: () -> Unit,
+    navigateToClient: () -> Unit,
+    navigateToProduct: () -> Unit,
+    navigateToConfiguration: () -> Unit
 ) {
-    val itemHeight = 150.dp
-    val horizontalSpacing = 12.dp
-    val verticalSpacing = 12.dp
-    val contentSpacing = PaddingValues(16.dp)
-
-    val menuItems = viewModel.getMenuItems()
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        contentPadding = contentSpacing,
-        verticalArrangement = Arrangement.spacedBy(verticalSpacing),
-        horizontalArrangement = Arrangement.spacedBy(horizontalSpacing)
+    val actions = provideMenu(
+        onSearchClick = navigateToSearch,
+        onSalesClick = navigateToSale,
+        onPaymentsClick = navigateToPayment,
+        onClientsClick = navigateToClient,
+        onProductsClick = navigateToProduct,
+        onSettingsClick = navigateToConfiguration
+    )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+            .padding(16.dp)
     ) {
-        items(menuItems) { item ->
-            MenuItemCard(
-                params = MenuItemCardParams(
-                    title = stringResource(item.title),
-                    icon = item.icon,
-                    backgroundColor = item.color,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(itemHeight),
-                    onClick = {
-                        viewModel.onMenuItemClick(item, navController)
-                    }
-                )
-            )
-        }
+        HomeHeader(name = "Janice")
+        Spacer(modifier = Modifier.height(24.dp))
+        ActionGrid(actions)
     }
 }
