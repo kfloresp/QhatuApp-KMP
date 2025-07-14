@@ -20,9 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.rgk.qhatu.ui.components.AppToolbar
-import com.rgk.qhatu.ui.components.ErrorView
-import com.rgk.qhatu.ui.components.LoadingView
+import com.rgk.qhatu.ui.components.deprecate.AppToolbar
+import com.rgk.qhatu.ui.components.deprecate.ErrorView
+import com.rgk.qhatu.ui.components.deprecate.LoadingView
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_back

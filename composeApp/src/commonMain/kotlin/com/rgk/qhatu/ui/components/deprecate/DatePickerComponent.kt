@@ -1,4 +1,4 @@
-package com.rgk.qhatu.ui.components
+package com.rgk.qhatu.ui.components.deprecate
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import kotlinx.datetime.*

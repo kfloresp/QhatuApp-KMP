@@ -1,4 +1,4 @@
-package com.rgk.qhatu.ui.components
+package com.rgk.qhatu.ui.components.deprecate
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height

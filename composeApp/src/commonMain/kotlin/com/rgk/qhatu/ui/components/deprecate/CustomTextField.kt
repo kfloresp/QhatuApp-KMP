@@ -1,4 +1,4 @@
-package com.rgk.qhatu.ui.components
+package com.rgk.qhatu.ui.components.deprecate
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
