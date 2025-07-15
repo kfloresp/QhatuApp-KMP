@@ -9,16 +9,6 @@
     <string name="tx_email">Email</string>
     <string name="tx_password">Password</string>
     <string name="tx_search">Search</string>
-    <string name="title_search">Search</string>
-    <string name="title_search_product">Search Product</string>
-    <string name="title_search_provider">Search Provider</string>
-    <string name="title_movement">Movements</string>
-    <string name="title_receipt">Receipts</string>
-    <string name="title_sale">Sales</string>
-    <string name="title_profile">Profile</string>
-    <string name="title_sync">Sync</string>
-    <string name="title_setting">Settings</string>
-    <string name="title_exit">Exit</string>
     <string name="tx_back">Back</string>
     <string name="tx_code_provider">Code provider:</string>
     <string name="tx_provider">Provider:</string>
@@ -29,6 +19,18 @@
     <string name="tx_active">Active</string>
     <string name="tx_inactive">Inactive</string>
     <string name="tx_provider_only">Provider</string>
-    <string name="title_receipt_detail">Receipt Detail</string>
-    <string name="title_advanced_search_provider">Advanced search for providers</string>
+
+    <!-- Title for screens -->
+    <string name="title_search">Search</string>
+    <string name="title_sales">Sales</string>
+    <string name="title_payments">Payments</string>
+    <string name="title_customers">Customers</string>
+    <string name="title_products">Products</string>
+    <string name="title_setting">Settings</string>
+
+    <!-- Text label for HOME -->
+    <string name="tx_greeting">Hello, %1$s</string>
+    <string name="tx_question">What will we do today?</string>
+
+
 </resources>

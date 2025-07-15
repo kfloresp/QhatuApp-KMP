@@ -20,11 +20,11 @@ import com.rgk.qhatu.domain.usecase.paymentTransaction.*
 import com.rgk.qhatu.domain.usecase.product.*
 import com.rgk.qhatu.domain.usecase.transactionDetail.*
 import com.rgk.qhatu.ui.feature.home.HomeViewModel
-import com.rgk.qhatu.ui.feature.login.AuthViewModel
+import com.rgk.qhatu.ui.feature.auth.AuthViewModel
 import com.rgk.qhatu.ui.feature.receipt.ReceiptViewModel
 import com.rgk.qhatu.ui.feature.receipt.searchprovider.SearchProviderViewModel
-import com.rgk.qhatu.ui.feature.receipt.receiptdetail.ReceiptDetailViewModel
 import com.rgk.qhatu.ui.feature.search.SearchViewModel
+import com.rgk.qhatu.ui.feature.splash.SplashViewModel
 import com.rgk.qhatu.ui.feature.sync.*
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.FirebaseAuth
@@ -131,7 +131,7 @@ val viewModelModule = module {
     viewModelOf(::SearchViewModel)
     viewModelOf(::SearchProviderViewModel)
     viewModelOf(::ReceiptViewModel)
-    viewModelOf(::ReceiptDetailViewModel)
+    viewModelOf(::SplashViewModel)
 }
 
 expect val nativeModule: Module

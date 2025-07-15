@@ -19,9 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.rgk.qhatu.domain.common.SyncTable
-import com.rgk.qhatu.ui.components.AppToolbar
-import com.rgk.qhatu.ui.components.SecondaryButton
-import com.rgk.qhatu.ui.feature.home.HomeItem
+import com.rgk.qhatu.ui.components.deprecate.AppToolbar
+import com.rgk.qhatu.ui.components.deprecate.SecondaryButton
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
@@ -62,7 +61,7 @@ fun SyncScreen(
             .fillMaxSize()
             .verticalScroll(scrollState)
     ) {
-        AppToolbar(title = stringResource(HomeItem.Sync.title),
+        AppToolbar("Sincronizar",
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(

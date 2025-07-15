@@ -1,7 +1,6 @@
 package com.rgk.qhatu.ui.feature.receipt.receiptdetail
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -42,13 +41,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.rgk.qhatu.ui.components.AppToolbar
-import com.rgk.qhatu.ui.components.SecondaryButton
-import com.rgk.qhatu.ui.feature.home.HomeItem
+import com.rgk.qhatu.ui.components.deprecate.AppToolbar
+import com.rgk.qhatu.ui.components.deprecate.SecondaryButton
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.ic_minus
 import qhatuapp.composeapp.generated.resources.ic_place_holder_product
@@ -59,7 +56,6 @@ import qhatuapp.composeapp.generated.resources.tx_back
 @Composable
 fun ReceiptDetailScreen(
     navController: NavController,
-    viewModel: ReceiptDetailViewModel = koinViewModel()
 ) {
     var quantity by remember { mutableStateOf(1) }
 
@@ -72,7 +68,7 @@ fun ReceiptDetailScreen(
             .pointerInput(Unit) { detectTapGestures { keyboardController?.hide() } }
     ) {
         AppToolbar(
-            title = stringResource(HomeItem.Receipt.ReceiptDetail.title),
+            title = "Receipt",
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
@@ -80,8 +76,7 @@ fun ReceiptDetailScreen(
                         contentDescription = stringResource(Res.string.tx_back)
                     )
                 }
-            },
-            backgroundColor = HomeItem.Receipt.ReceiptDetail.color
+            }
         )
         Spacer(modifier = Modifier.height(8.dp))
         InfoSection("17/06/2025", "Distribuidor Rocsana SAC")

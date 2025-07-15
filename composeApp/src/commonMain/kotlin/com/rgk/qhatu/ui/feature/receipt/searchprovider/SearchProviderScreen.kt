@@ -20,11 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.rgk.qhatu.ui.components.AppToolbar
-import com.rgk.qhatu.ui.components.ErrorView
-import com.rgk.qhatu.ui.components.LoadingView
-import com.rgk.qhatu.ui.feature.home.HomeItem
-import com.rgk.qhatu.ui.navigation.RouteNavigation.SearchProvider.Args.SELECTED_PROVIDER_ID
+import com.rgk.qhatu.ui.components.deprecate.AppToolbar
+import com.rgk.qhatu.ui.components.deprecate.ErrorView
+import com.rgk.qhatu.ui.components.deprecate.LoadingView
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_back
@@ -39,7 +37,7 @@ fun SearchProviderScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             AppToolbar(
-                title = stringResource(HomeItem.Receipt.SearchProvider.title),
+                title = "Search",
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -47,8 +45,7 @@ fun SearchProviderScreen(
                             contentDescription = stringResource(Res.string.tx_back)
                         )
                     }
-                },
-                backgroundColor = HomeItem.Receipt.SearchProvider.color
+                }
             )
 
             if (uiState is SearchProviderUiState.Success) {
@@ -68,7 +65,7 @@ fun SearchProviderScreen(
                                 .clickable {
                                     navController.previousBackStackEntry
                                         ?.savedStateHandle
-                                        ?.set(SELECTED_PROVIDER_ID, provider.razonSocial)
+                                        ?.set("provider_id", provider.razonSocial)
                                     navController.popBackStack()
                                 }
                                 .padding(horizontal = 16.dp, vertical = 8.dp)

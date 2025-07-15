@@ -10,13 +10,16 @@ import com.rgk.qhatu.domain.usecase.product.GetProductFromQueryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class SearchViewModel(
     private val getProductFromQueryUseCase: GetProductFromQueryUseCase
 ) : ViewModel() {
-    private val _uiState = mutableStateOf<SearchResultState>(SearchResultState.Idle)
-    val uiState: State<SearchResultState> = _uiState
+    private val _uiState = MutableStateFlow<SearchResultState>(SearchResultState.Idle)
+    val uiState: StateFlow<SearchResultState> = _uiState
+
 
     fun searchProducts(query: String, searchType: Int) {
         if (query.length < 3) {

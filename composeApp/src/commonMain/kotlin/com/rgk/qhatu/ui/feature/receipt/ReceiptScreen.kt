@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -31,23 +30,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.rgk.qhatu.ui.components.AppToolbar
-import com.rgk.qhatu.ui.components.ErrorView
-import com.rgk.qhatu.ui.components.LoadingView
-import com.rgk.qhatu.ui.components.PrimaryButton
-import com.rgk.qhatu.ui.components.SimpleDatePicker
-import com.rgk.qhatu.ui.components.toFormat
-import com.rgk.qhatu.ui.feature.home.HomeItem
-import com.rgk.qhatu.ui.feature.search.SearchType
-import com.rgk.qhatu.ui.navigation.RouteNavigation
-import com.rgk.qhatu.ui.navigation.RouteNavigation.SearchProvider.Args.SELECTED_PROVIDER_ID
+import com.rgk.qhatu.ui.components.deprecate.AppToolbar
+import com.rgk.qhatu.ui.components.deprecate.ErrorView
+import com.rgk.qhatu.ui.components.deprecate.LoadingView
+import com.rgk.qhatu.ui.components.deprecate.PrimaryButton
+import com.rgk.qhatu.ui.components.deprecate.SimpleDatePicker
+import com.rgk.qhatu.ui.components.deprecate.toFormat
 import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -74,7 +68,7 @@ fun ReceiptScreen(
     var showPicker by remember { mutableStateOf(false) }
     val selectedProviderId = navController.currentBackStackEntry
         ?.savedStateHandle
-        ?.get<String>(SELECTED_PROVIDER_ID)
+        ?.get<String>("SELECTED_PROVIDER")
 
     if (showBottomSheet && uiState is ReceiptState.Multiple) {
         val result = uiState as ReceiptState.Multiple
@@ -108,7 +102,7 @@ fun ReceiptScreen(
                             .fillMaxWidth()
                             .clickable {
                                 showBottomSheet = false
-                                navController.navigate(RouteNavigation.SearchProvider.createRoute(searchQuery.value))
+                                //navController.navigate(RouteNavigation.SearchProvider.createRoute(searchQuery.value))
                             }
                             .padding(16.dp)
                     )
@@ -125,7 +119,7 @@ fun ReceiptScreen(
             .pointerInput(Unit) { detectTapGestures { keyboardController?.hide() } }
     ) {
         AppToolbar(
-            title = stringResource(HomeItem.Receipt.title),
+            title = "Recibo",
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
@@ -134,7 +128,6 @@ fun ReceiptScreen(
                     )
                 }
             },
-            backgroundColor = HomeItem.Receipt.color
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -201,7 +194,7 @@ fun ReceiptScreen(
             val provider = (uiState as ReceiptState.Single).provider
             ReceiptProviderItem(provider)
             PrimaryButton("Continuar",
-                onClick = {navController.navigate(RouteNavigation.ReceiptDetail.src)},
+                onClick = {},
                 modifier = Modifier
                     .padding(20.dp))
         }

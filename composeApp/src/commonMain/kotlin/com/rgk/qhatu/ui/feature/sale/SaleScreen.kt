@@ -9,40 +9,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.rgk.qhatu.ui.components.AppToolbar
-import com.rgk.qhatu.ui.feature.home.HomeItem
+import com.rgk.qhatu.ui.components.deprecate.AppToolbar
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_back
 
 @Composable
-fun SaleScreen(navController: NavController) {
+fun SaleScreen() {
     Column(modifier = Modifier.fillMaxSize()) {
-        AppToolbar(
-            title = stringResource(HomeItem.Sale.title),
-            navigationIcon = {
-                IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBackIosNew,
-                        contentDescription = stringResource(Res.string.tx_back)
-                    )
-                }
-            },
-            backgroundColor = HomeItem.Sale.color
-        )
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp)
-        ) {
-
-
-        }
+        Text("Sale Screen")
     }
 }
