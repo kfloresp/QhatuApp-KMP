@@ -6,18 +6,25 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.rgk.qhatu.ui.components.toolbar.QhatuCartToolbar
 import com.rgk.qhatu.ui.components.toolbar.QhatuToolbar
-import com.rgk.qhatu.ui.feature.home.navigation.HomeDestination
+import com.rgk.qhatu.ui.feature.customer.navigation.CustomerDestination
+import com.rgk.qhatu.ui.feature.payment.navigation.PaymentDestination
+import com.rgk.qhatu.ui.feature.product.navigation.ProductDestination
+import com.rgk.qhatu.ui.feature.sale.navigation.SaleDestination
 import com.rgk.qhatu.ui.feature.search.navigation.SearchDestination
 import com.rgk.qhatu.ui.feature.settings.navigation.SettingDestination
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.title_customers
+import qhatuapp.composeapp.generated.resources.title_payments
+import qhatuapp.composeapp.generated.resources.title_products
+import qhatuapp.composeapp.generated.resources.title_sales
 import qhatuapp.composeapp.generated.resources.title_search
 import qhatuapp.composeapp.generated.resources.title_setting
 
 @Composable
 fun TopBarApp(
     navController: NavController,
-)  {
+) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
@@ -33,6 +40,39 @@ fun TopBarApp(
                 actions = {}
             )
         }
+
+        PaymentDestination::class.qualifiedName -> {
+            QhatuToolbar(
+                title = stringResource(Res.string.title_payments),
+                onNavigationClick = { navController.popBackStack() },
+                actions = {}
+            )
+        }
+
+        CustomerDestination::class.qualifiedName -> {
+            QhatuToolbar(
+                title = stringResource(Res.string.title_customers),
+                onNavigationClick = { navController.popBackStack() },
+                actions = {}
+            )
+        }
+
+        ProductDestination::class.qualifiedName -> {
+            QhatuToolbar(
+                title = stringResource(Res.string.title_products),
+                onNavigationClick = { navController.popBackStack() },
+                actions = {}
+            )
+        }
+
+        SaleDestination::class.qualifiedName -> {
+            QhatuToolbar(
+                title = stringResource(Res.string.title_sales),
+                onNavigationClick = { navController.popBackStack() },
+                actions = {}
+            )
+        }
+
         in shoppingToolbarRoutes.keys -> {
             QhatuCartToolbar(
                 title = shoppingToolbarRoutes[currentRoute] ?: "",

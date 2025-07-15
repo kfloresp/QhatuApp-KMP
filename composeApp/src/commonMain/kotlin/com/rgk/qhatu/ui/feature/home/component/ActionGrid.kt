@@ -51,14 +51,14 @@ fun provideMenu(
     onSearchClick: () -> Unit,
     onSalesClick: () -> Unit,
     onPaymentsClick: () -> Unit,
-    onClientsClick: () -> Unit,
+    onCustomersClick: () -> Unit,
     onProductsClick: () -> Unit,
     onSettingsClick: () -> Unit
 ): List<Action> = listOf(
     Action(Res.string.title_search, Icons.Default.Search, onSearchClick),
     Action(Res.string.title_sales, Icons.AutoMirrored.Filled.ReceiptLong, onSalesClick),
     Action(Res.string.title_payments, Icons.Default.CreditCard, onPaymentsClick),
-    Action(Res.string.title_customers, Icons.Default.Group, onClientsClick),
+    Action(Res.string.title_customers, Icons.Default.Group, onCustomersClick),
     Action(Res.string.title_products, Icons.Default.Inventory2, onProductsClick),
     Action(Res.string.title_setting, Icons.Default.Settings, onSettingsClick)
 )

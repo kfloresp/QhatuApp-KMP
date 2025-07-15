@@ -21,17 +21,17 @@ fun HomeScreen(
     navigateToSearch: () -> Unit,
     navigateToSale: () -> Unit,
     navigateToPayment: () -> Unit,
-    navigateToClient: () -> Unit,
+    navigateToCustomer: () -> Unit,
     navigateToProduct: () -> Unit,
-    navigateToConfiguration: () -> Unit
+    navigateToSetting: () -> Unit
 ) {
     val actions = provideMenu(
         onSearchClick = navigateToSearch,
         onSalesClick = navigateToSale,
         onPaymentsClick = navigateToPayment,
-        onClientsClick = navigateToClient,
+        onCustomersClick = navigateToCustomer,
         onProductsClick = navigateToProduct,
-        onSettingsClick = navigateToConfiguration
+        onSettingsClick = navigateToSetting
     )
     Column(
         modifier = Modifier

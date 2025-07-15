@@ -1,4 +1,4 @@
-package com.rgk.qhatu.ui.feature.settings
+package com.rgk.qhatu.ui.feature.product
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -19,28 +20,8 @@ import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_back
 
 @Composable
-fun SettingsScreen(navController: NavController) {
+fun ProductScreen() {
     Column(modifier = Modifier.fillMaxSize()) {
-        AppToolbar(
-            title = "Settings",
-            navigationIcon = {
-                IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBackIosNew,
-                        contentDescription = stringResource(Res.string.tx_back)
-                    )
-                }
-            }
-        )
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp)
-        ) {
-
-
-        }
+        Text("Product Screen")
     }
 }

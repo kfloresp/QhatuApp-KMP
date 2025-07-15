@@ -16,9 +16,9 @@ internal fun NavGraphBuilder.homeDestination(
     navigateToSearch: () -> Unit,
     navigateToSale: () -> Unit,
     navigateToPayment: () -> Unit,
-    navigateToClient: () -> Unit,
+    navigateToCustomer: () -> Unit,
     navigateToProduct: () -> Unit,
-    navigateToConfiguration: () -> Unit
+    navigateToSetting: () -> Unit
 ) {
     composable<HomeDestination> {
         val viewModel: HomeViewModel = koinViewModel()
@@ -28,9 +28,9 @@ internal fun NavGraphBuilder.homeDestination(
             navigateToSearch = navigateToSearch,
             navigateToSale = navigateToSale,
             navigateToPayment = navigateToPayment,
-            navigateToClient = navigateToClient,
+            navigateToCustomer = navigateToCustomer,
             navigateToProduct = navigateToProduct,
-            navigateToConfiguration = navigateToConfiguration
+            navigateToSetting = navigateToSetting
         )
     }
 }

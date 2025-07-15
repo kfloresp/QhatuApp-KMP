@@ -1,4 +1,4 @@
-package com.rgk.qhatu.ui.feature.sale
+package com.rgk.qhatu.ui.feature.customer
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,8 +20,8 @@ import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_back
 
 @Composable
-fun SaleScreen() {
+fun CustomerScreen() {
     Column(modifier = Modifier.fillMaxSize()) {
-        Text("Sale Screen")
+        Text("Customer Screen")
     }
 }

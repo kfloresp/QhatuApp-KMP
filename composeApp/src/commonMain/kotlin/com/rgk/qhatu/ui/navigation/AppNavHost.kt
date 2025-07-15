@@ -9,10 +9,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.rgk.qhatu.ui.feature.auth.navigation.authGraph
+import com.rgk.qhatu.ui.feature.customer.navigation.customerGraph
+import com.rgk.qhatu.ui.feature.customer.navigation.navigateToCustomer
 import com.rgk.qhatu.ui.feature.home.navigation.homeGraph
 import com.rgk.qhatu.ui.feature.home.navigation.navigateToHomeGraph
+import com.rgk.qhatu.ui.feature.payment.navigation.navigateToPayment
+import com.rgk.qhatu.ui.feature.payment.navigation.paymentGraph
+import com.rgk.qhatu.ui.feature.product.navigation.navigateToProduct
+import com.rgk.qhatu.ui.feature.product.navigation.productGraph
+import com.rgk.qhatu.ui.feature.sale.navigation.navigateToSale
+import com.rgk.qhatu.ui.feature.sale.navigation.saleGraph
 import com.rgk.qhatu.ui.feature.search.navigation.navigateToSearchGraph
 import com.rgk.qhatu.ui.feature.search.navigation.searchGraph
+import com.rgk.qhatu.ui.feature.settings.navigation.navigateToSetting
+import com.rgk.qhatu.ui.feature.settings.navigation.settingGraph
 import com.rgk.qhatu.ui.feature.splash.navigation.SplashGraph
 import com.rgk.qhatu.ui.feature.splash.navigation.splashGraph
 import com.rgk.qhatu.utils.navigateToAuthGraphWithPopUp
@@ -41,16 +51,21 @@ fun AppNavHost(
         )
         homeGraph(
             navigateToSearch = { navController.navigateToSearchGraph() },
-            navigateToSale = {},
-            navigateToConfiguration = {},
-            navigateToPayment = {},
-            navigateToProduct = {},
-            navigateToClient = {},
+            navigateToSale = { navController.navigateToSale() },
+            navigateToSetting = { navController.navigateToSetting() },
+            navigateToPayment = { navController.navigateToPayment() },
+            navigateToProduct = { navController.navigateToProduct() },
+            navigateToCustomer = { navController.navigateToCustomer() },
         )
         searchGraph(
             navigateToHome = {},
             navigateToCart = {},
             openScanQR = {})
+        saleGraph()
+        settingGraph()
+        paymentGraph()
+        productGraph()
+        customerGraph()
     }
 }
 

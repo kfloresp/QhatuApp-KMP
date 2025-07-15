@@ -34,7 +34,7 @@ fun QhatuToolbar(
     elevation: Dp = 4.dp,
     navigationIcon: ImageVector? = Icons.AutoMirrored.Filled.ArrowBack,
     onNavigationClick: (() -> Unit)? = null,
-    actions: @Composable RowScope.() -> Unit = {}
+    actions: @Composable RowScope.() -> Unit = {},
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
@@ -63,7 +63,7 @@ fun QhatuToolbar(
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Normal,
             )
 
             Row(

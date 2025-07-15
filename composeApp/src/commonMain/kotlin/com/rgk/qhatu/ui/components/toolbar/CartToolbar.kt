@@ -34,10 +34,10 @@ fun QhatuCartToolbar(
     title: String,
     cartValue: Double,
     cartItemCount: Int,
+    modifier: Modifier = Modifier,
+    elevation: Dp = 4.dp,
     onNavigationClick: () -> Unit,
     onCartClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    elevation: Dp = 4.dp
 ) {
 
     Surface(
@@ -53,13 +53,13 @@ fun QhatuCartToolbar(
             IconButton(onClick = onNavigationClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Navegación"
+                    contentDescription = null
                 )
             }
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.Normal,
                 modifier = Modifier.padding(start = 12.dp)
             )
 
@@ -75,7 +75,7 @@ fun QhatuCartToolbar(
                 Text(
                     text = "$CURRENCY $cartValue",
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.SemiBold
                 )
                 Spacer(Modifier.width(8.dp))
                 VerticalDivider( Modifier

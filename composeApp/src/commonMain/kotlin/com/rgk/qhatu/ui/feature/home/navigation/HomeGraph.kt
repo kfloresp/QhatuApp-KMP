@@ -17,9 +17,9 @@ fun NavGraphBuilder.homeGraph(
     navigateToSearch: () -> Unit,
     navigateToSale: () -> Unit,
     navigateToPayment: () -> Unit,
-    navigateToClient: () -> Unit,
+    navigateToCustomer: () -> Unit,
     navigateToProduct: () -> Unit,
-    navigateToConfiguration: () -> Unit
+    navigateToSetting: () -> Unit
 ) {
     navigation<HomeGraph>(
         startDestination = HomeDestination
@@ -28,9 +28,9 @@ fun NavGraphBuilder.homeGraph(
             navigateToSearch = navigateToSearch,
             navigateToSale = navigateToSale,
             navigateToPayment = navigateToPayment,
-            navigateToClient = navigateToClient,
+            navigateToCustomer = navigateToCustomer,
             navigateToProduct = navigateToProduct,
-            navigateToConfiguration = navigateToConfiguration
+            navigateToSetting = navigateToSetting
         )
     }
 }
