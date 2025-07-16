@@ -28,8 +28,31 @@
     <string name="title_products">Productos</string>
     <string name="title_setting">Configuración</string>
 
-    <!-- Text label for HOME -->
+    <!-- Pantalla de Inicio -->
     <string name="tx_greeting">Hola, %1$s</string>
     <string name="tx_question">¿Qué haremos hoy?</string>
 
+    <!-- Pantalla de Configuración -->
+    <string name="tx_settings_title">Configuración</string>
+
+    <string name="tx_profile_title">Perfil de tienda</string>
+    <string name="tx_profile_subtitle">Información de tu tienda</string>
+
+    <string name="tx_categories_title">Categorías</string>
+    <string name="tx_categories_subtitle">Gestiona las categorías de tus productos</string>
+
+    <string name="tx_brands_title">Marcas</string>
+    <string name="tx_brands_subtitle">Administra las marcas de tus productos</string>
+
+    <string name="tx_units_title">Unidades de medida</string>
+    <string name="tx_units_subtitle">Define las unidades de medida para tus productos</string>
+
+    <string name="tx_sync_title">Sincronizar datos</string>
+    <string name="tx_sync_subtitle">Sincroniza los datos de tu tienda</string>
+
+    <string name="tx_export_title">Exportar datos</string>
+    <string name="tx_export_subtitle">Exporta los datos de tu tienda</string>
+
+    <string name="tx_logout_title">Cerrar sesión</string>
+    <string name="tx_logout_subtitle">Salir de la aplicación</string>
 </resources>

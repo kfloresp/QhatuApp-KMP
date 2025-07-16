@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
+import com.rgk.qhatu.ui.feature.settings.component.SettingType
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,10 +15,11 @@ fun NavController.navigateToSetting(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.settingGraph(
+    onOptionClick: (SettingType) -> Unit
 ) {
     navigation<SettingGraph>(
         startDestination = SettingDestination
     ) {
-        settingDestination()
+        settingDestination(onOptionClick = onOptionClick)
     }
 }

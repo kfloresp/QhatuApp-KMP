@@ -21,6 +21,7 @@ import com.rgk.qhatu.ui.feature.sale.navigation.navigateToSale
 import com.rgk.qhatu.ui.feature.sale.navigation.saleGraph
 import com.rgk.qhatu.ui.feature.search.navigation.navigateToSearchGraph
 import com.rgk.qhatu.ui.feature.search.navigation.searchGraph
+import com.rgk.qhatu.ui.feature.settings.component.SettingType
 import com.rgk.qhatu.ui.feature.settings.navigation.navigateToSetting
 import com.rgk.qhatu.ui.feature.settings.navigation.settingGraph
 import com.rgk.qhatu.ui.feature.splash.navigation.SplashGraph
@@ -62,7 +63,19 @@ fun AppNavHost(
             navigateToCart = {},
             openScanQR = {})
         saleGraph()
-        settingGraph()
+        settingGraph(onOptionClick = { settingType ->
+            when (settingType) {
+                SettingType.PROFILE -> {}
+                SettingType.CATEGORIES -> {}
+                SettingType.BRANDS -> {}
+                SettingType.UNITS -> {}
+                SettingType.SYNC_DATA -> {}
+                SettingType.EXPORT_DATA -> {}
+                SettingType.LOGOUT -> {
+                    navController.navigateToAuthGraphWithPopUp()
+                }
+            }
+        })
         paymentGraph()
         productGraph()
         customerGraph()

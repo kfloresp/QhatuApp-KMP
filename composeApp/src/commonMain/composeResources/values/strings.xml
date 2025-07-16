@@ -32,5 +32,28 @@
     <string name="tx_greeting">Hello, %1$s</string>
     <string name="tx_question">What will we do today?</string>
 
+    <!-- Settings Screen -->
+    <string name="tx_settings_title">Settings</string>
+
+    <string name="tx_profile_title">Store Profile</string>
+    <string name="tx_profile_subtitle">Information about your store</string>
+
+    <string name="tx_categories_title">Categories</string>
+    <string name="tx_categories_subtitle">Manage your product categories</string>
+
+    <string name="tx_brands_title">Brands</string>
+    <string name="tx_brands_subtitle">Administer your product brands</string>
+
+    <string name="tx_units_title">Units of Measure</string>
+    <string name="tx_units_subtitle">Define measurement units for your products</string>
+
+    <string name="tx_sync_title">Synchronize Data</string>
+    <string name="tx_sync_subtitle">Synchronize your store data</string>
+
+    <string name="tx_export_title">Export Data</string>
+    <string name="tx_export_subtitle">Export your store data</string>
+
+    <string name="tx_logout_title">Log Out</string>
+    <string name="tx_logout_subtitle">Exit the application</string>
 
 </resources>
