@@ -1,14 +1,14 @@
-package com.rgk.qhatu.data.audit.repository
+package com.rgk.qhatu.data.feature.audit.repository
 
-import com.rgk.qhatu.data.audit.database.dao.AuditLogDao
-import com.rgk.qhatu.data.audit.remote.AuditLogRemoteDataSource
+import com.rgk.qhatu.data.feature.audit.database.dao.AuditLogDao
+import com.rgk.qhatu.data.feature.audit.remote.AuditLogRemoteDataSource
 import com.rgk.qhatu.domain.common.SyncResult
 import com.rgk.qhatu.domain.common.SyncStats
-import com.rgk.qhatu.domain.mapper.toDomain
-import com.rgk.qhatu.domain.mapper.toEntity
-import com.rgk.qhatu.domain.mapper.toModel
-import com.rgk.qhatu.domain.model.AuditLog
-import com.rgk.qhatu.domain.repository.AuditLogRepository
+import com.rgk.qhatu.domain.feature.audit.mapper.toDomain
+import com.rgk.qhatu.domain.feature.audit.mapper.toEntity
+import com.rgk.qhatu.domain.feature.audit.mapper.toModel
+import com.rgk.qhatu.domain.feature.audit.model.AuditLog
+import com.rgk.qhatu.domain.feature.audit.repository.AuditLogRepository
 import com.rgk.qhatu.domain.util.TimeUtils
 
 class AuditLogRepositoryImpl(

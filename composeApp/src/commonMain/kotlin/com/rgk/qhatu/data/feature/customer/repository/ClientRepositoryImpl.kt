@@ -1,14 +1,14 @@
-package com.rgk.qhatu.data.customer.repository
+package com.rgk.qhatu.data.feature.customer.repository
 
-import com.rgk.qhatu.data.customer.database.dao.ClientDao
-import com.rgk.qhatu.data.customer.remote.ClientRemoteDataSource
+import com.rgk.qhatu.data.feature.customer.database.dao.ClientDao
+import com.rgk.qhatu.data.feature.customer.remote.ClientRemoteDataSource
 import com.rgk.qhatu.domain.common.SyncResult
 import com.rgk.qhatu.domain.common.SyncStats
-import com.rgk.qhatu.domain.mapper.toDomain
-import com.rgk.qhatu.domain.mapper.toEntity
-import com.rgk.qhatu.domain.mapper.toModel
-import com.rgk.qhatu.domain.model.Client
-import com.rgk.qhatu.domain.repository.ClientRepository
+import com.rgk.qhatu.domain.feature.customer.mapper.toDomain
+import com.rgk.qhatu.domain.feature.customer.mapper.toEntity
+import com.rgk.qhatu.domain.feature.customer.mapper.toModel
+import com.rgk.qhatu.domain.feature.customer.model.Client
+import com.rgk.qhatu.domain.feature.customer.repository.ClientRepository
 import com.rgk.qhatu.domain.util.TimeUtils
 
 class ClientRepositoryImpl(

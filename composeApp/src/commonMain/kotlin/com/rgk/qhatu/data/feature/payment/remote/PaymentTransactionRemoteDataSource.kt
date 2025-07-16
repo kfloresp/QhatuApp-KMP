@@ -1,6 +1,6 @@
-package com.rgk.qhatu.data.payment.remote
+package com.rgk.qhatu.data.feature.payment.remote
 
-import com.rgk.qhatu.data.payment.remote.model.PaymentTransactionModel
+import com.rgk.qhatu.data.feature.payment.remote.model.PaymentTransactionModel
 import com.rgk.qhatu.domain.common.SyncTable
 import dev.gitlive.firebase.firestore.FirebaseFirestore
 

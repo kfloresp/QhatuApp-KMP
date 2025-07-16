@@ -20,8 +20,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.rgk.qhatu.domain.model.Client
-import com.rgk.qhatu.domain.model.Product
+import com.rgk.qhatu.domain.feature.customer.model.Client
+import com.rgk.qhatu.domain.feature.product.model.Product
 
 @Composable
 fun ReceiptProviderItem(

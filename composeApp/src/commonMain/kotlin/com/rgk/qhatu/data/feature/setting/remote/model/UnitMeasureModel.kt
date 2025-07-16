@@ -1,4 +1,4 @@
-package com.rgk.qhatu.data.setting.remote.model
+package com.rgk.qhatu.data.feature.setting.remote.model
 import kotlinx.serialization.Serializable
 
 @Serializable

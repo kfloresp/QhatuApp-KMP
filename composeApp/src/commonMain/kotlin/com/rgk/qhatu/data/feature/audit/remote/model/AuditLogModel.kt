@@ -1,4 +1,4 @@
-package com.rgk.qhatu.data.audit.remote.model
+package com.rgk.qhatu.data.feature.audit.remote.model
 
 import kotlinx.serialization.Serializable
 

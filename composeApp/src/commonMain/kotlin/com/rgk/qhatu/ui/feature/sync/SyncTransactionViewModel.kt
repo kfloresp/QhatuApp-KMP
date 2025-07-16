@@ -5,17 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.domain.common.SyncOperation
 import com.rgk.qhatu.domain.common.SyncResult
 import com.rgk.qhatu.domain.common.SyncStats
-import com.rgk.qhatu.domain.usecase.product.GetProductStatsUseCase
-import com.rgk.qhatu.domain.usecase.product.SyncProductUseCase
-import com.rgk.qhatu.domain.usecase.transaction.GetTransactionStatsUseCase
-import com.rgk.qhatu.domain.usecase.transaction.SyncTransactionUseCase
+import com.rgk.qhatu.domain.feature.sale.usecase.GetTransactionStatsUseCase
+import com.rgk.qhatu.domain.feature.sale.usecase.SyncTransactionUseCase
 import com.rgk.qhatu.domain.util.TimeUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class SyncTransactionViewModel(

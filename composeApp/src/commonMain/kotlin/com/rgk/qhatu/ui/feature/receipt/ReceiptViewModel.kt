@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.domain.common.SyncResult
-import com.rgk.qhatu.domain.model.Client
-import com.rgk.qhatu.domain.usecase.client.GetProviderUseCase
+import com.rgk.qhatu.domain.feature.customer.model.Client
+import com.rgk.qhatu.domain.feature.customer.usecase.GetProviderUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch

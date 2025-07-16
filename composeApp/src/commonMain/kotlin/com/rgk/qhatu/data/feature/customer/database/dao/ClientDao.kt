@@ -1,11 +1,11 @@
-package com.rgk.qhatu.data.customer.database.dao
+package com.rgk.qhatu.data.feature.customer.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.rgk.qhatu.data.customer.database.entity.ClientEntity
+import com.rgk.qhatu.data.feature.customer.database.entity.ClientEntity
 import com.rgk.qhatu.domain.common.SyncStats
 
 @Dao

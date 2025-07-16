@@ -1,14 +1,14 @@
-package com.rgk.qhatu.data.sale.repository
+package com.rgk.qhatu.data.feature.sale.repository
 
-import com.rgk.qhatu.data.sale.database.dao.TransactionDetailDao
-import com.rgk.qhatu.data.sale.remote.TransactionDetailRemoteDataSource
+import com.rgk.qhatu.data.feature.sale.database.dao.TransactionDetailDao
+import com.rgk.qhatu.data.feature.sale.remote.TransactionDetailRemoteDataSource
 import com.rgk.qhatu.domain.common.SyncResult
 import com.rgk.qhatu.domain.common.SyncStats
-import com.rgk.qhatu.domain.mapper.toDomain
-import com.rgk.qhatu.domain.mapper.toEntity
-import com.rgk.qhatu.domain.mapper.toModel
-import com.rgk.qhatu.domain.model.TransactionDetail
-import com.rgk.qhatu.domain.repository.TransactionDetailRepository
+import com.rgk.qhatu.domain.feature.sale.mapper.toDomain
+import com.rgk.qhatu.domain.feature.sale.mapper.toEntity
+import com.rgk.qhatu.domain.feature.sale.mapper.toModel
+import com.rgk.qhatu.domain.feature.sale.model.TransactionDetail
+import com.rgk.qhatu.domain.feature.sale.repository.TransactionDetailRepository
 import com.rgk.qhatu.domain.util.TimeUtils
 
 class TransactionDetailRepositoryImpl(

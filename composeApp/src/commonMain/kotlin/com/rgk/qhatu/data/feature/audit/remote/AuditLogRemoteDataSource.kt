@@ -1,6 +1,6 @@
-package com.rgk.qhatu.data.audit.remote
+package com.rgk.qhatu.data.feature.audit.remote
 
-import com.rgk.qhatu.data.audit.remote.model.AuditLogModel
+import com.rgk.qhatu.data.feature.audit.remote.model.AuditLogModel
 import com.rgk.qhatu.domain.common.SyncTable
 import dev.gitlive.firebase.firestore.FirebaseFirestore
 

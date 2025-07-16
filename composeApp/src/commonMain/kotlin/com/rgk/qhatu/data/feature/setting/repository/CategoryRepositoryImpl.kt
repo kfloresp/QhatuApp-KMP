@@ -1,14 +1,14 @@
-package com.rgk.qhatu.data.repository
+package com.rgk.qhatu.data.feature.setting.repository
 
-import com.rgk.qhatu.data.setting.database.dao.CategoryDao
-import com.rgk.qhatu.data.setting.remote.CategoryRemoteDataSource
+import com.rgk.qhatu.data.feature.setting.database.dao.CategoryDao
+import com.rgk.qhatu.data.feature.setting.remote.CategoryRemoteDataSource
 import com.rgk.qhatu.domain.common.SyncResult
 import com.rgk.qhatu.domain.common.SyncStats
-import com.rgk.qhatu.domain.mapper.toDomain
-import com.rgk.qhatu.domain.mapper.toEntity
-import com.rgk.qhatu.domain.mapper.toModel
-import com.rgk.qhatu.domain.model.Category
-import com.rgk.qhatu.domain.repository.CategoryRepository
+import com.rgk.qhatu.domain.feature.setting.mapper.toDomain
+import com.rgk.qhatu.domain.feature.setting.mapper.toEntity
+import com.rgk.qhatu.domain.feature.setting.mapper.toModel
+import com.rgk.qhatu.domain.feature.setting.model.Category
+import com.rgk.qhatu.domain.feature.setting.repository.CategoryRepository
 import com.rgk.qhatu.domain.util.TimeUtils
 
 class CategoryRepositoryImpl(

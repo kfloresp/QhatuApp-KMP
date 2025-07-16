@@ -1,6 +1,6 @@
-package com.rgk.qhatu.data.auth.remote
+package com.rgk.qhatu.data.feature.auth.remote
 
-import com.rgk.qhatu.data.auth.remote.model.UserModel
+import com.rgk.qhatu.data.feature.auth.remote.model.UserModel
 import dev.gitlive.firebase.auth.FirebaseAuth
 import dev.gitlive.firebase.auth.FirebaseUser
 

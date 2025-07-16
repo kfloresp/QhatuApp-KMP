@@ -1,6 +1,6 @@
-package com.rgk.qhatu.data.customer.remote
+package com.rgk.qhatu.data.feature.customer.remote
 
-import com.rgk.qhatu.data.customer.remote.model.ClientModel
+import com.rgk.qhatu.data.feature.customer.remote.model.ClientModel
 import com.rgk.qhatu.domain.common.SyncTable
 import dev.gitlive.firebase.firestore.FirebaseFirestore
 

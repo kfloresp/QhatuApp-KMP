@@ -1,10 +1,10 @@
-package com.rgk.qhatu.data.setting.database.dao
+package com.rgk.qhatu.data.feature.setting.database.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.rgk.qhatu.data.setting.database.entity.CategoryEntity
+import com.rgk.qhatu.data.feature.setting.database.entity.CategoryEntity
 import com.rgk.qhatu.domain.common.SyncStats
 
 @Dao

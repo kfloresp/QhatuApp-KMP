@@ -1,10 +1,10 @@
-package com.rgk.qhatu.data.payment.database.dao
+package com.rgk.qhatu.data.feature.payment.database.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.rgk.qhatu.data.payment.database.entity.PaymentTransactionEntity
+import com.rgk.qhatu.data.feature.payment.database.entity.PaymentTransactionEntity
 import com.rgk.qhatu.domain.common.SyncStats
 
 @Dao

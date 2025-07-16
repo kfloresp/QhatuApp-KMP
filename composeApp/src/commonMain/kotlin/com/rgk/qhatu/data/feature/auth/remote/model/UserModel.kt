@@ -1,4 +1,4 @@
-package com.rgk.qhatu.data.auth.remote.model
+package com.rgk.qhatu.data.feature.auth.remote.model
 
 import kotlinx.serialization.Serializable
 

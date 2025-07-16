@@ -1,6 +1,6 @@
-package com.rgk.qhatu.data.product.remote
+package com.rgk.qhatu.data.feature.product.remote
 
-import com.rgk.qhatu.data.product.remote.model.ProductModel
+import com.rgk.qhatu.data.feature.product.remote.model.ProductModel
 import com.rgk.qhatu.domain.common.SyncTable
 import dev.gitlive.firebase.firestore.FirebaseFirestore
 

@@ -20,7 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import com.rgk.qhatu.domain.model.Product
+import com.rgk.qhatu.domain.feature.product.model.Product
 import com.rgk.qhatu.ui.feature.search.SearchResultState
 import com.rgk.qhatu.ui.feature.search.SearchType
 

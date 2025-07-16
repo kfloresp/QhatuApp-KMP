@@ -1,6 +1,6 @@
-package com.rgk.qhatu.data.setting.remote
+package com.rgk.qhatu.data.feature.setting.remote
 
-import com.rgk.qhatu.data.setting.remote.model.ConfigurationModel
+import com.rgk.qhatu.data.feature.setting.remote.model.ConfigurationModel
 import com.rgk.qhatu.domain.common.SyncTable
 import dev.gitlive.firebase.firestore.FirebaseFirestore
 

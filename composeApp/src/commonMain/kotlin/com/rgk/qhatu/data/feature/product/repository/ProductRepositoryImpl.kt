@@ -1,14 +1,14 @@
-package com.rgk.qhatu.data.product.repository
+package com.rgk.qhatu.data.feature.product.repository
 
-import com.rgk.qhatu.data.product.database.dao.ProductDao
-import com.rgk.qhatu.data.product.remote.ProductRemoteDataSource
+import com.rgk.qhatu.data.feature.product.database.dao.ProductDao
+import com.rgk.qhatu.data.feature.product.remote.ProductRemoteDataSource
 import com.rgk.qhatu.domain.common.SyncResult
 import com.rgk.qhatu.domain.common.SyncStats
-import com.rgk.qhatu.domain.mapper.toDomain
-import com.rgk.qhatu.domain.mapper.toEntity
-import com.rgk.qhatu.domain.mapper.toModel
-import com.rgk.qhatu.domain.model.Product
-import com.rgk.qhatu.domain.repository.ProductRepository
+import com.rgk.qhatu.domain.feature.product.mapper.toDomain
+import com.rgk.qhatu.domain.feature.product.mapper.toEntity
+import com.rgk.qhatu.domain.feature.product.mapper.toModel
+import com.rgk.qhatu.domain.feature.product.model.Product
+import com.rgk.qhatu.domain.feature.product.repository.ProductRepository
 import com.rgk.qhatu.domain.util.TimeUtils
 import com.rgk.qhatu.ui.feature.search.SearchType
 import com.rgk.qhatu.utils.QhatuException

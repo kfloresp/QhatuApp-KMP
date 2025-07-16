@@ -1,10 +1,10 @@
-package com.rgk.qhatu.data.sale.database.dao
+package com.rgk.qhatu.data.feature.sale.database.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.rgk.qhatu.data.sale.database.entity.TransactionDetailEntity
+import com.rgk.qhatu.data.feature.sale.database.entity.TransactionDetailEntity
 import com.rgk.qhatu.domain.common.SyncStats
 
 @Dao

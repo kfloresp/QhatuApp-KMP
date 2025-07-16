@@ -5,15 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.domain.common.SyncOperation
 import com.rgk.qhatu.domain.common.SyncResult
 import com.rgk.qhatu.domain.common.SyncStats
-import com.rgk.qhatu.domain.usecase.category.GetCategoryStatsUseCase
-import com.rgk.qhatu.domain.usecase.category.SyncCategoryUseCase
+import com.rgk.qhatu.domain.feature.setting.usecase.GetCategoryStatsUseCase
+import com.rgk.qhatu.domain.feature.setting.usecase.SyncCategoryUseCase
 import com.rgk.qhatu.domain.util.TimeUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class SyncCategoryViewModel(

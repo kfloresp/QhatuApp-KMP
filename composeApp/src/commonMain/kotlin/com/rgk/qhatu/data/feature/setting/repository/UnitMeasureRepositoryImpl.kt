@@ -1,14 +1,14 @@
-package com.rgk.qhatu.data.repository
+package com.rgk.qhatu.data.feature.setting.repository
 
-import com.rgk.qhatu.data.setting.database.dao.UnitMeasureDao
-import com.rgk.qhatu.data.setting.remote.UnitMeasureRemoteDataSource
+import com.rgk.qhatu.data.feature.setting.database.dao.UnitMeasureDao
+import com.rgk.qhatu.data.feature.setting.remote.UnitMeasureRemoteDataSource
 import com.rgk.qhatu.domain.common.SyncResult
 import com.rgk.qhatu.domain.common.SyncStats
-import com.rgk.qhatu.domain.mapper.toDomain
-import com.rgk.qhatu.domain.mapper.toEntity
-import com.rgk.qhatu.domain.mapper.toModel
-import com.rgk.qhatu.domain.model.UnitMeasure
-import com.rgk.qhatu.domain.repository.UnitMeasureRepository
+import com.rgk.qhatu.domain.feature.setting.mapper.toDomain
+import com.rgk.qhatu.domain.feature.setting.mapper.toEntity
+import com.rgk.qhatu.domain.feature.setting.mapper.toModel
+import com.rgk.qhatu.domain.feature.setting.model.UnitMeasure
+import com.rgk.qhatu.domain.feature.setting.repository.UnitMeasureRepository
 import com.rgk.qhatu.domain.util.TimeUtils
 
 class UnitMeasureRepositoryImpl(

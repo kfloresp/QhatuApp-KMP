@@ -1,15 +1,12 @@
 package com.rgk.qhatu.ui.feature.search
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.domain.common.SyncResult
-import com.rgk.qhatu.domain.model.Product
-import com.rgk.qhatu.domain.usecase.product.GetProductFromQueryUseCase
+import com.rgk.qhatu.domain.feature.product.model.Product
+import com.rgk.qhatu.domain.feature.product.usecase.GetProductFromQueryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

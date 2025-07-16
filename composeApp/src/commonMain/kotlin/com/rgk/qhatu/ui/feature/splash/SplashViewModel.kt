@@ -2,7 +2,7 @@ package com.rgk.qhatu.ui.feature.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rgk.qhatu.domain.usecase.AuthUseCase
+import com.rgk.qhatu.domain.feature.auth.usecase.AuthUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay

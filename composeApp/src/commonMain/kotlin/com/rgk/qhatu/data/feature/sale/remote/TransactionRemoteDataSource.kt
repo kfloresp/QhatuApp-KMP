@@ -1,6 +1,6 @@
-package com.rgk.qhatu.data.sale.remote
+package com.rgk.qhatu.data.feature.sale.remote
 
-import com.rgk.qhatu.data.sale.remote.model.TransactionModel
+import com.rgk.qhatu.data.feature.sale.remote.model.TransactionModel
 import com.rgk.qhatu.domain.common.SyncTable
 import dev.gitlive.firebase.firestore.FirebaseFirestore
 

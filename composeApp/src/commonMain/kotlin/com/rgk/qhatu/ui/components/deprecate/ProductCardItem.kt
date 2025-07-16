@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.rgk.qhatu.domain.model.Product
+import com.rgk.qhatu.domain.feature.product.model.Product
 
 @Composable
 fun ProductCard(

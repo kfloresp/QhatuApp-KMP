@@ -1,10 +1,10 @@
-package com.rgk.qhatu.data.auth.repository
+package com.rgk.qhatu.data.feature.auth.repository
 
-import com.rgk.qhatu.data.auth.remote.AuthRemoteDataSource
+import com.rgk.qhatu.data.feature.auth.remote.AuthRemoteDataSource
 import com.rgk.qhatu.domain.common.SyncResult
-import com.rgk.qhatu.domain.mapper.toDomain
-import com.rgk.qhatu.domain.model.User
-import com.rgk.qhatu.domain.repository.AuthRepository
+import com.rgk.qhatu.domain.feature.auth.mapper.toDomain
+import com.rgk.qhatu.domain.feature.auth.model.User
+import com.rgk.qhatu.domain.feature.auth.repository.AuthRepository
 import com.rgk.qhatu.utils.FirebaseAuthException
 
 class AuthRepositoryImpl(private val remoteDataSource: AuthRemoteDataSource) : AuthRepository {

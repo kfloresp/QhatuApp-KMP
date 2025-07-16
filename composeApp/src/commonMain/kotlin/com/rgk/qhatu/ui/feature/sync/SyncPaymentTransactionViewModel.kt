@@ -5,15 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.domain.common.SyncOperation
 import com.rgk.qhatu.domain.common.SyncResult
 import com.rgk.qhatu.domain.common.SyncStats
-import com.rgk.qhatu.domain.usecase.paymentTransaction.GetPaymentTransactionStatsUseCase
-import com.rgk.qhatu.domain.usecase.paymentTransaction.SyncPaymentTransactionUseCase
+import com.rgk.qhatu.domain.feature.payment.usecase.GetPaymentTransactionStatsUseCase
+import com.rgk.qhatu.domain.feature.payment.usecase.SyncPaymentTransactionUseCase
 import com.rgk.qhatu.domain.util.TimeUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class SyncPaymentTransactionViewModel(

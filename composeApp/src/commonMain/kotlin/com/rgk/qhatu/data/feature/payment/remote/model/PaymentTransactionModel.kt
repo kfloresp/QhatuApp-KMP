@@ -1,4 +1,4 @@
-package com.rgk.qhatu.data.payment.remote.model
+package com.rgk.qhatu.data.feature.payment.remote.model
 import kotlinx.serialization.Serializable
 
 @Serializable

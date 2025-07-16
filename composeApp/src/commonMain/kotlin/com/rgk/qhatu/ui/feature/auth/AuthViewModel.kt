@@ -2,8 +2,8 @@ package com.rgk.qhatu.ui.feature.auth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.domain.common.SyncResult
-import com.rgk.qhatu.domain.model.User
-import com.rgk.qhatu.domain.usecase.AuthUseCase
+import com.rgk.qhatu.domain.feature.auth.model.User
+import com.rgk.qhatu.domain.feature.auth.usecase.AuthUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
