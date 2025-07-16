@@ -2,10 +2,10 @@ package com.rgk.qhatu.utils
 
 import androidx.navigation.NavController
 import androidx.navigation.navOptions
-import com.rgk.qhatu.ui.feature.auth.navigation.AuthGraph
-import com.rgk.qhatu.ui.feature.auth.navigation.navigateToAuthGraph
-import com.rgk.qhatu.ui.feature.home.navigation.HomeGraph
-import com.rgk.qhatu.ui.feature.home.navigation.navigateToHomeGraph
+import com.rgk.qhatu.presentation.feature.auth.AuthGraph
+import com.rgk.qhatu.presentation.feature.auth.navigateToAuthGraph
+import com.rgk.qhatu.presentation.feature.home.navigation.HomeGraph
+import com.rgk.qhatu.presentation.feature.home.navigation.navigateToHomeGraph
 
 fun NavController.navigateToHomeWithPopUp() {
     navigateToHomeGraph(

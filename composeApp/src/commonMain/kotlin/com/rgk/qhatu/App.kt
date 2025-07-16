@@ -4,8 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import com.rgk.qhatu.data.AppDataBase
-import com.rgk.qhatu.ui.navigation.AppNavGraph
+import com.rgk.qhatu.presentation.navigation.AppNavGraph
 import com.rgk.qhatu.utils.QhatuTheme
 
 @Composable

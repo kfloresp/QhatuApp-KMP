@@ -10,7 +10,7 @@ import com.rgk.qhatu.domain.feature.product.mapper.toModel
 import com.rgk.qhatu.domain.feature.product.model.Product
 import com.rgk.qhatu.domain.feature.product.repository.ProductRepository
 import com.rgk.qhatu.domain.util.TimeUtils
-import com.rgk.qhatu.ui.feature.search.SearchType
+import com.rgk.qhatu.presentation.feature.search.SearchType
 import com.rgk.qhatu.utils.QhatuException
 
 class ProductRepositoryImpl(
