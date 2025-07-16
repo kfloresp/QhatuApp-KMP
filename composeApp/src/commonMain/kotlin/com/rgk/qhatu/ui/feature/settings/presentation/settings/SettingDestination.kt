@@ -1,8 +1,7 @@
-package com.rgk.qhatu.ui.feature.settings.navigation
+package com.rgk.qhatu.ui.feature.settings.presentation.settings
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.rgk.qhatu.ui.feature.settings.SettingScreen
-import com.rgk.qhatu.ui.feature.settings.component.SettingType
+import com.rgk.qhatu.ui.feature.settings.presentation.settings.component.SettingType
 import kotlinx.serialization.Serializable
 
 @Serializable

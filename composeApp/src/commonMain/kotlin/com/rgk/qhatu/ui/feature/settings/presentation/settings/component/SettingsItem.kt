@@ -1,4 +1,4 @@
-package com.rgk.qhatu.ui.feature.settings.component
+package com.rgk.qhatu.ui.feature.settings.presentation.settings.component
 
 
 import androidx.compose.foundation.background

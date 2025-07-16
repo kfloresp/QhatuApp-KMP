@@ -1,10 +1,12 @@
-package com.rgk.qhatu.ui.feature.settings.navigation
+package com.rgk.qhatu.ui.feature.settings
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
-import com.rgk.qhatu.ui.feature.settings.component.SettingType
+import com.rgk.qhatu.ui.feature.settings.presentation.settings.SettingDestination
+import com.rgk.qhatu.ui.feature.settings.presentation.settings.settingDestination
+import com.rgk.qhatu.ui.feature.settings.presentation.settings.component.SettingType
 import kotlinx.serialization.Serializable
 
 @Serializable

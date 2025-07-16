@@ -21,9 +21,9 @@ import com.rgk.qhatu.ui.feature.sale.navigation.navigateToSale
 import com.rgk.qhatu.ui.feature.sale.navigation.saleGraph
 import com.rgk.qhatu.ui.feature.search.navigation.navigateToSearchGraph
 import com.rgk.qhatu.ui.feature.search.navigation.searchGraph
-import com.rgk.qhatu.ui.feature.settings.component.SettingType
-import com.rgk.qhatu.ui.feature.settings.navigation.navigateToSetting
-import com.rgk.qhatu.ui.feature.settings.navigation.settingGraph
+import com.rgk.qhatu.ui.feature.settings.presentation.settings.component.SettingType
+import com.rgk.qhatu.ui.feature.settings.navigateToSetting
+import com.rgk.qhatu.ui.feature.settings.settingGraph
 import com.rgk.qhatu.ui.feature.splash.navigation.SplashGraph
 import com.rgk.qhatu.ui.feature.splash.navigation.splashGraph
 import com.rgk.qhatu.utils.navigateToAuthGraphWithPopUp

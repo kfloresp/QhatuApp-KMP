@@ -12,4 +12,5 @@ sealed class SyncTable(val collection: String, val label: String) {
     data object ClientPayment : SyncTable("clientepago", "Pago Cliente")
     data object PaymentTransaction : SyncTable("pagomovimiento", "Pago Movimiento")
     data object AuditLog : SyncTable("auditoria", "Auditoría")
+    data object Store : SyncTable("tienda", "Auditoría")
 }

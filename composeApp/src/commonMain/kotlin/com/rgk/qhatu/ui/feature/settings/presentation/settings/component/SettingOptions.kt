@@ -1,4 +1,4 @@
-package com.rgk.qhatu.ui.feature.settings.component
+package com.rgk.qhatu.ui.feature.settings.presentation.settings.component
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
@@ -8,10 +8,8 @@ import androidx.compose.material.icons.outlined.NewLabel
 import androidx.compose.material.icons.outlined.SquareFoot
 import androidx.compose.material.icons.outlined.Store
 import androidx.compose.material.icons.outlined.Sync
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_brands_subtitle
 import qhatuapp.composeapp.generated.resources.tx_brands_title

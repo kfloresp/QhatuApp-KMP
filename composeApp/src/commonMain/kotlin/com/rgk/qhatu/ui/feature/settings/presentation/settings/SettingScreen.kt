@@ -1,4 +1,4 @@
-package com.rgk.qhatu.ui.feature.settings
+package com.rgk.qhatu.ui.feature.settings.presentation.settings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -7,16 +7,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.rgk.qhatu.ui.feature.settings.component.SettingType
-import com.rgk.qhatu.ui.feature.settings.component.SettingsItem
-import com.rgk.qhatu.ui.feature.settings.component.getLogoutOption
-import com.rgk.qhatu.ui.feature.settings.component.getSettingsOptions
+import com.rgk.qhatu.ui.feature.settings.presentation.settings.component.SettingType
+import com.rgk.qhatu.ui.feature.settings.presentation.settings.component.SettingsItem
+import com.rgk.qhatu.ui.feature.settings.presentation.settings.component.getLogoutOption
+import com.rgk.qhatu.ui.feature.settings.presentation.settings.component.getSettingsOptions
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

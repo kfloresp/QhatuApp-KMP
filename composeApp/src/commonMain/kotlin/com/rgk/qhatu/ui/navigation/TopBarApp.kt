@@ -11,7 +11,7 @@ import com.rgk.qhatu.ui.feature.payment.navigation.PaymentDestination
 import com.rgk.qhatu.ui.feature.product.navigation.ProductDestination
 import com.rgk.qhatu.ui.feature.sale.navigation.SaleDestination
 import com.rgk.qhatu.ui.feature.search.navigation.SearchDestination
-import com.rgk.qhatu.ui.feature.settings.navigation.SettingDestination
+import com.rgk.qhatu.ui.feature.settings.presentation.settings.SettingDestination
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.title_customers

@@ -19,7 +19,9 @@ const val DATABASE_NAME = "qhatu_database.db"
     ProductEntity::class,
     TransactionDetailEntity::class,
     TransactionEntity::class,
-    UnitMeasureEntity::class], version = 1, exportSchema = false)
+    UnitMeasureEntity::class,
+    StoreEntity::class,
+                     ], version = 1, exportSchema = false)
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDataBase : RoomDatabase(){
     abstract fun configurationDao(): ConfigurationDao
@@ -33,6 +35,7 @@ abstract class AppDataBase : RoomDatabase(){
     abstract fun transactionDetailDao(): TransactionDetailDao
     abstract fun transactionDao(): TransactionDao
     abstract fun unitMeasureDao(): UnitMeasureDao
+    abstract fun storeDao(): StoreDao
 }
 @Suppress("NO_ACTUAL_FOR_EXPECT")
 expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDataBase> {
