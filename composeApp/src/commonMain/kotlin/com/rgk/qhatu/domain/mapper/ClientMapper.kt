@@ -1,7 +1,7 @@
 package com.rgk.qhatu.domain.mapper
 
-import com.rgk.qhatu.data.database.entity.ClientEntity
-import com.rgk.qhatu.data.remote.model.ClientModel
+import com.rgk.qhatu.data.customer.database.entity.ClientEntity
+import com.rgk.qhatu.data.customer.remote.model.ClientModel
 import com.rgk.qhatu.domain.model.Client
 import com.rgk.qhatu.domain.util.TimeUtils
 

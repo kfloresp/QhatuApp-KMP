@@ -1,8 +1,8 @@
 package com.rgk.qhatu.domain.mapper
 
-import com.rgk.qhatu.data.database.entity.CategoryEntity
+import com.rgk.qhatu.data.setting.database.entity.CategoryEntity
 import com.rgk.qhatu.domain.model.Category
-import com.rgk.qhatu.data.remote.model.CategoryModel
+import com.rgk.qhatu.data.setting.remote.model.CategoryModel
 
 fun CategoryModel.toDomain(): Category = Category(
     id = id,

@@ -1,7 +1,7 @@
 package com.rgk.qhatu.domain.mapper
 
-import com.rgk.qhatu.data.database.entity.AuditLogEntity
-import com.rgk.qhatu.data.remote.model.AuditLogModel
+import com.rgk.qhatu.data.audit.database.entity.AuditLogEntity
+import com.rgk.qhatu.data.audit.remote.model.AuditLogModel
 import com.rgk.qhatu.domain.model.AuditLog
 
 fun AuditLogModel.toDomain(): AuditLog = AuditLog(

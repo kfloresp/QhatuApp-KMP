@@ -1,7 +1,7 @@
 package com.rgk.qhatu.domain.mapper
 
-import com.rgk.qhatu.data.database.entity.PaymentTransactionEntity
-import com.rgk.qhatu.data.remote.model.PaymentTransactionModel
+import com.rgk.qhatu.data.payment.database.entity.PaymentTransactionEntity
+import com.rgk.qhatu.data.payment.remote.model.PaymentTransactionModel
 import com.rgk.qhatu.domain.model.PaymentTransaction
 
 fun PaymentTransactionModel.toDomain(): PaymentTransaction = PaymentTransaction(

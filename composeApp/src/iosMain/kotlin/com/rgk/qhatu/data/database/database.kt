@@ -11,9 +11,9 @@ import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
-fun getDatabaseBuilder():RoomDatabase.Builder<AppDataBase>{
-    val dbFile = "${fileDirectory()}/$DATABASE_NAME"
-    return Room.databaseBuilder<AppDataBase>(
+fun getDatabaseBuilder():RoomDatabase.Builder<com.rgk.qhatu.data.AppDataBase>{
+    val dbFile = "${fileDirectory()}/${_root_ide_package_.com.rgk.qhatu.data.DATABASE_NAME}"
+    return Room.databaseBuilder<com.rgk.qhatu.data.AppDataBase>(
         name = dbFile
     ).setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)

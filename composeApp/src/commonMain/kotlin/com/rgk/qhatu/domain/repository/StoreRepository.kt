@@ -1,6 +1,6 @@
 package com.rgk.qhatu.domain.repository
 
-import com.rgk.qhatu.data.remote.model.StoreModel
+import com.rgk.qhatu.data.setting.remote.model.StoreModel
 import com.rgk.qhatu.domain.common.SyncResult
 import com.rgk.qhatu.domain.common.SyncStats
 import com.rgk.qhatu.domain.model.Store

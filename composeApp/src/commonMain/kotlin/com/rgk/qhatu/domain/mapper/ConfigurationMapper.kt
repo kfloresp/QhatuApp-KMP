@@ -1,7 +1,7 @@
 package com.rgk.qhatu.domain.mapper
 
-import com.rgk.qhatu.data.database.entity.ConfigurationEntity
-import com.rgk.qhatu.data.remote.model.ConfigurationModel
+import com.rgk.qhatu.data.setting.database.entity.ConfigurationEntity
+import com.rgk.qhatu.data.setting.remote.model.ConfigurationModel
 import com.rgk.qhatu.domain.model.Configuration
 
 fun ConfigurationModel.toDomain(): Configuration = Configuration(

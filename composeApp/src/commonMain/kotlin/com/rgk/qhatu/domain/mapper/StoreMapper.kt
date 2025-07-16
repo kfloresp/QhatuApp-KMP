@@ -1,7 +1,7 @@
 package com.rgk.qhatu.domain.mapper
 
-import com.rgk.qhatu.data.database.entity.StoreEntity
-import com.rgk.qhatu.data.remote.model.StoreModel
+import com.rgk.qhatu.data.setting.database.entity.StoreEntity
+import com.rgk.qhatu.data.setting.remote.model.StoreModel
 import com.rgk.qhatu.domain.model.Store
 
 fun StoreModel.toDomain(): Store = Store(

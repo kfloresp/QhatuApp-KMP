@@ -1,7 +1,7 @@
 package com.rgk.qhatu.domain.mapper
 
-import com.rgk.qhatu.data.database.entity.UnitMeasureEntity
-import com.rgk.qhatu.data.remote.model.UnitMeasureModel
+import com.rgk.qhatu.data.setting.database.entity.UnitMeasureEntity
+import com.rgk.qhatu.data.setting.remote.model.UnitMeasureModel
 import com.rgk.qhatu.domain.model.UnitMeasure
 
 fun UnitMeasureModel.toDomain(): UnitMeasure = UnitMeasure(

@@ -1,7 +1,7 @@
 package com.rgk.qhatu.domain.mapper
 
-import com.rgk.qhatu.data.database.entity.TransactionDetailEntity
-import com.rgk.qhatu.data.remote.model.TransactionDetailModel
+import com.rgk.qhatu.data.sale.database.entity.TransactionDetailEntity
+import com.rgk.qhatu.data.sale.remote.model.TransactionDetailModel
 import com.rgk.qhatu.domain.model.TransactionDetail
 
 fun TransactionDetailModel.toDomain(): TransactionDetail = TransactionDetail(

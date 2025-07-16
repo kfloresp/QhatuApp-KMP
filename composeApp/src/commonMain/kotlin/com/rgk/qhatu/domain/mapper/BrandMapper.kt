@@ -1,7 +1,7 @@
 package com.rgk.qhatu.domain.mapper
 
-import com.rgk.qhatu.data.database.entity.BrandEntity
-import com.rgk.qhatu.data.remote.model.BrandModel
+import com.rgk.qhatu.data.setting.database.entity.BrandEntity
+import com.rgk.qhatu.data.setting.remote.model.BrandModel
 import com.rgk.qhatu.domain.model.Brand
 
 fun BrandModel.toDomain(): Brand = Brand(
