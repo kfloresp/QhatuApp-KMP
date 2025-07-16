@@ -2,8 +2,8 @@ package com.rgk.qhatu.data.database
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.rgk.qhatu.data.AppDataBase
-import com.rgk.qhatu.data.DATABASE_NAME
+import com.rgk.qhatu.di.AppDataBase
+import com.rgk.qhatu.di.DATABASE_NAME
 import kotlinx.coroutines.Dispatchers
 
 fun getDatabaseBuilder(ctx: Context): RoomDatabase.Builder<AppDataBase>{

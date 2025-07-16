@@ -5,15 +5,17 @@ import androidx.room.RoomDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import com.rgk.qhatu.di.AppDataBase
+import com.rgk.qhatu.di.DATABASE_NAME
 import platform.Foundation.NSURL
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
-fun getDatabaseBuilder():RoomDatabase.Builder<com.rgk.qhatu.data.AppDataBase>{
-    val dbFile = "${fileDirectory()}/${_root_ide_package_.com.rgk.qhatu.data.DATABASE_NAME}"
-    return Room.databaseBuilder<com.rgk.qhatu.data.AppDataBase>(
+fun getDatabaseBuilder():RoomDatabase.Builder<AppDataBase>{
+    val dbFile = "${fileDirectory()}/${DATABASE_NAME}"
+    return Room.databaseBuilder<AppDataBase>(
         name = dbFile
     ).setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)
