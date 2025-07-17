@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object PaymentGraph
 
-fun NavController.navigateToPayment(navOptions: NavOptions? = null) {
+fun NavController.navigateToPaymentGraph(navOptions: NavOptions? = null) {
     navigate(PaymentGraph, navOptions)
 }
 

@@ -3,6 +3,7 @@ package com.rgk.qhatu.common.components.cart
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
@@ -64,7 +65,9 @@ fun CartIconWithBadge(
 @Composable
 fun CartIconWithBadgePreview() {
     QhatuTheme {
-        CartIconWithBadge(itemCount = 999)
+        Column(modifier = Modifier.background(Color.White)) {
+            CartIconWithBadge(itemCount = 999)
+        }
     }
 }
 
@@ -72,6 +75,8 @@ fun CartIconWithBadgePreview() {
 @Composable
 fun CartIconWithBadgeZeroPreview() {
     QhatuTheme {
-        CartIconWithBadge(itemCount = 0)
+        Column(modifier = Modifier.background(Color.White)) {
+            CartIconWithBadge(itemCount = 0)
+        }
     }
 }

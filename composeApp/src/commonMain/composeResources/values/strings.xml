@@ -28,7 +28,7 @@
     <string name="title_products">Products</string>
     <string name="title_setting">Settings</string>
 
-    <!-- Text label for HOME -->
+    <!-- Home Screen -->
     <string name="tx_greeting">Hello, %1$s</string>
     <string name="tx_question">What will we do today?</string>
 
@@ -55,5 +55,8 @@
 
     <string name="tx_logout_title">Log Out</string>
     <string name="tx_logout_subtitle">Exit the application</string>
+
+    <!-- Components -->
+    <string name="sync_progress">Syncing data…</string>
 
 </resources>

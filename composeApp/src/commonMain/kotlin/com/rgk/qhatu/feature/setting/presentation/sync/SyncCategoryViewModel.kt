@@ -50,7 +50,6 @@ class SyncCategoryViewModel(
     fun sync() {
         viewModelScope.launch(Dispatchers.IO) {
             _syncState.value = SyncState.Loading
-            @Suppress("SOME_SONAR_RULE")
             val result = syncCategoryUseCase(SyncOperation.Download())
             when (result) {
                 is SyncResult.Error -> {

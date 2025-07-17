@@ -12,19 +12,18 @@ import com.rgk.qhatu.common.extension.navigateToAuthGraphWithPopUp
 import com.rgk.qhatu.common.extension.navigateToHomeWithPopUp
 import com.rgk.qhatu.feature.auth.presentation.authGraph
 import com.rgk.qhatu.feature.customer.presentation.customerGraph
-import com.rgk.qhatu.feature.customer.presentation.navigateToCustomer
+import com.rgk.qhatu.feature.customer.presentation.navigateToCustomerGraph
 import com.rgk.qhatu.feature.home.presentation.homeGraph
 import com.rgk.qhatu.feature.home.presentation.navigateToHomeGraph
-import com.rgk.qhatu.feature.payment.presentation.navigateToPayment
+import com.rgk.qhatu.feature.payment.presentation.navigateToPaymentGraph
 import com.rgk.qhatu.feature.payment.presentation.paymentGraph
-import com.rgk.qhatu.feature.product.presentation.navigateToProduct
+import com.rgk.qhatu.feature.product.presentation.navigateToProductGraph
 import com.rgk.qhatu.feature.product.presentation.productGraph
-import com.rgk.qhatu.feature.sale.presentation.navigateToSale
+import com.rgk.qhatu.feature.sale.presentation.navigateToSaleGraph
 import com.rgk.qhatu.feature.sale.presentation.saleGraph
 import com.rgk.qhatu.feature.search.presentation.navigateToSearchGraph
 import com.rgk.qhatu.feature.search.presentation.searchGraph
-import com.rgk.qhatu.feature.setting.presentation.setting.component.SettingType
-import com.rgk.qhatu.feature.setting.presentation.navigateToSetting
+import com.rgk.qhatu.feature.setting.presentation.navigateToSettingGraph
 import com.rgk.qhatu.feature.setting.presentation.settingGraph
 import com.rgk.qhatu.feature.splash.presentation.SplashGraph
 import com.rgk.qhatu.feature.splash.presentation.splashGraph
@@ -51,30 +50,18 @@ fun AppNavHost(
         )
         homeGraph(
             navigateToSearch = { navController.navigateToSearchGraph() },
-            navigateToSale = { navController.navigateToSale() },
-            navigateToSetting = { navController.navigateToSetting() },
-            navigateToPayment = { navController.navigateToPayment() },
-            navigateToProduct = { navController.navigateToProduct() },
-            navigateToCustomer = { navController.navigateToCustomer() },
+            navigateToSale = { navController.navigateToSaleGraph() },
+            navigateToSetting = { navController.navigateToSettingGraph() },
+            navigateToPayment = { navController.navigateToPaymentGraph() },
+            navigateToProduct = { navController.navigateToProductGraph() },
+            navigateToCustomer = { navController.navigateToCustomerGraph() },
         )
         searchGraph(
             navigateToHome = {},
             navigateToCart = {},
             openScanQR = {})
         saleGraph()
-        settingGraph(onOptionClick = { settingType ->
-            when (settingType) {
-                SettingType.PROFILE -> {}
-                SettingType.CATEGORIES -> {}
-                SettingType.BRANDS -> {}
-                SettingType.UNITS -> {}
-                SettingType.SYNC_DATA -> {}
-                SettingType.EXPORT_DATA -> {}
-                SettingType.LOGOUT -> {
-                    navController.navigateToAuthGraphWithPopUp()
-                }
-            }
-        })
+        settingGraph(navController)
         paymentGraph()
         productGraph()
         customerGraph()

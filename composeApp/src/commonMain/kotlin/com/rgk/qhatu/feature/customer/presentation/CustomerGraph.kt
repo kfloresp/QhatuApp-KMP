@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object CustomerGraph
 
-fun NavController.navigateToCustomer(navOptions: NavOptions? = null) {
+fun NavController.navigateToCustomerGraph(navOptions: NavOptions? = null) {
     navigate(CustomerGraph, navOptions)
 }
 

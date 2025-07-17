@@ -55,4 +55,7 @@
 
     <string name="tx_logout_title">Cerrar sesión</string>
     <string name="tx_logout_subtitle">Salir de la aplicación</string>
+
+    <!-- Components -->
+    <string name="sync_progress">Sincronizando datos…</string>
 </resources>
