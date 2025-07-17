@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.rgk.qhatu.components.toolbar.QhatuCartToolbar
-import com.rgk.qhatu.components.toolbar.QhatuToolbar
+import com.rgk.qhatu.common.components.toolbar.QhatuCartToolbar
+import com.rgk.qhatu.common.components.toolbar.QhatuToolbar
 import com.rgk.qhatu.feature.customer.presentation.customer.CustomerDestination
 import com.rgk.qhatu.feature.payment.presentation.payment.PaymentDestination
 import com.rgk.qhatu.feature.product.presentation.product.ProductDestination

@@ -1,5 +1,6 @@
 package com.rgk.qhatu.feature.product.data.repository
 
+import com.rgk.qhatu.common.exception.QhatuException
 import com.rgk.qhatu.feature.product.data.database.dao.ProductDao
 import com.rgk.qhatu.feature.product.data.remote.ProductRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
@@ -9,9 +10,8 @@ import com.rgk.qhatu.feature.product.domain.mapper.toEntity
 import com.rgk.qhatu.feature.product.domain.mapper.toModel
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.repository.ProductRepository
+import com.rgk.qhatu.common.util.SearchType
 import com.rgk.qhatu.utils.TimeUtils
-import com.rgk.qhatu.utils.SearchType
-import com.rgk.qhatu.utils.QhatuException
 
 class ProductRepositoryImpl(
     private val sourceRemote: ProductRemoteDataSource,

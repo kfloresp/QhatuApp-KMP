@@ -1,4 +1,4 @@
-package com.rgk.qhatu.components.deprecate
+package com.rgk.qhatu.common.components.deprecate
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -22,7 +22,11 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.search.presentation.search.SearchResultState
-import com.rgk.qhatu.utils.SearchType
+import com.rgk.qhatu.common.util.SearchType
+import com.rgk.qhatu.components.deprecate.FullScreenDialog
+import com.rgk.qhatu.components.deprecate.ProductSearchAdvanced
+import com.rgk.qhatu.components.deprecate.SearchInputBar
+import com.rgk.qhatu.components.deprecate.SearchTypeSelector
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

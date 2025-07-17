@@ -1,4 +1,4 @@
-package com.rgk.qhatu.utils
+package com.rgk.qhatu.common.extension
 
 import androidx.navigation.NavController
 import androidx.navigation.navOptions

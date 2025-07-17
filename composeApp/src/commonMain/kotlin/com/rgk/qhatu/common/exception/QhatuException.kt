@@ -1,4 +1,4 @@
-package com.rgk.qhatu.utils
+package com.rgk.qhatu.common.exception
 
 sealed class QhatuException : Throwable() {
 

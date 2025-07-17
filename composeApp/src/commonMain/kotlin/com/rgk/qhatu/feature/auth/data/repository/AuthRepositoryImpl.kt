@@ -1,11 +1,11 @@
 package com.rgk.qhatu.feature.auth.data.repository
 
+import com.rgk.qhatu.common.exception.FirebaseAuthException
 import com.rgk.qhatu.feature.auth.data.remote.AuthRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.auth.domain.mapper.toDomain
 import com.rgk.qhatu.feature.auth.domain.model.User
 import com.rgk.qhatu.feature.auth.domain.repository.AuthRepository
-import com.rgk.qhatu.utils.FirebaseAuthException
 
 class AuthRepositoryImpl(private val remoteDataSource: AuthRemoteDataSource) : AuthRepository {
     override suspend fun login(email: String, password: String): SyncResult<User> {

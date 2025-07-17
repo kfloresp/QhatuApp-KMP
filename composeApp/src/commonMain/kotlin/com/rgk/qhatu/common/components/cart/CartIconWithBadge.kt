@@ -1,4 +1,4 @@
-package com.rgk.qhatu.components.cart
+package com.rgk.qhatu.common.components.cart
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rgk.qhatu.utils.QhatuTheme
+import com.rgk.qhatu.common.theme.QhatuTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable

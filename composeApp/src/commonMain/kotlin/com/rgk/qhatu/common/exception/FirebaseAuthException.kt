@@ -1,4 +1,4 @@
-package com.rgk.qhatu.utils
+package com.rgk.qhatu.common.exception
 
 import dev.gitlive.firebase.FirebaseNetworkException
 import dev.gitlive.firebase.FirebaseTooManyRequestsException

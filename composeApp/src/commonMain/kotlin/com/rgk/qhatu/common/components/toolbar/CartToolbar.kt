@@ -1,4 +1,4 @@
-package com.rgk.qhatu.components.toolbar
+package com.rgk.qhatu.common.components.toolbar
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,8 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rgk.qhatu.components.cart.CartIconWithBadge
-import com.rgk.qhatu.utils.QhatuTheme
+import com.rgk.qhatu.common.components.cart.CartIconWithBadge
+import com.rgk.qhatu.common.theme.QhatuTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 const val CURRENCY = "S/."

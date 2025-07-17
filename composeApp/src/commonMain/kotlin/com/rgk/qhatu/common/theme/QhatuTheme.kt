@@ -1,4 +1,4 @@
-package com.rgk.qhatu.utils
+package com.rgk.qhatu.common.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

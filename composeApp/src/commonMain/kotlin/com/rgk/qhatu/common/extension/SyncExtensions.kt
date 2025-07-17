@@ -1,4 +1,4 @@
-package com.rgk.qhatu.utils
+package com.rgk.qhatu.common.extension
 
 import com.rgk.qhatu.common.model.SyncResult
 import kotlinx.coroutines.flow.Flow

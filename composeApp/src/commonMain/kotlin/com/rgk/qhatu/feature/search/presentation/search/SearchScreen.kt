@@ -20,10 +20,10 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.rgk.qhatu.common.components.deprecate.ProductSearch
 import com.rgk.qhatu.components.deprecate.AppToolbar
 import com.rgk.qhatu.components.deprecate.ErrorView
 import com.rgk.qhatu.components.deprecate.LoadingView
-import com.rgk.qhatu.components.deprecate.ProductSearch
 import com.rgk.qhatu.components.deprecate.ProductSearchItem
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel

@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.rgk.qhatu.common.extension.navigateToAuthGraphWithPopUp
+import com.rgk.qhatu.common.extension.navigateToHomeWithPopUp
 import com.rgk.qhatu.feature.auth.presentation.authGraph
 import com.rgk.qhatu.feature.customer.presentation.customerGraph
 import com.rgk.qhatu.feature.customer.presentation.navigateToCustomer
@@ -26,9 +28,6 @@ import com.rgk.qhatu.feature.setting.presentation.navigateToSetting
 import com.rgk.qhatu.feature.setting.presentation.settingGraph
 import com.rgk.qhatu.feature.splash.presentation.SplashGraph
 import com.rgk.qhatu.feature.splash.presentation.splashGraph
-import com.rgk.qhatu.utils.navigateToAuthGraphWithPopUp
-import com.rgk.qhatu.utils.navigateToHomeWithPopUp
-
 @Composable
 fun AppNavHost(
     modifier: Modifier,
