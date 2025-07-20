@@ -9,8 +9,6 @@ import com.rgk.qhatu.feature.setting.presentation.category.categoryDestination
 import com.rgk.qhatu.feature.setting.presentation.setting.SettingDestination
 import com.rgk.qhatu.feature.setting.presentation.setting.settingDestination
 import com.rgk.qhatu.feature.setting.presentation.setting.component.SettingType
-import com.rgk.qhatu.presentation.MainAction
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -33,7 +31,6 @@ fun NavGraphBuilder.settingGraph(
                     SettingType.CATEGORIES -> {
                         navController.navigate(CategoryDestination)
                     }
-
                     SettingType.BRANDS -> {}
                     SettingType.UNITS -> {}
                     SettingType.SYNC_DATA -> {}
@@ -42,9 +39,8 @@ fun NavGraphBuilder.settingGraph(
 
                     }
                 }
-            },
-            onBackClick = navController::popBackStack
+            }
         )
-        categoryDestination(goBack = navController::popBackStack)
+        categoryDestination()
     }
 }

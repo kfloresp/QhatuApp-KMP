@@ -16,7 +16,6 @@ fun NavController.navigateToSearchGraph(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.searchGraph(
-    navigateToHome: () -> Unit,
     navigateToCart: () -> Unit,
     openScanQR: () -> Unit,
 ) {
@@ -24,7 +23,6 @@ fun NavGraphBuilder.searchGraph(
         startDestination = SearchDestination
     ) {
         searchDestination(
-            navigateToHome = navigateToHome,
             navigateToCart = navigateToCart,
             openScanQR = openScanQR,
         )

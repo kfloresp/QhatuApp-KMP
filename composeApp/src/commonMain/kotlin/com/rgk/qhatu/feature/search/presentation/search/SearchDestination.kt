@@ -3,10 +3,6 @@ package com.rgk.qhatu.feature.search.presentation.search
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowBack
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.collectAsState
@@ -19,8 +15,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.cart.CartIconWithBadge
 import com.rgk.qhatu.navigation.ProvideAppBarActions
-import com.rgk.qhatu.navigation.ProvideAppBarNavigationIcon
-import com.rgk.qhatu.navigation.ProvideAppBarTitle
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -28,7 +22,6 @@ import org.koin.compose.viewmodel.koinViewModel
 data object SearchDestination
 
 internal fun NavGraphBuilder.searchDestination(
-    navigateToHome: () -> Unit,
     navigateToCart: () -> Unit,
     openScanQR: () -> Unit,
 ) {
@@ -36,21 +29,6 @@ internal fun NavGraphBuilder.searchDestination(
         val viewModel: SearchViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
 
-        ProvideAppBarTitle {
-            Text("Settings")
-        }
-        ProvideAppBarNavigationIcon {
-            IconButton(
-                onClick = {
-                    navigateToHome()
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                    contentDescription = "Back"
-                )
-            }
-        }
         ProvideAppBarActions {
             Text(
                 text = "S/1000.0",
@@ -67,7 +45,6 @@ internal fun NavGraphBuilder.searchDestination(
 
         SearchScreen(
             uiState = uiState,
-            navigateToHome = navigateToHome,
             navigateToCart = navigateToCart,
             openScanQR = openScanQR
         )

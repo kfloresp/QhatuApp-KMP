@@ -33,7 +33,6 @@ import qhatuapp.composeapp.generated.resources.tx_back
 @Composable
 fun SearchScreen(
     uiState: SearchResultState,
-    navigateToHome: () -> Unit,
     navigateToCart: () -> Unit,
     openScanQR: () -> Unit
 ) {

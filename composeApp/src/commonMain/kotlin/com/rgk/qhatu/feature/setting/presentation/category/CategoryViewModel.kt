@@ -24,24 +24,20 @@ class CategoryViewModel(
     val uiState: StateFlow<CategoryUiState> = _uiState.asStateFlow()
 
     init {
-        println(">> CategoryViewModel creado: ${this.hashCode()}")
         getCategories()
     }
 
     fun getCategories() {
-        println("Get Categories....")
         _uiState.value = CategoryUiState.Loading
         viewModelScope.launch {
             val result = getCategoriesUseCase()
             when (result) {
                 is SyncResult.Error -> {
                     _uiState.value = CategoryUiState.Error(result.exception.message.orEmpty())
-                    println("Get Categories....Error")
                     println(result.exception.message.orEmpty())
                 }
 
                 is SyncResult.Success<*> -> {
-                    println("Get Categories....Success")
                     _uiState.value = CategoryUiState.Success(
                         categories = result.data as List<Category>
                     )
@@ -67,7 +63,9 @@ class CategoryViewModel(
     }
 
     fun syncCategories() {
-        println("Sync Categories....")
+        if (_uiState.value is CategoryUiState.Loading){
+            return
+        }
         _uiState.value = CategoryUiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -75,19 +73,14 @@ class CategoryViewModel(
                 when (result) {
                     is SyncResult.Error -> {
                         _uiState.value = CategoryUiState.Error(result.exception.message.orEmpty())
-                        println("Sync Categories Error....")
-                        println("ERROR: " + result.exception.message.orEmpty())
                     }
 
                     is SyncResult.Success<*> -> {
-                        delay(2500L)
                         getCategories()
                     }
                 }
             } catch (e: Exception) {
                 _uiState.value = CategoryUiState.Error(e.message.orEmpty())
-                println("Sync Categories Exception....")
-                println("EXCEPTION: " + e.message.orEmpty())
             }
         }
     }

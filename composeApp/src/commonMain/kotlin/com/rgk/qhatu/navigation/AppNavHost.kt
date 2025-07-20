@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -25,15 +23,10 @@ import com.rgk.qhatu.feature.sale.presentation.navigateToSaleGraph
 import com.rgk.qhatu.feature.sale.presentation.saleGraph
 import com.rgk.qhatu.feature.search.presentation.navigateToSearchGraph
 import com.rgk.qhatu.feature.search.presentation.searchGraph
-import com.rgk.qhatu.feature.setting.presentation.category.CategoryViewModel
 import com.rgk.qhatu.feature.setting.presentation.navigateToSettingGraph
 import com.rgk.qhatu.feature.setting.presentation.settingGraph
 import com.rgk.qhatu.feature.splash.presentation.SplashGraph
 import com.rgk.qhatu.feature.splash.presentation.splashGraph
-import com.rgk.qhatu.presentation.MainAction
-import com.rgk.qhatu.presentation.MainViewModel
-import kotlinx.coroutines.flow.SharedFlow
-import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun AppNavHost(
@@ -65,7 +58,6 @@ fun AppNavHost(
             navigateToCustomer = { navController.navigateToCustomerGraph() },
         )
         searchGraph(
-            navigateToHome = {},
             navigateToCart = {},
             openScanQR = {}
         )
@@ -102,15 +94,3 @@ fun AppNavGraph(
         )
     }
 }
-
-//        composable(
-//            route = RouteNavigation.SearchProvider.src,
-//            arguments = listOf(navArgument(RouteNavigation.SearchProvider.Args.QUERY) { type = NavType.StringType })
-//        ) { backstackEntry ->
-//            val query = checkNotNull(backstackEntry.arguments?.getString(RouteNavigation.SearchProvider.Args.QUERY))
-//            SearchProviderScreen(
-//                viewModel = koinViewModel(parameters = { parametersOf(query) }),
-//                navController = navController
-//            )
-//        }
-//    }

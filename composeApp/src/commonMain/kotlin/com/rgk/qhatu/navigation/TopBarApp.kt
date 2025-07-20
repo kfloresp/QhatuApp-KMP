@@ -19,23 +19,34 @@ import com.rgk.qhatu.feature.payment.presentation.payment.PaymentDestination
 import com.rgk.qhatu.feature.search.presentation.search.SearchDestination
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryDestination
 import com.rgk.qhatu.feature.setting.presentation.setting.SettingDestination
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
+import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.app_name
+import qhatuapp.composeapp.generated.resources.title_payments
+import qhatuapp.composeapp.generated.resources.title_search
+import qhatuapp.composeapp.generated.resources.title_setting
+import qhatuapp.composeapp.generated.resources.tx_categories_title
+
+private val destinationsWithToolbar = mapOf(
+    SettingDestination::class.qualifiedName to Res.string.title_setting,
+    CategoryDestination::class.qualifiedName to Res.string.tx_categories_title,
+    PaymentDestination::class.qualifiedName to Res.string.title_payments,
+)
+private val cartToolbarDestinations = mapOf(
+    SearchDestination::class.qualifiedName to Res.string.title_search
+)
+
+private val allDestinations = destinationsWithToolbar + cartToolbarDestinations
 
 @Composable
 fun TopBarApp(
     navController: NavController,
 ) {
-    val destinationsWithToolbar = listOf(
-        SettingDestination::class.qualifiedName,
-        CategoryDestination::class.qualifiedName,
-        PaymentDestination::class.qualifiedName,
-    )
-    val cartToolbarDestinations = listOf(
-        SearchDestination::class.qualifiedName,
-    )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     navBackStackEntry?.let { entry ->
         val currentRoute = navBackStackEntry?.destination?.route
-        if (currentRoute in destinationsWithToolbar || currentRoute in cartToolbarDestinations) {
+        if (currentRoute in allDestinations) {
             val viewModel: TopAppBarViewModel = viewModel(
                 viewModelStoreOwner = entry,
                 initializer = { TopAppBarViewModel() },
@@ -43,16 +54,16 @@ fun TopBarApp(
             when (currentRoute) {
                 in cartToolbarDestinations -> {
                     QhatuCartToolbar(
-                        title = viewModel.title,
-                        navigationIcon = viewModel.navigationIcon,
+                        title = stringResource(getTitleDestination(currentRoute)),
+                        onBackClick = navController::popBackStack,
                         actions = viewModel.actions,
                     )
                 }
 
                 in destinationsWithToolbar -> {
                     QhatuToolbar(
-                        title = viewModel.title,
-                        navigationIcon = viewModel.navigationIcon,
+                        title = stringResource(getTitleDestination(currentRoute)),
+                        onBackClick = navController::popBackStack,
                         actions = viewModel.actions,
                     )
                 }
@@ -61,38 +72,8 @@ fun TopBarApp(
     }
 }
 
-@Composable
-fun ProvideAppBarTitle(title: @Composable () -> Unit) {
-
-    val viewModelStoreOwner = LocalViewModelStoreOwner.current
-    (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
-        val viewModel: TopAppBarViewModel = viewModel(
-            viewModelStoreOwner = owner,
-            initializer = { TopAppBarViewModel() },
-        )
-        LaunchedEffect(title) {
-            viewModel.title = title
-        }
-    }
-
-}
-
-@Composable
-fun ProvideAppBarNavigationIcon(navigationIcon: @Composable () -> Unit) {
-
-    val viewModelStoreOwner = LocalViewModelStoreOwner.current
-    (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
-        val viewModel: TopAppBarViewModel = viewModel(
-            viewModelStoreOwner = owner,
-            initializer = { TopAppBarViewModel() },
-        )
-        LaunchedEffect(navigationIcon) {
-            viewModel.navigationIcon = navigationIcon
-        }
-    }
-
-}
-
+private fun getTitleDestination(currentRoute: String?): StringResource =
+    allDestinations[currentRoute] ?: Res.string.app_name
 @Composable
 fun ProvideAppBarActions(actions: @Composable RowScope.() -> Unit) {
 
@@ -110,9 +91,5 @@ fun ProvideAppBarActions(actions: @Composable RowScope.() -> Unit) {
 }
 
 private class TopAppBarViewModel : ViewModel() {
-    var title by mutableStateOf<@Composable () -> Unit>({ }, referentialEqualityPolicy())
-
-    var navigationIcon by mutableStateOf<@Composable () -> Unit>({ }, referentialEqualityPolicy())
-
     var actions by mutableStateOf<@Composable RowScope.() -> Unit>({ }, referentialEqualityPolicy())
 }

@@ -39,7 +39,7 @@ fun HomeScreen(
             .background(Color.White)
             .padding(16.dp)
     ) {
-        HomeHeader(name = "Janice")
+        HomeHeader(name = "Nick")
         Spacer(modifier = Modifier.height(24.dp))
         ActionGrid(actions)
     }
