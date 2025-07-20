@@ -19,10 +19,12 @@ import com.rgk.qhatu.feature.sale.domain.usecase.GetTransactionStatsUseCase
 import com.rgk.qhatu.feature.sale.domain.usecase.SyncTransactionDetailUseCase
 import com.rgk.qhatu.feature.sale.domain.usecase.SyncTransactionUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetBrandStatsUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.GetBrandsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoriesUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoryStatsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetConfigurationStatsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetUnitMeasureStatsUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.GetUnitsMeasureUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncBrandUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncCategoryUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncConfigurationUseCase
@@ -59,4 +61,6 @@ val domainModule = module {
     factoryOf(::GetClientUseCase)
     factoryOf(::GetProviderUseCase)
     factoryOf(::GetCategoriesUseCase)
+    factoryOf(::GetUnitsMeasureUseCase)
+    factoryOf(::GetBrandsUseCase)
 }

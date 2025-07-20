@@ -1,4 +1,4 @@
-package com.rgk.qhatu.feature.setting.presentation.category
+package com.rgk.qhatu.feature.setting.presentation.unitmeasure
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,14 +16,16 @@ import androidx.compose.ui.graphics.Color
 import com.rgk.qhatu.common.components.list.ActionableListContent
 import com.rgk.qhatu.common.components.search.SearchBar
 import com.rgk.qhatu.feature.setting.domain.model.Category
+import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
+import com.rgk.qhatu.feature.setting.presentation.category.CategoryUiState
 
 @Composable
-fun CategoryScreen(
-    uiState: CategoryUiState,
+fun UnitMeasureScreen(
+    uiState: UnitMeasureUiState,
     onQueryChange: (String) -> Unit,
-    onItemClick: (Category) -> Unit,
-    onEditClick: (Category) -> Unit,
-    onDeleteClick: (Category) -> Unit,
+    onItemClick: (UnitMeasure) -> Unit,
+    onEditClick: (UnitMeasure) -> Unit,
+    onDeleteClick: (UnitMeasure) -> Unit,
 ) {
     var searchQuery by remember { mutableStateOf("") }
     Column(Modifier.fillMaxSize()) {
@@ -35,19 +37,19 @@ fun CategoryScreen(
             }
         )
         when (uiState) {
-            is CategoryUiState.Loading -> {
+            is UnitMeasureUiState.Loading -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     CircularProgressIndicator()
                 }
             }
 
-            is CategoryUiState.Error -> {
+            is UnitMeasureUiState.Error -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text(text = uiState.message, color = Color.Red)
                 }
             }
 
-            is CategoryUiState.Success -> {
+            is UnitMeasureUiState.Success -> {
                 ActionableListContent(
                     modifier = Modifier,
                     items = uiState.result,

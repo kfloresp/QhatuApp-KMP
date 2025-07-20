@@ -6,8 +6,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.rgk.qhatu.navigation.AppNavGraph
 import com.rgk.qhatu.common.theme.QhatuTheme
-import com.rgk.qhatu.presentation.MainViewModel
-import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun App() {

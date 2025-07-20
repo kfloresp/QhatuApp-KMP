@@ -17,21 +17,25 @@ import com.rgk.qhatu.common.components.toolbar.QhatuCartToolbar
 import com.rgk.qhatu.common.components.toolbar.QhatuToolbar
 import com.rgk.qhatu.feature.payment.presentation.payment.PaymentDestination
 import com.rgk.qhatu.feature.search.presentation.search.SearchDestination
+import com.rgk.qhatu.feature.setting.presentation.brand.BrandDestination
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryDestination
 import com.rgk.qhatu.feature.setting.presentation.setting.SettingDestination
+import com.rgk.qhatu.feature.setting.presentation.unitmeasure.UnitMeasureDestination
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.app_name
-import qhatuapp.composeapp.generated.resources.title_payments
 import qhatuapp.composeapp.generated.resources.title_search
 import qhatuapp.composeapp.generated.resources.title_setting
+import qhatuapp.composeapp.generated.resources.tx_brands_title
 import qhatuapp.composeapp.generated.resources.tx_categories_title
+import qhatuapp.composeapp.generated.resources.tx_units_title
 
 private val destinationsWithToolbar = mapOf(
     SettingDestination::class.qualifiedName to Res.string.title_setting,
     CategoryDestination::class.qualifiedName to Res.string.tx_categories_title,
-    PaymentDestination::class.qualifiedName to Res.string.title_payments,
+    BrandDestination::class.qualifiedName to Res.string.tx_brands_title,
+    UnitMeasureDestination::class.qualifiedName to Res.string.tx_units_title,
 )
 private val cartToolbarDestinations = mapOf(
     SearchDestination::class.qualifiedName to Res.string.title_search
