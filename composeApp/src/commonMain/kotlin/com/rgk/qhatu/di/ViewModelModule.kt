@@ -18,10 +18,12 @@ import com.rgk.qhatu.feature.setting.presentation.sync.SyncProductViewModel
 import com.rgk.qhatu.feature.setting.presentation.sync.SyncTransactionDetailViewModel
 import com.rgk.qhatu.feature.setting.presentation.sync.SyncTransactionViewModel
 import com.rgk.qhatu.feature.setting.presentation.sync.SyncUnitMeasureViewModel
+import com.rgk.qhatu.presentation.MainViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val viewModelModule = module {
+    viewModelOf(::MainViewModel)
     viewModelOf(::HomeViewModel)
     viewModelOf(::AuthViewModel)
     viewModelOf(::SyncAuditLogViewModel)

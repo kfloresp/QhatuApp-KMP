@@ -21,7 +21,7 @@ fun Category.toEntity(): CategoryEntity = CategoryEntity(
 )
 
 fun CategoryEntity.toDomain(): Category = Category(
-    id = id,
+    id = idInternal.toString(),
     nombre = nombre,
     descripcion = descripcion,
     flag_sincronizado = flag_sincronizado,

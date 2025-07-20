@@ -1,14 +1,21 @@
 package com.rgk.qhatu.feature.setting.presentation.category
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.rgk.qhatu.common.components.list.ActionableListContent
-import com.rgk.qhatu.common.theme.QhatuTheme
+import com.rgk.qhatu.common.components.search.SearchBar
 import com.rgk.qhatu.feature.setting.domain.model.Category
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun CategoryScreen(
@@ -16,45 +23,42 @@ fun CategoryScreen(
     onQueryChange: (String) -> Unit,
     onItemClick: (Category) -> Unit,
     onEditClick: (Category) -> Unit,
-    onDeleteClick: (Category) -> Unit
+    onDeleteClick: (Category) -> Unit,
 ) {
-    ActionableListContent(
-        modifier = Modifier,
-        items = uiState.categories,
-        itemToLabel = { it.nombre },
-        itemToKey = { it.id },
-        isSyncing = uiState.isSyncing,
-        onQueryChange = onQueryChange,
-        onItemClick = onItemClick,
-        onEditClick = onEditClick,
-        onDeleteClick = onDeleteClick
-    )
-}
+    var searchQuery by remember { mutableStateOf("") }
+    Column(Modifier.fillMaxSize()) {
+        SearchBar(
+            query = searchQuery,
+            onQueryChange = {
+                searchQuery = it
+                onQueryChange(it)
+            }
+        )
+        when (uiState) {
+            is CategoryUiState.Loading -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            }
 
-@Preview
-@Composable
-private fun CategoryScreenPreview() {
-    val sampleCategories = listOf(
-        Category(id = "1", nombre = "Bebidas"),
-        Category(id = "2", nombre = "Lácteos"),
-        Category(id = "3", nombre = "Snacks")
-    )
+            is CategoryUiState.Error -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = uiState.message, color = Color.Red)
+                }
+            }
 
-    val previewState = CategoryUiState(
-        isSyncing = true,
-        categories = sampleCategories,
-        query = ""
-    )
-
-    QhatuTheme {
-        Column(modifier = Modifier.background(Color.White)) {
-            CategoryScreen(
-                uiState = previewState,
-                onQueryChange = {},
-                onItemClick = {},
-                onEditClick = {},
-                onDeleteClick = {}
-            )
+            is CategoryUiState.Success -> {
+                ActionableListContent(
+                    modifier = Modifier,
+                    items = uiState.categories,
+                    itemToLabel = { it.nombre },
+                    itemToKey = { it.id },
+                    isSyncing = false,
+                    onItemClick = onItemClick,
+                    onEditClick = onEditClick,
+                    onDeleteClick = onDeleteClick
+                )
+            }
         }
     }
 }
