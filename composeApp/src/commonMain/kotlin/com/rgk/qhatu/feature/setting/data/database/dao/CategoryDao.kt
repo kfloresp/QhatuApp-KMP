@@ -10,15 +10,15 @@ import com.rgk.qhatu.common.model.SyncStats
 @Dao
 interface CategoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun save(entity: CategoryEntity)
+    suspend fun save(entity: CategoryEntity) //UUID.randomUUID().toString()
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(entity: CategoryEntity)
+    @Update
+    suspend fun update(entity: CategoryEntity): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(entity: List<CategoryEntity>)
 
-    @Query("SELECT * FROM categories")
+    @Query("SELECT * FROM categories where flag_eliminado = false")
     suspend fun fetchAll(): List<CategoryEntity>
 
     @Query("SELECT COUNT(*) as count, MAX(fecha_actualizacion) as lastUpdated FROM categories")

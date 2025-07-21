@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.theme.QhatuTheme
@@ -30,15 +31,15 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun ItemAction(
     modifier: Modifier = Modifier,
     label: String,
-    onEditClick: () -> Unit,
-    onDeleteClick: () -> Unit,
+    onActionClick: () -> Unit,
+    imageVector: ImageVector = Icons.Default.Delete,
     onItemClick: () -> Unit = {}
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onItemClick)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
@@ -51,19 +52,9 @@ fun ItemAction(
 
         Spacer(modifier = Modifier.width(16.dp))
 
-        IconButton(onClick = onEditClick, modifier = Modifier.size(24.dp)) {
+        IconButton(onClick = onActionClick, modifier = Modifier.size(48.dp)) {
             Icon(
-                imageVector = Icons.Default.Edit,
-                contentDescription = null,
-                tint = Color.Gray
-            )
-        }
-
-        Spacer(modifier = Modifier.width(16.dp))
-
-        IconButton(onClick = onDeleteClick, modifier = Modifier.size(24.dp)) {
-            Icon(
-                imageVector = Icons.Default.Delete,
+                imageVector = imageVector,
                 contentDescription = null,
                 tint = Color.Gray
             )
@@ -78,8 +69,8 @@ private fun ItemActionPreview() {
         Column(modifier = Modifier.background(Color.White)) {
             ItemAction(
                 label = "Abarrotes",
-                onEditClick = {},
-                onDeleteClick = {},
+                onItemClick = {},
+                onActionClick = {},
             )
         }
     }

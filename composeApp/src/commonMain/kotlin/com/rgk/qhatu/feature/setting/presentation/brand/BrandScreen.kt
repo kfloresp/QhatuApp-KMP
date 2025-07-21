@@ -24,8 +24,7 @@ fun BrandScreen(
     uiState: BrandUiState,
     onQueryChange: (String) -> Unit,
     onItemClick: (Brand) -> Unit,
-    onEditClick: (Brand) -> Unit,
-    onDeleteClick: (Brand) -> Unit,
+    onActionClick: (Brand) -> Unit,
 ) {
     var searchQuery by remember { mutableStateOf("") }
     Column(Modifier.fillMaxSize()) {
@@ -57,8 +56,7 @@ fun BrandScreen(
                     itemToKey = { it.id },
                     isSyncing = false,
                     onItemClick = onItemClick,
-                    onEditClick = onEditClick,
-                    onDeleteClick = onDeleteClick
+                    onActionClick = onActionClick,
                 )
             }
         }

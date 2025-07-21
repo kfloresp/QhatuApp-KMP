@@ -7,6 +7,7 @@ import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.setting.domain.model.Category
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoriesUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncCategoryUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.UpdateCategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,9 +17,10 @@ import kotlinx.coroutines.launch
 
 class CategoryViewModel(
     private val syncCategoryUseCase: SyncCategoryUseCase,
-    private val getCategoriesUseCase: GetCategoriesUseCase
+    private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val updateCategoryUseCase: UpdateCategoryUseCase,
 ) : ViewModel() {
-
+    private var allItems: List<Category> = emptyList()
     private val _uiState = MutableStateFlow<CategoryUiState>(CategoryUiState.Loading)
     val uiState: StateFlow<CategoryUiState> = _uiState.asStateFlow()
 
@@ -37,8 +39,9 @@ class CategoryViewModel(
                 }
 
                 is SyncResult.Success<*> -> {
+                    allItems = result.data as List<Category>
                     _uiState.value = CategoryUiState.Success(
-                        result = result.data as List<Category>
+                        result = allItems
                     )
                 }
             }
@@ -46,23 +49,42 @@ class CategoryViewModel(
     }
 
     fun onQueryChanged(query: String) {
+        if (_uiState.value !is CategoryUiState.Success) return
 
+        val filtered = if (query.isBlank()) allItems
+        else allItems.filter { it.nombre.contains(query, ignoreCase = true) }
+
+        _uiState.value = CategoryUiState.Success(
+            result = filtered,
+            query = query
+        )
     }
 
     fun onItemClick(item: Category) {
-        // Por implementar
-    }
+        if (_uiState.value is CategoryUiState.Loading) {
+            return
+        }
+        _uiState.value = CategoryUiState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val result = updateCategoryUseCase(item)
+                when (result) {
+                    is SyncResult.Error -> {
+                        _uiState.value = CategoryUiState.Error(result.exception.message.orEmpty())
+                    }
 
-    fun onEditClick(item: Category) {
-        // Por implementar
-    }
-
-    fun onDeleteClick(item: Category) {
-        // Por implementar
+                    is SyncResult.Success<*> -> {
+                        fetchLocal()
+                    }
+                }
+            } catch (e: Exception) {
+                _uiState.value = CategoryUiState.Error(e.message.orEmpty())
+            }
+        }
     }
 
     fun fetchRemote() {
-        if (_uiState.value is CategoryUiState.Loading){
+        if (_uiState.value is CategoryUiState.Loading) {
             return
         }
         _uiState.value = CategoryUiState.Loading

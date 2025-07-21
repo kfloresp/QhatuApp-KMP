@@ -9,22 +9,24 @@ fun CategoryModel.toDomain(): Category = Category(
     nombre = nombre,
     descripcion = descripcion,
     flag_sincronizado = flag_sincronizado,
+    flag_eliminado = flag_eliminado,
     fecha_actualizacion = fecha_actualizacion
 )
 fun Category.toEntity(): CategoryEntity = CategoryEntity(
-    idInternal = 0,
     id = id,
     nombre = nombre,
     descripcion = descripcion,
     flag_sincronizado = flag_sincronizado,
+    flag_eliminado = flag_eliminado,
     fecha_actualizacion = fecha_actualizacion
 )
 
 fun CategoryEntity.toDomain(): Category = Category(
-    id = idInternal.toString(),
+    id = id,
     nombre = nombre,
     descripcion = descripcion,
     flag_sincronizado = flag_sincronizado,
+    flag_eliminado = flag_eliminado,
     fecha_actualizacion = fecha_actualizacion
 )
 
@@ -33,13 +35,14 @@ fun CategoryEntity.toModel(): CategoryModel = CategoryModel(
     nombre = nombre,
     descripcion = descripcion,
     flag_sincronizado = flag_sincronizado,
+    flag_eliminado = flag_eliminado,
     fecha_actualizacion = fecha_actualizacion
 )
 fun CategoryModel.toEntity(): CategoryEntity = CategoryEntity(
-    idInternal = 0,
     id = id,
     nombre = nombre,
     descripcion = descripcion,
     flag_sincronizado = flag_sincronizado,
+    flag_eliminado = flag_eliminado,
     fecha_actualizacion = fecha_actualizacion
 )

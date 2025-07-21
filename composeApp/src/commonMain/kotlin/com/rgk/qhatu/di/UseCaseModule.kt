@@ -29,6 +29,7 @@ import com.rgk.qhatu.feature.setting.domain.usecase.SyncBrandUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncCategoryUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncConfigurationUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncUnitMeasureUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.UpdateCategoryUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -63,4 +64,5 @@ val domainModule = module {
     factoryOf(::GetCategoriesUseCase)
     factoryOf(::GetUnitsMeasureUseCase)
     factoryOf(::GetBrandsUseCase)
+    factoryOf(::UpdateCategoryUseCase)
 }

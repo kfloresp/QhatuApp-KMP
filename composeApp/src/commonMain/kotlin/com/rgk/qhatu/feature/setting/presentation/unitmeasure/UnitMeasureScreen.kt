@@ -24,8 +24,7 @@ fun UnitMeasureScreen(
     uiState: UnitMeasureUiState,
     onQueryChange: (String) -> Unit,
     onItemClick: (UnitMeasure) -> Unit,
-    onEditClick: (UnitMeasure) -> Unit,
-    onDeleteClick: (UnitMeasure) -> Unit,
+    onActionClick: (UnitMeasure) -> Unit,
 ) {
     var searchQuery by remember { mutableStateOf("") }
     Column(Modifier.fillMaxSize()) {
@@ -57,8 +56,7 @@ fun UnitMeasureScreen(
                     itemToKey = { it.id },
                     isSyncing = false,
                     onItemClick = onItemClick,
-                    onEditClick = onEditClick,
-                    onDeleteClick = onDeleteClick
+                    onActionClick = onActionClick,
                 )
             }
         }

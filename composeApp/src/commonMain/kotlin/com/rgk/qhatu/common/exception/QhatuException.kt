@@ -22,6 +22,10 @@ sealed class QhatuException : Throwable() {
         override val message: String = errorMessage
     }
 
+   data class ExceptionRoom(val errorMessage: String) : QhatuException() {
+        override val message: String = errorMessage
+    }
+
     data class Unexpected(val errorMessage: String) : QhatuException() {
         override val message: String = errorMessage
     }

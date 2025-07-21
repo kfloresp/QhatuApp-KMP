@@ -14,8 +14,7 @@ fun <T> ActionableListContent(
     itemToKey: (T) -> Any,
     isSyncing: Boolean,
     onItemClick: (T) -> Unit,
-    onEditClick: (T) -> Unit,
-    onDeleteClick: (T) -> Unit
+    onActionClick: (T) -> Unit,
 ) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
         item {
@@ -29,8 +28,7 @@ fun <T> ActionableListContent(
             ItemAction(
                 label = itemToLabel(item),
                 onItemClick = { onItemClick(item) },
-                onEditClick = { onEditClick(item) },
-                onDeleteClick = { onDeleteClick(item) }
+                onActionClick = { onActionClick(item) },
             )
         }
     }

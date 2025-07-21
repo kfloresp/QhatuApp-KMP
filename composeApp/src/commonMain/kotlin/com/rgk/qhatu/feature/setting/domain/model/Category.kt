@@ -4,6 +4,7 @@ data class Category(
     val id: String,
     val nombre: String,
     val descripcion: String? = null,
-    val flag_sincronizado: Int = 0,
-    val fecha_actualizacion: Long = 0
+    val flag_sincronizado: Boolean,
+    val flag_eliminado: Boolean,
+    val fecha_actualizacion: Long = 0,
 )

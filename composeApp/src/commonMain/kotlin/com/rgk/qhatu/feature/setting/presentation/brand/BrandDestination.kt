@@ -41,8 +41,7 @@ internal fun NavGraphBuilder.brandDestination(
             uiState = uiState,
             onQueryChange = viewModel::onQueryChanged,
             onItemClick = viewModel::onItemClick,
-            onEditClick = viewModel::onEditClick,
-            onDeleteClick = viewModel::onDeleteClick,
+            onActionClick = viewModel::onEditClick,
         )
     }
 }
