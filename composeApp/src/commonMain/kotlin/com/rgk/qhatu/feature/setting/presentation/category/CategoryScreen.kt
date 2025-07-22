@@ -32,10 +32,12 @@ fun CategoryScreen(
         onRefresh = { onPullRefresh() }
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
+            if (!isRefreshing) {
                 SearchBar(
                     query = query,
                     onQueryChange = onQueryChange
                 )
+            }
 
             when (uiState) {
                 is CategoryUiState.Loading -> {

@@ -3,6 +3,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -57,7 +58,8 @@ fun CustomTextField(
                     if (params.clickable && params.onClick != null) {
                         Modifier.clickable(onClick = params.onClick)
                     } else Modifier
-                )
+                ),
+            shape = RoundedCornerShape(12.dp)
         )
 
         params.error?.let {

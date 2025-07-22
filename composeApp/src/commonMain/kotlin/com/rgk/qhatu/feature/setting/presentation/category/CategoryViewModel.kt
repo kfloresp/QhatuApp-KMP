@@ -26,12 +26,10 @@ class CategoryViewModel(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val updateCategoryUseCase: UpdateCategoryUseCase,
 ) : ViewModel() {
-    private val DELAY_TIME = 1500L
+    private val DELAY_TIME = 500L
     private var allItems: List<Category> = emptyList()
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
-    var isSearching by mutableStateOf(false)
-        private set
     private val _uiState = MutableStateFlow<CategoryUiState>(CategoryUiState.Loading)
     val uiState: StateFlow<CategoryUiState> = _uiState.asStateFlow()
 
