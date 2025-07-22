@@ -3,6 +3,7 @@ package com.rgk.qhatu.feature.splash.presentation.splash
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.feature.auth.domain.usecase.AuthUseCase
+import com.rgk.qhatu.feature.auth.domain.usecase.ObserveCurrentUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class SplashViewModel(private val authUseCase: AuthUseCase) : ViewModel() {
+class SplashViewModel(private val observeCurrentUser: ObserveCurrentUser) : ViewModel() {
     private val _uiState = MutableStateFlow<SplashUiState>(SplashUiState.Loading)
     val uiState: StateFlow<SplashUiState> = _uiState.asStateFlow()
 
@@ -24,7 +25,7 @@ class SplashViewModel(private val authUseCase: AuthUseCase) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             delay(2000)
             try {
-                if (authUseCase.currentUser() != null) {
+                if (observeCurrentUser() != null) {
                     _uiState.value = SplashUiState.NavigateToHome
                 } else {
                     _uiState.value = SplashUiState.NavigateToLogin

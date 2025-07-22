@@ -78,7 +78,7 @@ class AuthViewModel(
 
         viewModelScope.launch {
             @Suppress("SOME_SONAR_RULE")
-                val result = authUseCase.login(_email.value, _password.value)
+                val result = authUseCase(_email.value, _password.value)
                 when (result){
                     is SyncResult.Error -> {
                         _showDialog.value = true

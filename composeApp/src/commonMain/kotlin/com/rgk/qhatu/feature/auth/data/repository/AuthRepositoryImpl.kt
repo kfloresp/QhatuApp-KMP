@@ -27,10 +27,9 @@ class AuthRepositoryImpl(private val remoteDataSource: AuthRemoteDataSource) : A
     }
 
     override suspend fun logout() {
-        remoteDataSource.logout()
+        return remoteDataSource.logout()
     }
 
-    override fun getCurrentUser(): User? {
-        return remoteDataSource.getCurrentUser()?.toDomain()
-    }
+    override val getCurrentUser: User? = remoteDataSource.getCurrentUser()?.toDomain()
+
 }

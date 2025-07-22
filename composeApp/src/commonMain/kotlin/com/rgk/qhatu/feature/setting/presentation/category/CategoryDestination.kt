@@ -29,19 +29,6 @@ internal fun NavGraphBuilder.categoryDestination(
         var selectedCategoryToEdit by remember { mutableStateOf<Category?>(null) }
         var selectedCategoryToDelete by remember { mutableStateOf<Category?>(null) }
 
-        ProvideAppBarActions {
-            IconButton(
-                onClick = {
-                    viewModel.fetchRemote()
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Download,
-                    contentDescription = null
-                )
-            }
-        }
-
         CategoryScreen(
             uiState = uiState,
             onQueryChange = viewModel::onQueryChanged,

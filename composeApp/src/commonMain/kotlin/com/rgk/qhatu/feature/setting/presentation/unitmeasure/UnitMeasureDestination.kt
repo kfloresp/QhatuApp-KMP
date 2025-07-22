@@ -24,20 +24,6 @@ internal fun NavGraphBuilder.unitMeasureDestination(
         val viewModel: UnitMeasureViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
 
-
-        ProvideAppBarActions {
-            IconButton(
-                onClick = {
-                    viewModel.fetchRemote()
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Download,
-                    contentDescription = null
-                )
-            }
-        }
-
         UnitMeasureScreen(
             uiState = uiState,
             onQueryChange = viewModel::onQueryChanged,

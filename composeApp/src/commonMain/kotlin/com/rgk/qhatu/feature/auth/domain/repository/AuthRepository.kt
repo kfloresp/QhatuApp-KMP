@@ -7,5 +7,5 @@ interface AuthRepository {
     suspend fun login(email: String, password: String): SyncResult<User>
     suspend fun register(email: String, password: String): SyncResult<User>
     suspend fun logout()
-    fun getCurrentUser(): User?
+    val getCurrentUser: User?
 }

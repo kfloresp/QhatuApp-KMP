@@ -26,7 +26,7 @@
     <string name="title_payments">Pagos</string>
     <string name="title_customers">Clientes</string>
     <string name="title_products">Productos</string>
-    <string name="title_setting">Configuración</string>
+    <string name="title_setting">Ajustes</string>
 
     <!-- Pantalla de Inicio -->
     <string name="tx_greeting">Hola, %1$s</string>
@@ -55,6 +55,10 @@
 
     <string name="tx_logout_title">Cerrar sesión</string>
     <string name="tx_logout_subtitle">Salir de la aplicación</string>
+
+    <string name="tx_logout_prompt">¿Desea cerrar sesión?</string>
+    <string name="tx_logout_confirm">Sí, cerrar sesión</string>
+    <string name="tx_cancel">Cancelar</string>
 
     <!-- Components -->
     <string name="sync_progress">Sincronizando datos…</string>

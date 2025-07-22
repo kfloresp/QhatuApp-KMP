@@ -4,6 +4,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
+import com.rgk.qhatu.common.extension.navigateToAuthGraphWithPopUp
+import com.rgk.qhatu.feature.auth.presentation.navigateToAuthGraph
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandDestination
 import com.rgk.qhatu.feature.setting.presentation.brand.brandDestination
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryDestination
@@ -24,32 +26,33 @@ fun NavController.navigateToSettingGraph(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.settingGraph(
     navController: NavController,
+    closeSession: () -> Unit,
 ) {
     navigation<SettingGraph>(
         startDestination = SettingDestination
     ) {
         settingDestination(
-            onOptionClick = { settingType ->
-                when (settingType) {
-                    SettingType.PROFILE -> {}
-                    SettingType.CATEGORIES -> {
-                        navController.navigate(CategoryDestination)
-                    }
+            onProfileClick = {
 
-                    SettingType.BRANDS -> {
-                        navController.navigate(BrandDestination)
-                    }
+            },
+            onCategoriesClick = {
+                navController.navigate(CategoryDestination)
+            },
+            onBrandsClick = {
+                navController.navigate(BrandDestination)
+            },
+            onUnitsClick = {
+                navController.navigate(UnitMeasureDestination)
+            },
+            onSyncDataClick = {
 
-                    SettingType.UNITS -> {
-                        navController.navigate(UnitMeasureDestination)
-                    }
-                    SettingType.SYNC_DATA -> {}
-                    SettingType.EXPORT_DATA -> {}
-                    SettingType.LOGOUT -> {
+            },
+            onExportDataClick = {
 
-                    }
-                }
-            }
+            },
+            onLogoutClick = {
+                closeSession()
+            },
         )
         unitMeasureDestination()
         brandDestination()

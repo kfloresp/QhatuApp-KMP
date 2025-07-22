@@ -23,20 +23,6 @@ internal fun NavGraphBuilder.brandDestination(
         val viewModel: BrandViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
 
-
-        ProvideAppBarActions {
-            IconButton(
-                onClick = {
-                    viewModel.fetchRemote()
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Download,
-                    contentDescription = null
-                )
-            }
-        }
-
         BrandScreen(
             uiState = uiState,
             onQueryChange = viewModel::onQueryChanged,

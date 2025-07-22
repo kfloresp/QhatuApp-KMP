@@ -3,6 +3,9 @@ package com.rgk.qhatu.di
 import com.rgk.qhatu.feature.audit.domain.usecase.GetAuditLogStatsUseCase
 import com.rgk.qhatu.feature.audit.domain.usecase.SyncAuditLogUseCase
 import com.rgk.qhatu.feature.auth.domain.usecase.AuthUseCase
+import com.rgk.qhatu.feature.auth.domain.usecase.LogoutUseCase
+import com.rgk.qhatu.feature.auth.domain.usecase.ObserveCurrentUser
+import com.rgk.qhatu.feature.auth.domain.usecase.RegisterUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetClientStatsUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetClientUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetProviderUseCase
@@ -65,4 +68,8 @@ val domainModule = module {
     factoryOf(::GetUnitsMeasureUseCase)
     factoryOf(::GetBrandsUseCase)
     factoryOf(::UpdateCategoryUseCase)
+    factoryOf(::LogoutUseCase)
+    factoryOf(::ObserveCurrentUser)
+    factoryOf(::RegisterUseCase)
+
 }

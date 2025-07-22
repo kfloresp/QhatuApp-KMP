@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.rgk.qhatu.MainViewModel
 import com.rgk.qhatu.common.extension.navigateToAuthGraphWithPopUp
 import com.rgk.qhatu.common.extension.navigateToHomeWithPopUp
 import com.rgk.qhatu.feature.auth.presentation.authGraph
@@ -27,11 +28,13 @@ import com.rgk.qhatu.feature.setting.presentation.navigateToSettingGraph
 import com.rgk.qhatu.feature.setting.presentation.settingGraph
 import com.rgk.qhatu.feature.splash.presentation.SplashGraph
 import com.rgk.qhatu.feature.splash.presentation.splashGraph
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun AppNavHost(
     modifier: Modifier,
     navController: NavHostController,
+    closeSession: () -> Unit,
 ) {
     NavHost(
         modifier = modifier,
@@ -63,7 +66,8 @@ fun AppNavHost(
         )
         saleGraph()
         settingGraph(
-            navController = navController
+            navController = navController,
+            closeSession = closeSession,
         )
         paymentGraph()
         productGraph()
@@ -73,7 +77,9 @@ fun AppNavHost(
 
 @Composable
 fun AppNavGraph(
-    navController: NavHostController = rememberNavController()
+    viewModel: MainViewModel,
+    navController: NavHostController,
+    closeSession: () -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.safeDrawingPadding(),
@@ -90,7 +96,8 @@ fun AppNavGraph(
     ) { innerPadding ->
         AppNavHost(
             modifier = Modifier.padding(innerPadding),
-            navController = navController
+            navController = navController,
+            closeSession = closeSession,
         )
     }
 }

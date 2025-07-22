@@ -1,5 +1,6 @@
 package com.rgk.qhatu.di
 
+import com.rgk.qhatu.MainViewModel
 import com.rgk.qhatu.feature.auth.presentation.auth.AuthViewModel
 import com.rgk.qhatu.feature.home.presentation.home.HomeViewModel
 import com.rgk.qhatu.feature.sale.presentation.receipt.ReceiptViewModel
@@ -24,6 +25,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val viewModelModule = module {
+    viewModelOf(::MainViewModel)
     viewModelOf(::HomeViewModel)
     viewModelOf(::AuthViewModel)
     viewModelOf(::SyncAuditLogViewModel)
