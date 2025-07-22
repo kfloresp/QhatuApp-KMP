@@ -35,12 +35,14 @@ import qhatuapp.composeapp.generated.resources.ic_question
 @Composable
 fun ConfirmDialog(
     title: String,
+    description: String? = null,
     primaryButtonText: String,
     onPrimaryClick: () -> Unit,
     imagePainter: Painter? = painterResource(resource = Res.drawable.ic_question),
     secondaryButtonText: String? = null,
     onSecondaryClick: (() -> Unit)? = null,
     onDismiss: (() -> Unit)? = null,
+    isClosable: Boolean = false,
 ) {
     Dialog(onDismissRequest = { onDismiss?.invoke() }) {
         Surface(
@@ -54,11 +56,11 @@ fun ConfirmDialog(
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (onDismiss != null) {
+                if (isClosable) {
                     Box(modifier = Modifier.fillMaxWidth()) {
                         IconButton(
                             modifier = Modifier.align(Alignment.TopEnd),
-                            onClick = onDismiss
+                            onClick = { onDismiss?.invoke() }
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Close,
@@ -87,8 +89,16 @@ fun ConfirmDialog(
                     style = MaterialTheme.typography.titleLarge,
                     textAlign = TextAlign.Center
                 )
+                description?.let {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = description,
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Center
+                    )
+                }
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
                 Column(
                     modifier = Modifier.fillMaxWidth(),
@@ -120,9 +130,11 @@ fun ConfirmDialog(
 private fun ConfirmDialogPreview() {
     ConfirmDialog(
         title = "¿Desea eliminar (Categoria: LACTEOS)?",
+        description = "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
         imagePainter = painterResource(resource = Res.drawable.ic_question),
         primaryButtonText = "Eliminar",
         onPrimaryClick = { /* acción */ },
+        isClosable = true,
         secondaryButtonText = "Cancelar",
         onSecondaryClick = { /* cancelar */ },
         onDismiss = { /* cerrar modal */ }

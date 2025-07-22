@@ -20,7 +20,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun SettingScreen(
-    onOptionClick: (SettingType) -> Unit
+    onOptionClick: (SettingType) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         val settingsOptions = remember {

@@ -1,9 +1,5 @@
 package com.rgk.qhatu.feature.setting.presentation.category
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Download
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,7 +9,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.feature.setting.domain.model.Category
-import com.rgk.qhatu.navigation.ProvideAppBarActions
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -21,11 +16,11 @@ import org.koin.compose.viewmodel.koinViewModel
 data object CategoryDestination
 
 internal fun NavGraphBuilder.categoryDestination(
-
 ) {
     composable<CategoryDestination> {
         val viewModel: CategoryViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
+        val isRefreshing by viewModel.isRefreshing.collectAsState()
         var selectedCategoryToEdit by remember { mutableStateOf<Category?>(null) }
         var selectedCategoryToDelete by remember { mutableStateOf<Category?>(null) }
 
@@ -38,6 +33,8 @@ internal fun NavGraphBuilder.categoryDestination(
             onActionClick = {
                 selectedCategoryToDelete = it
             },
+            onPullRefresh = viewModel::onPullRefresh,
+            isRefreshing = isRefreshing
         )
 
         selectedCategoryToEdit?.let { category ->
@@ -45,7 +42,6 @@ internal fun NavGraphBuilder.categoryDestination(
                 title = "¿Deseas editar la categoría \"${category.nombre}\"?",
                 primaryButtonText = "Sí, editar",
                 onPrimaryClick = {
-                    //viewModel.onItemClick(category)
                     selectedCategoryToEdit = null
                 },
                 secondaryButtonText = "Cancelar",

@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -16,7 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.theme.QhatuTheme
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_search_bar
 
 @Composable
 fun SearchBar(
@@ -30,12 +35,22 @@ fun SearchBar(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
-        placeholder = { Text("Buscar...") },
+        placeholder = { Text(stringResource(Res.string.tx_search_bar)) },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = null
             )
+        },
+        trailingIcon = {
+            if (query.isNotEmpty()) {
+                IconButton(onClick = { onQueryChange("") }) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = null
+                    )
+                }
+            }
         },
         shape = RoundedCornerShape(50),
         colors = OutlinedTextFieldDefaults.colors(

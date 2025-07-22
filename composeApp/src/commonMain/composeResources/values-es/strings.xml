@@ -59,6 +59,7 @@
     <string name="tx_logout_prompt">¿Desea cerrar sesión?</string>
     <string name="tx_logout_confirm">Sí, cerrar sesión</string>
     <string name="tx_cancel">Cancelar</string>
+    <string name="tx_search_bar">Buscar...</string>
 
     <!-- Components -->
     <string name="sync_progress">Sincronizando datos…</string>
