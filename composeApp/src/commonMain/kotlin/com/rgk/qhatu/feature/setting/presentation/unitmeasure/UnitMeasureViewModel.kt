@@ -73,7 +73,7 @@ class UnitMeasureViewModel(
         _uiState.value = UnitMeasureUiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val result = syncUnitMeasureUseCase(SyncOperation.Download())
+                val result = syncUnitMeasureUseCase(SyncOperation.RemoteToLocal())
                 when (result) {
                     is SyncResult.Error -> {
                         _uiState.value = UnitMeasureUiState.Error(result.exception.message.orEmpty())

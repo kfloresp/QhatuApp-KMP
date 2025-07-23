@@ -51,7 +51,7 @@ class SyncBrandViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             _syncState.value = SyncState.Loading
             @Suppress("SOME_SONAR_RULE")
-            val result = syncBrandUseCase(SyncOperation.Download())
+            val result = syncBrandUseCase(SyncOperation.RemoteToLocal())
             when (result) {
                 is SyncResult.Error -> {
                     _syncState.value = SyncState.Error(result.exception.message.orEmpty())

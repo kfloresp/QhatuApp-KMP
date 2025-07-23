@@ -1,4 +1,5 @@
 package com.rgk.qhatu.feature.setting.data.repository
+
 import com.rgk.qhatu.feature.setting.data.database.dao.ConfigurationDao
 import com.rgk.qhatu.feature.setting.data.remote.ConfigurationRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
@@ -53,15 +54,6 @@ class ConfigurationRepositoryImpl(
             data.forEach {
                 sourceRemote.uploadCollection(it)
             }
-            SyncResult.Success(true)
-        } catch (e: Exception) {
-            SyncResult.Error(e)
-        }
-    }
-
-    override suspend fun updateLocal(register: Configuration): SyncResult<Boolean> {
-        return try {
-            sourceLocal.update(register.toEntity())
             SyncResult.Success(true)
         } catch (e: Exception) {
             SyncResult.Error(e)

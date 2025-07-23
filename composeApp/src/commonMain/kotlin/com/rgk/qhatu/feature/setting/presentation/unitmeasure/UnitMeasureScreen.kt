@@ -15,9 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.rgk.qhatu.common.components.list.ActionableListContent
 import com.rgk.qhatu.common.components.search.SearchBar
-import com.rgk.qhatu.feature.setting.domain.model.Category
 import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
-import com.rgk.qhatu.feature.setting.presentation.category.CategoryUiState
 
 @Composable
 fun UnitMeasureScreen(
@@ -54,7 +52,6 @@ fun UnitMeasureScreen(
                     items = uiState.result,
                     itemToLabel = { it.name },
                     itemToKey = { it.id },
-                    isSyncing = false,
                     onItemClick = onItemClick,
                     onActionClick = onActionClick,
                 )

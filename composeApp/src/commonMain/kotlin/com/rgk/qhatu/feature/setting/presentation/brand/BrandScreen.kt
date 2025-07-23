@@ -16,8 +16,6 @@ import androidx.compose.ui.graphics.Color
 import com.rgk.qhatu.common.components.list.ActionableListContent
 import com.rgk.qhatu.common.components.search.SearchBar
 import com.rgk.qhatu.feature.setting.domain.model.Brand
-import com.rgk.qhatu.feature.setting.domain.model.Category
-import com.rgk.qhatu.feature.setting.presentation.category.CategoryUiState
 
 @Composable
 fun BrandScreen(
@@ -54,7 +52,6 @@ fun BrandScreen(
                     items = uiState.result,
                     itemToLabel = { it.name },
                     itemToKey = { it.id },
-                    isSyncing = false,
                     onItemClick = onItemClick,
                     onActionClick = onActionClick,
                 )

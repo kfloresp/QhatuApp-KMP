@@ -8,17 +8,16 @@ import com.rgk.qhatu.feature.setting.domain.repository.StoreRepository
 class SyncStoreUseCase(private val repository: StoreRepository) {
     suspend operator fun invoke(operation: SyncOperation<Store>): SyncResult<*> {
         return when (operation) {
-            is SyncOperation.Save -> {
+            is SyncOperation.SaveLocal -> {
                 repository.saveLocal(operation.registers)
             }
-            is SyncOperation.Update -> {
-                repository.uploadRemote(operation.register)
+            is SyncOperation.UpsertLocal -> {
+                repository.upsertLocal(operation.register)
             }
-            is SyncOperation.Download -> {
+            is SyncOperation.LocalToRemote -> {
                 repository.syncRemoteToLocal()
             }
-
-            is SyncOperation.Upload<*> -> {
+            is SyncOperation.RemoteToLocal<*> -> {
                 repository.syncRemoteToLocal()
             }
         }

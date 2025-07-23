@@ -70,7 +70,7 @@ class BrandViewModel(
         _uiState.value = BrandUiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val result = syncBrandUseCase(SyncOperation.Download())
+                val result = syncBrandUseCase(SyncOperation.RemoteToLocal())
                 when (result) {
                     is SyncResult.Error -> {
                         _uiState.value = BrandUiState.Error(result.exception.message.orEmpty())

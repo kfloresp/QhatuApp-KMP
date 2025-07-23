@@ -1,8 +1,11 @@
 package com.rgk.qhatu.feature.setting.presentation.category
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,6 +17,10 @@ import com.rgk.qhatu.common.components.refresh.RefreshBox
 import com.rgk.qhatu.common.components.search.SearchBar
 import com.rgk.qhatu.common.components.shimmer.ShimmerListVertical
 import com.rgk.qhatu.feature.setting.domain.model.Category
+import org.jetbrains.compose.resources.imageResource
+import org.jetbrains.compose.resources.painterResource
+import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.ic_question
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,12 +39,6 @@ fun CategoryScreen(
         onRefresh = { onPullRefresh() }
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
-            if (!isRefreshing) {
-                SearchBar(
-                    query = query,
-                    onQueryChange = onQueryChange
-                )
-            }
 
             when (uiState) {
                 is CategoryUiState.Loading -> {
@@ -51,15 +52,27 @@ fun CategoryScreen(
                 }
 
                 is CategoryUiState.Success -> {
+                    SearchBar(
+                        query = query,
+                        onQueryChange = onQueryChange
+                    )
                     ActionableListContent(
                         modifier = Modifier,
                         items = uiState.result,
                         itemToLabel = { it.name },
                         itemToKey = { it.id },
-                        isSyncing = false,
                         onItemClick = onItemClick,
                         onActionClick = onActionClick,
                     )
+                }
+
+                CategoryUiState.Empty -> {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Image(
+                            painter = painterResource(Res.drawable.ic_question),
+                            contentDescription = null
+                        )
+                    }
                 }
             }
         }

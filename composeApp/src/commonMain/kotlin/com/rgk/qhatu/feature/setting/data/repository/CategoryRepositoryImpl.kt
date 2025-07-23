@@ -1,7 +1,5 @@
 package com.rgk.qhatu.feature.setting.data.repository
 
-import com.rgk.qhatu.common.exception.RoomOperationType
-import com.rgk.qhatu.common.exception.validateRoomRowCount
 import com.rgk.qhatu.common.extension.safeCall
 import com.rgk.qhatu.feature.setting.data.database.dao.CategoryDao
 import com.rgk.qhatu.feature.setting.data.remote.CategoryRemoteDataSource
@@ -19,6 +17,7 @@ class CategoryRepositoryImpl(
     private val sourceRemote: CategoryRemoteDataSource,
     private val sourceLocal: CategoryDao,
 ) : CategoryRepository {
+
     override suspend fun fetchLocal(): SyncResult<List<Category>> {
         return try {
             val data = sourceLocal.fetchAll().map {
@@ -64,15 +63,13 @@ class CategoryRepositoryImpl(
         }
     }
 
-    override suspend fun updateLocal(register: Category): SyncResult<Unit> {
+    override suspend fun upsertLocal(register: Category): SyncResult<Unit> {
         return safeCall {
             val isNew = register.id.isEmpty()
             if (isNew) {
-                val row = sourceLocal.save(register.toEntity().copy(id = generateUUID()))
-                //validateRoomRowCount(row, operation = RoomOperationType.INSERT)
+                sourceLocal.save(register.toEntity().copy(id = generateUUID()))
             } else {
-                val row = sourceLocal.update(register.toEntity())
-                validateRoomRowCount(row, operation = RoomOperationType.UPDATE)
+                sourceLocal.update(register.toEntity())
             }
         }
     }

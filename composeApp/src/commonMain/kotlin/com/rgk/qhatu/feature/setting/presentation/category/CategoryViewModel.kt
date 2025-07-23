@@ -7,7 +7,6 @@ import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.setting.domain.model.Category
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoriesUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncCategoryUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.UpdateCategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
@@ -20,7 +19,6 @@ import kotlinx.coroutines.launch
 class CategoryViewModel(
     private val syncCategoryUseCase: SyncCategoryUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val updateCategoryUseCase: UpdateCategoryUseCase,
 ) : ViewModel() {
     private val DELAY_TIME = 500L
     private var allItems: List<Category> = emptyList()
@@ -42,23 +40,35 @@ class CategoryViewModel(
     }
 
     private suspend fun fetchLocal() {
-        _uiState.value = CategoryUiState.Loading
+        _uiState.update {
+            CategoryUiState.Loading
+        }
         delay(DELAY_TIME)
         val result = getCategoriesUseCase()
         when (result) {
             is SyncResult.Error -> {
-                _uiState.value = CategoryUiState.Error(result.exception.message.orEmpty())
-                println(result.exception.message.orEmpty())
+                _uiState.update {
+                    CategoryUiState.Error(result.exception.message.orEmpty())
+                }
             }
 
             is SyncResult.Success<*> -> {
                 allItems = result.data as List<Category>
-                _uiState.value = CategoryUiState.Success(
-                    result = allItems
-                )
+                if (allItems.isNotEmpty()) {
+                    _uiState.update {
+                        CategoryUiState.Success(
+                            result = allItems
+                        )
+                    }
+                } else {
+                    _uiState.update {
+                        CategoryUiState.Empty
+                    }
+                }
             }
         }
     }
+
     fun onQueryChanged(query: String) {
         if (_uiState.value !is CategoryUiState.Success) return
 
@@ -78,7 +88,7 @@ class CategoryViewModel(
         _uiState.value = CategoryUiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val result = updateCategoryUseCase(item)
+                val result = syncCategoryUseCase(SyncOperation.UpsertLocal(item))
                 when (result) {
                     is SyncResult.Error -> {
                         _uiState.value = CategoryUiState.Error(result.exception.message.orEmpty())
@@ -101,7 +111,7 @@ class CategoryViewModel(
         _uiState.value = CategoryUiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val result = syncCategoryUseCase(SyncOperation.Download())
+                val result = syncCategoryUseCase(SyncOperation.RemoteToLocal())
                 when (result) {
                     is SyncResult.Error -> {
                         _uiState.value = CategoryUiState.Error(result.exception.message.orEmpty())

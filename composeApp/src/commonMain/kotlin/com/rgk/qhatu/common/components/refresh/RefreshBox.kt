@@ -3,6 +3,8 @@ package com.rgk.qhatu.common.components.refresh
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 import androidx.compose.material3.pulltorefresh.PullToRefreshState
@@ -30,8 +32,9 @@ fun RefreshBox(
     content: @Composable BoxScope.() -> Unit,
 ) {
     Box(
-        modifier.pullToRefresh
-            (state = state, isRefreshing = isRefreshing, onRefresh = onRefresh).fillMaxSize(),
+        modifier
+            .pullToRefresh(state = state, isRefreshing = isRefreshing, onRefresh = onRefresh)
+            .fillMaxSize(),
         contentAlignment = contentAlignment,
     ) {
         content()

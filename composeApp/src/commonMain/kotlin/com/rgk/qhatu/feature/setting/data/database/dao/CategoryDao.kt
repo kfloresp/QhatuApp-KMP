@@ -10,13 +10,13 @@ import com.rgk.qhatu.common.model.SyncStats
 @Dao
 interface CategoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun save(entity: CategoryEntity): Long
+    suspend fun save(entity: CategoryEntity)
 
     @Update
-    suspend fun update(entity: CategoryEntity): Int
+    suspend fun update(entity: CategoryEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun save(entity: List<CategoryEntity>): List<Long>
+    suspend fun save(entity: List<CategoryEntity>)
 
     @Query("SELECT * FROM categories where flag_eliminado = false")
     suspend fun fetchAll(): List<CategoryEntity>

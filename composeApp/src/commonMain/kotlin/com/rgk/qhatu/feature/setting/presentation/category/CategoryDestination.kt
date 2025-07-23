@@ -1,5 +1,7 @@
 package com.rgk.qhatu.feature.setting.presentation.category
 
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,6 +14,7 @@ import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.dialog.ContentDialog
 import com.rgk.qhatu.feature.setting.domain.model.Category
 import com.rgk.qhatu.feature.setting.presentation.category.component.CategoryForm
+import com.rgk.qhatu.navigation.ProvideAppBarActions
 import com.rgk.qhatu.navigation.ProvideFabAction
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
@@ -41,7 +44,7 @@ internal fun NavGraphBuilder.categoryDestination(
         var selectedCategoryToNew by remember { mutableStateOf(false) }
 
         ProvideFabAction {
-            if (!isRefreshing) {
+            if (!isRefreshing && uiState is CategoryUiState.Success || uiState is CategoryUiState.Empty) {
                 ButtonFlotableAction(
                     label = stringResource(Res.string.tx_setting_add_new)
                 ) {
@@ -49,6 +52,7 @@ internal fun NavGraphBuilder.categoryDestination(
                 }
             }
         }
+
         CategoryScreen(
             uiState = uiState,
             onQueryChange = viewModel::onQueryChanged,
@@ -59,7 +63,7 @@ internal fun NavGraphBuilder.categoryDestination(
                 selectedCategoryToDelete = it
             },
             onPullRefresh = viewModel::onPullRefresh,
-            isRefreshing = isRefreshing
+            isRefreshing = isRefreshing,
         )
 
         selectedCategoryToEdit?.let { category ->

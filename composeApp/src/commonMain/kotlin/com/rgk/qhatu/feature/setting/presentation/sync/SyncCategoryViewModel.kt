@@ -50,7 +50,7 @@ class SyncCategoryViewModel(
     fun sync() {
         viewModelScope.launch(Dispatchers.IO) {
             _syncState.value = SyncState.Loading
-            val result = syncCategoryUseCase(SyncOperation.Download())
+            val result = syncCategoryUseCase(SyncOperation.RemoteToLocal())
             when (result) {
                 is SyncResult.Error -> {
                     _syncState.value = SyncState.Error(result.exception.message.orEmpty())

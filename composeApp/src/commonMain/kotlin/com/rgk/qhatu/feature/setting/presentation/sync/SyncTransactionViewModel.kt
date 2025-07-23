@@ -50,7 +50,7 @@ class SyncTransactionViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             _syncState.value = SyncState.Loading
             @Suppress("SOME_SONAR_RULE")
-            val result = syncTransactionUseCase(SyncOperation.Download())
+            val result = syncTransactionUseCase(SyncOperation.RemoteToLocal())
             when (result) {
                 is SyncResult.Error -> {
                     _syncState.value = SyncState.Error(result.exception.message.orEmpty())

@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.rgk.qhatu.common.components.progress.SyncProgressIndicator
 
 @Composable
 fun <T> ActionableListContent(
@@ -15,7 +14,6 @@ fun <T> ActionableListContent(
     items: List<T>,
     itemToLabel: (T) -> String,
     itemToKey: (T) -> Any,
-    isSyncing: Boolean,
     onItemClick: (T) -> Unit,
     onActionClick: (T) -> Unit,
 ) {
@@ -25,10 +23,6 @@ fun <T> ActionableListContent(
             bottom = 80.dp
         ),
     ) {
-        item {
-            SyncProgressIndicator(isSyncing = isSyncing)
-        }
-
         itemsIndexed(
             items = items,
             key = { _, item -> itemToKey(item) }
