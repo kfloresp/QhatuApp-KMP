@@ -1,10 +1,11 @@
 package com.rgk.qhatu.feature.setting.domain.model
 
 data class UnitMeasure(
-    val id: String,
-    val nombre: String,
-    val descripcion: String? = null,
-    val abreviatura: String,
-    val fecha_sincronizado: Long = 0,
-    val flag_sincronizado: Int = 0
+    val id: String = "",
+    val name: String = "",
+    val description: String? = null,
+    val abbreviation: String? = null,
+    val isSynced: Boolean = false,
+    val isDeleted: Boolean = false,
+    val lastUpdated: Long = 0,
 )

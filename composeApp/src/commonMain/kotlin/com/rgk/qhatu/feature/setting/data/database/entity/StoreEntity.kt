@@ -1,17 +1,33 @@
 package com.rgk.qhatu.feature.setting.data.database.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "stores")
 data class StoreEntity(
-    @PrimaryKey(autoGenerate = true)
-    val idInternal: Int = 0,
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     val id: String,
-    val nombre: String,
-    val direccion: String,
-    val celular: String,
-    val urlLogo: String,
-    val flagSincronizado: Int,
-    val fechaSincronizado: Long
+
+    @ColumnInfo(name = "nombre")
+    val name: String,
+
+    @ColumnInfo(name = "direccion")
+    val address: String?,
+
+    @ColumnInfo(name = "celular")
+    val phone: String?,
+
+    @ColumnInfo(name = "urlLogo")
+    val logoUrl: String?,
+
+    @ColumnInfo(name = "flag_sincronizado")
+    val isSynced: Boolean,
+
+    @ColumnInfo(name = "flag_eliminado")
+    val isDeleted: Boolean,
+
+    @ColumnInfo(name = "fecha_actualizacion")
+    val lastUpdated: Long,
 )

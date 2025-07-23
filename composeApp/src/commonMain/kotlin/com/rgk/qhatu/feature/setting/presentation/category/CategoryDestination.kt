@@ -1,9 +1,5 @@
 package com.rgk.qhatu.feature.setting.presentation.category
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,7 +38,7 @@ internal fun NavGraphBuilder.categoryDestination(
         val isRefreshing by viewModel.isRefreshing.collectAsState()
         var selectedCategoryToEdit by remember { mutableStateOf<Category?>(null) }
         var selectedCategoryToDelete by remember { mutableStateOf<Category?>(null) }
-        var selectedCategoryToNew by remember { mutableStateOf<Boolean>(false) }
+        var selectedCategoryToNew by remember { mutableStateOf(false) }
 
         ProvideFabAction {
             if (!isRefreshing) {
@@ -71,14 +67,14 @@ internal fun NavGraphBuilder.categoryDestination(
                 title = stringResource(Res.string.tx_setting_edit_category),
                 content = {
                     CategoryForm(
-                        initialName = category.nombre,
-                        initialDescription = category.descripcion.orEmpty(),
+                        initialName = category.name,
+                        initialDescription = category.description.orEmpty(),
                         onPrimaryButtonRes = Res.string.tx_setting_confirm_edit,
-                        onConfirm = { nombre, descripcion ->
+                        onConfirm = { nameCategory, descriptionCategory ->
                             viewModel.onItemClick(
                                 category.copy(
-                                    nombre = nombre,
-                                    descripcion = descripcion
+                                    name = nameCategory,
+                                    description = descriptionCategory
                                 )
                             )
                             selectedCategoryToEdit = null
@@ -101,11 +97,11 @@ internal fun NavGraphBuilder.categoryDestination(
                         initialName = "",
                         initialDescription = "",
                         onPrimaryButtonRes = Res.string.tx_setting_confirm_new,
-                        onConfirm = { nombre, descripcion ->
+                        onConfirm = { nameCategory, descriptionCategory ->
                             viewModel.onItemClick(
                                 Category(
-                                    nombre = nombre,
-                                    descripcion = descripcion,
+                                    name = nameCategory,
+                                    description = descriptionCategory,
                                 )
                             )
                             selectedCategoryToNew = false
@@ -126,11 +122,11 @@ internal fun NavGraphBuilder.categoryDestination(
                 title = stringResource(Res.string.tx_setting_delete_category),
                 description = stringResource(
                     Res.string.tx_setting_confirm_delete_message,
-                    category.nombre
+                    category.name
                 ),
                 primaryButtonText = stringResource(Res.string.tx_setting_confirm_delete),
                 onPrimaryClick = {
-                    viewModel.onItemClick(category.copy(flag_eliminado = true))
+                    viewModel.onItemClick(category.copy(isDeleted = true))
                     selectedCategoryToDelete = null
                 },
                 secondaryButtonText = stringResource(Res.string.tx_setting_cancel),

@@ -6,45 +6,45 @@ import com.rgk.qhatu.feature.setting.data.remote.model.CategoryModel
 
 fun CategoryModel.toDomain(): Category = Category(
     id = id,
-    nombre = nombre,
-    descripcion = descripcion,
-    flag_sincronizado = flag_sincronizado,
-    flag_eliminado = flag_eliminado,
-    fecha_actualizacion = fecha_actualizacion
+    name = name,
+    description = description,
+    isSynced = isSynced,
+    isDeleted = isDeleted,
+    lastUpdated = lastUpdated,
 )
 
 fun Category.toEntity(): CategoryEntity = CategoryEntity(
     id = id,
-    nombre = nombre,
-    descripcion = descripcion,
-    flag_sincronizado = flag_sincronizado,
-    flag_eliminado = flag_eliminado,
-    fecha_actualizacion = fecha_actualizacion
+    name = name,
+    description = description,
+    isSynced = isSynced,
+    isDeleted = isDeleted,
+    lastUpdated = lastUpdated,
 )
 
 fun CategoryEntity.toDomain(): Category = Category(
     id = id,
-    nombre = nombre,
-    descripcion = descripcion,
-    flag_sincronizado = flag_sincronizado,
-    flag_eliminado = flag_eliminado,
-    fecha_actualizacion = fecha_actualizacion
+    name = name,
+    description = description,
+    isSynced = isSynced,
+    isDeleted = isDeleted,
+    lastUpdated = lastUpdated,
 )
 
 fun CategoryEntity.toModel(): CategoryModel = CategoryModel(
     id = id,
-    nombre = nombre,
-    descripcion = descripcion,
-    flag_sincronizado = flag_sincronizado,
-    flag_eliminado = flag_eliminado,
-    fecha_actualizacion = fecha_actualizacion
+    name = name,
+    description = description,
+    isSynced = isSynced,
+    isDeleted = isDeleted,
+    lastUpdated = lastUpdated,
 )
 
 fun CategoryModel.toEntity(): CategoryEntity = CategoryEntity(
     id = id,
-    nombre = nombre,
-    descripcion = descripcion,
-    flag_sincronizado = flag_sincronizado,
-    flag_eliminado = flag_eliminado,
-    fecha_actualizacion = fecha_actualizacion
+    name = name,
+    description = description,
+    isSynced = isSynced,
+    isDeleted = isDeleted,
+    lastUpdated = lastUpdated,
 )

@@ -22,7 +22,7 @@ interface UnitMeasureDao {
     @Query("SELECT * FROM unit_measures")
     suspend fun fetchAll(): List<UnitMeasureEntity>
 
-    @Query("SELECT COUNT(*) as count, MAX(fecha_sincronizado) as lastUpdated FROM unit_measures")
+    @Query("SELECT COUNT(*) as count, MAX(fecha_actualizacion) as lastUpdated FROM unit_measures")
     suspend fun getStats(): SyncStats
 
     @Query("SELECT id FROM unit_measures WHERE flag_sincronizado = 1")

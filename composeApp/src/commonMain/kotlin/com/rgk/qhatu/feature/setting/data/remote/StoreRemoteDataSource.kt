@@ -1,19 +1,20 @@
 package com.rgk.qhatu.feature.setting.data.remote
 
 import com.rgk.qhatu.feature.setting.data.remote.model.StoreModel
-import com.rgk.qhatu.common.model.SyncTable
 import dev.gitlive.firebase.firestore.FirebaseFirestore
+
+private const val COLLECTION = "tienda"
 
 class StoreRemoteDataSource(private val firestore: FirebaseFirestore) {
 
     suspend fun fetchCollection(): List<StoreModel> {
-        val querySnapshot = firestore.collection(SyncTable.Store.collection).get()
+        val querySnapshot = firestore.collection(COLLECTION).get()
         return querySnapshot.documents.map { documentSnapshot ->
             documentSnapshot.data<StoreModel>()
         }
     }
 
     suspend fun uploadCollection(data: StoreModel) {
-        firestore.collection(SyncTable.Store.collection).document(data.id).set(data)
+        firestore.collection(COLLECTION).document(data.id).set(data)
     }
 }

@@ -1,11 +1,15 @@
 package com.rgk.qhatu.feature.setting.data.remote.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class StoreModel(
     val id: String,
-    val nombre: String,
-    val direccion: String,
-    val celular: String,
-    val urlLogo: String,
-    val flagSincronizado: Int = 0,
-    val fechaSincronizado: Long = 0
+    val name: String,
+    val address: String? = null,
+    val phone: String? = null,
+    val logoUrl: String? = null,
+    val isSynced: Boolean = false,
+    val isDeleted: Boolean = false,
+    val lastUpdated: Long = 0,
 )

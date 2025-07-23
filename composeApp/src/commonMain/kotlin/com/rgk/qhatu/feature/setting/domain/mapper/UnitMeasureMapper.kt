@@ -6,47 +6,50 @@ import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
 
 fun UnitMeasureModel.toDomain(): UnitMeasure = UnitMeasure(
     id = id,
-    nombre = nombre,
-    descripcion = descripcion,
-    abreviatura = abreviatura,
-    fecha_sincronizado = fecha_sincronizado,
-    flag_sincronizado = flag_sincronizado
+    name = name,
+    description = description,
+    abbreviation = abbreviation,
+    isSynced = isSynced,
+    isDeleted = isDeleted,
+    lastUpdated = lastUpdated,
 )
 
 fun UnitMeasure.toEntity(): UnitMeasureEntity = UnitMeasureEntity(
-    idInternal = 0,
     id = id,
-    nombre = nombre,
-    descripcion = descripcion,
-    abreviatura = abreviatura,
-    fecha_sincronizado = fecha_sincronizado,
-    flag_sincronizado = flag_sincronizado
+    name = name.orEmpty(),
+    description = description.orEmpty(),
+    abbreviation = abbreviation.orEmpty(),
+    isSynced = isSynced,
+    isDeleted = isDeleted,
+    lastUpdated = lastUpdated,
 )
 
 fun UnitMeasureEntity.toDomain(): UnitMeasure = UnitMeasure(
     id = id,
-    nombre = nombre,
-    descripcion = descripcion,
-    abreviatura = abreviatura,
-    fecha_sincronizado = fecha_sincronizado,
-    flag_sincronizado = flag_sincronizado
+    name = name,
+    description = description,
+    abbreviation = abbreviation,
+    isSynced = isSynced,
+    isDeleted = isDeleted,
+    lastUpdated = lastUpdated,
 )
 
 fun UnitMeasureEntity.toModel(): UnitMeasureModel = UnitMeasureModel(
     id = id,
-    nombre = nombre,
-    descripcion = descripcion,
-    abreviatura = abreviatura,
-    fecha_sincronizado = fecha_sincronizado,
-    flag_sincronizado = flag_sincronizado
+    name = name,
+    description = description,
+    abbreviation = abbreviation,
+    isSynced = isSynced,
+    isDeleted = isDeleted,
+    lastUpdated = lastUpdated,
 )
 
 fun UnitMeasureModel.toEntity(): UnitMeasureEntity = UnitMeasureEntity(
-    idInternal = 0,
     id = id,
-    nombre = nombre,
-    descripcion = descripcion,
-    abreviatura = abreviatura,
-    fecha_sincronizado = fecha_sincronizado,
-    flag_sincronizado = flag_sincronizado
+    name = name.orEmpty(),
+    description = description.orEmpty(),
+    abbreviation = abbreviation.orEmpty(),
+    isSynced = isSynced,
+    isDeleted = isDeleted,
+    lastUpdated = lastUpdated,
 )

@@ -5,8 +5,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class BrandModel(
     val id: String,
-    val nombre: String,
-    val descripcion: String? = null,
-    val flag_sincronizado: Int = 0,
-    val fecha_actualizacion: Long = 0
+    val name: String,
+    val description: String? = null,
+    val isSynced: Boolean = false,
+    val isDeleted: Boolean = false,
+    val lastUpdated: Long = 0,
 )

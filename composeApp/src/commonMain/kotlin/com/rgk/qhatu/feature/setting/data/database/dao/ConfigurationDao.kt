@@ -23,7 +23,7 @@ interface ConfigurationDao {
     @Query("SELECT * FROM configurations")
     suspend fun fetchAll(): List<ConfigurationEntity>
 
-    @Query("SELECT COUNT(*) as count, MAX(fecha_sincronizado) as lastUpdated FROM configurations")
+    @Query("SELECT COUNT(*) as count, MAX(fecha_actualizacion) as lastUpdated FROM configurations")
     suspend fun getStats(): SyncStats
 
     @Query("SELECT id FROM configurations WHERE flag_sincronizado = 1")

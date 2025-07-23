@@ -1,12 +1,13 @@
 package com.rgk.qhatu.feature.setting.data.remote
 
 import com.rgk.qhatu.feature.setting.data.remote.model.UnitMeasureModel
-import com.rgk.qhatu.common.model.SyncTable
 import dev.gitlive.firebase.firestore.FirebaseFirestore
+
+private const val COLLECTION = "store"
 
 class UnitMeasureRemoteDataSource(private val firestore: FirebaseFirestore) {
     suspend fun fetchCollection(): List<UnitMeasureModel> {
-        val querySnapshot = firestore.collection(SyncTable.UnitMeasure.collection).get()
+        val querySnapshot = firestore.collection(COLLECTION).get()
         val documents = querySnapshot.documents.map { documentSnapshot ->
             documentSnapshot.data<UnitMeasureModel>()
         }
@@ -14,6 +15,6 @@ class UnitMeasureRemoteDataSource(private val firestore: FirebaseFirestore) {
     }
 
     suspend fun uploadCollection(data: UnitMeasureModel) {
-        firestore.collection(SyncTable.UnitMeasure.collection).document(data.id).set(data)
+        firestore.collection(COLLECTION).document(data.id).set(data)
     }
 }

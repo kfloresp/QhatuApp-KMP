@@ -1,12 +1,13 @@
 package com.rgk.qhatu.feature.setting.data.remote
 
 import com.rgk.qhatu.feature.setting.data.remote.model.CategoryModel
-import com.rgk.qhatu.common.model.SyncTable
 import dev.gitlive.firebase.firestore.FirebaseFirestore
 
-class CategoryRemoteDataSource(private val firestore: FirebaseFirestore){
+private const val COLLECTION = "categoria"
+
+class CategoryRemoteDataSource(private val firestore: FirebaseFirestore) {
     suspend fun fetchCollection(): List<CategoryModel> {
-        val querySnapshot = firestore.collection(SyncTable.Category.collection).get()
+        val querySnapshot = firestore.collection(COLLECTION).get()
         val documents = querySnapshot.documents.map { documentSnapshot ->
             documentSnapshot.data<CategoryModel>()
         }
@@ -14,6 +15,6 @@ class CategoryRemoteDataSource(private val firestore: FirebaseFirestore){
     }
 
     suspend fun uploadCollection(data: CategoryModel) {
-        firestore.collection(SyncTable.Category.collection).document(data.id).set(data)
+        firestore.collection(COLLECTION).document(data.id).set(data)
     }
 }

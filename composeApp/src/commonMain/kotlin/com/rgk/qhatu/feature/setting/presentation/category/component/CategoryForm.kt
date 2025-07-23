@@ -30,13 +30,13 @@ fun CategoryForm(
     onConfirm: (String, String) -> Unit,
     onCancel: () -> Unit
 ) {
-    var nombre by remember { mutableStateOf(initialName) }
-    var descripcion by remember { mutableStateOf(initialDescription) }
+    var nameCategory by remember { mutableStateOf(initialName) }
+    var descriptionCategory by remember { mutableStateOf(initialDescription) }
 
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         CustomTextField(
-            value = nombre,
-            onValueChange = { nombre = it },
+            value = nameCategory,
+            onValueChange = { nameCategory = it },
             params = CustomTextFieldParams(
                 label = stringResource(Res.string.tx_setting_name),
                 singleLine = false,
@@ -44,8 +44,8 @@ fun CategoryForm(
             )
         )
         CustomTextField(
-            value = descripcion,
-            onValueChange = { descripcion = it },
+            value = descriptionCategory,
+            onValueChange = { descriptionCategory = it },
             params = CustomTextFieldParams(
                 label = stringResource(Res.string.tx_setting_description),
                 singleLine = false,
@@ -58,7 +58,7 @@ fun CategoryForm(
         ButtonActions(
             primaryButtonText = stringResource(onPrimaryButtonRes),
             onPrimaryClick = {
-                onConfirm(nombre, descripcion)
+                onConfirm(nameCategory, descriptionCategory)
             },
             secondaryButtonText = stringResource(Res.string.tx_setting_cancel),
             onSecondaryClick = {

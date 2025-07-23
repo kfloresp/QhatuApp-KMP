@@ -88,7 +88,7 @@ class ConfigurationRepositoryImpl(
             sourceLocal.deleteUnsynced()
             val newClients = remoteClients.filterNot { it.id in localSyncedIds }
             sourceLocal.save(newClients.map {
-                it.toEntity().copy(fecha_sincronizado = TimeUtils.getCurrentTimestamp())
+                it.toEntity().copy(lastUpdated = TimeUtils.getCurrentTimestamp())
             })
             SyncResult.Success(true)
         } catch (e: Exception) {

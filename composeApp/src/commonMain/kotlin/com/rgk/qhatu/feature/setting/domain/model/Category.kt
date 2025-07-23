@@ -2,9 +2,9 @@ package com.rgk.qhatu.feature.setting.domain.model
 
 data class Category(
     val id: String = "",
-    val nombre: String,
-    val descripcion: String? = null,
-    val flag_sincronizado: Boolean = false,
-    val flag_eliminado: Boolean = false,
-    val fecha_actualizacion: Long = 0,
+    val name: String = "",
+    val description: String? = null,
+    val isSynced: Boolean = false,
+    val isDeleted: Boolean = false,
+    val lastUpdated: Long = 0,
 )

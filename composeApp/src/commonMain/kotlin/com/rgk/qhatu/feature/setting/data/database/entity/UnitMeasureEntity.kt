@@ -1,16 +1,30 @@
 package com.rgk.qhatu.feature.setting.data.database.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "unit_measures")
 data class UnitMeasureEntity(
-    @PrimaryKey(autoGenerate = true)
-    val idInternal: Int,
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     val id: String,
-    val nombre: String,
-    val descripcion: String?,
-    val abreviatura: String,
-    val fecha_sincronizado: Long,
-    val flag_sincronizado: Int
+
+    @ColumnInfo(name = "nombre")
+    val name: String,
+
+    @ColumnInfo(name = "descripcion")
+    val description: String?,
+
+    @ColumnInfo(name = "abreviatura")
+    val abbreviation: String,
+
+    @ColumnInfo(name = "flag_sincronizado")
+    val isSynced: Boolean,
+
+    @ColumnInfo(name = "flag_eliminado")
+    val isDeleted: Boolean,
+
+    @ColumnInfo(name = "fecha_actualizacion")
+    val lastUpdated: Long,
 )

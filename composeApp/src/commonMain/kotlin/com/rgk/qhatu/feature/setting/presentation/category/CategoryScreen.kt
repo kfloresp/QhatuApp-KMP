@@ -54,7 +54,7 @@ fun CategoryScreen(
                     ActionableListContent(
                         modifier = Modifier,
                         items = uiState.result,
-                        itemToLabel = { it.nombre },
+                        itemToLabel = { it.name },
                         itemToKey = { it.id },
                         isSyncing = false,
                         onItemClick = onItemClick,
