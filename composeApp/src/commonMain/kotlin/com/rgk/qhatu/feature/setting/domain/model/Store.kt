@@ -7,6 +7,5 @@ data class Store(
     val phone: String? = null,
     val logoUrl: String? = null,
     val isSynced: Boolean = false,
-    val isDeleted: Boolean = false,
     val lastUpdated: Long = 0,
 )

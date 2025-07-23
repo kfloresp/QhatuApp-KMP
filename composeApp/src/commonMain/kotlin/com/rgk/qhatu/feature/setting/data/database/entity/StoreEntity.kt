@@ -25,9 +25,6 @@ data class StoreEntity(
     @ColumnInfo(name = "flag_sincronizado")
     val isSynced: Boolean,
 
-    @ColumnInfo(name = "flag_eliminado")
-    val isDeleted: Boolean,
-
     @ColumnInfo(name = "fecha_actualizacion")
     val lastUpdated: Long,
 )
