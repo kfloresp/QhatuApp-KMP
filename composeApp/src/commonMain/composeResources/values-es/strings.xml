@@ -60,7 +60,14 @@
     <string name="tx_logout_confirm">Sí, cerrar sesión</string>
     <string name="tx_cancel">Cancelar</string>
     <string name="tx_search_bar">Buscar...</string>
-
+    <string name="tx_setting_edit_category">Editar Categoría</string>
+    <string name="tx_setting_name">Nombre</string>
+    <string name="tx_setting_description">Descripción</string>
+    <string name="tx_setting_confirm_edit">Sí, editar</string>
+    <string name="tx_setting_cancel">Cancelar</string>
+    <string name="tx_setting_delete_category">Eliminar Categoría</string>
+    <string name="tx_setting_confirm_delete_message">¿Deseas eliminar %s?</string>
+    <string name="tx_setting_confirm_delete">Sí, eliminar</string>
     <!-- Components -->
     <string name="sync_progress">Sincronizando datos…</string>
 </resources>

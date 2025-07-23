@@ -10,13 +10,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.rgk.qhatu.common.components.button.ButtonActions
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.dialog.ContentDialog
 import com.rgk.qhatu.components.deprecate.CustomTextField
 import com.rgk.qhatu.components.deprecate.CustomTextFieldParams
 import com.rgk.qhatu.feature.setting.domain.model.Category
 import kotlinx.serialization.Serializable
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_setting_cancel
+import qhatuapp.composeapp.generated.resources.tx_setting_confirm_delete
+import qhatuapp.composeapp.generated.resources.tx_setting_confirm_delete_message
+import qhatuapp.composeapp.generated.resources.tx_setting_confirm_edit
+import qhatuapp.composeapp.generated.resources.tx_setting_delete_category
+import qhatuapp.composeapp.generated.resources.tx_setting_description
+import qhatuapp.composeapp.generated.resources.tx_setting_edit_category
+import qhatuapp.composeapp.generated.resources.tx_setting_name
 
 @Serializable
 data object CategoryDestination
@@ -45,7 +56,7 @@ internal fun NavGraphBuilder.categoryDestination(
 
         selectedCategoryToEdit?.let { category ->
             ContentDialog(
-                title = "Editar Categoria",
+                title = stringResource(Res.string.tx_setting_edit_category),
                 content = {
                     var nombre by remember { mutableStateOf(category.nombre) }
                     var descripcion by remember { mutableStateOf(category.descripcion.orEmpty()) }
@@ -55,7 +66,7 @@ internal fun NavGraphBuilder.categoryDestination(
                             value = nombre,
                             onValueChange = { nombre = it },
                             params = CustomTextFieldParams(
-                                label = "Nombre",
+                                label = stringResource(Res.string.tx_setting_name),
                                 singleLine = false,
                                 maxLength = 50
                             )
@@ -64,20 +75,27 @@ internal fun NavGraphBuilder.categoryDestination(
                             value = descripcion,
                             onValueChange = { descripcion = it },
                             params = CustomTextFieldParams(
-                                label = "Descripcion",
+                                label = stringResource(Res.string.tx_setting_description),
                                 singleLine = false,
                                 maxLength = 50
                             )
                         )
                     }
-                },
-                primaryButtonText = "Sí, editar",
-                onPrimaryClick = {
-                    selectedCategoryToEdit = null
-                },
-                secondaryButtonText = "Cancelar",
-                onSecondaryClick = {
-                    selectedCategoryToEdit = null
+                    ButtonActions(
+                        primaryButtonText = stringResource(Res.string.tx_setting_confirm_edit),
+                        onPrimaryClick = {
+                            viewModel.onItemClick(
+                                category.copy(
+                                    nombre = nombre,
+                                    descripcion = descripcion
+                                )
+                            )
+                            selectedCategoryToEdit = null
+                        },
+                        secondaryButtonText = stringResource(Res.string.tx_setting_cancel),
+                        onSecondaryClick = {
+                            selectedCategoryToEdit = null
+                        })
                 },
                 onDismiss = {
                     selectedCategoryToEdit = null
@@ -87,13 +105,17 @@ internal fun NavGraphBuilder.categoryDestination(
 
         selectedCategoryToDelete?.let { category ->
             ConfirmDialog(
-                title = "¿Deseas eliminar la categoría \"${category.nombre}\"?",
-                primaryButtonText = "Sí, eliminar",
+                title = stringResource(Res.string.tx_setting_delete_category),
+                description = stringResource(
+                    Res.string.tx_setting_confirm_delete_message,
+                    category.nombre
+                ),
+                primaryButtonText = stringResource(Res.string.tx_setting_confirm_delete),
                 onPrimaryClick = {
                     viewModel.onItemClick(category.copy(flag_eliminado = true))
                     selectedCategoryToDelete = null
                 },
-                secondaryButtonText = "Cancelar",
+                secondaryButtonText = stringResource(Res.string.tx_setting_cancel),
                 onSecondaryClick = {
                     selectedCategoryToDelete = null
                 },

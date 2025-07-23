@@ -38,7 +38,7 @@ fun ConfirmDialog(
     description: String? = null,
     primaryButtonText: String,
     onPrimaryClick: () -> Unit,
-    imagePainter: Painter? = painterResource(resource = Res.drawable.ic_question),
+    imagePainter: Painter? = null,
     secondaryButtonText: String? = null,
     onSecondaryClick: (() -> Unit)? = null,
     onDismiss: (() -> Unit)? = null,
