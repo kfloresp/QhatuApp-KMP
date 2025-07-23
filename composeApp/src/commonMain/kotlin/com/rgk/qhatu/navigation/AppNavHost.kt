@@ -88,6 +88,11 @@ fun AppNavGraph(
                 navController = navController
             )
         },
+        floatingActionButton = {
+            FloatingActionButtonApp(
+                navController = navController
+            )
+        },
         bottomBar = {
             BottomBarApp(
                 navController = navController

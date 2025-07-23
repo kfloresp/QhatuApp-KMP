@@ -12,6 +12,7 @@ fun CategoryModel.toDomain(): Category = Category(
     flag_eliminado = flag_eliminado,
     fecha_actualizacion = fecha_actualizacion
 )
+
 fun Category.toEntity(): CategoryEntity = CategoryEntity(
     id = id,
     nombre = nombre,
@@ -38,6 +39,7 @@ fun CategoryEntity.toModel(): CategoryModel = CategoryModel(
     flag_eliminado = flag_eliminado,
     fecha_actualizacion = fecha_actualizacion
 )
+
 fun CategoryModel.toEntity(): CategoryEntity = CategoryEntity(
     id = id,
     nombre = nombre,

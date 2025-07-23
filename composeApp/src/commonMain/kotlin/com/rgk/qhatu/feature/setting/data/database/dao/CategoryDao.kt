@@ -10,7 +10,7 @@ import com.rgk.qhatu.common.model.SyncStats
 @Dao
 interface CategoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun save(entity: CategoryEntity) //UUID.randomUUID().toString()
+    suspend fun save(entity: CategoryEntity)
 
     @Update
     suspend fun update(entity: CategoryEntity): Int

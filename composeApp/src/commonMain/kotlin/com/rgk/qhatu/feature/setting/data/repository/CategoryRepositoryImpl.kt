@@ -1,14 +1,13 @@
 package com.rgk.qhatu.feature.setting.data.repository
 
-import com.rgk.qhatu.common.exception.QhatuException
 import com.rgk.qhatu.common.exception.RoomOperationType
-import com.rgk.qhatu.common.exception.roomException
 import com.rgk.qhatu.common.exception.validateRoomRowCount
 import com.rgk.qhatu.common.extension.safeCall
 import com.rgk.qhatu.feature.setting.data.database.dao.CategoryDao
 import com.rgk.qhatu.feature.setting.data.remote.CategoryRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
+import com.rgk.qhatu.common.util.generateUUID
 import com.rgk.qhatu.feature.setting.domain.mapper.toDomain
 import com.rgk.qhatu.feature.setting.domain.mapper.toEntity
 import com.rgk.qhatu.feature.setting.domain.mapper.toModel
@@ -67,8 +66,14 @@ class CategoryRepositoryImpl(
 
     override suspend fun updateLocal(register: Category): SyncResult<Unit> {
         return safeCall {
-            val row = sourceLocal.update(register.toEntity())
-            validateRoomRowCount(row, operation = RoomOperationType.UPDATE)
+            val isNew = register.id.isEmpty()
+            if (isNew) {
+                val row = sourceLocal.save(register.toEntity().copy(id = generateUUID()))
+                //validateRoomRowCount(row, operation = RoomOperationType.INSERT)
+            } else {
+                val row = sourceLocal.update(register.toEntity())
+                validateRoomRowCount(row, operation = RoomOperationType.UPDATE)
+            }
         }
     }
 
