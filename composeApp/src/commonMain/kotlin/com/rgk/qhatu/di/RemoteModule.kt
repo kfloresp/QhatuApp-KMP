@@ -11,6 +11,7 @@ import com.rgk.qhatu.feature.sale.data.remote.TransactionRemoteDataSource
 import com.rgk.qhatu.feature.setting.data.remote.BrandRemoteDataSource
 import com.rgk.qhatu.feature.setting.data.remote.CategoryRemoteDataSource
 import com.rgk.qhatu.feature.setting.data.remote.ConfigurationRemoteDataSource
+import com.rgk.qhatu.feature.setting.data.remote.StoreRemoteDataSource
 import com.rgk.qhatu.feature.setting.data.remote.UnitMeasureRemoteDataSource
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -28,4 +29,5 @@ val dataSourceModule = module {
     factoryOf(::TransactionDetailRemoteDataSource)
     factoryOf(::TransactionRemoteDataSource)
     factoryOf(::UnitMeasureRemoteDataSource)
+    factoryOf(::StoreRemoteDataSource)
 }

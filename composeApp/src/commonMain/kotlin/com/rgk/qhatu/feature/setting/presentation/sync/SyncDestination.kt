@@ -1,81 +1,73 @@
 package com.rgk.qhatu.feature.setting.presentation.sync
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DownloadForOffline
-import androidx.compose.material.icons.filled.PublishedWithChanges
 import androidx.compose.material.icons.filled.Update
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.outlined.Backup
+import androidx.compose.material.icons.outlined.Update
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.rgk.qhatu.feature.setting.presentation.sync.component.SyncType
+import com.rgk.qhatu.feature.setting.presentation.sync.component.SyncsOption
+import com.rgk.qhatu.feature.setting.presentation.sync.component.getSyncsOptions
 import com.rgk.qhatu.navigation.ProvideAppBarActions
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.serialization.Serializable
+import org.koin.compose.viewmodel.koinViewModel
 
 @Serializable
 data object SyncDestination
 
 internal fun NavGraphBuilder.syncDestination() {
     composable<SyncDestination> {
-
+        val viewModel: SyncViewModel = koinViewModel()
+        val uiState by viewModel.uiState.collectAsState()
+        val syncOptions = MutableStateFlow(getSyncsOptions())
+        val options by syncOptions.collectAsState()
         ProvideAppBarActions {
             IconButton(onClick = {}) {
                 Icon(Icons.Default.Update, contentDescription = null)
             }
         }
-
-        SyncScreen(onOptionClick = { syncType ->
-            when (syncType) {
-                SyncType.STORE -> {
-
-                }
-
-                SyncType.CATEGORY -> {
-
-                }
-
-                SyncType.BRAND -> {
-
-                }
-
-                SyncType.UNIT_MEASURE -> {
-
-                }
-
-                SyncType.AUDIT -> {
-
-                }
-
-                SyncType.CUSTOMER -> {
-
-                }
-
-                SyncType.PAYMENT_CUSTOMER -> {
-
-                }
-
-                SyncType.PAYMENT_TRANSACTION -> {
-
-                }
-
-                SyncType.PRODUCT -> {
-
-                }
-
-                SyncType.SALE -> {
-
-                }
-
-                SyncType.SALE_DETAIL -> {
-
-                }
-
-                SyncType.CONFIGURATION -> {
-
+        when (uiState) {
+            is SyncUiState.Error -> {
+                val index = (uiState as SyncUiState.Error).index
+                val message = (uiState as SyncUiState.Error).message
+                syncOptions.update { list ->
+                    list.toMutableList().apply {
+                        this[index] = this[index].copy(subtitle = message)
+                    }
                 }
             }
-        })
+
+            is SyncUiState.Loading -> {
+                val index = (uiState as SyncUiState.Loading).index
+                syncOptions.update { list ->
+                    list.toMutableList().apply {
+                        this[index] = this[index].copy(icon = Icons.Outlined.Update)
+                    }
+                }
+            }
+
+            is SyncUiState.Success -> {
+                val index = (uiState as SyncUiState.Success).index
+                syncOptions.update { list ->
+                    list.toMutableList().apply {
+                        this[index] = this[index].copy(subtitle = "Sincronización exitosa")
+                    }
+                }
+            }
+
+            SyncUiState.Idle -> Unit
+        }
+        SyncScreen(
+            onOptionClick = { syncType, index ->
+                viewModel.sync(syncType, index)
+            },
+            syncOptions = options
+        )
     }
 }

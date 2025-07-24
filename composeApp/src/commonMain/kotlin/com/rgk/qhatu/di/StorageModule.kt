@@ -11,6 +11,7 @@ import com.rgk.qhatu.feature.sale.data.database.dao.TransactionDetailDao
 import com.rgk.qhatu.feature.setting.data.database.dao.BrandDao
 import com.rgk.qhatu.feature.setting.data.database.dao.CategoryDao
 import com.rgk.qhatu.feature.setting.data.database.dao.ConfigurationDao
+import com.rgk.qhatu.feature.setting.data.database.dao.StoreDao
 import com.rgk.qhatu.feature.setting.data.database.dao.UnitMeasureDao
 import org.koin.dsl.module
 
@@ -29,4 +30,5 @@ val databaseModule = module {
     single<TransactionDao> { get<AppDataBase>().transactionDao() }
     single<TransactionDetailDao> { get<AppDataBase>().transactionDetailDao() }
     single<UnitMeasureDao> { get<AppDataBase>().unitMeasureDao() }
+    single<StoreDao> { get<AppDataBase>().storeDao() }
 }

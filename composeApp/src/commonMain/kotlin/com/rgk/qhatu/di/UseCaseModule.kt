@@ -31,6 +31,7 @@ import com.rgk.qhatu.feature.setting.domain.usecase.GetUnitsMeasureUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncBrandUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncCategoryUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncConfigurationUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.SyncStoreUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncUnitMeasureUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -69,5 +70,6 @@ val domainModule = module {
     factoryOf(::LogoutUseCase)
     factoryOf(::ObserveCurrentUser)
     factoryOf(::RegisterUseCase)
+    factoryOf(::SyncStoreUseCase)
 
 }

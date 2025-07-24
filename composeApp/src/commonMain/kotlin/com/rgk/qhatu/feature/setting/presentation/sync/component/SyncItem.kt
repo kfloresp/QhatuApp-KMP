@@ -27,15 +27,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Store
 import com.rgk.qhatu.common.theme.QhatuTheme
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_sync_all_subtitle
 
 @Composable
 fun SyncItem(
     icon: ImageVector,
     title: String,
-    subtitle: String,
+    subtitle: String? = null,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
@@ -70,7 +73,7 @@ fun SyncItem(
                 fontWeight = FontWeight.SemiBold
             )
             Text(
-                text = subtitle,
+                text = subtitle ?: stringResource(Res.string.tx_sync_all_subtitle),
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color.Gray
             )

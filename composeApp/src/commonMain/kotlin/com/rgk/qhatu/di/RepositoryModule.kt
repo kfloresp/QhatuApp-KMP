@@ -20,9 +20,11 @@ import com.rgk.qhatu.feature.payment.domain.repository.PaymentTransactionReposit
 import com.rgk.qhatu.feature.product.domain.repository.ProductRepository
 import com.rgk.qhatu.feature.sale.domain.repository.TransactionDetailRepository
 import com.rgk.qhatu.feature.sale.domain.repository.TransactionRepository
+import com.rgk.qhatu.feature.setting.data.repository.StoreRepositoryImpl
 import com.rgk.qhatu.feature.setting.domain.repository.BrandRepository
 import com.rgk.qhatu.feature.setting.domain.repository.CategoryRepository
 import com.rgk.qhatu.feature.setting.domain.repository.ConfigurationRepository
+import com.rgk.qhatu.feature.setting.domain.repository.StoreRepository
 import com.rgk.qhatu.feature.setting.domain.repository.UnitMeasureRepository
 import org.koin.dsl.module
 
@@ -39,4 +41,5 @@ val repositoryModule = module {
     factory<TransactionDetailRepository> { TransactionDetailRepositoryImpl(get(), get()) }
     factory<TransactionRepository> { TransactionRepositoryImpl(get(), get()) }
     factory<UnitMeasureRepository> { UnitMeasureRepositoryImpl(get(), get()) }
+    factory<StoreRepository> { StoreRepositoryImpl(get(), get()) }
 }
