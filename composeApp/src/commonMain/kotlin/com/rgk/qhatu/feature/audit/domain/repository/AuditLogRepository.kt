@@ -8,9 +8,8 @@ interface AuditLogRepository {
     suspend fun fetchLocal(): SyncResult<List<AuditLog>>
     suspend fun getStats(): SyncResult<SyncStats>
     suspend fun fetchRemote(): SyncResult<List<AuditLog>>
-    suspend fun uploadRemote() : SyncResult<Boolean>
-    suspend fun updateLocal(register: AuditLog): SyncResult<Boolean>
-    suspend fun saveLocal(registers: List<AuditLog>) : SyncResult<Boolean>
-    suspend fun syncLocalToRemote(): SyncResult<Boolean>
-    suspend fun syncRemoteToLocal(): SyncResult<Boolean>
+    suspend fun updateLocal(register: AuditLog): SyncResult<Unit>
+    suspend fun saveLocal(registers: List<AuditLog>) : SyncResult<Unit>
+    suspend fun syncLocalToRemote(): SyncResult<Unit>
+    suspend fun syncRemoteToLocal(): SyncResult<Unit>
 }

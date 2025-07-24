@@ -1,5 +1,6 @@
 package com.rgk.qhatu.feature.sale.data.repository
 
+import com.rgk.qhatu.common.extension.safeCall
 import com.rgk.qhatu.feature.sale.data.database.dao.TransactionDetailDao
 import com.rgk.qhatu.feature.sale.data.remote.TransactionDetailRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
@@ -46,44 +47,24 @@ class TransactionDetailRepositoryImpl(
         }
     }
 
-    override suspend fun uploadRemote(): SyncResult<Boolean> {
-        return try {
-            val data = sourceLocal.fetchAll().map {
-                it.toModel()
-            }
-            data.forEach {
-                sourceRemote.uploadCollection(it)
-            }
-            SyncResult.Success(true)
-        } catch (e: Exception) {
-            SyncResult.Error(e)
-        }
-    }
-
-    override suspend fun updateLocal(register: TransactionDetail): SyncResult<Boolean> {
-        return try {
+    override suspend fun updateLocal(register: TransactionDetail): SyncResult<Unit> {
+        return safeCall {
             sourceLocal.update(register.toEntity())
-            SyncResult.Success(true)
-        } catch (e: Exception) {
-            SyncResult.Error(e)
         }
     }
 
-    override suspend fun saveLocal(registers: List<TransactionDetail>): SyncResult<Boolean> {
-        return try {
+    override suspend fun saveLocal(registers: List<TransactionDetail>): SyncResult<Unit> {
+        return safeCall {
             sourceLocal.save(registers.map { it.toEntity() })
-            SyncResult.Success(true)
-        } catch (e: Exception) {
-            SyncResult.Error(e)
         }
     }
 
-    override suspend fun syncLocalToRemote(): SyncResult<Boolean> {
+    override suspend fun syncLocalToRemote(): SyncResult<Unit> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun syncRemoteToLocal(): SyncResult<Boolean> {
-        return try {
+    override suspend fun syncRemoteToLocal(): SyncResult<Unit> {
+        return safeCall {
             val localSyncedIds = sourceLocal.getSyncedIds()
             val remoteClients = sourceRemote.fetchCollection()
             sourceLocal.deleteUnsynced()
@@ -91,9 +72,6 @@ class TransactionDetailRepositoryImpl(
             sourceLocal.save(newClients.map {
                 it.toEntity().copy(fecha_sincronizado = TimeUtils.getCurrentTimestamp())
             })
-            SyncResult.Success(true)
-        } catch (e: Exception) {
-            SyncResult.Error(e)
         }
     }
 

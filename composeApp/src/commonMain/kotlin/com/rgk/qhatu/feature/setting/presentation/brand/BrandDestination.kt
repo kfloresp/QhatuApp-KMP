@@ -43,16 +43,6 @@ internal fun NavGraphBuilder.brandDestination(
         var selectedBrandToDelete by remember { mutableStateOf<Brand?>(null) }
         var selectedBrandToNew by remember { mutableStateOf(false) }
 
-        ProvideFabAction {
-            if (!isRefreshing && uiState is BrandUiState.Success || uiState is BrandUiState.Empty) {
-                ButtonFlotableAction(
-                    label = stringResource(Res.string.tx_setting_add_new)
-                ) {
-                    selectedBrandToNew = true
-                }
-            }
-        }
-
         ProvideAppBarActions {
             Button(onClick = {
                 viewModel.fetchRemote()

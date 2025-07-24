@@ -6,7 +6,7 @@ import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.feature.sale.domain.usecase.GetTransactionDetailStatsUseCase
-import com.rgk.qhatu.feature.sale.domain.usecase.SyncTransactionDetailUseCase
+import com.rgk.qhatu.feature.sale.domain.usecase.SyncSaleDetailUseCase
 import com.rgk.qhatu.utils.TimeUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class SyncTransactionDetailViewModel(
     private val getTransactionDetailStatsUseCase: GetTransactionDetailStatsUseCase,
-    private val syncTransactionDetailUseCase: SyncTransactionDetailUseCase
+    private val syncSaleDetailUseCase: SyncSaleDetailUseCase
 ) : ViewModel() {
 
     private val _syncState = MutableStateFlow<SyncState>(SyncState.Idle)
@@ -50,7 +50,7 @@ class SyncTransactionDetailViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             _syncState.value = SyncState.Loading
             @Suppress("SOME_SONAR_RULE")
-            val result = syncTransactionDetailUseCase(SyncOperation.RemoteToLocal())
+            val result = syncSaleDetailUseCase(SyncOperation.RemoteToLocal())
             when (result) {
                 is SyncResult.Error -> {
                     _syncState.value = SyncState.Error(result.exception.message.orEmpty())

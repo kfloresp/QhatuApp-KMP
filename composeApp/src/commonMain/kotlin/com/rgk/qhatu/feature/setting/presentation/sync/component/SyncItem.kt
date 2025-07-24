@@ -1,4 +1,4 @@
-package com.rgk.qhatu.feature.setting.presentation.setting.component
+package com.rgk.qhatu.feature.setting.presentation.sync.component
 
 
 import androidx.compose.foundation.background
@@ -30,7 +30,7 @@ import com.rgk.qhatu.common.theme.QhatuTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun SettingsItem(
+fun SyncItem(
     icon: ImageVector,
     title: String,
     subtitle: String,
@@ -82,7 +82,7 @@ fun SettingsItem(
 @Composable
 fun SettingsItemPreview() {
     QhatuTheme {
-        SettingsItem(
+        SyncItem(
             icon = Icons.Outlined.Store,
             title = "Perfil de tienda",
             subtitle = "Información de tu tienda",

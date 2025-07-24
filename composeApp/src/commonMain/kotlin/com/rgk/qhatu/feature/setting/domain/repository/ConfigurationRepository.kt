@@ -8,8 +8,7 @@ interface ConfigurationRepository {
     suspend fun fetchLocal(): SyncResult<List<Configuration>>
     suspend fun getStats(): SyncResult<SyncStats>
     suspend fun fetchRemote(): SyncResult<List<Configuration>>
-    suspend fun uploadRemote() : SyncResult<Boolean>
-    suspend fun saveLocal(registers: List<Configuration>) : SyncResult<Boolean>
-    suspend fun syncLocalToRemote(): SyncResult<Boolean>
-    suspend fun syncRemoteToLocal(): SyncResult<Boolean>
+    suspend fun saveLocal(registers: List<Configuration>) : SyncResult<Unit>
+    suspend fun syncLocalToRemote(): SyncResult<Unit>
+    suspend fun syncRemoteToLocal(): SyncResult<Unit>
 }

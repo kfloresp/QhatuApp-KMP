@@ -44,14 +44,6 @@ internal fun NavGraphBuilder.unitMeasureDestination() {
         var selectedUnitMeasureToDelete by remember { mutableStateOf<UnitMeasure?>(null) }
         var selectedUnitMeasureToNew by remember { mutableStateOf(false) }
 
-        ProvideAppBarActions {
-            Button(onClick = {
-                viewModel.fetchRemote()
-            }) {
-                Text("SYNC")
-            }
-        }
-
         ProvideFabAction {
             if (!isRefreshing && uiState is UnitMeasureUiState.Success || uiState is UnitMeasureUiState.Empty) {
                 ButtonFlotableAction(

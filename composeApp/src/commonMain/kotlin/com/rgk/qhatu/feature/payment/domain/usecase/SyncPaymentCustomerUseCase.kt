@@ -5,7 +5,7 @@ import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.payment.domain.model.ClientPayment
 import com.rgk.qhatu.feature.payment.domain.repository.ClientPaymentRepository
 
-class SyncClientPaymentUseCase(private val repository: ClientPaymentRepository) {
+class SyncPaymentCustomerUseCase(private val repository: ClientPaymentRepository) {
     suspend operator fun invoke(operation: SyncOperation<ClientPayment>): SyncResult<*> {
         return when (operation) {
             is SyncOperation.SaveLocal -> repository.saveLocal(operation.registers)

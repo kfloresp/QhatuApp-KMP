@@ -8,10 +8,9 @@ interface ProductRepository {
     suspend fun fetchLocal(): SyncResult<List<Product>>
     suspend fun getStats(): SyncResult<SyncStats>
     suspend fun fetchRemote(): SyncResult<List<Product>>
-    suspend fun uploadRemote() : SyncResult<Boolean>
-    suspend fun updateLocal(register: Product): SyncResult<Boolean>
-    suspend fun saveLocal(registers: List<Product>) : SyncResult<Boolean>
-    suspend fun syncLocalToRemote(): SyncResult<Boolean>
-    suspend fun syncRemoteToLocal(): SyncResult<Boolean>
+    suspend fun updateLocal(register: Product): SyncResult<Unit>
+    suspend fun saveLocal(registers: List<Product>) : SyncResult<Unit>
+    suspend fun syncLocalToRemote(): SyncResult<Unit>
+    suspend fun syncRemoteToLocal(): SyncResult<Unit>
     suspend fun getProductFromQuery(query: String, searchType: Int): SyncResult<List<Product>>
 }

@@ -12,8 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.rgk.qhatu.feature.setting.presentation.setting.component.SettingItem
 import com.rgk.qhatu.feature.setting.presentation.setting.component.SettingType
-import com.rgk.qhatu.feature.setting.presentation.setting.component.SettingsItem
 import com.rgk.qhatu.feature.setting.presentation.setting.component.getLogoutOption
 import com.rgk.qhatu.feature.setting.presentation.setting.component.getSettingsOptions
 import org.jetbrains.compose.resources.stringResource
@@ -32,10 +32,10 @@ fun SettingScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(12.dp)
+                .padding(horizontal = 12.dp)
         ) {
             items(settingsOptions) { option ->
-                SettingsItem(
+                SettingItem(
                     icon = option.icon,
                     title = stringResource(resource = option.title),
                     subtitle = stringResource(resource = option.subtitle),
@@ -50,7 +50,7 @@ fun SettingScreen(
             }
 
             item {
-                SettingsItem(
+                SettingItem(
                     icon = logoutOption.icon,
                     title = stringResource(resource = logoutOption.title),
                     subtitle = stringResource(resource = logoutOption.subtitle),

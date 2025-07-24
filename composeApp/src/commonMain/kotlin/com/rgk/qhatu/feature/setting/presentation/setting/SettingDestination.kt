@@ -38,15 +38,15 @@ internal fun NavGraphBuilder.settingDestination(
                         onStoreClick()
                     }
 
-                    SettingType.CATEGORIES -> {
+                    SettingType.CATEGORY -> {
                         onCategoriesClick()
                     }
 
-                    SettingType.BRANDS -> {
+                    SettingType.BRAND -> {
                         onBrandsClick()
                     }
 
-                    SettingType.UNITS -> {
+                    SettingType.UNIT_MEASURE -> {
                         onUnitsClick()
                     }
 

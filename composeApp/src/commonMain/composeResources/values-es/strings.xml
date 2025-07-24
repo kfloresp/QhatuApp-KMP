@@ -42,6 +42,17 @@
     <string name="tx_brands_subtitle">Administra las marcas de tus productos</string>
     <string name="tx_units_title">Unidades de medida</string>
     <string name="tx_units_subtitle">Define las unidades de medida para tus productos</string>
+
+    <string name="tx_audit_title">Logs</string>
+    <string name="tx_customer_title">Clientes</string>
+    <string name="tx_payment_customer_title">Pagos de clientes</string>
+    <string name="tx_paymnet_transaction_title">Detalle de pagos de clientes</string>
+    <string name="tx_product_title">Productos</string>
+    <string name="tx_sale_title">Ventas</string>
+    <string name="tx_sale_detail_title">Detalle de ventas</string>
+    <string name="tx_configuration_title">Configuración</string>
+    <string name="tx_sync_all_subtitle">Sincronización necesaria para realizar el backup</string>
+
     <string name="tx_sync_title">Sincronizar datos</string>
     <string name="tx_sync_subtitle">Sincroniza los datos de tu tienda</string>
     <string name="tx_export_title">Exportar datos</string>

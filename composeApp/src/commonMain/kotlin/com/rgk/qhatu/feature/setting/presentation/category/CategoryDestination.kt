@@ -43,14 +43,6 @@ internal fun NavGraphBuilder.categoryDestination(
         var selectedCategoryToDelete by remember { mutableStateOf<Category?>(null) }
         var selectedCategoryToNew by remember { mutableStateOf(false) }
 
-        ProvideAppBarActions {
-            Button(onClick = {
-                viewModel.fetchRemote()
-            }) {
-                Text("SYNC")
-            }
-        }
-
         ProvideFabAction {
             if (!isRefreshing && uiState is CategoryUiState.Success || uiState is CategoryUiState.Empty) {
                 ButtonFlotableAction(

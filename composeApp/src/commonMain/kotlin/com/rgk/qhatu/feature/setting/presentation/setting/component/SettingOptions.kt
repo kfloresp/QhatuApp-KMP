@@ -42,19 +42,19 @@ fun getSettingsOptions(): List<SettingsOption> {
             subtitle = Res.string.tx_profile_subtitle,
         ),
         SettingsOption(
-            type = SettingType.CATEGORIES,
+            type = SettingType.CATEGORY,
             icon = Icons.Outlined.Category,
             title = Res.string.tx_categories_title,
             subtitle = Res.string.tx_categories_subtitle,
         ),
         SettingsOption(
-            type = SettingType.BRANDS,
+            type = SettingType.BRAND,
             icon = Icons.Outlined.NewLabel,
             title = Res.string.tx_brands_title,
             subtitle = Res.string.tx_brands_subtitle,
         ),
         SettingsOption(
-            type = SettingType.UNITS,
+            type = SettingType.UNIT_MEASURE,
             icon = Icons.Outlined.SquareFoot,
             title = Res.string.tx_units_title,
             subtitle = Res.string.tx_units_subtitle,

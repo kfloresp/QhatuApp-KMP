@@ -8,7 +8,6 @@ import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.common.util.generateUUID
 import com.rgk.qhatu.feature.setting.domain.mapper.toDomain
 import com.rgk.qhatu.feature.setting.domain.mapper.toEntity
-import com.rgk.qhatu.feature.setting.domain.mapper.toModel
 import com.rgk.qhatu.feature.setting.domain.model.Category
 import com.rgk.qhatu.feature.setting.domain.repository.CategoryRepository
 import com.rgk.qhatu.utils.TimeUtils
@@ -49,20 +48,6 @@ class CategoryRepositoryImpl(
         }
     }
 
-    override suspend fun uploadRemote(): SyncResult<Boolean> {
-        return try {
-            val data = sourceLocal.fetchAll().map {
-                it.toModel()
-            }
-            data.forEach {
-                sourceRemote.uploadCollection(it)
-            }
-            SyncResult.Success(true)
-        } catch (e: Exception) {
-            SyncResult.Error(e)
-        }
-    }
-
     override suspend fun upsertLocal(register: Category): SyncResult<Unit> {
         return safeCall {
             val isNew = register.id.isEmpty()
@@ -74,21 +59,18 @@ class CategoryRepositoryImpl(
         }
     }
 
-    override suspend fun saveLocal(registers: List<Category>): SyncResult<Boolean> {
-        return try {
+    override suspend fun saveLocal(registers: List<Category>): SyncResult<Unit> {
+        return safeCall {
             sourceLocal.save(registers.map { it.toEntity() })
-            SyncResult.Success(true)
-        } catch (e: Exception) {
-            SyncResult.Error(e)
         }
     }
 
-    override suspend fun syncLocalToRemote(): SyncResult<Boolean> {
+    override suspend fun syncLocalToRemote(): SyncResult<Unit> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun syncRemoteToLocal(): SyncResult<Boolean> {
-        return try {
+    override suspend fun syncRemoteToLocal(): SyncResult<Unit> {
+        return safeCall {
             val localSyncedIds = sourceLocal.getSyncedIds()
             val remoteClients = sourceRemote.fetchCollection()
             sourceLocal.deleteUnsynced()
@@ -96,9 +78,6 @@ class CategoryRepositoryImpl(
             sourceLocal.save(newClients.map {
                 it.toEntity().copy(lastUpdated = TimeUtils.getCurrentTimestamp())
             })
-            SyncResult.Success(true)
-        } catch (e: Exception) {
-            SyncResult.Error(e)
         }
     }
 

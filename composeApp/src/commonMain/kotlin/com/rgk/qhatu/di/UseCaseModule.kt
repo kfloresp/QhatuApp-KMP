@@ -9,9 +9,9 @@ import com.rgk.qhatu.feature.auth.domain.usecase.RegisterUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetClientStatsUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetClientUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetProviderUseCase
-import com.rgk.qhatu.feature.customer.domain.usecase.SyncClientUseCase
+import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.GetClientPaymentStatsUseCase
-import com.rgk.qhatu.feature.payment.domain.usecase.SyncClientPaymentUseCase
+import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentCustomerUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentTransactionStatsUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentTransactionUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetProductFromQueryUseCase
@@ -19,8 +19,8 @@ import com.rgk.qhatu.feature.product.domain.usecase.GetProductStatsUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
 import com.rgk.qhatu.feature.sale.domain.usecase.GetTransactionDetailStatsUseCase
 import com.rgk.qhatu.feature.sale.domain.usecase.GetTransactionStatsUseCase
-import com.rgk.qhatu.feature.sale.domain.usecase.SyncTransactionDetailUseCase
-import com.rgk.qhatu.feature.sale.domain.usecase.SyncTransactionUseCase
+import com.rgk.qhatu.feature.sale.domain.usecase.SyncSaleDetailUseCase
+import com.rgk.qhatu.feature.sale.domain.usecase.SyncSaleUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetBrandStatsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetBrandsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoriesUseCase
@@ -52,13 +52,13 @@ val domainModule = module {
     factoryOf(::SyncAuditLogUseCase)
     factoryOf(::SyncBrandUseCase)
     factoryOf(::SyncCategoryUseCase)
-    factoryOf(::SyncClientUseCase)
-    factoryOf(::SyncClientPaymentUseCase)
+    factoryOf(::SyncCustomerUseCase)
+    factoryOf(::SyncPaymentCustomerUseCase)
     factoryOf(::SyncConfigurationUseCase)
     factoryOf(::SyncPaymentTransactionUseCase)
     factoryOf(::SyncProductUseCase)
-    factoryOf(::SyncTransactionUseCase)
-    factoryOf(::SyncTransactionDetailUseCase)
+    factoryOf(::SyncSaleUseCase)
+    factoryOf(::SyncSaleDetailUseCase)
     factoryOf(::SyncUnitMeasureUseCase)
     factoryOf(::GetProductFromQueryUseCase)
     factoryOf(::GetClientUseCase)

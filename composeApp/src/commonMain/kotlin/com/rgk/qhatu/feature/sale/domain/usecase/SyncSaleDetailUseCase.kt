@@ -1,12 +1,12 @@
-package com.rgk.qhatu.feature.customer.domain.usecase
+package com.rgk.qhatu.feature.sale.domain.usecase
 
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
-import com.rgk.qhatu.feature.customer.domain.model.Client
-import com.rgk.qhatu.feature.customer.domain.repository.ClientRepository
+import com.rgk.qhatu.feature.sale.domain.model.TransactionDetail
+import com.rgk.qhatu.feature.sale.domain.repository.TransactionDetailRepository
 
-class SyncClientUseCase(private val repository: ClientRepository) {
-    suspend operator fun invoke(operation: SyncOperation<Client>): SyncResult<*> {
+class SyncSaleDetailUseCase(private val repository: TransactionDetailRepository) {
+    suspend operator fun invoke(operation: SyncOperation<TransactionDetail>): SyncResult<*> {
         return when (operation) {
             is SyncOperation.SaveLocal -> repository.saveLocal(operation.registers)
             is SyncOperation.UpsertLocal -> repository.updateLocal(operation.register)

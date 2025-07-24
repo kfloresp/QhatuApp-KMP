@@ -15,7 +15,7 @@ import com.rgk.qhatu.utils.TimeUtils
 
 class UnitMeasureRepositoryImpl(
     private val sourceRemote: UnitMeasureRemoteDataSource,
-    private val sourceLocal: UnitMeasureDao
+    private val sourceLocal: UnitMeasureDao,
 ) : UnitMeasureRepository {
     override suspend fun fetchLocal(): SyncResult<List<UnitMeasure>> {
         return try {
@@ -48,20 +48,6 @@ class UnitMeasureRepositoryImpl(
         }
     }
 
-    override suspend fun uploadRemote(): SyncResult<Boolean> {
-        return try {
-            val data = sourceLocal.fetchAll().map {
-                it.toModel()
-            }
-            data.forEach {
-                sourceRemote.uploadCollection(it)
-            }
-            SyncResult.Success(true)
-        } catch (e: Exception) {
-            SyncResult.Error(e)
-        }
-    }
-
     override suspend fun upsertLocal(register: UnitMeasure): SyncResult<Unit> {
         return safeCall {
             val isNew = register.id.isEmpty()
@@ -73,21 +59,18 @@ class UnitMeasureRepositoryImpl(
         }
     }
 
-    override suspend fun saveLocal(registers: List<UnitMeasure>): SyncResult<Boolean> {
-        return try {
+    override suspend fun saveLocal(registers: List<UnitMeasure>): SyncResult<Unit> {
+        return safeCall {
             sourceLocal.save(registers.map { it.toEntity() })
-            SyncResult.Success(true)
-        } catch (e: Exception) {
-            SyncResult.Error(e)
         }
     }
 
-    override suspend fun syncLocalToRemote(): SyncResult<Boolean> {
+    override suspend fun syncLocalToRemote(): SyncResult<Unit> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun syncRemoteToLocal(): SyncResult<Boolean> {
-        return try {
+    override suspend fun syncRemoteToLocal(): SyncResult<Unit> {
+        return safeCall {
             val localSyncedIds = sourceLocal.getSyncedIds()
             val remoteClients = sourceRemote.fetchCollection()
             sourceLocal.deleteUnsynced()
@@ -95,9 +78,6 @@ class UnitMeasureRepositoryImpl(
             sourceLocal.save(newClients.map {
                 it.toEntity().copy(lastUpdated = TimeUtils.getCurrentTimestamp())
             })
-            SyncResult.Success(true)
-        } catch (e: Exception) {
-            SyncResult.Error(e)
         }
     }
 

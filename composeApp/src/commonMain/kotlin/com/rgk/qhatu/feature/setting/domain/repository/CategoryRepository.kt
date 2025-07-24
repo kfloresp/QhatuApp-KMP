@@ -8,10 +8,9 @@ interface CategoryRepository {
     suspend fun fetchLocal(): SyncResult<List<Category>>
     suspend fun getStats(): SyncResult<SyncStats>
     suspend fun fetchRemote(): SyncResult<List<Category>>
-    suspend fun uploadRemote() : SyncResult<Boolean>
     suspend fun upsertLocal(register: Category): SyncResult<Unit>
-    suspend fun saveLocal(registers: List<Category>) : SyncResult<Boolean>
-    suspend fun syncLocalToRemote(): SyncResult<Boolean>
-    suspend fun syncRemoteToLocal(): SyncResult<Boolean>
+    suspend fun saveLocal(registers: List<Category>) : SyncResult<Unit>
+    suspend fun syncLocalToRemote(): SyncResult<Unit>
+    suspend fun syncRemoteToLocal(): SyncResult<Unit>
 
 }

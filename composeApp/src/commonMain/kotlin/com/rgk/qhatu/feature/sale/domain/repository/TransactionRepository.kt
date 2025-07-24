@@ -8,10 +8,9 @@ interface TransactionRepository {
     suspend fun fetchLocal(): SyncResult<List<Transaction>>
     suspend fun getStats(): SyncResult<SyncStats>
     suspend fun fetchRemote(): SyncResult<List<Transaction>>
-    suspend fun uploadRemote() : SyncResult<Boolean>
-    suspend fun updateLocal(register: Transaction): SyncResult<Boolean>
-    suspend fun saveLocal(registers: List<Transaction>) : SyncResult<Boolean>
-    suspend fun syncLocalToRemote(): SyncResult<Boolean>
-    suspend fun syncRemoteToLocal(): SyncResult<Boolean>
+    suspend fun updateLocal(register: Transaction): SyncResult<Unit>
+    suspend fun saveLocal(registers: List<Transaction>) : SyncResult<Unit>
+    suspend fun syncLocalToRemote(): SyncResult<Unit>
+    suspend fun syncRemoteToLocal(): SyncResult<Unit>
 
 }

@@ -10,6 +10,6 @@ interface StoreRepository {
     suspend fun getStats(): SyncResult<SyncStats>
     suspend fun fetchRemote(): SyncResult<List<StoreModel>>
     suspend fun upsertLocal(register: Store): SyncResult<Unit>
-    suspend fun saveLocal(stores: List<Store>): SyncResult<Boolean>
-    suspend fun syncRemoteToLocal(): SyncResult<Boolean>
+    suspend fun saveLocal(stores: List<Store>): SyncResult<Unit>
+    suspend fun syncRemoteToLocal(): SyncResult<Unit>
 }

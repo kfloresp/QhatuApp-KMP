@@ -6,7 +6,7 @@ import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.feature.payment.domain.usecase.GetClientPaymentStatsUseCase
-import com.rgk.qhatu.feature.payment.domain.usecase.SyncClientPaymentUseCase
+import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentCustomerUseCase
 import com.rgk.qhatu.utils.TimeUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class SyncClientPaymentViewModel(
     private val getClientPaymentStatsUseCase: GetClientPaymentStatsUseCase,
-    private val syncClientPaymentUseCase: SyncClientPaymentUseCase
+    private val syncPaymentCustomerUseCase: SyncPaymentCustomerUseCase
 ) : ViewModel() {
 
     private val _syncState = MutableStateFlow<SyncState>(SyncState.Idle)
@@ -51,7 +51,7 @@ class SyncClientPaymentViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             _syncState.value = SyncState.Loading
             @Suppress("SOME_SONAR_RULE")
-            val result = syncClientPaymentUseCase(SyncOperation.RemoteToLocal())
+            val result = syncPaymentCustomerUseCase(SyncOperation.RemoteToLocal())
             when (result) {
                 is SyncResult.Error -> {
                     _syncState.value = SyncState.Error(result.exception.message.orEmpty())
