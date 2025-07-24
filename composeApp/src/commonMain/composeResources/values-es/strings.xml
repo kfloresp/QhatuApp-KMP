@@ -73,4 +73,6 @@
     <string name="tx_setting_confirm_delete">Sí, eliminar</string>
     <!-- Components -->
     <string name="sync_progress">Sincronizando datos…</string>
+    <string name="tx_empty_result">Ups... no encontramos nada</string>
+    <string name="tx_error_result">Algo salió mal: %1$s</string>
 </resources>
