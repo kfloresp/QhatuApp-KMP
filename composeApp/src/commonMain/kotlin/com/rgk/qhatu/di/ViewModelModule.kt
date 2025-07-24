@@ -8,18 +8,20 @@ import com.rgk.qhatu.feature.sale.presentation.receipt.searchprovider.SearchProv
 import com.rgk.qhatu.feature.search.presentation.search.SearchViewModel
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandViewModel
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryViewModel
+import com.rgk.qhatu.feature.setting.presentation.store.StoreViewModel
+import com.rgk.qhatu.feature.setting.presentation.sync.SyncViewModel
 import com.rgk.qhatu.feature.splash.presentation.splash.SplashViewModel
-import com.rgk.qhatu.feature.setting.presentation.sync.SyncAuditLogViewModel
-import com.rgk.qhatu.feature.setting.presentation.sync.SyncBrandViewModel
-import com.rgk.qhatu.feature.setting.presentation.sync.SyncCategoryViewModel
-import com.rgk.qhatu.feature.setting.presentation.sync.SyncClientPaymentViewModel
-import com.rgk.qhatu.feature.setting.presentation.sync.SyncClientViewModel
-import com.rgk.qhatu.feature.setting.presentation.sync.SyncConfigurationViewModel
-import com.rgk.qhatu.feature.setting.presentation.sync.SyncPaymentTransactionViewModel
-import com.rgk.qhatu.feature.setting.presentation.sync.SyncProductViewModel
-import com.rgk.qhatu.feature.setting.presentation.sync.SyncTransactionDetailViewModel
-import com.rgk.qhatu.feature.setting.presentation.sync.SyncTransactionViewModel
-import com.rgk.qhatu.feature.setting.presentation.sync.SyncUnitMeasureViewModel
+import com.rgk.qhatu.feature.setting.presentation.sync.deprecated.SyncAuditLogViewModel
+import com.rgk.qhatu.feature.setting.presentation.sync.deprecated.SyncBrandViewModel
+import com.rgk.qhatu.feature.setting.presentation.sync.deprecated.SyncCategoryViewModel
+import com.rgk.qhatu.feature.setting.presentation.sync.deprecated.SyncClientPaymentViewModel
+import com.rgk.qhatu.feature.setting.presentation.sync.deprecated.SyncClientViewModel
+import com.rgk.qhatu.feature.setting.presentation.sync.deprecated.SyncConfigurationViewModel
+import com.rgk.qhatu.feature.setting.presentation.sync.deprecated.SyncPaymentTransactionViewModel
+import com.rgk.qhatu.feature.setting.presentation.sync.deprecated.SyncProductViewModel
+import com.rgk.qhatu.feature.setting.presentation.sync.deprecated.SyncTransactionDetailViewModel
+import com.rgk.qhatu.feature.setting.presentation.sync.deprecated.SyncTransactionViewModel
+import com.rgk.qhatu.feature.setting.presentation.sync.deprecated.SyncUnitMeasureViewModel
 import com.rgk.qhatu.feature.setting.presentation.unitmeasure.UnitMeasureViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
@@ -46,4 +48,6 @@ val viewModelModule = module {
     viewModelOf(::CategoryViewModel)
     viewModelOf(::BrandViewModel)
     viewModelOf(::UnitMeasureViewModel)
+    viewModelOf(::StoreViewModel)
+    viewModelOf(::SyncViewModel)
 }

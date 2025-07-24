@@ -1,7 +1,7 @@
 package com.rgk.qhatu.feature.setting.presentation.setting.component
 
 enum class SettingType {
-    PROFILE,
+    STORE,
     CATEGORIES,
     BRANDS,
     UNITS,

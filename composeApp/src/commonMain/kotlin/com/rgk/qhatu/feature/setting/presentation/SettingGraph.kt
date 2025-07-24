@@ -10,6 +10,10 @@ import com.rgk.qhatu.feature.setting.presentation.category.CategoryDestination
 import com.rgk.qhatu.feature.setting.presentation.category.categoryDestination
 import com.rgk.qhatu.feature.setting.presentation.setting.SettingDestination
 import com.rgk.qhatu.feature.setting.presentation.setting.settingDestination
+import com.rgk.qhatu.feature.setting.presentation.store.StoreDestination
+import com.rgk.qhatu.feature.setting.presentation.store.storeDestination
+import com.rgk.qhatu.feature.setting.presentation.sync.SyncDestination
+import com.rgk.qhatu.feature.setting.presentation.sync.syncDestination
 import com.rgk.qhatu.feature.setting.presentation.unitmeasure.UnitMeasureDestination
 import com.rgk.qhatu.feature.setting.presentation.unitmeasure.unitMeasureDestination
 import kotlinx.serialization.Serializable
@@ -29,8 +33,8 @@ fun NavGraphBuilder.settingGraph(
         startDestination = SettingDestination
     ) {
         settingDestination(
-            onProfileClick = {
-
+            onStoreClick = {
+                navController.navigate(StoreDestination)
             },
             onCategoriesClick = {
                 navController.navigate(CategoryDestination)
@@ -42,11 +46,9 @@ fun NavGraphBuilder.settingGraph(
                 navController.navigate(UnitMeasureDestination)
             },
             onSyncDataClick = {
-
+                navController.navigate(SyncDestination)
             },
-            onExportDataClick = {
-
-            },
+            onExportDataClick = {},
             onLogoutClick = {
                 closeSession()
             },
@@ -54,5 +56,7 @@ fun NavGraphBuilder.settingGraph(
         unitMeasureDestination()
         brandDestination()
         categoryDestination()
+        storeDestination()
+        syncDestination()
     }
 }

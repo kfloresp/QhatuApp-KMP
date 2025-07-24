@@ -19,6 +19,8 @@ import com.rgk.qhatu.feature.search.presentation.search.SearchDestination
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandDestination
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryDestination
 import com.rgk.qhatu.feature.setting.presentation.setting.SettingDestination
+import com.rgk.qhatu.feature.setting.presentation.store.StoreDestination
+import com.rgk.qhatu.feature.setting.presentation.sync.SyncDestination
 import com.rgk.qhatu.feature.setting.presentation.unitmeasure.UnitMeasureDestination
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -28,6 +30,8 @@ import qhatuapp.composeapp.generated.resources.title_search
 import qhatuapp.composeapp.generated.resources.title_setting
 import qhatuapp.composeapp.generated.resources.tx_brands_title
 import qhatuapp.composeapp.generated.resources.tx_categories_title
+import qhatuapp.composeapp.generated.resources.tx_profile_title
+import qhatuapp.composeapp.generated.resources.tx_sync_title
 import qhatuapp.composeapp.generated.resources.tx_units_title
 
 private val destinationsWithToolbar = mapOf(
@@ -35,6 +39,8 @@ private val destinationsWithToolbar = mapOf(
     CategoryDestination::class.qualifiedName to Res.string.tx_categories_title,
     BrandDestination::class.qualifiedName to Res.string.tx_brands_title,
     UnitMeasureDestination::class.qualifiedName to Res.string.tx_units_title,
+    StoreDestination::class.qualifiedName to Res.string.tx_profile_title,
+    SyncDestination::class.qualifiedName to Res.string.tx_sync_title,
 )
 private val cartToolbarDestinations = mapOf(
     SearchDestination::class.qualifiedName to Res.string.title_search

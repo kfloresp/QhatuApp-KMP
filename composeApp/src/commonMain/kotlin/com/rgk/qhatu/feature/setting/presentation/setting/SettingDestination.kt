@@ -21,7 +21,7 @@ import qhatuapp.composeapp.generated.resources.tx_logout_prompt
 data object SettingDestination
 
 internal fun NavGraphBuilder.settingDestination(
-    onProfileClick: () -> Unit,
+    onStoreClick: () -> Unit,
     onCategoriesClick: () -> Unit,
     onBrandsClick: () -> Unit,
     onUnitsClick: () -> Unit,
@@ -34,8 +34,8 @@ internal fun NavGraphBuilder.settingDestination(
         SettingScreen(
             onOptionClick = { settingType ->
                 when (settingType) {
-                    SettingType.PROFILE -> {
-                        onProfileClick()
+                    SettingType.STORE -> {
+                        onStoreClick()
                     }
 
                     SettingType.CATEGORIES -> {

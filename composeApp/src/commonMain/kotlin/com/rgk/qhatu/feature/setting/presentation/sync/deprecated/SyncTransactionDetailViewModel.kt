@@ -1,12 +1,12 @@
-package com.rgk.qhatu.feature.setting.presentation.sync
+package com.rgk.qhatu.feature.setting.presentation.sync.deprecated
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
-import com.rgk.qhatu.feature.setting.domain.usecase.GetUnitMeasureStatsUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncUnitMeasureUseCase
+import com.rgk.qhatu.feature.sale.domain.usecase.GetTransactionDetailStatsUseCase
+import com.rgk.qhatu.feature.sale.domain.usecase.SyncTransactionDetailUseCase
 import com.rgk.qhatu.utils.TimeUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -15,9 +15,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class SyncUnitMeasureViewModel(
-    private val getUnitMeasureStatsUseCase: GetUnitMeasureStatsUseCase,
-    private val syncUnitMeasureUseCase: SyncUnitMeasureUseCase
+class SyncTransactionDetailViewModel(
+    private val getTransactionDetailStatsUseCase: GetTransactionDetailStatsUseCase,
+    private val syncTransactionDetailUseCase: SyncTransactionDetailUseCase
 ) : ViewModel() {
 
     private val _syncState = MutableStateFlow<SyncState>(SyncState.Idle)
@@ -30,7 +30,7 @@ class SyncUnitMeasureViewModel(
     private fun observeStats() {
         viewModelScope.launch(Dispatchers.IO) {
             @Suppress("SOME_SONAR_RULE")
-            val result = getUnitMeasureStatsUseCase()
+            val result = getTransactionDetailStatsUseCase()
                 when (result) {
                     is SyncResult.Error -> {
                         _syncState.value = SyncState.Error(result.exception.message.orEmpty())
@@ -50,7 +50,7 @@ class SyncUnitMeasureViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             _syncState.value = SyncState.Loading
             @Suppress("SOME_SONAR_RULE")
-            val result = syncUnitMeasureUseCase(SyncOperation.RemoteToLocal())
+            val result = syncTransactionDetailUseCase(SyncOperation.RemoteToLocal())
             when (result) {
                 is SyncResult.Error -> {
                     _syncState.value = SyncState.Error(result.exception.message.orEmpty())

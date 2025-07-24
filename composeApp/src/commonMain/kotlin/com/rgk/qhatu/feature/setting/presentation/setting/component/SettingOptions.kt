@@ -36,7 +36,7 @@ data class SettingsOption(
 fun getSettingsOptions(): List<SettingsOption> {
     return listOf(
         SettingsOption(
-            type = SettingType.PROFILE,
+            type = SettingType.STORE,
             icon = Icons.Outlined.Store,
             title = Res.string.tx_profile_title,
             subtitle = Res.string.tx_profile_subtitle,

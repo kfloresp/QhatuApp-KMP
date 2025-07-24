@@ -1,4 +1,4 @@
-package com.rgk.qhatu.feature.setting.presentation.sync
+package com.rgk.qhatu.feature.setting.presentation.sync.deprecated
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

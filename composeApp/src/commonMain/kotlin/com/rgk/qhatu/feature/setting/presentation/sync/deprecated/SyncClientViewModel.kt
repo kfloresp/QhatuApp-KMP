@@ -1,12 +1,12 @@
-package com.rgk.qhatu.feature.setting.presentation.sync
+package com.rgk.qhatu.feature.setting.presentation.sync.deprecated
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
-import com.rgk.qhatu.feature.payment.domain.usecase.GetClientPaymentStatsUseCase
-import com.rgk.qhatu.feature.payment.domain.usecase.SyncClientPaymentUseCase
+import com.rgk.qhatu.feature.customer.domain.usecase.GetClientStatsUseCase
+import com.rgk.qhatu.feature.customer.domain.usecase.SyncClientUseCase
 import com.rgk.qhatu.utils.TimeUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -15,9 +15,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class SyncClientPaymentViewModel(
-    private val getClientPaymentStatsUseCase: GetClientPaymentStatsUseCase,
-    private val syncClientPaymentUseCase: SyncClientPaymentUseCase
+class SyncClientViewModel(
+    private val getClientStatsUseCase: GetClientStatsUseCase,
+    private val syncClientUseCase: SyncClientUseCase
 ) : ViewModel() {
 
     private val _syncState = MutableStateFlow<SyncState>(SyncState.Idle)
@@ -30,7 +30,7 @@ class SyncClientPaymentViewModel(
     private fun observeStats() {
         viewModelScope.launch(Dispatchers.IO) {
             @Suppress("SOME_SONAR_RULE")
-            val result = getClientPaymentStatsUseCase()
+            val result = getClientStatsUseCase()
                 when (result) {
                     is SyncResult.Error -> {
                         _syncState.value = SyncState.Error(result.exception.message.orEmpty())
@@ -43,7 +43,6 @@ class SyncClientPaymentViewModel(
                         )
                     }
                 }
-
         }
     }
 
@@ -51,7 +50,7 @@ class SyncClientPaymentViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             _syncState.value = SyncState.Loading
             @Suppress("SOME_SONAR_RULE")
-            val result = syncClientPaymentUseCase(SyncOperation.RemoteToLocal())
+            val result = syncClientUseCase(SyncOperation.RemoteToLocal())
             when (result) {
                 is SyncResult.Error -> {
                     _syncState.value = SyncState.Error(result.exception.message.orEmpty())

@@ -1,4 +1,4 @@
-package com.rgk.qhatu.feature.setting.presentation.sync
+package com.rgk.qhatu.feature.setting.presentation.sync.deprecated
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

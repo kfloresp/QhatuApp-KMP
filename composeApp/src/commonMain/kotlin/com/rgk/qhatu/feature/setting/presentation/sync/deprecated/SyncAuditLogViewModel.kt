@@ -1,12 +1,12 @@
-package com.rgk.qhatu.feature.setting.presentation.sync
+package com.rgk.qhatu.feature.setting.presentation.sync.deprecated
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
-import com.rgk.qhatu.feature.sale.domain.usecase.GetTransactionDetailStatsUseCase
-import com.rgk.qhatu.feature.sale.domain.usecase.SyncTransactionDetailUseCase
+import com.rgk.qhatu.feature.audit.domain.usecase.GetAuditLogStatsUseCase
+import com.rgk.qhatu.feature.audit.domain.usecase.SyncAuditLogUseCase
 import com.rgk.qhatu.utils.TimeUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -15,9 +15,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class SyncTransactionDetailViewModel(
-    private val getTransactionDetailStatsUseCase: GetTransactionDetailStatsUseCase,
-    private val syncTransactionDetailUseCase: SyncTransactionDetailUseCase
+class SyncAuditLogViewModel(
+    private val getAuditLogStatsUseCase: GetAuditLogStatsUseCase,
+    private val syncAuditLogUseCase: SyncAuditLogUseCase
 ) : ViewModel() {
 
     private val _syncState = MutableStateFlow<SyncState>(SyncState.Idle)
@@ -30,7 +30,7 @@ class SyncTransactionDetailViewModel(
     private fun observeStats() {
         viewModelScope.launch(Dispatchers.IO) {
             @Suppress("SOME_SONAR_RULE")
-            val result = getTransactionDetailStatsUseCase()
+            val result = getAuditLogStatsUseCase()
                 when (result) {
                     is SyncResult.Error -> {
                         _syncState.value = SyncState.Error(result.exception.message.orEmpty())
@@ -43,14 +43,14 @@ class SyncTransactionDetailViewModel(
                         )
                     }
                 }
-        }
+            }
     }
 
     fun sync() {
         viewModelScope.launch(Dispatchers.IO) {
             _syncState.value = SyncState.Loading
             @Suppress("SOME_SONAR_RULE")
-            val result = syncTransactionDetailUseCase(SyncOperation.RemoteToLocal())
+            val result = syncAuditLogUseCase(SyncOperation.RemoteToLocal())
             when (result) {
                 is SyncResult.Error -> {
                     _syncState.value = SyncState.Error(result.exception.message.orEmpty())
@@ -64,3 +64,4 @@ class SyncTransactionDetailViewModel(
         }
     }
 }
+

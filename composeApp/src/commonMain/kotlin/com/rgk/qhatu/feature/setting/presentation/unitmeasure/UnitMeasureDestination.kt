@@ -13,7 +13,6 @@ import com.rgk.qhatu.common.components.button.ButtonFlotableAction
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.dialog.ContentDialog
 import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
-import com.rgk.qhatu.feature.setting.presentation.brand.component.BrandForm
 import com.rgk.qhatu.feature.setting.presentation.unitmeasure.component.UnitMeasureForm
 import com.rgk.qhatu.navigation.ProvideAppBarActions
 import com.rgk.qhatu.navigation.ProvideFabAction
@@ -34,9 +33,7 @@ import qhatuapp.composeapp.generated.resources.tx_setting_unit_measure_new
 @Serializable
 data object UnitMeasureDestination
 
-internal fun NavGraphBuilder.unitMeasureDestination(
-
-) {
+internal fun NavGraphBuilder.unitMeasureDestination() {
 
     composable<UnitMeasureDestination> {
         val viewModel: UnitMeasureViewModel = koinViewModel()
