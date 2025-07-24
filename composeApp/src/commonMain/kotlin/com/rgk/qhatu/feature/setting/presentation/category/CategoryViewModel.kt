@@ -56,10 +56,9 @@ class CategoryViewModel(
                 allItems = result.data as List<Category>
                 if (allItems.isNotEmpty()) {
                     _uiState.update {
-//                        CategoryUiState.Success(
-//                            result = allItems
-//                        )
-                        CategoryUiState.Error("Lorem ipsum lorem ipsum lorem ipsum lorem ipsum")
+                        CategoryUiState.Success(
+                            result = allItems
+                        )
                     }
                 } else {
                     _uiState.update {
