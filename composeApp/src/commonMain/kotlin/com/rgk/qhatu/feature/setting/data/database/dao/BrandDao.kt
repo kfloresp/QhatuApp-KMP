@@ -18,7 +18,7 @@ interface BrandDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(entity: List<BrandEntity>)
 
-    @Query("SELECT * FROM brands")
+    @Query("SELECT * FROM brands where flag_eliminado = false")
     suspend fun fetchAll(): List<BrandEntity>
 
     @Query("SELECT COUNT(*) as count, MAX(fecha_actualizacion) as lastUpdated FROM brands")

@@ -19,7 +19,7 @@ interface UnitMeasureDao {
     @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun save(entity: List<UnitMeasureEntity>)
 
-    @Query("SELECT * FROM unit_measures")
+    @Query("SELECT * FROM unit_measures where flag_eliminado = false")
     suspend fun fetchAll(): List<UnitMeasureEntity>
 
     @Query("SELECT COUNT(*) as count, MAX(fecha_actualizacion) as lastUpdated FROM unit_measures")

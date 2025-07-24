@@ -1,4 +1,4 @@
-package com.rgk.qhatu.feature.setting.presentation.category.component
+package com.rgk.qhatu.feature.setting.presentation.brand.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,7 +22,7 @@ import qhatuapp.composeapp.generated.resources.tx_setting_description
 import qhatuapp.composeapp.generated.resources.tx_setting_name
 
 @Composable
-fun CategoryForm(
+fun BrandForm(
     initialName: String,
     initialDescription: String,
     onPrimaryButtonRes : StringResource,

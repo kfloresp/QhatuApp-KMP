@@ -20,7 +20,7 @@ interface ConfigurationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(entity: List<ConfigurationEntity>)
 
-    @Query("SELECT * FROM configurations")
+    @Query("SELECT * FROM configurations where flag_eliminado = false")
     suspend fun fetchAll(): List<ConfigurationEntity>
 
     @Query("SELECT COUNT(*) as count, MAX(fecha_actualizacion) as lastUpdated FROM configurations")

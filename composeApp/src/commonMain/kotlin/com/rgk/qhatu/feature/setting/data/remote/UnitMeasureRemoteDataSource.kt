@@ -3,7 +3,7 @@ package com.rgk.qhatu.feature.setting.data.remote
 import com.rgk.qhatu.feature.setting.data.remote.model.UnitMeasureModel
 import dev.gitlive.firebase.firestore.FirebaseFirestore
 
-private const val COLLECTION = "store"
+private const val COLLECTION = "unidadmedida"
 
 class UnitMeasureRemoteDataSource(private val firestore: FirebaseFirestore) {
     suspend fun fetchCollection(): List<UnitMeasureModel> {

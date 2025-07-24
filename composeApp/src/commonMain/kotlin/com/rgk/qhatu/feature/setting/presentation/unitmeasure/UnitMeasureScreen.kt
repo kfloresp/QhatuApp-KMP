@@ -1,60 +1,63 @@
 package com.rgk.qhatu.feature.setting.presentation.unitmeasure
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import com.rgk.qhatu.common.components.empty.EmptySection
+import com.rgk.qhatu.common.components.error.ErrorSection
 import com.rgk.qhatu.common.components.list.ActionableListContent
+import com.rgk.qhatu.common.components.refresh.RefreshBox
 import com.rgk.qhatu.common.components.search.SearchBar
+import com.rgk.qhatu.common.components.shimmer.ShimmerListVertical
 import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UnitMeasureScreen(
     uiState: UnitMeasureUiState,
     onQueryChange: (String) -> Unit,
     onItemClick: (UnitMeasure) -> Unit,
     onActionClick: (UnitMeasure) -> Unit,
+    isRefreshing: Boolean,
+    onPullRefresh: () -> Unit,
 ) {
-    var searchQuery by remember { mutableStateOf("") }
-    Column(Modifier.fillMaxSize()) {
-        SearchBar(
-            query = searchQuery,
-            onQueryChange = {
-                searchQuery = it
-                onQueryChange(it)
-            }
-        )
-        when (uiState) {
-            is UnitMeasureUiState.Loading -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
-                }
-            }
+    val query = if (uiState is UnitMeasureUiState.Success) uiState.query else ""
 
-            is UnitMeasureUiState.Error -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = uiState.message, color = Color.Red)
-                }
-            }
+    RefreshBox(
+        isRefreshing = isRefreshing,
+        onRefresh = { onPullRefresh() }
+    ) {
+        Column(Modifier.fillMaxSize()) {
 
-            is UnitMeasureUiState.Success -> {
-                ActionableListContent(
-                    modifier = Modifier,
-                    items = uiState.result,
-                    itemToLabel = { it.name },
-                    itemToKey = { it.id },
-                    onItemClick = onItemClick,
-                    onActionClick = onActionClick,
-                )
+            when (uiState) {
+                is UnitMeasureUiState.Loading -> {
+                    ShimmerListVertical()
+                }
+
+                is UnitMeasureUiState.Error -> {
+                    ErrorSection(uiState.message)
+                }
+
+                is UnitMeasureUiState.Success -> {
+                    SearchBar(
+                        query = query,
+                        onQueryChange = onQueryChange
+                    )
+                    ActionableListContent(
+                        modifier = Modifier,
+                        items = uiState.result,
+                        itemToLabel = { it.name },
+                        itemToKey = { it.id },
+                        onItemClick = onItemClick,
+                        onActionClick = onActionClick,
+                    )
+                }
+
+                UnitMeasureUiState.Empty -> {
+                    EmptySection()
+                }
             }
         }
     }

@@ -34,45 +34,44 @@
 
     <!-- Pantalla de Configuración -->
     <string name="tx_settings_title">Configuración</string>
-
     <string name="tx_profile_title">Perfil de tienda</string>
     <string name="tx_profile_subtitle">Información de tu tienda</string>
-
     <string name="tx_categories_title">Categorías</string>
     <string name="tx_categories_subtitle">Gestiona las categorías de tus productos</string>
-
     <string name="tx_brands_title">Marcas</string>
     <string name="tx_brands_subtitle">Administra las marcas de tus productos</string>
-
     <string name="tx_units_title">Unidades de medida</string>
     <string name="tx_units_subtitle">Define las unidades de medida para tus productos</string>
-
     <string name="tx_sync_title">Sincronizar datos</string>
     <string name="tx_sync_subtitle">Sincroniza los datos de tu tienda</string>
-
     <string name="tx_export_title">Exportar datos</string>
     <string name="tx_export_subtitle">Exporta los datos de tu tienda</string>
-
     <string name="tx_logout_title">Cerrar sesión</string>
     <string name="tx_logout_subtitle">Salir de la aplicación</string>
-
     <string name="tx_logout_prompt">¿Desea cerrar sesión?</string>
     <string name="tx_logout_confirm">Sí, cerrar sesión</string>
     <string name="tx_cancel">Cancelar</string>
     <string name="tx_search_bar">Buscar...</string>
-    <string name="tx_setting_edit_category">Editar Categoría</string>
-    <string name="tx_setting_new_category">Nueva Categoría</string>
     <string name="tx_setting_name">Nombre</string>
     <string name="tx_setting_description">Descripción</string>
     <string name="tx_setting_confirm_edit">Sí, editar</string>
     <string name="tx_setting_confirm_new">Crear</string>
     <string name="tx_setting_add_new">Agregar</string>
     <string name="tx_setting_cancel">Cancelar</string>
-    <string name="tx_setting_delete_category">Eliminar Categoría</string>
     <string name="tx_setting_confirm_delete_message">¿Deseas eliminar %1$s?</string>
     <string name="tx_setting_confirm_delete">Sí, eliminar</string>
-    <!-- Components -->
-    <string name="sync_progress">Sincronizando datos…</string>
+    <string name="tx_setting_category_delete">Eliminar Categoría</string>
+    <string name="tx_setting_category_edit">Editar Categoría</string>
+    <string name="tx_setting_category_new">Nueva Categoría</string>
+    <string name="tx_setting_unit_measure_abreviature">Abreviatura</string>
+    <string name="tx_setting_unit_measure_delete">Eliminar Unidad Medida</string>
+    <string name="tx_setting_unit_measure_edit">Editar Unidad Medida</string>
+    <string name="tx_setting_unit_measure_new">Nueva Unidad Medida</string>
+    <string name="tx_setting_brand_delete">Eliminar Marca</string>
+    <string name="tx_setting_brand_edit">Editar Marca</string>
+    <string name="tx_setting_brand_new">Nueva Marca</string>
+
+    <!-- Componentes generales -->
     <string name="tx_empty_result">Ups... no encontramos nada</string>
     <string name="tx_error_result">Algo salió mal: %1$s</string>
 </resources>

@@ -1,6 +1,6 @@
 package com.rgk.qhatu.feature.setting.presentation.category
 
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -22,13 +22,13 @@ import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_setting_add_new
 import qhatuapp.composeapp.generated.resources.tx_setting_cancel
+import qhatuapp.composeapp.generated.resources.tx_setting_category_delete
+import qhatuapp.composeapp.generated.resources.tx_setting_category_edit
+import qhatuapp.composeapp.generated.resources.tx_setting_category_new
 import qhatuapp.composeapp.generated.resources.tx_setting_confirm_delete
 import qhatuapp.composeapp.generated.resources.tx_setting_confirm_delete_message
 import qhatuapp.composeapp.generated.resources.tx_setting_confirm_edit
 import qhatuapp.composeapp.generated.resources.tx_setting_confirm_new
-import qhatuapp.composeapp.generated.resources.tx_setting_delete_category
-import qhatuapp.composeapp.generated.resources.tx_setting_edit_category
-import qhatuapp.composeapp.generated.resources.tx_setting_new_category
 
 @Serializable
 data object CategoryDestination
@@ -42,6 +42,14 @@ internal fun NavGraphBuilder.categoryDestination(
         var selectedCategoryToEdit by remember { mutableStateOf<Category?>(null) }
         var selectedCategoryToDelete by remember { mutableStateOf<Category?>(null) }
         var selectedCategoryToNew by remember { mutableStateOf(false) }
+
+        ProvideAppBarActions {
+            Button(onClick = {
+                viewModel.fetchRemote()
+            }) {
+                Text("SYNC")
+            }
+        }
 
         ProvideFabAction {
             if (!isRefreshing && uiState is CategoryUiState.Success || uiState is CategoryUiState.Empty) {
@@ -68,17 +76,17 @@ internal fun NavGraphBuilder.categoryDestination(
 
         selectedCategoryToEdit?.let { category ->
             ContentDialog(
-                title = stringResource(Res.string.tx_setting_edit_category),
+                title = stringResource(Res.string.tx_setting_category_edit),
                 content = {
                     CategoryForm(
                         initialName = category.name,
                         initialDescription = category.description.orEmpty(),
                         onPrimaryButtonRes = Res.string.tx_setting_confirm_edit,
-                        onConfirm = { nameCategory, descriptionCategory ->
+                        onConfirm = { name, description ->
                             viewModel.onItemClick(
                                 category.copy(
-                                    name = nameCategory,
-                                    description = descriptionCategory
+                                    name = name,
+                                    description = description
                                 )
                             )
                             selectedCategoryToEdit = null
@@ -93,19 +101,20 @@ internal fun NavGraphBuilder.categoryDestination(
                 }
             )
         }
+
         if (selectedCategoryToNew) {
             ContentDialog(
-                title = stringResource(Res.string.tx_setting_new_category),
+                title = stringResource(Res.string.tx_setting_category_new),
                 content = {
                     CategoryForm(
                         initialName = "",
                         initialDescription = "",
                         onPrimaryButtonRes = Res.string.tx_setting_confirm_new,
-                        onConfirm = { nameCategory, descriptionCategory ->
+                        onConfirm = { name, description ->
                             viewModel.onItemClick(
                                 Category(
-                                    name = nameCategory,
-                                    description = descriptionCategory,
+                                    name = name,
+                                    description = description,
                                 )
                             )
                             selectedCategoryToNew = false
@@ -123,7 +132,7 @@ internal fun NavGraphBuilder.categoryDestination(
 
         selectedCategoryToDelete?.let { category ->
             ConfirmDialog(
-                title = stringResource(Res.string.tx_setting_delete_category),
+                title = stringResource(Res.string.tx_setting_category_delete),
                 description = stringResource(
                     Res.string.tx_setting_confirm_delete_message,
                     category.name

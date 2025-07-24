@@ -1,4 +1,5 @@
-package com.rgk.qhatu.feature.setting.presentation.category.component
+package com.rgk.qhatu.feature.setting.presentation.unitmeasure.component
+
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,17 +21,20 @@ import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_setting_cancel
 import qhatuapp.composeapp.generated.resources.tx_setting_description
 import qhatuapp.composeapp.generated.resources.tx_setting_name
+import qhatuapp.composeapp.generated.resources.tx_setting_unit_measure_abreviature
 
 @Composable
-fun CategoryForm(
+fun UnitMeasureForm(
     initialName: String,
     initialDescription: String,
-    onPrimaryButtonRes : StringResource,
-    onConfirm: (String, String) -> Unit,
-    onCancel: () -> Unit
+    initialAbbreviation: String,
+    onPrimaryButtonRes: StringResource,
+    onConfirm: (String, String, String) -> Unit,
+    onCancel: () -> Unit,
 ) {
     var name by remember { mutableStateOf(initialName) }
     var description by remember { mutableStateOf(initialDescription) }
+    var abbreviation by remember { mutableStateOf(initialAbbreviation) }
 
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         CustomTextField(
@@ -51,13 +55,22 @@ fun CategoryForm(
                 maxLength = 50
             )
         )
+        CustomTextField(
+            value = abbreviation,
+            onValueChange = { abbreviation = it },
+            params = CustomTextFieldParams(
+                label = stringResource(Res.string.tx_setting_unit_measure_abreviature),
+                singleLine = false,
+                maxLength = 10
+            )
+        )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         ButtonActions(
             primaryButtonText = stringResource(onPrimaryButtonRes),
             onPrimaryClick = {
-                onConfirm(name, description)
+                onConfirm(name, description, abbreviation)
             },
             secondaryButtonText = stringResource(Res.string.tx_setting_cancel),
             onSecondaryClick = {
