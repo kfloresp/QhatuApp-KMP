@@ -57,6 +57,7 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.koin.viewmodel)
                 implementation(libs.kotlinx.datetime)
+                implementation("io.github.alexzhirkevich:compottie:2.0.0-rc04")
 
         }
     }

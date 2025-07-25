@@ -1,0 +1,94 @@
+package com.rgk.qhatu.feature.setting.presentation.sync.component
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Store
+import androidx.compose.material3.CircularProgressIndicator
+import com.rgk.qhatu.common.theme.QhatuTheme
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_sync_all_subtitle
+
+@Composable
+fun SyncItem(
+    icon: ImageVector,
+    title: String,
+    subtitle: String? = null,
+    loading: Boolean = false,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier.fillMaxWidth().clickable(onClick = onClick)
+            .padding(vertical = 12.dp, horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        if (loading) {
+            CircularProgressIndicator()
+        } else {
+            Box(
+                modifier = Modifier.size(48.dp).clip(RoundedCornerShape(12.dp))
+                    .background(Color.Black.copy(alpha = 0.05f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
+            }
+        }
+        Spacer(modifier = Modifier.width(16.dp))
+        Column(
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold
+            )
+            Text(
+                text = subtitle ?: stringResource(Res.string.tx_sync_all_subtitle),
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.Gray
+            )
+        }
+    }
+}
+
+@Preview()
+@Composable
+fun SettingsItemPreview() {
+    QhatuTheme {
+        SyncItem(
+            loading = false,
+            icon = Icons.Outlined.Store,
+            title = "Perfil de tienda",
+            subtitle = "Información de tu tienda",
+            onClick = {})
+    }
+}

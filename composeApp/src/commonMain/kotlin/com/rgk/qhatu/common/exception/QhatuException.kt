@@ -1,0 +1,32 @@
+package com.rgk.qhatu.common.exception
+
+sealed class QhatuException : Throwable() {
+
+    object InvalidSearchType : QhatuException() {
+        override val message: String = "Tipo de búsqueda no válida"
+    }
+
+    object ProductNotFound : QhatuException() {
+        override val message: String = "Producto no encontrado"
+    }
+
+    object NetworkUnavailable : QhatuException() {
+        override val message: String = "No hay conexión a internet"
+    }
+
+    object UnauthorizedAccess : QhatuException() {
+        override val message: String = "Acceso no autorizado"
+    }
+
+    data class Exception(val errorMessage: String) : QhatuException() {
+        override val message: String = errorMessage
+    }
+
+   data class ExceptionRoom(val errorMessage: String) : QhatuException() {
+        override val message: String = errorMessage
+    }
+
+    data class Unexpected(val errorMessage: String) : QhatuException() {
+        override val message: String = errorMessage
+    }
+}
