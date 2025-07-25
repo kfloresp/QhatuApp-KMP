@@ -1,9 +1,5 @@
 package com.rgk.qhatu.navigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -17,12 +13,14 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandDestination
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryDestination
+import com.rgk.qhatu.feature.setting.presentation.store.StoreDestination
 import com.rgk.qhatu.feature.setting.presentation.unitmeasure.UnitMeasureDestination
 
 private val destinationsWithFab = listOf(
     CategoryDestination::class.qualifiedName,
     BrandDestination::class.qualifiedName,
-    UnitMeasureDestination::class.qualifiedName
+    UnitMeasureDestination::class.qualifiedName,
+   StoreDestination::class.qualifiedName,
 )
 
 @Composable

@@ -13,7 +13,7 @@ data class StoreModel(
     val address: String? = null,
     @SerialName("celular")
     val phone: String? = null,
-    @SerialName("urlLogo")
+    @SerialName("url_logo")
     val logoUrl: String? = null,
     @SerialName("flag_sincronizado")
     val isSynced: Boolean = false,

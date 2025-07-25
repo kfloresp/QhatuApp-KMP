@@ -9,7 +9,6 @@ import com.rgk.qhatu.feature.setting.domain.usecase.GetUnitsMeasureUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncUnitMeasureUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +19,6 @@ class UnitMeasureViewModel(
     private val syncUnitMeasureUseCase: SyncUnitMeasureUseCase,
     private val getUnitsMeasureUseCase: GetUnitsMeasureUseCase,
 ) : ViewModel() {
-    private val DELAY_TIME = 500L
     private var allItems: List<UnitMeasure> = emptyList()
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
@@ -43,7 +41,6 @@ class UnitMeasureViewModel(
         _uiState.update {
             UnitMeasureUiState.Loading
         }
-        delay(DELAY_TIME)
         val result = getUnitsMeasureUseCase()
         when (result) {
             is SyncResult.Error -> {

@@ -1,4 +1,4 @@
-package com.rgk.qhatu.common.components.empty
+package com.rgk.qhatu.common.components.loading
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,10 +21,10 @@ import com.rgk.qhatu.common.components.lottie.LottieAnimation
 import com.rgk.qhatu.common.components.lottie.LottieResource
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_empty_result
+import qhatuapp.composeapp.generated.resources.tx_loading_result
 
 @Composable
-fun EmptySection() {
+fun LoadingSection() {
     Column(
         modifier = Modifier.fillMaxSize()
             .padding(vertical = 20.dp)
@@ -33,11 +33,11 @@ fun EmptySection() {
         verticalArrangement = Arrangement.Center,
     ) {
         LottieResource(
-            LottieAnimation.EMPTY_BOX,
-            modifier = Modifier.width(400.dp).height(400.dp)
+            LottieAnimation.LOADING_INFINITE,
+            modifier = Modifier.width(400.dp).height(200.dp)
         )
         Text(
-            text = stringResource(Res.string.tx_empty_result),
+            text = stringResource(Res.string.tx_loading_result),
             fontSize = 18.sp,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,

@@ -1,5 +1,6 @@
 package com.rgk.qhatu.common.components.error
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -28,7 +29,8 @@ fun ErrorSection(messageError: String) {
         modifier = Modifier.fillMaxSize()
             .padding(vertical = 20.dp)
             .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
         LottieResource(
             LottieAnimation.ERROR_CAT,

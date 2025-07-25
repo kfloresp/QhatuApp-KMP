@@ -26,6 +26,7 @@ import com.rgk.qhatu.feature.setting.domain.usecase.GetBrandsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoriesUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoryStatsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetConfigurationStatsUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.GetStoreUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetUnitMeasureStatsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetUnitsMeasureUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncBrandUseCase
@@ -71,5 +72,6 @@ val domainModule = module {
     factoryOf(::ObserveCurrentUser)
     factoryOf(::RegisterUseCase)
     factoryOf(::SyncStoreUseCase)
+    factoryOf(::GetStoreUseCase)
 
 }

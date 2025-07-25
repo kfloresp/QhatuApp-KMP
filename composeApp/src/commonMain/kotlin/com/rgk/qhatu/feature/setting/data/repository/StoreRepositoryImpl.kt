@@ -1,8 +1,6 @@
 package com.rgk.qhatu.feature.setting.data.repository
 
 import com.rgk.qhatu.common.extension.safeCall
-import com.rgk.qhatu.feature.setting.data.database.dao.CategoryDao
-import com.rgk.qhatu.feature.setting.data.remote.CategoryRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.common.util.generateUUID
@@ -10,9 +8,7 @@ import com.rgk.qhatu.feature.setting.data.database.dao.StoreDao
 import com.rgk.qhatu.feature.setting.data.remote.StoreRemoteDataSource
 import com.rgk.qhatu.feature.setting.domain.mapper.toDomain
 import com.rgk.qhatu.feature.setting.domain.mapper.toEntity
-import com.rgk.qhatu.feature.setting.domain.model.Category
 import com.rgk.qhatu.feature.setting.domain.model.Store
-import com.rgk.qhatu.feature.setting.domain.repository.CategoryRepository
 import com.rgk.qhatu.feature.setting.domain.repository.StoreRepository
 import com.rgk.qhatu.utils.TimeUtils
 
@@ -21,12 +17,17 @@ class StoreRepositoryImpl(
     private val sourceLocal: StoreDao,
 ) : StoreRepository {
 
-    override suspend fun fetchLocal(): SyncResult<List<Store>> {
+    override suspend fun fetchLocal(): SyncResult<Store> {
         return try {
-            val data = sourceLocal.fetchAll().map {
-                it.toDomain()
+            val data = sourceLocal.fetchAll()
+            if (data.isEmpty()) {
+                SyncResult.Success(Store())
+            } else {
+                val firstData = data.map {
+                    it.toDomain()
+                }.first()
+                SyncResult.Success(firstData)
             }
-            SyncResult.Success(data)
         } catch (e: Exception) {
             SyncResult.Error(e)
         }

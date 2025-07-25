@@ -81,8 +81,16 @@
     <string name="tx_setting_brand_delete">Eliminar Marca</string>
     <string name="tx_setting_brand_edit">Editar Marca</string>
     <string name="tx_setting_brand_new">Nueva Marca</string>
+    <string name="tx_setting_store_name">Nombre de la tienda</string>
+    <string name="tx_setting_store_address">Dirección</string>
+    <string name="tx_setting_store_phone">Celular</string>
+    <string name="tx_setting_store_save_changes">Guardar</string>
+    <string name="tx_setting_store_confirm_save_title">Confirmar</string>
+    <string name="tx_setting_store_confirm_save_subtitle">¿Deseas guardar cambios?</string>
+    <string name="tx_setting_store_confirm_save">Sí, guardar</string>
 
     <!-- Componentes generales -->
     <string name="tx_empty_result">Ups... no encontramos nada</string>
+    <string name="tx_loading_result">Cargando...</string>
     <string name="tx_error_result">Algo salió mal: %1$s</string>
 </resources>
