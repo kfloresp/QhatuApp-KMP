@@ -91,7 +91,8 @@ class UnitMeasureViewModel(
                 val result = syncUnitMeasureUseCase(SyncOperation.UpsertLocal(item))
                 when (result) {
                     is SyncResult.Error -> {
-                        _uiState.value = UnitMeasureUiState.Error(result.exception.message.orEmpty())
+                        _uiState.value =
+                            UnitMeasureUiState.Error(result.exception.message.orEmpty())
                     }
 
                     is SyncResult.Success<*> -> {
@@ -114,7 +115,8 @@ class UnitMeasureViewModel(
                 val result = syncUnitMeasureUseCase(SyncOperation.RemoteToLocal())
                 when (result) {
                     is SyncResult.Error -> {
-                        _uiState.value = UnitMeasureUiState.Error(result.exception.message.orEmpty())
+                        _uiState.value =
+                            UnitMeasureUiState.Error(result.exception.message.orEmpty())
                     }
 
                     is SyncResult.Success<*> -> {
