@@ -1,7 +1,5 @@
 package com.rgk.qhatu.feature.setting.presentation.category
 
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +12,6 @@ import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.dialog.ContentDialog
 import com.rgk.qhatu.feature.setting.domain.model.Category
 import com.rgk.qhatu.feature.setting.presentation.category.component.CategoryForm
-import com.rgk.qhatu.navigation.ProvideAppBarActions
 import com.rgk.qhatu.navigation.ProvideFabAction
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
@@ -33,8 +30,7 @@ import qhatuapp.composeapp.generated.resources.tx_setting_confirm_new
 @Serializable
 data object CategoryDestination
 
-internal fun NavGraphBuilder.categoryDestination(
-) {
+internal fun NavGraphBuilder.categoryDestination() {
     composable<CategoryDestination> {
         val viewModel: CategoryViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()

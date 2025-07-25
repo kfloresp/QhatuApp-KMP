@@ -20,7 +20,6 @@ class CategoryViewModel(
     private val syncCategoryUseCase: SyncCategoryUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
 ) : ViewModel() {
-    private val DELAY_TIME = 500L
     private var allItems: List<Category> = emptyList()
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
@@ -43,7 +42,6 @@ class CategoryViewModel(
         _uiState.update {
             CategoryUiState.Loading
         }
-        delay(DELAY_TIME)
         val result = getCategoriesUseCase()
         when (result) {
             is SyncResult.Error -> {

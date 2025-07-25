@@ -3,7 +3,6 @@ package com.rgk.qhatu.feature.setting.presentation.setting.component
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.outlined.Category
-import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.NewLabel
 import androidx.compose.material.icons.outlined.SquareFoot
 import androidx.compose.material.icons.outlined.Store
@@ -15,8 +14,6 @@ import qhatuapp.composeapp.generated.resources.tx_brands_subtitle
 import qhatuapp.composeapp.generated.resources.tx_brands_title
 import qhatuapp.composeapp.generated.resources.tx_categories_subtitle
 import qhatuapp.composeapp.generated.resources.tx_categories_title
-import qhatuapp.composeapp.generated.resources.tx_export_subtitle
-import qhatuapp.composeapp.generated.resources.tx_export_title
 import qhatuapp.composeapp.generated.resources.tx_logout_subtitle
 import qhatuapp.composeapp.generated.resources.tx_logout_title
 import qhatuapp.composeapp.generated.resources.tx_profile_subtitle

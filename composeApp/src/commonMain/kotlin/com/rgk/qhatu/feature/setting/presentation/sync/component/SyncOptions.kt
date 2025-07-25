@@ -19,7 +19,6 @@ import qhatuapp.composeapp.generated.resources.tx_sale_title
 import qhatuapp.composeapp.generated.resources.tx_sync_title
 import qhatuapp.composeapp.generated.resources.tx_units_title
 
-
 data class SyncsOption(
     val type: SyncType,
     val icon: ImageVector,

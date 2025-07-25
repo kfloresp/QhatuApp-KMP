@@ -20,7 +20,6 @@ class BrandViewModel(
     private val syncBrandUseCase: SyncBrandUseCase,
     private val getBrandsUseCase: GetBrandsUseCase
 ) : ViewModel() {
-    private val DELAY_TIME = 500L
     private var allItems: List<Brand> = emptyList()
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
@@ -43,7 +42,6 @@ class BrandViewModel(
         _uiState.update {
             BrandUiState.Loading
         }
-        delay(DELAY_TIME)
         val result = getBrandsUseCase()
         when (result) {
             is SyncResult.Error -> {

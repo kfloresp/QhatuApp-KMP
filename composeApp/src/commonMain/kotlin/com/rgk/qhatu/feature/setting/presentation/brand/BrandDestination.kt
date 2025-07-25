@@ -1,7 +1,5 @@
 package com.rgk.qhatu.feature.setting.presentation.brand
 
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,18 +7,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.rgk.qhatu.common.components.button.ButtonFlotableAction
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.dialog.ContentDialog
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 import com.rgk.qhatu.feature.setting.presentation.brand.component.BrandForm
-import com.rgk.qhatu.navigation.ProvideAppBarActions
-import com.rgk.qhatu.navigation.ProvideFabAction
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_setting_add_new
 import qhatuapp.composeapp.generated.resources.tx_setting_brand_delete
 import qhatuapp.composeapp.generated.resources.tx_setting_brand_edit
 import qhatuapp.composeapp.generated.resources.tx_setting_brand_new
@@ -42,14 +36,6 @@ internal fun NavGraphBuilder.brandDestination(
         var selectedBrandToEdit by remember { mutableStateOf<Brand?>(null) }
         var selectedBrandToDelete by remember { mutableStateOf<Brand?>(null) }
         var selectedBrandToNew by remember { mutableStateOf(false) }
-
-        ProvideAppBarActions {
-            Button(onClick = {
-                viewModel.fetchRemote()
-            }) {
-                Text("SYNC")
-            }
-        }
 
         BrandScreen(
             uiState = uiState,
