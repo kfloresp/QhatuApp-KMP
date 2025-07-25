@@ -19,7 +19,6 @@ import com.rgk.qhatu.feature.setting.presentation.sync.component.SyncType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -38,13 +37,30 @@ class SyncViewModel(
     private val syncConfiguration: SyncConfigurationUseCase,
 ) : ViewModel() {
     private val DELAY_TIME = 500L
-    private val _uiState = MutableStateFlow<SyncUiState>(SyncUiState.Idle)
-    val uiState: StateFlow<SyncUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(
+        SyncUiState(itemStates = List(SyncType.entries.size) { SyncItemState.Idle })
+    )
+    val uiState: StateFlow<SyncUiState> = _uiState
+
+    private fun updateItemState(index: Int, newState: SyncItemState) {
+        _uiState.update { currentState ->
+            val newList = currentState.itemStates.toMutableList()
+            newList[index] = newState
+            currentState.copy(itemStates = newList)
+        }
+    }
+
+    fun syncAll(){
+        SyncType.entries.forEachIndexed { index, type ->
+            sync(type, index)
+        }
+    }
 
     fun sync(type: SyncType, index: Int) {
-        _uiState.update {
-            SyncUiState.Loading(index)
-        }
+        val currentState = uiState.value.itemStates.getOrNull(index)
+        if (currentState is SyncItemState.Loading) return
+
+        updateItemState(index, SyncItemState.Loading)
         viewModelScope.launch {
             delay(DELAY_TIME)
             val result = when (type) {
@@ -98,15 +114,14 @@ class SyncViewModel(
             }
             when (result) {
                 is SyncResult.Error -> {
-                    _uiState.update {
-                        SyncUiState.Error(index, result.exception.message.orEmpty())
-                    }
+                    updateItemState(
+                        index,
+                        SyncItemState.Error(message = result.exception.message.orEmpty())
+                    )
                 }
 
                 is SyncResult.Success<*> -> {
-                    _uiState.update {
-                        SyncUiState.Success(index)
-                    }
+                    updateItemState(index, SyncItemState.Success())
                 }
             }
         }

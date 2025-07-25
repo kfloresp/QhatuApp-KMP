@@ -27,6 +27,7 @@ fun SyncScreen(
         ) {
             itemsIndexed(syncOptions) { index, option ->
                 SyncItem(
+                    loading = option.loading,
                     icon = option.icon,
                     title = stringResource(resource = option.title),
                     subtitle = option.subtitle,

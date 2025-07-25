@@ -2,19 +2,15 @@ package com.rgk.qhatu.feature.setting.presentation.sync
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Update
-import androidx.compose.material.icons.outlined.Backup
-import androidx.compose.material.icons.outlined.Update
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.rgk.qhatu.feature.setting.presentation.sync.component.SyncsOption
 import com.rgk.qhatu.feature.setting.presentation.sync.component.getSyncsOptions
 import com.rgk.qhatu.navigation.ProvideAppBarActions
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -25,49 +21,29 @@ internal fun NavGraphBuilder.syncDestination() {
     composable<SyncDestination> {
         val viewModel: SyncViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
-        val syncOptions = MutableStateFlow(getSyncsOptions())
-        val options by syncOptions.collectAsState()
+
         ProvideAppBarActions {
-            IconButton(onClick = {}) {
+            IconButton(onClick = {
+                viewModel.syncAll()
+            }) {
                 Icon(Icons.Default.Update, contentDescription = null)
             }
         }
-        when (uiState) {
-            is SyncUiState.Error -> {
-                val index = (uiState as SyncUiState.Error).index
-                val message = (uiState as SyncUiState.Error).message
-                syncOptions.update { list ->
-                    list.toMutableList().apply {
-                        this[index] = this[index].copy(subtitle = message)
-                    }
+        val currentOptions = remember(uiState.itemStates) {
+            getSyncsOptions().mapIndexed { index, item ->
+                when (val state = uiState.itemStates.getOrNull(index)) {
+                    is SyncItemState.Loading -> item.copy(loading = true)
+                    is SyncItemState.Success -> item.copy(subtitle = state.message, loading = false)
+                    is SyncItemState.Error -> item.copy(subtitle = state.message, loading = false)
+                    else -> item
                 }
             }
-
-            is SyncUiState.Loading -> {
-                val index = (uiState as SyncUiState.Loading).index
-                syncOptions.update { list ->
-                    list.toMutableList().apply {
-                        this[index] = this[index].copy(icon = Icons.Outlined.Update)
-                    }
-                }
-            }
-
-            is SyncUiState.Success -> {
-                val index = (uiState as SyncUiState.Success).index
-                syncOptions.update { list ->
-                    list.toMutableList().apply {
-                        this[index] = this[index].copy(subtitle = "Sincronización exitosa")
-                    }
-                }
-            }
-
-            SyncUiState.Idle -> Unit
         }
         SyncScreen(
             onOptionClick = { syncType, index ->
                 viewModel.sync(syncType, index)
             },
-            syncOptions = options
+            syncOptions = currentOptions
         )
     }
 }

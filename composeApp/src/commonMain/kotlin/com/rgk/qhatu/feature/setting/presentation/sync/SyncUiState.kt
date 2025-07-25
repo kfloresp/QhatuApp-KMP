@@ -1,8 +1,12 @@
 package com.rgk.qhatu.feature.setting.presentation.sync
 
-sealed class SyncUiState {
-    data object Idle : SyncUiState()
-    data class Success(val index: Int) : SyncUiState()
-    data class Loading(val index: Int) : SyncUiState()
-    data class Error(val index: Int, val message: String) : SyncUiState()
+data class SyncUiState(
+    val itemStates: List<SyncItemState> = emptyList()
+)
+
+sealed class SyncItemState {
+    data object Idle : SyncItemState()
+    data object Loading : SyncItemState()
+    data class Success(val message: String = "Sincronización exitosa") : SyncItemState()
+    data class Error(val message: String) : SyncItemState()
 }

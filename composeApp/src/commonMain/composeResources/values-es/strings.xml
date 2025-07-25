@@ -51,7 +51,7 @@
     <string name="tx_sale_title">Ventas</string>
     <string name="tx_sale_detail_title">Detalle de ventas</string>
     <string name="tx_configuration_title">Configuración</string>
-    <string name="tx_sync_all_subtitle">Sincronización necesaria para realizar el backup</string>
+    <string name="tx_sync_all_subtitle">Click para sincronizar</string>
 
     <string name="tx_sync_title">Sincronizar datos</string>
     <string name="tx_sync_subtitle">Sincroniza los datos de tu tienda</string>

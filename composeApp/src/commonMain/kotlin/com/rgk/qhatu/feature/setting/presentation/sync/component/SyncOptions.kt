@@ -25,6 +25,7 @@ data class SyncsOption(
     val icon: ImageVector,
     val title: StringResource,
     val subtitle: String? = null,
+    val loading: Boolean = false,
 )
 
 fun getSyncsOptions(): List<SyncsOption> {

@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Store
+import androidx.compose.material3.CircularProgressIndicator
 import com.rgk.qhatu.common.theme.QhatuTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -37,33 +38,32 @@ fun SyncItem(
     icon: ImageVector,
     title: String,
     subtitle: String? = null,
+    loading: Boolean = false,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
+        modifier = modifier.fillMaxWidth().clickable(onClick = onClick)
             .padding(vertical = 12.dp, horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(
-            modifier = Modifier
-                .size(48.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color.Black.copy(alpha = 0.05f)),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp),
-                tint = MaterialTheme.colorScheme.onSurface
-            )
+        if (loading) {
+            CircularProgressIndicator()
+        } else {
+            Box(
+                modifier = Modifier.size(48.dp).clip(RoundedCornerShape(12.dp))
+                    .background(Color.Black.copy(alpha = 0.05f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
+            }
         }
-
         Spacer(modifier = Modifier.width(16.dp))
-
         Column(
             verticalArrangement = Arrangement.Center
         ) {
@@ -86,10 +86,10 @@ fun SyncItem(
 fun SettingsItemPreview() {
     QhatuTheme {
         SyncItem(
+            loading = false,
             icon = Icons.Outlined.Store,
             title = "Perfil de tienda",
             subtitle = "Información de tu tienda",
-            onClick = {}
-        )
+            onClick = {})
     }
 }
