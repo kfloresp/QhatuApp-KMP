@@ -7,22 +7,22 @@ import kotlinx.serialization.Serializable
 data class CustomerModel(
     val id: String,
 
-    @SerialName("razonSocial")
+    @SerialName("razon_social")
     val businessName: String? = null,
 
     @SerialName("nombre")
     val firstName: String? = null,
 
-    @SerialName("apellidoPaterno")
+    @SerialName("apellido_paterno")
     val lastName: String? = null,
 
-    @SerialName("apellidoMaterno")
+    @SerialName("apellido_materno")
     val motherLastName: String? = null,
 
-    @SerialName("tipoDocumento")
+    @SerialName("tipo_documento")
     val documentType: String,
 
-    @SerialName("numeroDocumento")
+    @SerialName("numero_documento")
     val documentNumber: String,
 
     @SerialName("celular")
@@ -34,13 +34,13 @@ data class CustomerModel(
     @SerialName("correo")
     val email: String? = null,
 
-    @SerialName("saldoPendiente")
+    @SerialName("saldo_pendiente")
     val pendingAmount: Double? = 0.0,
 
-    @SerialName("flagProveedor")
+    @SerialName("flag_proveedor")
     val isSupplier: Int = 0,
 
-    @SerialName("flagActivo")
+    @SerialName("flag_activo")
     val isActive: Int = 0,
 
     @SerialName("flag_sincronizado")
