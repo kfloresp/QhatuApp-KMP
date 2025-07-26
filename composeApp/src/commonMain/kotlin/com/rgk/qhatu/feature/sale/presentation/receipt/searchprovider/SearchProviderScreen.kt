@@ -33,9 +33,9 @@ fun SearchProviderScreen(
                         .fillMaxSize()
                         .padding(8.dp)
                 ) {
-                    items(uiState.clients) { provider ->
+                    items(uiState.customers) { provider ->
                         ListItem(
-                            headlineContent = { Text(provider.razonSocial.orEmpty()) },
+                            headlineContent = { Text(provider.id.orEmpty()) },
                             supportingContent = {
                                 Text("Código: ${provider.id}")
                             },
@@ -44,7 +44,7 @@ fun SearchProviderScreen(
                                 .clickable {
                                     navController.previousBackStackEntry
                                         ?.savedStateHandle
-                                        ?.set("provider_id", provider.razonSocial)
+                                        ?.set("provider_id", provider.id)
                                     navController.popBackStack()
                                 }
                                 .padding(horizontal = 16.dp, vertical = 8.dp)

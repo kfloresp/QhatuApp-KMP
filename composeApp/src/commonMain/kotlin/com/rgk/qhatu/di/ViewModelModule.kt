@@ -20,8 +20,6 @@ val viewModelModule = module {
     viewModelOf(::HomeViewModel)
     viewModelOf(::AuthViewModel)
     viewModelOf(::SearchViewModel)
-    viewModelOf(::SearchProviderViewModel)
-    viewModelOf(::ReceiptViewModel)
     viewModelOf(::SplashViewModel)
     viewModelOf(::CategoryViewModel)
     viewModelOf(::BrandViewModel)

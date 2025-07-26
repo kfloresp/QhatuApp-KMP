@@ -2,7 +2,7 @@ package com.rgk.qhatu.di
 
 import com.rgk.qhatu.feature.audit.data.repository.AuditLogRepositoryImpl
 import com.rgk.qhatu.feature.auth.data.repository.AuthRepositoryImpl
-import com.rgk.qhatu.feature.customer.data.repository.ClientRepositoryImpl
+import com.rgk.qhatu.feature.customer.data.repository.CustomerRepositoryImpl
 import com.rgk.qhatu.feature.product.data.repository.ProductRepositoryImpl
 import com.rgk.qhatu.feature.setting.data.repository.BrandRepositoryImpl
 import com.rgk.qhatu.feature.setting.data.repository.CategoryRepositoryImpl
@@ -15,7 +15,7 @@ import com.rgk.qhatu.feature.setting.data.repository.ConfigurationRepositoryImpl
 import com.rgk.qhatu.feature.audit.domain.repository.AuditLogRepository
 import com.rgk.qhatu.feature.auth.domain.repository.AuthRepository
 import com.rgk.qhatu.feature.payment.domain.repository.ClientPaymentRepository
-import com.rgk.qhatu.feature.customer.domain.repository.ClientRepository
+import com.rgk.qhatu.feature.customer.domain.repository.CustomerRepository
 import com.rgk.qhatu.feature.payment.domain.repository.PaymentTransactionRepository
 import com.rgk.qhatu.feature.product.domain.repository.ProductRepository
 import com.rgk.qhatu.feature.sale.domain.repository.TransactionDetailRepository
@@ -34,7 +34,7 @@ val repositoryModule = module {
     factory<BrandRepository> { BrandRepositoryImpl(get(), get()) }
     factory<CategoryRepository> { CategoryRepositoryImpl(get(), get()) }
     factory<ClientPaymentRepository> { ClientPaymentRepositoryImpl(get(), get()) }
-    factory<ClientRepository> { ClientRepositoryImpl(get(), get()) }
+    factory<CustomerRepository> { CustomerRepositoryImpl(get(), get()) }
     factory<ConfigurationRepository> { ConfigurationRepositoryImpl(get(), get()) }
     factory<PaymentTransactionRepository> { PaymentTransactionRepositoryImpl(get(), get()) }
     factory<ProductRepository> { ProductRepositoryImpl(get(), get()) }

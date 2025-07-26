@@ -77,7 +77,7 @@ fun ReceiptScreen(
             Column(modifier = Modifier.padding(16.dp)) {
                 result.providers.take(4).forEach { provider ->
                     ListItem(
-                        headlineContent = { Text(provider.razonSocial.orEmpty()) },
+                        headlineContent = { Text(provider.id.orEmpty()) },
                         supportingContent = { Text("${stringResource(Res.string.tx_provider)} ${provider.id}") },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -85,7 +85,7 @@ fun ReceiptScreen(
                                 showBottomSheet = false
                                 searchQuery.value = ""
                                 viewModel.clearSearch()
-                                viewModel.searchProvider(provider.razonSocial.orEmpty())
+                                viewModel.searchProvider(provider.id.orEmpty())
                             }
                     )
 

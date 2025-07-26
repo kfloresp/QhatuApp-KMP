@@ -1,22 +1,22 @@
 package com.rgk.qhatu.feature.customer.data.repository
 
 import com.rgk.qhatu.common.extension.safeCall
-import com.rgk.qhatu.feature.customer.data.database.dao.ClientDao
+import com.rgk.qhatu.feature.customer.data.database.dao.CustomerDao
 import com.rgk.qhatu.feature.customer.data.remote.ClientRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
+import com.rgk.qhatu.common.util.generateUUID
 import com.rgk.qhatu.feature.customer.domain.mapper.toDomain
 import com.rgk.qhatu.feature.customer.domain.mapper.toEntity
-import com.rgk.qhatu.feature.customer.domain.mapper.toModel
-import com.rgk.qhatu.feature.customer.domain.model.Client
-import com.rgk.qhatu.feature.customer.domain.repository.ClientRepository
+import com.rgk.qhatu.feature.customer.domain.model.Customer
+import com.rgk.qhatu.feature.customer.domain.repository.CustomerRepository
 import com.rgk.qhatu.utils.TimeUtils
 
-class ClientRepositoryImpl(
+class CustomerRepositoryImpl(
     private val sourceRemote: ClientRemoteDataSource,
-    private val sourceLocal: ClientDao
-) : ClientRepository {
-    override suspend fun fetchLocal(): SyncResult<List<Client>> {
+    private val sourceLocal: CustomerDao
+) : CustomerRepository {
+    override suspend fun fetchLocal(): SyncResult<List<Customer>> {
         return try {
             val data = sourceLocal.fetchAll().map {
                 it.toDomain()
@@ -36,7 +36,7 @@ class ClientRepositoryImpl(
         }
     }
 
-    override suspend fun fetchRemote(): SyncResult<List<Client>> {
+    override suspend fun fetchRemote(): SyncResult<List<Customer>> {
         return try {
             val data = sourceRemote.fetchCollection().map {
                 it.toDomain()
@@ -47,13 +47,18 @@ class ClientRepositoryImpl(
         }
     }
 
-    override suspend fun updateLocal(register: Client): SyncResult<Unit> {
+    override suspend fun upsertLocal(register: Customer): SyncResult<Unit> {
         return safeCall {
-            sourceLocal.update(register.toEntity())
+            val isNew = register.id.isEmpty()
+            if (isNew) {
+                sourceLocal.save(register.toEntity().copy(id = generateUUID()))
+            } else {
+                sourceLocal.update(register.toEntity())
+            }
         }
     }
 
-    override suspend fun saveLocal(registers: List<Client>): SyncResult<Unit> {
+    override suspend fun saveLocal(registers: List<Customer>): SyncResult<Unit> {
         return safeCall {
             sourceLocal.save(registers.map { it.toEntity() })
         }
@@ -71,32 +76,10 @@ class ClientRepositoryImpl(
             val newClients = remoteClients.filterNot { it.id in localSyncedIds }
             sourceLocal.save(newClients.map {
                 it.toEntity().copy(
-                    fechaSincronizado = TimeUtils.getCurrentTimestamp(),
-                    flagSincronizado = 1
+                    lastUpdated = TimeUtils.getCurrentTimestamp(),
+                    isSynced = true
                 )
             })
-        }
-    }
-
-    override suspend fun fetchClient(query: String): SyncResult<List<Client>> {
-        return try {
-                val data = sourceLocal.fetchClient(query).map {
-                    it.toDomain()
-                }
-                return SyncResult.Success(data)
-        } catch (e: Exception) {
-            SyncResult.Error(e)
-        }
-    }
-
-    override suspend fun fetchProvider(query: String): SyncResult<List<Client>> {
-        return try {
-                val data = sourceLocal.fetchProvider(query).map {
-                    it.toDomain()
-                }
-                return SyncResult.Success(data)
-        } catch (e: Exception) {
-            SyncResult.Error(e)
         }
     }
 }

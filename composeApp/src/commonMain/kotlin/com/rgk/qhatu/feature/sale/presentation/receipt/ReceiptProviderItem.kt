@@ -20,11 +20,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.rgk.qhatu.feature.customer.domain.model.Client
+import com.rgk.qhatu.feature.customer.domain.model.Customer
 
 @Composable
 fun ReceiptProviderItem(
-    provider: Client,
+    provider: Customer,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -51,7 +51,7 @@ fun ReceiptProviderItem(
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(
-            text = provider.razonSocial.orEmpty(),
+            text = provider.id.orEmpty(),
             style = MaterialTheme.typography.headlineSmall,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
@@ -59,12 +59,12 @@ fun ReceiptProviderItem(
         Spacer(modifier = Modifier.height(10.dp))
 
         Text("Código Proveedor: ${provider.id}", style = MaterialTheme.typography.titleMedium)
-        Text("Dirección: ${provider.direccion}", style = MaterialTheme.typography.titleMedium)
-        Text("Teléfono: ${provider.celular}", style = MaterialTheme.typography.titleMedium)
+        Text("Dirección: ${provider.id}", style = MaterialTheme.typography.titleMedium)
+        Text("Teléfono: ${provider.id}", style = MaterialTheme.typography.titleMedium)
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        val isActivo = provider.flagActivo != 0
+        val isActivo = provider.isDeleted
         val statusColor = if (isActivo) Color(0xFF4CAF50) else Color(0xFFD32F2F)
         val statusText = if (isActivo) "Activo" else "Inactivo"
 

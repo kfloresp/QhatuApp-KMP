@@ -10,6 +10,6 @@ data object CustomerSummaryDestination
 internal fun NavGraphBuilder.customerSummaryDestination(
 ) {
     composable<CustomerSummaryDestination> {
-
+        CustomerSummaryScreen()
     }
 }

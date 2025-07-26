@@ -6,8 +6,8 @@ import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import com.rgk.qhatu.feature.audit.data.database.dao.AuditLogDao
 import com.rgk.qhatu.feature.audit.data.database.entity.AuditLogEntity
-import com.rgk.qhatu.feature.customer.data.database.dao.ClientDao
-import com.rgk.qhatu.feature.customer.data.database.entity.ClientEntity
+import com.rgk.qhatu.feature.customer.data.database.dao.CustomerDao
+import com.rgk.qhatu.feature.customer.data.database.entity.CustomerEntity
 import com.rgk.qhatu.feature.payment.data.database.dao.ClientPaymentDao
 import com.rgk.qhatu.feature.payment.data.database.dao.PaymentTransactionDao
 import com.rgk.qhatu.feature.payment.data.database.entity.ClientPaymentEntity
@@ -35,7 +35,7 @@ const val DATABASE_NAME = "qhatu_database.db"
     AuditLogEntity::class,
     BrandEntity::class,
     CategoryEntity::class,
-    ClientEntity::class,
+    CustomerEntity::class,
     ClientPaymentEntity::class,
     PaymentTransactionEntity::class,
     ProductEntity::class,
@@ -50,7 +50,7 @@ abstract class AppDataBase : RoomDatabase(){
     abstract fun auditLogDao(): AuditLogDao
     abstract fun brandDao(): BrandDao
     abstract fun categoryDao(): CategoryDao
-    abstract fun clientDao(): ClientDao
+    abstract fun clientDao(): CustomerDao
     abstract fun clientPaymentDao(): ClientPaymentDao
     abstract fun paymentTransactionDao(): PaymentTransactionDao
     abstract fun productDao(): ProductDao
