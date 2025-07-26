@@ -2,16 +2,10 @@ package com.rgk.qhatu.feature.customer.presentation.customer
 
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.button.ButtonFlotableAction
-import com.rgk.qhatu.feature.setting.domain.model.Category
-import com.rgk.qhatu.feature.setting.presentation.category.CategoryScreen
-import com.rgk.qhatu.feature.setting.presentation.category.CategoryUiState
-import com.rgk.qhatu.feature.setting.presentation.category.CategoryViewModel
+import com.rgk.qhatu.navigation.ProvideAppBarTitle
 import com.rgk.qhatu.navigation.ProvideFabAction
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
