@@ -8,10 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,15 +16,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.rgk.qhatu.common.components.deprecate.ProductSearch
-import com.rgk.qhatu.components.deprecate.AppToolbar
-import com.rgk.qhatu.components.deprecate.ErrorView
-import com.rgk.qhatu.components.deprecate.LoadingView
-import com.rgk.qhatu.components.deprecate.ProductSearchItem
-import org.jetbrains.compose.resources.stringResource
+import com.rgk.qhatu.common.components.loading.LoadingView
 import org.koin.compose.viewmodel.koinViewModel
-import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_back
 
 @Composable
 fun SearchScreen(
@@ -53,36 +42,17 @@ fun SearchScreen_2(navController: NavController, viewModel: SearchViewModel = ko
                 .verticalScroll(scrollState)
                 .pointerInput(Unit) { detectTapGestures { keyboardController?.hide() } },
     ) {
-        AppToolbar(
-            title = "Search", navigationIcon = {
-                IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBackIosNew,
-                        contentDescription = stringResource(Res.string.tx_back)
-                    )
-                }
-            }
-        )
-        Spacer(modifier = Modifier.height(8.dp))
 
-        ProductSearch(
-            uiState = uiState.value,
-            onSearch = { q, t -> viewModel.searchProducts(q, t.code) },
-            onClearSearch = { viewModel.clearSearchResult() },
-            onProductSelected = { product -> viewModel.setSelectedProduct(product) }
-        )
+        Spacer(modifier = Modifier.height(8.dp))
         if (uiState is SearchResultState.SingleResult) {
             val product = (uiState as SearchResultState.SingleResult).product
-            ProductSearchItem(product)
         }
     }
 
     when (uiState) {
         is SearchResultState.Error -> {
-            ErrorView(
-                message = (uiState as SearchResultState.Error).message,
-                modifier = Modifier.fillMaxSize()
-            )
+
+
         }
 
         is SearchResultState.Loading -> {

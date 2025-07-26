@@ -45,6 +45,9 @@
 
     <string name="tx_audit_title">Logs</string>
     <string name="tx_customer_title">Clientes</string>
+    <string name="tx_customer_new_title">Nuevo cliente</string>
+    <string name="tx_customer_info_title">Información del cliente</string>
+    <string name="tx_customer_resume_summary_title">Resumen de deuda</string>
     <string name="tx_payment_customer_title">Pagos de clientes</string>
     <string name="tx_paymnet_transaction_title">Detalle de pagos de clientes</string>
     <string name="tx_product_title">Productos</string>

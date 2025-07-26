@@ -12,8 +12,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.components.button.ButtonActions
-import com.rgk.qhatu.components.deprecate.CustomTextField
-import com.rgk.qhatu.components.deprecate.CustomTextFieldParams
+import com.rgk.qhatu.common.components.textfield.CustomTextField
+import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res

@@ -1,4 +1,4 @@
-package com.rgk.qhatu.components.deprecate
+package com.rgk.qhatu.common.components.button
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height

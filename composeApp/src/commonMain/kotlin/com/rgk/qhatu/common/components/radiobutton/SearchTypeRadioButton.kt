@@ -61,12 +61,6 @@ fun <T> SearchTypeSelector(
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         items.forEach { item ->
-            SearchTypeRadioButton(
-                item = item,
-                isSelected = item == selectedItem,
-                onSelected = onItemSelected,
-                label = labelSelector(item)
-            )
         }
     }
 }

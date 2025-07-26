@@ -1,4 +1,4 @@
-package com.rgk.qhatu.components.deprecate
+package com.rgk.qhatu.common.components.loading
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

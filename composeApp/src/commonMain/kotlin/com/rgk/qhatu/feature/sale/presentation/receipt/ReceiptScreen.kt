@@ -14,7 +14,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,17 +35,13 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.rgk.qhatu.components.deprecate.AppToolbar
-import com.rgk.qhatu.components.deprecate.ErrorView
-import com.rgk.qhatu.components.deprecate.LoadingView
-import com.rgk.qhatu.components.deprecate.PrimaryButton
-import com.rgk.qhatu.components.deprecate.SimpleDatePicker
-import com.rgk.qhatu.components.deprecate.toFormat
+import com.rgk.qhatu.common.components.loading.LoadingView
+import com.rgk.qhatu.common.components.button.PrimaryButton
+import com.rgk.qhatu.common.components.datepicker.toFormat
 import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_back
 import qhatuapp.composeapp.generated.resources.tx_date
 import qhatuapp.composeapp.generated.resources.tx_provider
 import qhatuapp.composeapp.generated.resources.tx_provider_only
@@ -118,17 +113,6 @@ fun ReceiptScreen(
             .verticalScroll(scrollState)
             .pointerInput(Unit) { detectTapGestures { keyboardController?.hide() } }
     ) {
-        AppToolbar(
-            title = "Recibo",
-            navigationIcon = {
-                IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBackIosNew,
-                        contentDescription = stringResource(Res.string.tx_back)
-                    )
-                }
-            },
-        )
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -152,17 +136,7 @@ fun ReceiptScreen(
         )
 
         if (showPicker) {
-            SimpleDatePicker(
-                showPicker = showPicker,
-                initialDate = selectedDate,
-                onDateSelected = { date ->
-                    selectedDate = date
-                    showPicker = false
-                },
-                onDismiss = {
-                    showPicker = false
-                }
-            )
+
         }
 
         OutlinedTextField(
@@ -200,10 +174,7 @@ fun ReceiptScreen(
         }
 
         if (uiState is ReceiptState.Error) {
-            ErrorView(
-                message = (uiState as ReceiptState.Error).message,
-                modifier = Modifier.fillMaxSize()
-            )
+
         }
     }
 

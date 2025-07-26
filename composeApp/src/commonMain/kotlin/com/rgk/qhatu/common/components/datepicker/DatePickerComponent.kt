@@ -1,4 +1,4 @@
-package com.rgk.qhatu.components.deprecate
+package com.rgk.qhatu.common.components.datepicker
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import kotlinx.datetime.*

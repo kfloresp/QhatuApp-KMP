@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.rgk.qhatu.common.components.toolbar.QhatuCartToolbar
 import com.rgk.qhatu.common.components.toolbar.QhatuToolbar
+import com.rgk.qhatu.feature.customer.presentation.customer.CustomerDestination
 import com.rgk.qhatu.feature.search.presentation.search.SearchDestination
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandDestination
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryDestination
@@ -30,6 +31,7 @@ import qhatuapp.composeapp.generated.resources.title_search
 import qhatuapp.composeapp.generated.resources.title_setting
 import qhatuapp.composeapp.generated.resources.tx_brands_title
 import qhatuapp.composeapp.generated.resources.tx_categories_title
+import qhatuapp.composeapp.generated.resources.tx_customer_title
 import qhatuapp.composeapp.generated.resources.tx_profile_title
 import qhatuapp.composeapp.generated.resources.tx_sync_title
 import qhatuapp.composeapp.generated.resources.tx_units_title
@@ -41,6 +43,7 @@ private val destinationsWithToolbar = mapOf(
     UnitMeasureDestination::class.qualifiedName to Res.string.tx_units_title,
     StoreDestination::class.qualifiedName to Res.string.tx_profile_title,
     SyncDestination::class.qualifiedName to Res.string.tx_sync_title,
+    CustomerDestination::class.qualifiedName to Res.string.tx_customer_title,
 )
 private val cartToolbarDestinations = mapOf(
     SearchDestination::class.qualifiedName to Res.string.title_search

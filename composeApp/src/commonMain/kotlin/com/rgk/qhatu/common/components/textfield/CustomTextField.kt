@@ -1,4 +1,4 @@
-package com.rgk.qhatu.components.deprecate
+package com.rgk.qhatu.common.components.textfield
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
