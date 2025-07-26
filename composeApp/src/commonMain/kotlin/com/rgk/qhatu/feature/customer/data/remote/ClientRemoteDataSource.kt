@@ -1,12 +1,12 @@
 package com.rgk.qhatu.feature.customer.data.remote
 
 import com.rgk.qhatu.feature.customer.data.remote.model.ClientModel
-import com.rgk.qhatu.common.model.SyncTable
 import dev.gitlive.firebase.firestore.FirebaseFirestore
 
+private const val COLLECTION = "cliente"
 class ClientRemoteDataSource(private val firestore: FirebaseFirestore) {
     suspend fun fetchCollection(): List<ClientModel> {
-        val querySnapshot = firestore.collection(SyncTable.Client.collection).get()
+        val querySnapshot = firestore.collection(COLLECTION).get()
         val documents = querySnapshot.documents.map { documentSnapshot ->
             documentSnapshot.data<ClientModel>()
         }
@@ -14,6 +14,6 @@ class ClientRemoteDataSource(private val firestore: FirebaseFirestore) {
     }
 
     suspend fun uploadCollection(data: ClientModel) {
-        firestore.collection(SyncTable.Client.collection).document(data.id).set(data)
+        firestore.collection(COLLECTION).document(data.id).set(data)
     }
 }

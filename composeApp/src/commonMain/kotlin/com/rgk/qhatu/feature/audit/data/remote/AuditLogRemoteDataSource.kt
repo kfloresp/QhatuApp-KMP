@@ -1,12 +1,12 @@
 package com.rgk.qhatu.feature.audit.data.remote
 
 import com.rgk.qhatu.feature.audit.data.remote.model.AuditLogModel
-import com.rgk.qhatu.common.model.SyncTable
 import dev.gitlive.firebase.firestore.FirebaseFirestore
 
+private const val COLLECTION = "auditoria"
 class AuditLogRemoteDataSource(private val firestore: FirebaseFirestore) {
     suspend fun fetchCollection(): List<AuditLogModel> {
-        val querySnapshot = firestore.collection(SyncTable.AuditLog.collection).get()
+        val querySnapshot = firestore.collection(COLLECTION).get()
         val documents = querySnapshot.documents.map { documentSnapshot ->
             documentSnapshot.data<AuditLogModel>()
         }
@@ -14,6 +14,6 @@ class AuditLogRemoteDataSource(private val firestore: FirebaseFirestore) {
     }
 
     suspend fun uploadCollection(data: AuditLogModel) {
-        firestore.collection(SyncTable.AuditLog.collection).document(data.id).set(data)
+        firestore.collection(COLLECTION).document(data.id).set(data)
     }
 }
