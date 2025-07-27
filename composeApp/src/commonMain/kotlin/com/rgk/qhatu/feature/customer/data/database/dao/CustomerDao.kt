@@ -22,7 +22,7 @@ interface CustomerDao {
     @Query("SELECT COUNT(*) as count, MAX(fecha_actualizacion) as lastUpdated FROM clients")
     suspend fun getStats(): SyncStats
 
-    @Query("SELECT * FROM clients")
+    @Query("SELECT * FROM clients WHERE flag_eliminado = 0 and flagProveedor = 0")
     suspend fun fetchAll(): List<CustomerEntity>
 
     @Query("SELECT id FROM clients WHERE fecha_actualizacion = 1")

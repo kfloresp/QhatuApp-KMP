@@ -40,10 +40,10 @@ data class CustomerEntity(
     val pendingAmount: Double? = 0.0,
 
     @ColumnInfo(name = "flagProveedor")
-    val isSupplier: Int = 0,
+    val isSupplier: Boolean = false,
 
     @ColumnInfo(name = "flagActivo")
-    val isActive: Int = 0,
+    val isActive: Boolean = false,
 
     @ColumnInfo(name = "flag_sincronizado")
     val isSynced: Boolean = false,

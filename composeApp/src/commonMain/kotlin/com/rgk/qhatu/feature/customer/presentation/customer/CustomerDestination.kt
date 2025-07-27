@@ -5,7 +5,6 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.button.ButtonFlotableAction
-import com.rgk.qhatu.navigation.ProvideAppBarTitle
 import com.rgk.qhatu.navigation.ProvideFabAction
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
@@ -17,6 +16,7 @@ import qhatuapp.composeapp.generated.resources.tx_setting_add_new
 data object CustomerDestination
 
 internal fun NavGraphBuilder.customerDestination(
+    onCustomerClick: (String) -> Unit,
 ) {
     composable<CustomerDestination> {
         val viewModel: CustomerViewModel = koinViewModel()
@@ -37,10 +37,11 @@ internal fun NavGraphBuilder.customerDestination(
             uiState = uiState,
             onQueryChange = viewModel::onQueryChanged,
             onItemClick = {
-
+                onCustomerClick(it.id)
             },
             onActionClick = {
-
+                //Validar que tenga número de celular
+                //Crear funcion expect/actual
             },
             onPullRefresh = viewModel::onPullRefresh,
             isRefreshing = isRefreshing,

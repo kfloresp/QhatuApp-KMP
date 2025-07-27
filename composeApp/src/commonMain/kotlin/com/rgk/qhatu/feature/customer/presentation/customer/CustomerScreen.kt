@@ -12,6 +12,7 @@ import com.rgk.qhatu.common.components.refresh.RefreshBox
 import com.rgk.qhatu.common.components.search.SearchBar
 import com.rgk.qhatu.common.components.shimmer.ShimmerListVertical
 import com.rgk.qhatu.feature.customer.domain.model.Customer
+import com.rgk.qhatu.feature.customer.presentation.customer.component.ItemCustomerAction
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,10 +49,18 @@ fun CustomerScreen(
                     ActionableListContent(
                         modifier = Modifier,
                         items = uiState.result,
-                        itemToLabel = { it.firstName.toString() },
-                        itemToKey = { it.id },
+                        itemKey = { it.id },
                         onItemClick = onItemClick,
                         onActionClick = onActionClick,
+                        itemContent = { item, onClick, onAction ->
+                            ItemCustomerAction(
+                                title = item.nameCustomer,
+                                subTitle = item.pendingCustomer,
+                                firstLetter = item.firstLetterCustomer,
+                                onItemClick = onClick,
+                                onActionClick = onAction
+                            )
+                        }
                     )
                 }
 

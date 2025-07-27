@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import com.rgk.qhatu.common.components.empty.EmptySection
 import com.rgk.qhatu.common.components.error.ErrorSection
 import com.rgk.qhatu.common.components.list.ActionableListContent
+import com.rgk.qhatu.common.components.list.ItemAction
 import com.rgk.qhatu.common.components.refresh.RefreshBox
 import com.rgk.qhatu.common.components.search.SearchBar
 import com.rgk.qhatu.common.components.shimmer.ShimmerListVertical
@@ -48,10 +49,16 @@ fun CategoryScreen(
                     ActionableListContent(
                         modifier = Modifier,
                         items = uiState.result,
-                        itemToLabel = { it.name },
-                        itemToKey = { it.id },
+                        itemKey = { it.id },
                         onItemClick = onItemClick,
                         onActionClick = onActionClick,
+                        itemContent = { item, onClick, onAction ->
+                            ItemAction(
+                                label = item.name,
+                                onItemClick = onClick,
+                                onActionClick = onAction
+                            )
+                        }
                     )
                 }
 

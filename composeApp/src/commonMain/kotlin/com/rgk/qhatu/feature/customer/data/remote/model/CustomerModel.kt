@@ -38,10 +38,10 @@ data class CustomerModel(
     val pendingAmount: Double? = 0.0,
 
     @SerialName("flag_proveedor")
-    val isSupplier: Int = 0,
+    val isSupplier: Boolean = false,
 
     @SerialName("flag_activo")
-    val isActive: Int = 0,
+    val isActive: Boolean = false,
 
     @SerialName("flag_sincronizado")
     val isSynced: Boolean = false,

@@ -71,7 +71,7 @@ fun AppNavHost(
         )
         paymentGraph()
         productGraph()
-        customerGraph()
+        customerGraph(navController = navController)
     }
 }
 
