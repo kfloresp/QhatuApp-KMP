@@ -5,7 +5,7 @@ import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 
 interface CustomerRepository {
-    suspend fun fetchLocal(): SyncResult<List<Customer>>
+    suspend fun fetchLocal(idCustomer:String?): SyncResult<List<Customer>>
     suspend fun getStats(): SyncResult<SyncStats>
     suspend fun fetchRemote(): SyncResult<List<Customer>>
     suspend fun upsertLocal(register: Customer): SyncResult<Unit>

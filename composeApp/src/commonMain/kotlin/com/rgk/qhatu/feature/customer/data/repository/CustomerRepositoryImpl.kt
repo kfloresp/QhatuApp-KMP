@@ -14,12 +14,20 @@ import com.rgk.qhatu.utils.TimeUtils
 
 class CustomerRepositoryImpl(
     private val sourceRemote: ClientRemoteDataSource,
-    private val sourceLocal: CustomerDao
+    private val sourceLocal: CustomerDao,
 ) : CustomerRepository {
-    override suspend fun fetchLocal(): SyncResult<List<Customer>> {
+
+    override suspend fun fetchLocal(idCustomer: String?): SyncResult<List<Customer>> {
         return try {
-            val data = sourceLocal.fetchAll().map {
-                it.toDomain()
+            var data: List<Customer> = emptyList()
+            idCustomer?.let {
+                data = sourceLocal.fetchCustomer(idCustomer).map {
+                    it.toDomain()
+                }
+            } ?: run {
+                data = sourceLocal.fetchAll().map {
+                    it.toDomain()
+                }
             }
             SyncResult.Success(data)
         } catch (e: Exception) {

@@ -14,14 +14,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.rgk.qhatu.feature.customer.presentation.customer.CustomerDestination
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandDestination
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryDestination
-import com.rgk.qhatu.feature.setting.presentation.store.StoreDestination
 import com.rgk.qhatu.feature.setting.presentation.unitmeasure.UnitMeasureDestination
 
 private val destinationsWithFab = listOf(
     CategoryDestination::class.qualifiedName,
     BrandDestination::class.qualifiedName,
     UnitMeasureDestination::class.qualifiedName,
-    StoreDestination::class.qualifiedName,
     CustomerDestination::class.qualifiedName,
 )
 

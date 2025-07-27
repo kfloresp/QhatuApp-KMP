@@ -4,7 +4,7 @@ import com.rgk.qhatu.common.util.formatAmount
 import com.rgk.qhatu.common.util.orZero
 
 data class Customer(
-    val id: String,
+    val id: String = "",
 
     val businessName: String? = null,
 
@@ -14,9 +14,9 @@ data class Customer(
 
     val motherLastName: String? = null,
 
-    val documentType: String,
+    val documentType: String = "",
 
-    val documentNumber: String,
+    val documentNumber: String = "",
 
     val phoneNumber: String? = null,
 

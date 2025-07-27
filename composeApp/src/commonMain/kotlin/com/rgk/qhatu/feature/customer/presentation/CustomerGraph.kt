@@ -23,9 +23,13 @@ fun NavGraphBuilder.customerGraph(
     navigation<CustomerGraph>(
         startDestination = CustomerDestination
     ) {
-        customerDestination(onCustomerClick = {
-            navController.navigate(CustomerInformationDestination)
-        })
+        customerDestination(
+            onCustomerClick = {
+                navController.navigate(CustomerInformationDestination(it))
+            },
+            onNewCustomerClick = {
+                navController.navigate(CustomerInformationDestination(null))
+            })
         customerInformationDestination()
     }
 }

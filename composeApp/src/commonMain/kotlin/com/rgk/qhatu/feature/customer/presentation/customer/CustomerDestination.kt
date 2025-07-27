@@ -17,6 +17,7 @@ data object CustomerDestination
 
 internal fun NavGraphBuilder.customerDestination(
     onCustomerClick: (String) -> Unit,
+    onNewCustomerClick: () -> Unit,
 ) {
     composable<CustomerDestination> {
         val viewModel: CustomerViewModel = koinViewModel()
@@ -28,7 +29,7 @@ internal fun NavGraphBuilder.customerDestination(
                 ButtonFlotableAction(
                     label = stringResource(Res.string.tx_setting_add_new)
                 ) {
-
+                    onNewCustomerClick()
                 }
             }
         }

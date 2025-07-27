@@ -12,10 +12,13 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.rgk.qhatu.common.components.toolbar.QhatuCartToolbar
 import com.rgk.qhatu.common.components.toolbar.QhatuToolbar
 import com.rgk.qhatu.feature.customer.presentation.customer.CustomerDestination
+import com.rgk.qhatu.feature.customer.presentation.customerinformation.CustomerInformationDestination
+import com.rgk.qhatu.feature.customer.presentation.customersummary.CustomerSummaryDestination
 import com.rgk.qhatu.feature.search.presentation.search.SearchDestination
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandDestination
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryDestination
@@ -29,6 +32,8 @@ import qhatuapp.composeapp.generated.resources.title_search
 import qhatuapp.composeapp.generated.resources.title_setting
 import qhatuapp.composeapp.generated.resources.tx_brands_title
 import qhatuapp.composeapp.generated.resources.tx_categories_title
+import qhatuapp.composeapp.generated.resources.tx_customer_info_title
+import qhatuapp.composeapp.generated.resources.tx_customer_resume_summary_title
 import qhatuapp.composeapp.generated.resources.tx_customer_title
 import qhatuapp.composeapp.generated.resources.tx_profile_title
 import qhatuapp.composeapp.generated.resources.tx_sync_title
@@ -42,6 +47,8 @@ private val destinationsWithToolbar = mapOf(
     StoreDestination::class.qualifiedName to Res.string.tx_profile_title,
     SyncDestination::class.qualifiedName to Res.string.tx_sync_title,
     CustomerDestination::class.qualifiedName to Res.string.tx_customer_title,
+    CustomerInformationDestination::class.qualifiedName to Res.string.tx_customer_title,
+    CustomerSummaryDestination::class.qualifiedName to Res.string.tx_customer_resume_summary_title,
 )
 private val cartToolbarDestinations = mapOf(
     SearchDestination::class.qualifiedName to Res.string.title_search
@@ -55,7 +62,7 @@ fun TopBarApp(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     navBackStackEntry?.let { entry ->
-        val currentRoute = navBackStackEntry?.destination?.route
+        val currentRoute = navBackStackEntry?.destination?.route?.substringBefore("/")
         val titleDestination = getTitleDestination(currentRoute)
         if (currentRoute in allDestinations) {
             val viewModel: TopAppBarViewModel = viewModel(
@@ -105,7 +112,7 @@ fun ProvideAppBarActions(actions: @Composable RowScope.() -> Unit) {
 }
 
 @Composable
-fun ProvideAppBarTitle(title: String) {
+fun ProvideAppBarTitle(title: String?) {
     val viewModelStoreOwner = LocalViewModelStoreOwner.current
     (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
         val viewModel: TopAppBarViewModel = viewModel(
