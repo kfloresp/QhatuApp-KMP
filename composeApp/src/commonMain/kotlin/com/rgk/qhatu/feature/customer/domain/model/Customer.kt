@@ -49,6 +49,8 @@ data class Customer(
         get() = if (pendingAmount.orZero() > 0.0) pendingAmount.orZero()
             .formatAmount(CURRENCY_SYMBOL) else NO_DEBT
 
+    val havePendingCustomer: Boolean
+        get() = if (pendingAmount.orZero() > 0.0) true else false
 
     val firstLetterCustomer: String
         get() = if (isSupplier) {

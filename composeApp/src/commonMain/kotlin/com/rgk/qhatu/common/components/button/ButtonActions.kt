@@ -13,13 +13,14 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ButtonActions(
+    modifier: Modifier = Modifier,
     primaryButtonText: String,
     onPrimaryClick: () -> Unit,
     secondaryButtonText: String? = null,
     onSecondaryClick: (() -> Unit)? = null,
 ){
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(
             8.dp,
             Alignment.CenterHorizontally

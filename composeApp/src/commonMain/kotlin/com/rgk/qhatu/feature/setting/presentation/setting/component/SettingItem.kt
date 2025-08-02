@@ -34,8 +34,8 @@ fun SettingItem(
     icon: ImageVector,
     title: String,
     subtitle: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit = {},
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
@@ -72,7 +72,7 @@ fun SettingItem(
             Text(
                 text = subtitle,
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color.Gray
+                color = MaterialTheme.colorScheme.outline
             )
         }
     }
@@ -82,11 +82,13 @@ fun SettingItem(
 @Composable
 fun SettingsItemPreview() {
     QhatuTheme {
-        SettingItem(
-            icon = Icons.Outlined.Store,
-            title = "Perfil de tienda",
-            subtitle = "Información de tu tienda",
-            onClick = {}
-        )
+        Column(modifier = Modifier.background(MaterialTheme.colorScheme.onPrimary)) {
+            SettingItem(
+                icon = Icons.Outlined.Store,
+                title = "Perfil de tienda",
+                subtitle = "Información de tu tienda",
+                onClick = {}
+            )
+        }
     }
 }
