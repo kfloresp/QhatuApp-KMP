@@ -22,7 +22,7 @@ class CustomerProfileViewModel(
         MutableStateFlow<CustomerProfileUiState>(CustomerProfileUiState.Loading)
     val uiState: StateFlow<CustomerProfileUiState> = _uiState.asStateFlow()
 
-    private val destinationArgs = savedStateHandle.toRoute< CustomerProfileDestination>()
+    private val destinationArgs = savedStateHandle.toRoute<CustomerProfileDestination>()
     val idCustomer get():String? = destinationArgs.idCustomer
 
     init {

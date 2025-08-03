@@ -9,7 +9,6 @@ import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
-import com.rgk.qhatu.feature.customer.presentation.customerprofile.CustomerProfileDestination
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,12 +28,15 @@ class CustomerFormViewModel(
         MutableStateFlow(false)
     val isNewCustomer: StateFlow<Boolean> = _isNewCustomer.asStateFlow()
 
-    private val destinationArgs = savedStateHandle.toRoute< CustomerProfileDestination>()
-    val idCustomer get():String? = destinationArgs.idCustomer
+    private val destinationArgs = savedStateHandle.toRoute<CustomerFormDestination>()
+    val idCustomer get():String = destinationArgs.idCustomer
 
     init {
-        idCustomer?.let {
-            loadCustomer(it)
+        if (idCustomer.isEmpty()) {
+            _isNewCustomer.value = true
+            _uiState.value = CustomerFormUiState.Success(Customer())
+        } else {
+            loadCustomer(idCustomer)
         }
     }
 

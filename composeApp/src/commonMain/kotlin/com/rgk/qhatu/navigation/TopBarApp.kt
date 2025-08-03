@@ -16,6 +16,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.rgk.qhatu.common.components.toolbar.QhatuCartToolbar
 import com.rgk.qhatu.common.components.toolbar.QhatuToolbar
 import com.rgk.qhatu.feature.customer.presentation.customer.CustomerDestination
+import com.rgk.qhatu.feature.customer.presentation.customerform.CustomerFormDestination
 import com.rgk.qhatu.feature.customer.presentation.customerprofile.CustomerProfileDestination
 import com.rgk.qhatu.feature.customer.presentation.customersummary.CustomerSummaryDestination
 import com.rgk.qhatu.feature.search.presentation.search.SearchDestination
@@ -47,6 +48,7 @@ private val destinationsWithToolbar = mapOf(
     SyncDestination::class.qualifiedName to Res.string.tx_sync_title,
     CustomerDestination::class.qualifiedName to Res.string.tx_customer_title,
     CustomerProfileDestination::class.qualifiedName to Res.string.tx_customer_profile_title,
+    CustomerFormDestination::class.qualifiedName to Res.string.tx_customer_title,
     CustomerSummaryDestination::class.qualifiedName to Res.string.tx_customer_resume_summary_title,
 )
 private val cartToolbarDestinations = mapOf(
@@ -72,7 +74,7 @@ fun TopBarApp(
                 in cartToolbarDestinations -> {
                     QhatuCartToolbar(
                         title = viewModel.title ?: titleDestination,
-                        onBackClick = navController::popBackStack,
+                        onBackClick = { viewModel.onBackStack ?: navController.popBackStack() },
                         actions = viewModel.actions,
                     )
                 }
@@ -80,7 +82,7 @@ fun TopBarApp(
                 in destinationsWithToolbar -> {
                     QhatuToolbar(
                         title = viewModel.title ?: titleDestination,
-                        onBackClick = navController::popBackStack,
+                        onBackClick = { viewModel.onBackStack ?: navController.popBackStack() },
                         actions = viewModel.actions,
                     )
                 }
@@ -124,8 +126,43 @@ fun ProvideAppBarTitle(title: String?) {
     }
 }
 
+@Composable
+fun ProvideAppBarOnBackStack(onBackStack: (() -> Unit)?) {
+    val viewModelStoreOwner = LocalViewModelStoreOwner.current
+    (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
+        val viewModel: TopAppBarViewModel = viewModel(
+            viewModelStoreOwner = owner,
+            initializer = { TopAppBarViewModel() },
+        )
+        LaunchedEffect(onBackStack) {
+            viewModel.onBackStack = onBackStack
+        }
+    }
+}
+
+@Composable
+fun ProvideAppBar(
+    actions: (@Composable RowScope.() -> Unit) = { },
+    title: String? = null,
+    onBackStack: (() -> Unit)? = null,
+) {
+    val viewModelStoreOwner = LocalViewModelStoreOwner.current
+    (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
+        val viewModel: TopAppBarViewModel = viewModel(
+            viewModelStoreOwner = owner,
+            initializer = { TopAppBarViewModel() },
+        )
+        LaunchedEffect(actions,title,onBackStack) {
+            viewModel.actions = actions
+            viewModel.title = title
+            viewModel.onBackStack = onBackStack
+        }
+    }
+}
+
 
 private class TopAppBarViewModel : ViewModel() {
     var actions by mutableStateOf<@Composable RowScope.() -> Unit>({ }, referentialEqualityPolicy())
     var title by mutableStateOf<String?>(null, referentialEqualityPolicy())
+    var onBackStack by mutableStateOf<(() -> Unit)?>(null, referentialEqualityPolicy())
 }

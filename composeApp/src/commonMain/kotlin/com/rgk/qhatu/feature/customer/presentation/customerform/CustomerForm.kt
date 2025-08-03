@@ -20,6 +20,18 @@ import com.rgk.qhatu.common.components.loading.LoadingSection
 import com.rgk.qhatu.common.components.textfield.CustomTextField
 import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
 import com.rgk.qhatu.feature.customer.domain.model.Customer
+import org.jetbrains.compose.resources.stringResource
+import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_profile_customer_address
+import qhatuapp.composeapp.generated.resources.tx_profile_customer_document_number
+import qhatuapp.composeapp.generated.resources.tx_profile_customer_document_type
+import qhatuapp.composeapp.generated.resources.tx_profile_customer_email
+import qhatuapp.composeapp.generated.resources.tx_profile_customer_last_name_father
+import qhatuapp.composeapp.generated.resources.tx_profile_customer_last_name_mother
+import qhatuapp.composeapp.generated.resources.tx_profile_customer_name
+import qhatuapp.composeapp.generated.resources.tx_profile_customer_phone
+import qhatuapp.composeapp.generated.resources.tx_save_changes
+import qhatuapp.composeapp.generated.resources.tx_save_delete
 
 @Composable
 fun CustomerFormScreen(
@@ -51,14 +63,15 @@ fun CustomerFormScreen(
 
             Column(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.fillMaxWidth().padding(12.dp).verticalScroll(rememberScrollState())
+                modifier = Modifier.fillMaxWidth().padding(12.dp)
+                    .verticalScroll(rememberScrollState())
                     .imePadding(),
             ) {
                 CustomTextField(
                     value = firstName, onValueChange = {
                         firstName = it
                     }, params = CustomTextFieldParams(
-                        label = "Nombre",
+                        label = stringResource(Res.string.tx_profile_customer_name),
                         singleLine = true,
                         maxLength = 50
                     )
@@ -68,7 +81,7 @@ fun CustomerFormScreen(
                     value = lastName, onValueChange = {
                         lastName = it
                     }, params = CustomTextFieldParams(
-                        label = "Apellido Paterno",
+                        label = stringResource(Res.string.tx_profile_customer_last_name_father),
                         singleLine = true,
                         maxLength = 50
                     )
@@ -78,7 +91,7 @@ fun CustomerFormScreen(
                     value = motherLastName, onValueChange = {
                         motherLastName = it
                     }, params = CustomTextFieldParams(
-                        label = "Apellido Materno",
+                        label = stringResource(Res.string.tx_profile_customer_last_name_mother),
                         singleLine = true,
                         maxLength = 50
                     )
@@ -88,9 +101,9 @@ fun CustomerFormScreen(
                     value = documentType, onValueChange = {
                         documentType = it
                     }, params = CustomTextFieldParams(
-                        label = "Tipo Documento",
+                        label = stringResource(Res.string.tx_profile_customer_document_type),
                         singleLine = true,
-                        maxLength = 50
+                        maxLength = 10
                     )
                 )
 
@@ -98,9 +111,9 @@ fun CustomerFormScreen(
                     value = documentNumber, onValueChange = {
                         documentNumber = it
                     }, params = CustomTextFieldParams(
-                        label = "Nro Documento",
+                        label = stringResource(Res.string.tx_profile_customer_document_number),
                         singleLine = true,
-                        maxLength = 50
+                        maxLength = 10
                     )
                 )
 
@@ -108,9 +121,9 @@ fun CustomerFormScreen(
                     value = phoneNumber, onValueChange = {
                         phoneNumber = it
                     }, params = CustomTextFieldParams(
-                        label = "Celular",
+                        label = stringResource(Res.string.tx_profile_customer_phone),
                         singleLine = true,
-                        maxLength = 50
+                        maxLength = 12
                     )
                 )
 
@@ -118,7 +131,7 @@ fun CustomerFormScreen(
                     value = address, onValueChange = {
                         address = it
                     }, params = CustomTextFieldParams(
-                        label = "Dirección",
+                        label = stringResource(Res.string.tx_profile_customer_address),
                         singleLine = true,
                         maxLength = 50
                     )
@@ -128,7 +141,7 @@ fun CustomerFormScreen(
                     value = email, onValueChange = {
                         email = it
                     }, params = CustomTextFieldParams(
-                        label = "Email",
+                        label = stringResource(Res.string.tx_profile_customer_email),
                         singleLine = true,
                         maxLength = 50
                     )
@@ -137,21 +150,33 @@ fun CustomerFormScreen(
                 if (isNew) {
                     ButtonActions(
                         modifier = Modifier.padding(12.dp),
-                        primaryButtonText = "Guardar",
-                        onPrimaryClick = { onSaveClick(result.copy(firstName = firstName,
-                            lastName = lastName, motherLastName = motherLastName,
-                            documentType = documentType, documentNumber = documentNumber,
-                            phoneNumber = phoneNumber, address = address, email = email)) },
+                        primaryButtonText = stringResource(Res.string.tx_save_changes),
+                        onPrimaryClick = {
+                            onSaveClick(
+                                result.copy(
+                                    firstName = firstName,
+                                    lastName = lastName, motherLastName = motherLastName,
+                                    documentType = documentType, documentNumber = documentNumber,
+                                    phoneNumber = phoneNumber, address = address, email = email
+                                )
+                            )
+                        },
                     )
                 } else {
                     ButtonActions(
                         modifier = Modifier.padding(12.dp),
-                        primaryButtonText = "Guardar",
-                        onPrimaryClick = { onSaveClick(result.copy(firstName = firstName,
-                            lastName = lastName, motherLastName = motherLastName,
-                            documentType = documentType, documentNumber = documentNumber,
-                            phoneNumber = phoneNumber, address = address, email = email)) },
-                        secondaryButtonText = "Eliminar",
+                        primaryButtonText = stringResource(Res.string.tx_save_changes),
+                        onPrimaryClick = {
+                            onSaveClick(
+                                result.copy(
+                                    firstName = firstName,
+                                    lastName = lastName, motherLastName = motherLastName,
+                                    documentType = documentType, documentNumber = documentNumber,
+                                    phoneNumber = phoneNumber, address = address, email = email
+                                )
+                            )
+                        },
+                        secondaryButtonText = stringResource(Res.string.tx_save_delete),
                         onSecondaryClick = { onDeleteClick(result.copy(isDeleted = true)) }
                     )
                 }

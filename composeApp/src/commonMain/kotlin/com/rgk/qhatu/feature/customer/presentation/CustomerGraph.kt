@@ -30,14 +30,18 @@ fun NavGraphBuilder.customerGraph(
                 navController.navigate(CustomerProfileDestination(it))
             },
             onNewCustomerClick = {
-                navController.navigate(CustomerFormDestination(null))
+                navController.navigate(CustomerFormDestination(""))
             })
         customerProfileDestination(onResumeClick = {
         }, onEditClick = {
             navController.navigate(CustomerFormDestination(it))
         })
         customerFormDestination(onBackPopUp = {
-            navController.navigate(CustomerDestination)
+            navController.navigate(CustomerDestination) {
+                popUpTo(CustomerFormDestination) {
+                    inclusive = true
+                }
+            }
         })
     }
 }

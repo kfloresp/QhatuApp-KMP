@@ -98,9 +98,18 @@
     <string name="tx_profile_customer_address">Dirección</string>
     <string name="tx_profile_customer_edit">Editar cliente</string>
     <string name="tx_profile_customer_view_debt_summary">Ver resumen deuda</string>
+    <string name="tx_profile_customer_name">Nombre</string>
+    <string name="tx_profile_customer_last_name_father">Apellido Paterno</string>
+    <string name="tx_profile_customer_last_name_mother">Apellido Materno</string>
+    <string name="tx_profile_customer_document_type">Tipo Documento</string>
+    <string name="tx_profile_customer_document_number">Nro Documento</string>
+    <string name="tx_profile_customer_email">Email</string>
+    <string name="tx_profile_customer_delete">Eliminar</string>
 
     <!-- Componentes generales -->
     <string name="tx_empty_result">Ups... no encontramos nada</string>
     <string name="tx_loading_result">Cargando...</string>
     <string name="tx_error_result">Algo salió mal: %1$s</string>
+    <string name="tx_save_changes">Guardar</string>
+    <string name="tx_save_delete">Eliminar</string>
 </resources>
