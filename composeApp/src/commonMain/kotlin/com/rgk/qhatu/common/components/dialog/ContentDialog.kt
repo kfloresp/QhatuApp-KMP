@@ -18,8 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.rgk.qhatu.components.deprecate.CustomTextField
-import com.rgk.qhatu.components.deprecate.CustomTextFieldParams
+import com.rgk.qhatu.common.components.textfield.CustomTextField
+import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable

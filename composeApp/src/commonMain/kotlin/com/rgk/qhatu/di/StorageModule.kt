@@ -2,7 +2,7 @@ package com.rgk.qhatu.di
 
 import androidx.room.RoomDatabase
 import com.rgk.qhatu.feature.audit.data.database.dao.AuditLogDao
-import com.rgk.qhatu.feature.customer.data.database.dao.ClientDao
+import com.rgk.qhatu.feature.customer.data.database.dao.CustomerDao
 import com.rgk.qhatu.feature.payment.data.database.dao.ClientPaymentDao
 import com.rgk.qhatu.feature.payment.data.database.dao.PaymentTransactionDao
 import com.rgk.qhatu.feature.product.data.database.dao.ProductDao
@@ -22,7 +22,7 @@ val databaseModule = module {
     single<AuditLogDao> { get<AppDataBase>().auditLogDao() }
     single<BrandDao> { get<AppDataBase>().brandDao() }
     single<CategoryDao> { get<AppDataBase>().categoryDao() }
-    single<ClientDao> { get<AppDataBase>().clientDao() }
+    single<CustomerDao> { get<AppDataBase>().clientDao() }
     single<ClientPaymentDao> { get<AppDataBase>().clientPaymentDao() }
     single<PaymentTransactionDao> { get<AppDataBase>().paymentTransactionDao() }
     single<ConfigurationDao> { get<AppDataBase>().configurationDao() }

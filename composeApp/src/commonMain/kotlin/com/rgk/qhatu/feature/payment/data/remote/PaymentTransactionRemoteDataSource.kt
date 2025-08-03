@@ -1,12 +1,13 @@
 package com.rgk.qhatu.feature.payment.data.remote
 
 import com.rgk.qhatu.feature.payment.data.remote.model.PaymentTransactionModel
-import com.rgk.qhatu.common.model.SyncTable
 import dev.gitlive.firebase.firestore.FirebaseFirestore
+
+private const val COLLECTION = "pagomovimiento"
 
 class PaymentTransactionRemoteDataSource(private val firestore: FirebaseFirestore) {
     suspend fun fetchCollection(): List<PaymentTransactionModel> {
-        val querySnapshot = firestore.collection(SyncTable.PaymentTransaction.collection).get()
+        val querySnapshot = firestore.collection(COLLECTION).get()
         val documents = querySnapshot.documents.map { documentSnapshot ->
             documentSnapshot.data<PaymentTransactionModel>()
         }
@@ -14,6 +15,6 @@ class PaymentTransactionRemoteDataSource(private val firestore: FirebaseFirestor
     }
 
     suspend fun uploadCollection(data: PaymentTransactionModel) {
-        firestore.collection(SyncTable.PaymentTransaction.collection).document(data.id).set(data)
+        firestore.collection(COLLECTION).document(data.id).set(data)
     }
 }

@@ -24,11 +24,10 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rgk.qhatu.components.deprecate.AlertMessageDialog
-import com.rgk.qhatu.components.deprecate.EmailField
-import com.rgk.qhatu.components.deprecate.LoadingView
-import com.rgk.qhatu.components.deprecate.PrimaryButton
-import com.rgk.qhatu.components.deprecate.PasswordField
+import com.rgk.qhatu.common.components.textfield.EmailField
+import com.rgk.qhatu.common.components.loading.LoadingView
+import com.rgk.qhatu.common.components.button.PrimaryButton
+import com.rgk.qhatu.common.components.textfield.PasswordField
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
@@ -115,12 +114,7 @@ fun AuthScreen(
         }
     }
     if (uiState is AuthState.Error && showDialog) {
-        AlertMessageDialog(
-            title = stringResource(Res.string.tx_error),
-            message = uiState.exception.message.orEmpty(),
-            confirmText = stringResource(Res.string.tx_acept),
-            onConfirm = { toggleDialogVisibility() }
-        )
+
     }
     if (uiState is AuthState.Loading) {
         LoadingView()

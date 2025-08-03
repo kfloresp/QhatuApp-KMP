@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 fun QhatuToolbar(
     modifier: Modifier = Modifier,
     elevation: Dp = 4.dp,
-    onBackClick: ()-> Unit,
+    onBackClick: (() -> Unit)? = null,
     title: String,
     actions: @Composable RowScope.() -> Unit = {},
 ) {
@@ -41,23 +41,27 @@ fun QhatuToolbar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Box(modifier = Modifier.width(48.dp)) {
-                IconButton(
-                    onClick = {
-                        onBackClick()
+            onBackClick?.let {
+                Box(modifier = Modifier.width(48.dp)) {
+                    IconButton(
+                        onClick = {
+                            onBackClick()
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                            contentDescription = "Back"
+                        )
                     }
-                ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                        contentDescription = "Back"
-                    )
                 }
             }
 
             Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                Text(title,
+                Text(
+                    title,
                     style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.SemiBold)
+                    fontWeight = FontWeight.SemiBold
+                )
             }
 
             Row(

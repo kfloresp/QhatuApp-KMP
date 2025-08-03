@@ -18,8 +18,6 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -41,16 +39,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.rgk.qhatu.components.deprecate.AppToolbar
-import com.rgk.qhatu.components.deprecate.SecondaryButton
+import com.rgk.qhatu.common.components.button.SecondaryButton
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.ic_minus
 import qhatuapp.composeapp.generated.resources.ic_place_holder_product
 import qhatuapp.composeapp.generated.resources.ic_plus
-import qhatuapp.composeapp.generated.resources.tx_back
 
 @Preview
 @Composable
@@ -67,17 +62,7 @@ fun ReceiptDetailScreen(
             .verticalScroll(scrollState)
             .pointerInput(Unit) { detectTapGestures { keyboardController?.hide() } }
     ) {
-        AppToolbar(
-            title = "Receipt",
-            navigationIcon = {
-                IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBackIosNew,
-                        contentDescription = stringResource(Res.string.tx_back)
-                    )
-                }
-            }
-        )
+
         Spacer(modifier = Modifier.height(8.dp))
         InfoSection("17/06/2025", "Distribuidor Rocsana SAC")
 
