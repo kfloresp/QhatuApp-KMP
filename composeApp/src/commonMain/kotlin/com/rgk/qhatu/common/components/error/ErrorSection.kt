@@ -21,7 +21,7 @@ import com.rgk.qhatu.common.components.lottie.LottieAnimation
 import com.rgk.qhatu.common.components.lottie.LottieResource
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_error_result
+import qhatuapp.composeapp.generated.resources.tx_global_error_result
 
 @Composable
 fun ErrorSection(messageError: String) {
@@ -37,7 +37,7 @@ fun ErrorSection(messageError: String) {
             modifier = Modifier.width(400.dp).height(400.dp)
         )
         Text(
-            text = stringResource(Res.string.tx_error_result,messageError),
+            text = stringResource(Res.string.tx_global_error_result,messageError),
             fontSize = 18.sp,
             maxLines = 4,
             overflow = TextOverflow.Ellipsis,

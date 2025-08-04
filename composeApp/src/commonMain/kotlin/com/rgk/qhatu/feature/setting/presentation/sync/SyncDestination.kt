@@ -10,7 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.feature.setting.presentation.sync.component.getSyncsOptions
-import com.rgk.qhatu.navigation.ProvideAppBarActions
+import com.rgk.qhatu.navigation.ProvideAppBar
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -22,13 +22,14 @@ internal fun NavGraphBuilder.syncDestination() {
         val viewModel: SyncViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
 
-        ProvideAppBarActions {
+        ProvideAppBar(actions = {
             IconButton(onClick = {
                 viewModel.syncAll()
             }) {
                 Icon(Icons.Default.Update, contentDescription = null)
             }
-        }
+        })
+
         val currentOptions = remember(uiState.itemStates) {
             getSyncsOptions().mapIndexed { index, item ->
                 when (val state = uiState.itemStates.getOrNull(index)) {

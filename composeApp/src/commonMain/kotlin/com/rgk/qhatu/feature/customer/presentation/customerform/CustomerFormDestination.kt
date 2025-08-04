@@ -2,14 +2,25 @@ package com.rgk.qhatu.feature.customer.presentation.customerform
 
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.rgk.qhatu.common.components.dialog.ConfirmDialog
+import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.navigation.ProvideAppBar
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_customer_new_title
+import qhatuapp.composeapp.generated.resources.tx_global_cancel
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete_message
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_save
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_save_subtitle
+import qhatuapp.composeapp.generated.resources.tx_global_confirmation
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_edit
 
 @Serializable
@@ -23,6 +34,9 @@ internal fun NavGraphBuilder.customerFormDestination(
         val uiState by viewModel.uiState.collectAsState()
         val isNewCustomer by viewModel.isNewCustomer.collectAsState()
 
+        var selectedCustomerToDelete by remember { mutableStateOf<Customer?>(null) }
+        var selectedCustomerToSave by remember { mutableStateOf<Customer?>(null) }
+
         ProvideAppBar(
             title = if (isNewCustomer) stringResource(Res.string.tx_customer_new_title)
             else stringResource(Res.string.tx_profile_customer_edit),
@@ -33,12 +47,35 @@ internal fun NavGraphBuilder.customerFormDestination(
             uiState = uiState,
             isNew = isNewCustomer,
             onSaveClick = {
-                viewModel.onUpsertLocal(it)
+                selectedCustomerToSave = it
             },
             onDeleteClick = {
-                viewModel.onUpsertLocal(it.copy(isDeleted = true))
+                selectedCustomerToDelete = it
             },
             onBackPopUp = { onBackPopUp.invoke() }
         )
+
+        selectedCustomerToSave?.let {
+            ConfirmDialog(
+                title = stringResource(Res.string.tx_global_confirmation),
+                description = stringResource(Res.string.tx_global_confirm_save_subtitle),
+                primaryButtonText = stringResource(Res.string.tx_global_confirm_save),
+                onPrimaryClick = { viewModel.onUpsertLocal(it) },
+                secondaryButtonText = stringResource(Res.string.tx_global_cancel),
+                onSecondaryClick = { selectedCustomerToSave = null }
+            )
+        }
+
+        selectedCustomerToDelete?.let {
+            ConfirmDialog(
+                title = stringResource(Res.string.tx_global_confirmation),
+                description = stringResource(Res.string.tx_global_confirm_delete_message,it.nameCustomer),
+                primaryButtonText = stringResource(Res.string.tx_global_confirm_delete),
+                onPrimaryClick = {
+                    viewModel.onUpsertLocal(it.copy(isDeleted = true)) },
+                secondaryButtonText = stringResource(Res.string.tx_global_cancel),
+                onSecondaryClick = { selectedCustomerToDelete = null }
+            )
+        }
     }
 }

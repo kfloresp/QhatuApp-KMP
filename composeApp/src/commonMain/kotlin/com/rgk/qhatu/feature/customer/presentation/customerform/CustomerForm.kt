@@ -22,6 +22,8 @@ import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_global_delete_changes
+import qhatuapp.composeapp.generated.resources.tx_global_save_changes
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_address
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_document_number
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_document_type
@@ -30,8 +32,6 @@ import qhatuapp.composeapp.generated.resources.tx_profile_customer_last_name_fat
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_last_name_mother
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_name
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_phone
-import qhatuapp.composeapp.generated.resources.tx_save_changes
-import qhatuapp.composeapp.generated.resources.tx_save_delete
 
 @Composable
 fun CustomerFormScreen(
@@ -150,7 +150,7 @@ fun CustomerFormScreen(
                 if (isNew) {
                     ButtonActions(
                         modifier = Modifier.padding(12.dp),
-                        primaryButtonText = stringResource(Res.string.tx_save_changes),
+                        primaryButtonText = stringResource(Res.string.tx_global_save_changes),
                         onPrimaryClick = {
                             onSaveClick(
                                 result.copy(
@@ -165,7 +165,7 @@ fun CustomerFormScreen(
                 } else {
                     ButtonActions(
                         modifier = Modifier.padding(12.dp),
-                        primaryButtonText = stringResource(Res.string.tx_save_changes),
+                        primaryButtonText = stringResource(Res.string.tx_global_save_changes),
                         onPrimaryClick = {
                             onSaveClick(
                                 result.copy(
@@ -176,7 +176,7 @@ fun CustomerFormScreen(
                                 )
                             )
                         },
-                        secondaryButtonText = stringResource(Res.string.tx_save_delete),
+                        secondaryButtonText = stringResource(Res.string.tx_global_delete_changes),
                         onSecondaryClick = { onDeleteClick(result.copy(isDeleted = true)) }
                     )
                 }

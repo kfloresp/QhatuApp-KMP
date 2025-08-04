@@ -21,7 +21,7 @@ import com.rgk.qhatu.common.components.lottie.LottieAnimation
 import com.rgk.qhatu.common.components.lottie.LottieResource
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_loading_result
+import qhatuapp.composeapp.generated.resources.tx_global_loading_result
 
 @Composable
 fun LoadingSection() {
@@ -37,7 +37,7 @@ fun LoadingSection() {
             modifier = Modifier.width(400.dp).height(200.dp)
         )
         Text(
-            text = stringResource(Res.string.tx_loading_result),
+            text = stringResource(Res.string.tx_global_loading_result),
             fontSize = 18.sp,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,

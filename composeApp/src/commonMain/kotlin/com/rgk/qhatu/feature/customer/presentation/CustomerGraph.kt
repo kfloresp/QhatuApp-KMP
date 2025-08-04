@@ -25,23 +25,14 @@ fun NavGraphBuilder.customerGraph(
     navigation<CustomerGraph>(
         startDestination = CustomerDestination
     ) {
-        customerDestination(
-            onCustomerClick = {
-                navController.navigate(CustomerProfileDestination(it))
-            },
-            onNewCustomerClick = {
-                navController.navigate(CustomerFormDestination(""))
-            })
-        customerProfileDestination(onResumeClick = {
-        }, onEditClick = {
+        customerDestination(onCustomerClick = {
+            navController.navigate(CustomerProfileDestination(it))
+        }, onNewCustomerClick = {
+            navController.navigate(CustomerFormDestination(""))
+        })
+        customerProfileDestination(onResumeClick = {}, onEditClick = {
             navController.navigate(CustomerFormDestination(it))
         })
-        customerFormDestination(onBackPopUp = {
-            navController.navigate(CustomerDestination) {
-                popUpTo(CustomerFormDestination) {
-                    inclusive = true
-                }
-            }
-        })
+        customerFormDestination(onBackPopUp = navController::popBackStack)
     }
 }

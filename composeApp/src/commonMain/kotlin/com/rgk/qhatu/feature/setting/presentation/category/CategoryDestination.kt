@@ -17,15 +17,15 @@ import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_setting_add_new
-import qhatuapp.composeapp.generated.resources.tx_setting_cancel
-import qhatuapp.composeapp.generated.resources.tx_setting_category_delete
-import qhatuapp.composeapp.generated.resources.tx_setting_category_edit
-import qhatuapp.composeapp.generated.resources.tx_setting_category_new
-import qhatuapp.composeapp.generated.resources.tx_setting_confirm_delete
-import qhatuapp.composeapp.generated.resources.tx_setting_confirm_delete_message
-import qhatuapp.composeapp.generated.resources.tx_setting_confirm_edit
-import qhatuapp.composeapp.generated.resources.tx_setting_confirm_new
+import qhatuapp.composeapp.generated.resources.tx_global_add_new
+import qhatuapp.composeapp.generated.resources.tx_global_cancel
+import qhatuapp.composeapp.generated.resources.tx_global_category_edit
+import qhatuapp.composeapp.generated.resources.tx_global_category_new
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete_message
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_edit
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_new
+import qhatuapp.composeapp.generated.resources.tx_global_confirmation
 
 @Serializable
 data object CategoryDestination
@@ -42,7 +42,7 @@ internal fun NavGraphBuilder.categoryDestination() {
         ProvideFabAction {
             if (!isRefreshing && uiState is CategoryUiState.Success || uiState is CategoryUiState.Empty) {
                 ButtonFlotableAction(
-                    label = stringResource(Res.string.tx_setting_add_new)
+                    label = stringResource(Res.string.tx_global_add_new)
                 ) {
                     selectedCategoryToNew = true
                 }
@@ -64,12 +64,12 @@ internal fun NavGraphBuilder.categoryDestination() {
 
         selectedCategoryToEdit?.let { category ->
             ContentDialog(
-                title = stringResource(Res.string.tx_setting_category_edit),
+                title = stringResource(Res.string.tx_global_category_edit),
                 content = {
                     CategoryForm(
                         initialName = category.name,
                         initialDescription = category.description.orEmpty(),
-                        onPrimaryButtonRes = Res.string.tx_setting_confirm_edit,
+                        onPrimaryButtonRes = Res.string.tx_global_confirm_edit,
                         onConfirm = { name, description ->
                             viewModel.onItemClick(
                                 category.copy(
@@ -92,12 +92,12 @@ internal fun NavGraphBuilder.categoryDestination() {
 
         if (selectedCategoryToNew) {
             ContentDialog(
-                title = stringResource(Res.string.tx_setting_category_new),
+                title = stringResource(Res.string.tx_global_category_new),
                 content = {
                     CategoryForm(
                         initialName = "",
                         initialDescription = "",
-                        onPrimaryButtonRes = Res.string.tx_setting_confirm_new,
+                        onPrimaryButtonRes = Res.string.tx_global_confirm_new,
                         onConfirm = { name, description ->
                             viewModel.onItemClick(
                                 Category(
@@ -120,17 +120,17 @@ internal fun NavGraphBuilder.categoryDestination() {
 
         selectedCategoryToDelete?.let { category ->
             ConfirmDialog(
-                title = stringResource(Res.string.tx_setting_category_delete),
+                title = stringResource(Res.string.tx_global_confirmation),
                 description = stringResource(
-                    Res.string.tx_setting_confirm_delete_message,
+                    Res.string.tx_global_confirm_delete_message,
                     category.name
                 ),
-                primaryButtonText = stringResource(Res.string.tx_setting_confirm_delete),
+                primaryButtonText = stringResource(Res.string.tx_global_confirm_delete),
                 onPrimaryClick = {
                     viewModel.onItemClick(category.copy(isDeleted = true))
                     selectedCategoryToDelete = null
                 },
-                secondaryButtonText = stringResource(Res.string.tx_setting_cancel),
+                secondaryButtonText = stringResource(Res.string.tx_global_cancel),
                 onSecondaryClick = {
                     selectedCategoryToDelete = null
                 },

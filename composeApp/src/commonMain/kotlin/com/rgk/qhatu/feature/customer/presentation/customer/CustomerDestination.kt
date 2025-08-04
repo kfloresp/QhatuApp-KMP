@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_setting_add_new
+import qhatuapp.composeapp.generated.resources.tx_global_add_new
 
 @Serializable
 data object CustomerDestination
@@ -27,7 +27,7 @@ internal fun NavGraphBuilder.customerDestination(
         ProvideFabAction {
             if (!isRefreshing && uiState is CustomerUiState.Success || uiState is CustomerUiState.Empty) {
                 ButtonFlotableAction(
-                    label = stringResource(Res.string.tx_setting_add_new)
+                    label = stringResource(Res.string.tx_global_add_new)
                 ) {
                     onNewCustomerClick()
                 }

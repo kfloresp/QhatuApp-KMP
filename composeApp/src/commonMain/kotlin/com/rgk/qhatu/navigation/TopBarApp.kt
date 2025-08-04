@@ -74,7 +74,9 @@ fun TopBarApp(
                 in cartToolbarDestinations -> {
                     QhatuCartToolbar(
                         title = viewModel.title ?: titleDestination,
-                        onBackClick = { viewModel.onBackStack ?: navController.popBackStack() },
+                        onBackClick = {
+                            viewModel.onBackStack?.invoke() ?: navController.popBackStack()
+                        },
                         actions = viewModel.actions,
                     )
                 }
@@ -82,7 +84,9 @@ fun TopBarApp(
                 in destinationsWithToolbar -> {
                     QhatuToolbar(
                         title = viewModel.title ?: titleDestination,
-                        onBackClick = { viewModel.onBackStack ?: navController.popBackStack() },
+                        onBackClick = {
+                            viewModel.onBackStack?.invoke() ?: navController.popBackStack()
+                        },
                         actions = viewModel.actions,
                     )
                 }
@@ -98,49 +102,6 @@ private fun getTitleDestination(currentRoute: String?): String {
 }
 
 @Composable
-fun ProvideAppBarActions(actions: @Composable RowScope.() -> Unit) {
-
-    val viewModelStoreOwner = LocalViewModelStoreOwner.current
-    (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
-        val viewModel: TopAppBarViewModel = viewModel(
-            viewModelStoreOwner = owner,
-            initializer = { TopAppBarViewModel() },
-        )
-        LaunchedEffect(actions) {
-            viewModel.actions = actions
-        }
-    }
-}
-
-@Composable
-fun ProvideAppBarTitle(title: String?) {
-    val viewModelStoreOwner = LocalViewModelStoreOwner.current
-    (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
-        val viewModel: TopAppBarViewModel = viewModel(
-            viewModelStoreOwner = owner,
-            initializer = { TopAppBarViewModel() },
-        )
-        LaunchedEffect(title) {
-            viewModel.title = title
-        }
-    }
-}
-
-@Composable
-fun ProvideAppBarOnBackStack(onBackStack: (() -> Unit)?) {
-    val viewModelStoreOwner = LocalViewModelStoreOwner.current
-    (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
-        val viewModel: TopAppBarViewModel = viewModel(
-            viewModelStoreOwner = owner,
-            initializer = { TopAppBarViewModel() },
-        )
-        LaunchedEffect(onBackStack) {
-            viewModel.onBackStack = onBackStack
-        }
-    }
-}
-
-@Composable
 fun ProvideAppBar(
     actions: (@Composable RowScope.() -> Unit) = { },
     title: String? = null,
@@ -152,7 +113,7 @@ fun ProvideAppBar(
             viewModelStoreOwner = owner,
             initializer = { TopAppBarViewModel() },
         )
-        LaunchedEffect(actions,title,onBackStack) {
+        LaunchedEffect(actions, title, onBackStack) {
             viewModel.actions = actions
             viewModel.title = title
             viewModel.onBackStack = onBackStack
