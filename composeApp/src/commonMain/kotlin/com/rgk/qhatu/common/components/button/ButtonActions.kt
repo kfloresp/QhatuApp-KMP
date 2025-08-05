@@ -16,6 +16,7 @@ fun ButtonActions(
     modifier: Modifier = Modifier,
     primaryButtonText: String,
     onPrimaryClick: () -> Unit,
+    isEnabled: Boolean = false,
     secondaryButtonText: String? = null,
     onSecondaryClick: (() -> Unit)? = null,
 ){
@@ -33,7 +34,7 @@ fun ButtonActions(
                 Text(secondaryButtonText)
             }
         }
-        Button(onClick = onPrimaryClick, modifier = Modifier.weight(1f)) {
+        Button(onClick = onPrimaryClick, modifier = Modifier.weight(1f), enabled = isEnabled) {
             Text(primaryButtonText)
         }
     }

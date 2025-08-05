@@ -57,8 +57,8 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.koin.viewmodel)
                 implementation(libs.kotlinx.datetime)
-                implementation("io.github.alexzhirkevich:compottie:2.0.0-rc04")
-
+                implementation(libs.compottie)
+                implementation(libs.ui.backhandler)
         }
     }
 
@@ -74,6 +74,7 @@ android {
     defaultConfig {
         applicationId = "com.rgk.ingenieros"
         minSdk = libs.versions.android.minSdk.get().toInt()
+        //noinspection OldTargetApi
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"

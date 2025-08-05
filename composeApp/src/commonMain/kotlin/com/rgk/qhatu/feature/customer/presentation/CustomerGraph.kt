@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
+import com.rgk.qhatu.common.extension.navigateToHomeWithPopUp
 import com.rgk.qhatu.feature.customer.presentation.customer.CustomerDestination
 import com.rgk.qhatu.feature.customer.presentation.customer.customerDestination
 import com.rgk.qhatu.feature.customer.presentation.customerform.CustomerFormDestination
@@ -25,14 +26,36 @@ fun NavGraphBuilder.customerGraph(
     navigation<CustomerGraph>(
         startDestination = CustomerDestination
     ) {
-        customerDestination(onCustomerClick = {
-            navController.navigate(CustomerProfileDestination(it))
-        }, onNewCustomerClick = {
-            navController.navigate(CustomerFormDestination(""))
-        })
-        customerProfileDestination(onResumeClick = {}, onEditClick = {
-            navController.navigate(CustomerFormDestination(it))
-        })
-        customerFormDestination(onBackPopUp = navController::popBackStack)
+        customerDestination(
+            onCustomerClick = {
+                navController.navigate(CustomerProfileDestination(it))
+            }, onNewCustomerClick = {
+                navController.navigate(CustomerFormDestination(""))
+            },
+            onBackPopUp = {
+                navController.navigateToHomeWithPopUp()
+            }
+        )
+        customerProfileDestination(
+            onResumeClick = {
+            }, onEditClick = {
+                navController.navigate(CustomerFormDestination(it))
+            },
+            onBackPopUp = {
+                navController.navigate(CustomerDestination)
+            }
+        )
+        customerFormDestination(
+            onBackPopUp = { idCustomer ->
+                if (idCustomer.isEmpty()) {
+                    navController.navigate(CustomerDestination)
+                } else {
+                    navController.navigate(CustomerProfileDestination(idCustomer))
+                }
+            },
+            onDeletePopUp = {
+                navController.navigate(CustomerDestination)
+            }
+        )
     }
 }
