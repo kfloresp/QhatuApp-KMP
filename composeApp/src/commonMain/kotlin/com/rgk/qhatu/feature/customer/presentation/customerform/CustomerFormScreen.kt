@@ -8,10 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.components.button.ButtonActions
@@ -22,6 +18,8 @@ import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_global_delete_changes
+import qhatuapp.composeapp.generated.resources.tx_global_save_changes
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_address
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_document_number
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_document_type
@@ -30,17 +28,21 @@ import qhatuapp.composeapp.generated.resources.tx_profile_customer_last_name_fat
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_last_name_mother
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_name
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_phone
-import qhatuapp.composeapp.generated.resources.tx_save_changes
-import qhatuapp.composeapp.generated.resources.tx_save_delete
 
 @Composable
 fun CustomerFormScreen(
-    uiState: CustomerFormUiState,
     isNew: Boolean = false,
+    uiState: CustomerFormUiState,
+    formState: CustomerFormValidationState,
+    onFieldChange: (Customer.() -> Customer) -> Unit,
     onSaveClick: (Customer) -> Unit,
     onDeleteClick: (Customer) -> Unit,
     onBackPopUp: () -> Unit,
+    onDeletePopUp: () -> Unit,
 ) {
+    val fields = formState.fields
+
+
     when (uiState) {
         is CustomerFormUiState.Error -> {
             ErrorSection(uiState.message)
@@ -51,16 +53,6 @@ fun CustomerFormScreen(
         }
 
         is CustomerFormUiState.Success -> {
-            val result = uiState.result
-            var firstName by remember { mutableStateOf(result.firstName ?: "") }
-            var lastName by remember { mutableStateOf(result.lastName ?: "") }
-            var motherLastName by remember { mutableStateOf(result.motherLastName ?: "") }
-            var documentType by remember { mutableStateOf(result.documentType) }
-            var documentNumber by remember { mutableStateOf(result.documentNumber) }
-            var phoneNumber by remember { mutableStateOf(result.phoneNumber ?: "") }
-            var address by remember { mutableStateOf(result.address ?: "") }
-            var email by remember { mutableStateOf(result.email ?: "") }
-
             Column(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier.fillMaxWidth().padding(12.dp)
@@ -68,19 +60,26 @@ fun CustomerFormScreen(
                     .imePadding(),
             ) {
                 CustomTextField(
-                    value = firstName, onValueChange = {
-                        firstName = it
-                    }, params = CustomTextFieldParams(
+                    value = fields.firstName.orEmpty(),
+                    onValueChange = {
+                        onFieldChange {
+                            copy(firstName = it)
+                        }
+                    },
+                    params = CustomTextFieldParams(
                         label = stringResource(Res.string.tx_profile_customer_name),
                         singleLine = true,
                         maxLength = 50
                     )
                 )
-
                 CustomTextField(
-                    value = lastName, onValueChange = {
-                        lastName = it
-                    }, params = CustomTextFieldParams(
+                    value = fields.lastName.orEmpty(),
+                    onValueChange = {
+                        onFieldChange {
+                            copy(lastName = it)
+                        }
+                    },
+                    params = CustomTextFieldParams(
                         label = stringResource(Res.string.tx_profile_customer_last_name_father),
                         singleLine = true,
                         maxLength = 50
@@ -88,9 +87,13 @@ fun CustomerFormScreen(
                 )
 
                 CustomTextField(
-                    value = motherLastName, onValueChange = {
-                        motherLastName = it
-                    }, params = CustomTextFieldParams(
+                    value = fields.motherLastName.orEmpty(),
+                    onValueChange = {
+                        onFieldChange {
+                            copy(motherLastName = it)
+                        }
+                    },
+                    params = CustomTextFieldParams(
                         label = stringResource(Res.string.tx_profile_customer_last_name_mother),
                         singleLine = true,
                         maxLength = 50
@@ -98,9 +101,13 @@ fun CustomerFormScreen(
                 )
 
                 CustomTextField(
-                    value = documentType, onValueChange = {
-                        documentType = it
-                    }, params = CustomTextFieldParams(
+                    value = fields.documentType,
+                    onValueChange = {
+                        onFieldChange {
+                            copy(documentType = it)
+                        }
+                    },
+                    params = CustomTextFieldParams(
                         label = stringResource(Res.string.tx_profile_customer_document_type),
                         singleLine = true,
                         maxLength = 10
@@ -108,9 +115,13 @@ fun CustomerFormScreen(
                 )
 
                 CustomTextField(
-                    value = documentNumber, onValueChange = {
-                        documentNumber = it
-                    }, params = CustomTextFieldParams(
+                    value = fields.documentNumber,
+                    onValueChange = {
+                        onFieldChange {
+                            copy(documentNumber = it)
+                        }
+                    },
+                    params = CustomTextFieldParams(
                         label = stringResource(Res.string.tx_profile_customer_document_number),
                         singleLine = true,
                         maxLength = 10
@@ -118,9 +129,13 @@ fun CustomerFormScreen(
                 )
 
                 CustomTextField(
-                    value = phoneNumber, onValueChange = {
-                        phoneNumber = it
-                    }, params = CustomTextFieldParams(
+                    value = fields.phoneNumber.orEmpty(),
+                    onValueChange = {
+                        onFieldChange {
+                            copy(phoneNumber = it)
+                        }
+                    },
+                    params = CustomTextFieldParams(
                         label = stringResource(Res.string.tx_profile_customer_phone),
                         singleLine = true,
                         maxLength = 12
@@ -128,9 +143,13 @@ fun CustomerFormScreen(
                 )
 
                 CustomTextField(
-                    value = address, onValueChange = {
-                        address = it
-                    }, params = CustomTextFieldParams(
+                    value = fields.address.orEmpty(),
+                    onValueChange = {
+                        onFieldChange {
+                            copy(address = it)
+                        }
+                    },
+                    params = CustomTextFieldParams(
                         label = stringResource(Res.string.tx_profile_customer_address),
                         singleLine = true,
                         maxLength = 50
@@ -138,9 +157,13 @@ fun CustomerFormScreen(
                 )
 
                 CustomTextField(
-                    value = email, onValueChange = {
-                        email = it
-                    }, params = CustomTextFieldParams(
+                    value = fields.email.orEmpty(),
+                    onValueChange = {
+                        onFieldChange {
+                            copy(email = it)
+                        }
+                    },
+                    params = CustomTextFieldParams(
                         label = stringResource(Res.string.tx_profile_customer_email),
                         singleLine = true,
                         maxLength = 50
@@ -150,39 +173,36 @@ fun CustomerFormScreen(
                 if (isNew) {
                     ButtonActions(
                         modifier = Modifier.padding(12.dp),
-                        primaryButtonText = stringResource(Res.string.tx_save_changes),
+                        primaryButtonText = stringResource(Res.string.tx_global_save_changes),
+                        isEnabled = formState.isValid,
                         onPrimaryClick = {
-                            onSaveClick(
-                                result.copy(
-                                    firstName = firstName,
-                                    lastName = lastName, motherLastName = motherLastName,
-                                    documentType = documentType, documentNumber = documentNumber,
-                                    phoneNumber = phoneNumber, address = address, email = email
-                                )
-                            )
+                            onSaveClick(fields)
                         },
                     )
                 } else {
                     ButtonActions(
                         modifier = Modifier.padding(12.dp),
-                        primaryButtonText = stringResource(Res.string.tx_save_changes),
+                        primaryButtonText = stringResource(Res.string.tx_global_save_changes),
+                        isEnabled = formState.isValid,
                         onPrimaryClick = {
-                            onSaveClick(
-                                result.copy(
-                                    firstName = firstName,
-                                    lastName = lastName, motherLastName = motherLastName,
-                                    documentType = documentType, documentNumber = documentNumber,
-                                    phoneNumber = phoneNumber, address = address, email = email
-                                )
-                            )
+                            onSaveClick(fields)
                         },
-                        secondaryButtonText = stringResource(Res.string.tx_save_delete),
-                        onSecondaryClick = { onDeleteClick(result.copy(isDeleted = true)) }
+                        secondaryButtonText = stringResource(Res.string.tx_global_delete_changes),
+                        onSecondaryClick = { onDeleteClick(fields.copy(isDeleted = true)) }
                     )
                 }
             }
         }
 
-        CustomerFormUiState.SuccessUpsert -> onBackPopUp()
+        is CustomerFormUiState.SuccessUpsert -> {
+            val isDeleted = uiState.isDeleted
+            if (isDeleted) {
+                onDeletePopUp()
+            } else {
+                onBackPopUp()
+            }
+        }
+
+        CustomerFormUiState.Idle -> Unit
     }
 }

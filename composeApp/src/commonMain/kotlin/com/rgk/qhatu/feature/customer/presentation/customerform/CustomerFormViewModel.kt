@@ -24,6 +24,8 @@ class CustomerFormViewModel(
         MutableStateFlow<CustomerFormUiState>(CustomerFormUiState.Loading)
     val uiState: StateFlow<CustomerFormUiState> = _uiState.asStateFlow()
 
+    private val _formState = MutableStateFlow(CustomerFormValidationState())
+    val formState: StateFlow<CustomerFormValidationState> = _formState.asStateFlow()
     private val _isNewCustomer =
         MutableStateFlow(false)
     val isNewCustomer: StateFlow<Boolean> = _isNewCustomer.asStateFlow()
@@ -35,6 +37,9 @@ class CustomerFormViewModel(
         if (idCustomer.isEmpty()) {
             _isNewCustomer.value = true
             _uiState.value = CustomerFormUiState.Success(Customer())
+            _formState.update {
+                CustomerFormValidationState(Customer(),false)
+            }
         } else {
             loadCustomer(idCustomer)
         }
@@ -60,17 +65,20 @@ class CustomerFormViewModel(
                             result = customer
                         )
                     }
+                    _formState.update {
+                        CustomerFormValidationState(customer,false)
+                    }
                 }
             }
         }
     }
 
-    fun onUpsertLocal(it: Customer) {
+    fun onUpsertLocal(customer: Customer) {
         viewModelScope.launch {
             _uiState.update {
                 CustomerFormUiState.Loading
             }
-            val result = syncCustomerUseCase(SyncOperation.UpsertLocal(it))
+            val result = syncCustomerUseCase(SyncOperation.UpsertLocal(customer))
             when (result) {
                 is SyncResult.Error -> {
                     _uiState.update {
@@ -80,10 +88,25 @@ class CustomerFormViewModel(
 
                 is SyncResult.Success<*> -> {
                     _uiState.update {
-                        CustomerFormUiState.SuccessUpsert
+                        CustomerFormUiState.SuccessUpsert(customer.isDeleted)
                     }
                 }
             }
         }
     }
+
+    fun onFieldChange(update: Customer.() -> Customer) {
+        val currentFields = _formState.value.fields
+        val updatedFields = currentFields.update()
+        val isValid = validateFields(updatedFields)
+        _formState.value = CustomerFormValidationState(updatedFields, isValid)
+    }
+
+    private fun validateFields(fields: Customer): Boolean {
+        return fields.firstName.orEmpty().isNotBlank() &&
+                fields.lastName.orEmpty().isNotBlank() &&
+                fields.documentType.isNotBlank() &&
+                fields.documentNumber.isNotBlank()
+    }
+
 }

@@ -17,7 +17,7 @@ import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_setting_cancel
+import qhatuapp.composeapp.generated.resources.tx_global_cancel
 import qhatuapp.composeapp.generated.resources.tx_setting_description
 import qhatuapp.composeapp.generated.resources.tx_setting_name
 import qhatuapp.composeapp.generated.resources.tx_setting_unit_measure_abreviature
@@ -71,7 +71,7 @@ fun UnitMeasureForm(
             onPrimaryClick = {
                 onConfirm(name, description, abbreviation)
             },
-            secondaryButtonText = stringResource(Res.string.tx_setting_cancel),
+            secondaryButtonText = stringResource(Res.string.tx_global_cancel),
             onSecondaryClick = {
                 onCancel()
             }

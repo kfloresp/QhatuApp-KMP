@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.components.button.PrimaryButton
@@ -39,7 +40,7 @@ fun ProfileCustomer(customer: Customer, onEditClick: () -> Unit, onResumeClick: 
             .background(MaterialTheme.colorScheme.onPrimary)
     ) {
         Column(
-            modifier = Modifier.weight(1f).padding(top = 40.dp),
+            modifier = Modifier.weight(1f).padding(top = 40.dp).fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CircularIcon(icon = Icons.Default.Person, size = 150.dp, iconSize = 48.dp)
@@ -55,14 +56,14 @@ fun ProfileCustomer(customer: Customer, onEditClick: () -> Unit, onResumeClick: 
                 color = MaterialTheme.colorScheme.outline,
             )
             Spacer(Modifier.height(10.dp))
-            customer.address?.let {
+            if (!customer.address.isNullOrEmpty()) {
                 SettingItem(
                     icon = Icons.Outlined.LocationOn,
                     title = stringResource(Res.string.tx_profile_customer_address),
                     subtitle = customer.address,
                 )
             }
-            customer.phoneNumber?.let {
+            if (!customer.phoneNumber.isNullOrEmpty()) {
                 SettingItem(
                     icon = Icons.Outlined.Call,
                     title = stringResource(Res.string.tx_profile_customer_phone),

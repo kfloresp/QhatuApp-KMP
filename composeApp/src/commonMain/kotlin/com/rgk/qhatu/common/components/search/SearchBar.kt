@@ -21,7 +21,7 @@ import com.rgk.qhatu.common.theme.QhatuTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_search_bar
+import qhatuapp.composeapp.generated.resources.tx_global_search_bar
 
 @Composable
 fun SearchBar(
@@ -35,7 +35,7 @@ fun SearchBar(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
-        placeholder = { Text(stringResource(Res.string.tx_search_bar)) },
+        placeholder = { Text(stringResource(Res.string.tx_global_search_bar)) },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,

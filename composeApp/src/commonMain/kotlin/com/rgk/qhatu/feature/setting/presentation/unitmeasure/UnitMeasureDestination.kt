@@ -17,15 +17,16 @@ import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_setting_add_new
-import qhatuapp.composeapp.generated.resources.tx_setting_cancel
-import qhatuapp.composeapp.generated.resources.tx_setting_confirm_delete
-import qhatuapp.composeapp.generated.resources.tx_setting_confirm_delete_message
-import qhatuapp.composeapp.generated.resources.tx_setting_confirm_edit
-import qhatuapp.composeapp.generated.resources.tx_setting_confirm_new
-import qhatuapp.composeapp.generated.resources.tx_setting_unit_measure_delete
-import qhatuapp.composeapp.generated.resources.tx_setting_unit_measure_edit
-import qhatuapp.composeapp.generated.resources.tx_setting_unit_measure_new
+import qhatuapp.composeapp.generated.resources.tx_global_add_new
+import qhatuapp.composeapp.generated.resources.tx_global_cancel
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete_message
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_edit
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_new
+import qhatuapp.composeapp.generated.resources.tx_global_confirmation
+import qhatuapp.composeapp.generated.resources.tx_global_unit_measure_delete
+import qhatuapp.composeapp.generated.resources.tx_global_unit_measure_edit
+import qhatuapp.composeapp.generated.resources.tx_global_unit_measure_new
 
 @Serializable
 data object UnitMeasureDestination
@@ -44,7 +45,7 @@ internal fun NavGraphBuilder.unitMeasureDestination() {
         ProvideFabAction {
             if (!isRefreshing && uiState is UnitMeasureUiState.Success || uiState is UnitMeasureUiState.Empty) {
                 ButtonFlotableAction(
-                    label = stringResource(Res.string.tx_setting_add_new)
+                    label = stringResource(Res.string.tx_global_add_new)
                 ) {
                     selectedUnitMeasureToNew = true
                 }
@@ -66,13 +67,13 @@ internal fun NavGraphBuilder.unitMeasureDestination() {
 
         selectedUnitMeasureToEdit?.let { unitMeasure ->
             ContentDialog(
-                title = stringResource(Res.string.tx_setting_unit_measure_edit),
+                title = stringResource(Res.string.tx_global_unit_measure_edit),
                 content = {
                     UnitMeasureForm(
                         initialName = unitMeasure.name,
                         initialDescription = unitMeasure.description.orEmpty(),
                         initialAbbreviation = unitMeasure.abbreviation.orEmpty(),
-                        onPrimaryButtonRes = Res.string.tx_setting_confirm_edit,
+                        onPrimaryButtonRes = Res.string.tx_global_confirm_edit,
                         onConfirm = { name, description, abbreviation ->
                             viewModel.onItemClick(
                                 unitMeasure.copy(
@@ -96,13 +97,13 @@ internal fun NavGraphBuilder.unitMeasureDestination() {
 
         if (selectedUnitMeasureToNew) {
             ContentDialog(
-                title = stringResource(Res.string.tx_setting_unit_measure_new),
+                title = stringResource(Res.string.tx_global_unit_measure_new),
                 content = {
                     UnitMeasureForm(
                         initialName = "",
                         initialDescription = "",
                         initialAbbreviation = "",
-                        onPrimaryButtonRes = Res.string.tx_setting_confirm_new,
+                        onPrimaryButtonRes = Res.string.tx_global_confirm_new,
                         onConfirm = { name, description, abbreviation ->
                             viewModel.onItemClick(
                                 UnitMeasure(
@@ -126,17 +127,17 @@ internal fun NavGraphBuilder.unitMeasureDestination() {
 
         selectedUnitMeasureToDelete?.let { unitMeasure ->
             ConfirmDialog(
-                title = stringResource(Res.string.tx_setting_unit_measure_delete),
+                title = stringResource(Res.string.tx_global_confirmation),
                 description = stringResource(
-                    Res.string.tx_setting_confirm_delete_message,
+                    Res.string.tx_global_confirm_delete_message,
                     unitMeasure.name
                 ),
-                primaryButtonText = stringResource(Res.string.tx_setting_confirm_delete),
+                primaryButtonText = stringResource(Res.string.tx_global_confirm_delete),
                 onPrimaryClick = {
                     viewModel.onItemClick(unitMeasure.copy(isDeleted = true))
                     selectedUnitMeasureToDelete = null
                 },
-                secondaryButtonText = stringResource(Res.string.tx_setting_cancel),
+                secondaryButtonText = stringResource(Res.string.tx_global_cancel),
                 onSecondaryClick = {
                     selectedUnitMeasureToDelete = null
                 },

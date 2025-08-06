@@ -26,6 +26,10 @@ class CustomerProfileViewModel(
     val idCustomer get():String? = destinationArgs.idCustomer
 
     init {
+        loadInit()
+    }
+
+    fun loadInit() {
         idCustomer?.let {
             loadCustomer(it)
         }

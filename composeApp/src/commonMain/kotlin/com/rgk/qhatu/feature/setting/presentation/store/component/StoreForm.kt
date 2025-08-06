@@ -17,10 +17,10 @@ import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
 import com.rgk.qhatu.feature.setting.domain.model.Store
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_global_save_changes
 import qhatuapp.composeapp.generated.resources.tx_setting_store_address
 import qhatuapp.composeapp.generated.resources.tx_setting_store_name
 import qhatuapp.composeapp.generated.resources.tx_setting_store_phone
-import qhatuapp.composeapp.generated.resources.tx_setting_store_save_changes
 
 @Composable
 fun StoreForm(store: Store, onSaveClick: (Store) -> Unit) {
@@ -64,7 +64,7 @@ fun StoreForm(store: Store, onSaveClick: (Store) -> Unit) {
             )
         }
         PrimaryButton(
-            stringResource(Res.string.tx_setting_store_save_changes),
+            stringResource(Res.string.tx_global_save_changes),
             modifier = Modifier.padding(12.dp),
             onClick = { onSaveClick(store.copy(name = name, address = address, phone = phone)) })
     }

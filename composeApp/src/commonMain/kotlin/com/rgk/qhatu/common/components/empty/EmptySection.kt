@@ -21,7 +21,7 @@ import com.rgk.qhatu.common.components.lottie.LottieAnimation
 import com.rgk.qhatu.common.components.lottie.LottieResource
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_empty_result
+import qhatuapp.composeapp.generated.resources.tx_global_empty_result
 
 @Composable
 fun EmptySection() {
@@ -37,7 +37,7 @@ fun EmptySection() {
             modifier = Modifier.width(400.dp).height(400.dp)
         )
         Text(
-            text = stringResource(Res.string.tx_empty_result),
+            text = stringResource(Res.string.tx_global_empty_result),
             fontSize = 18.sp,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,

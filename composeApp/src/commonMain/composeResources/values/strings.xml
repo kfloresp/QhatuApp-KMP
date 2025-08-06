@@ -64,33 +64,13 @@
     <string name="tx_logout_subtitle">Salir de la aplicación</string>
     <string name="tx_logout_prompt">¿Desea cerrar sesión?</string>
     <string name="tx_logout_confirm">Sí, cerrar sesión</string>
-    <string name="tx_cancel">Cancelar</string>
-    <string name="tx_search_bar">Buscar...</string>
-    <string name="tx_setting_name">Nombre</string>
-    <string name="tx_setting_description">Descripción</string>
-    <string name="tx_setting_confirm_edit">Sí, editar</string>
-    <string name="tx_setting_confirm_new">Crear</string>
-    <string name="tx_setting_add_new">Agregar</string>
-    <string name="tx_setting_cancel">Cancelar</string>
-    <string name="tx_setting_confirm_delete_message">¿Deseas eliminar %1$s?</string>
-    <string name="tx_setting_confirm_delete">Sí, eliminar</string>
-    <string name="tx_setting_category_delete">Eliminar Categoría</string>
-    <string name="tx_setting_category_edit">Editar Categoría</string>
-    <string name="tx_setting_category_new">Nueva Categoría</string>
     <string name="tx_setting_unit_measure_abreviature">Abreviatura</string>
-    <string name="tx_setting_unit_measure_delete">Eliminar Unidad Medida</string>
-    <string name="tx_setting_unit_measure_edit">Editar Unidad Medida</string>
-    <string name="tx_setting_unit_measure_new">Nueva Unidad Medida</string>
-    <string name="tx_setting_brand_delete">Eliminar Marca</string>
-    <string name="tx_setting_brand_edit">Editar Marca</string>
-    <string name="tx_setting_brand_new">Nueva Marca</string>
     <string name="tx_setting_store_name">Nombre de la tienda</string>
     <string name="tx_setting_store_address">Dirección</string>
     <string name="tx_setting_store_phone">Celular</string>
-    <string name="tx_setting_store_save_changes">Guardar</string>
-    <string name="tx_setting_store_confirm_save_title">Confirmar</string>
-    <string name="tx_setting_store_confirm_save_subtitle">¿Deseas guardar cambios?</string>
-    <string name="tx_setting_store_confirm_save">Sí, guardar</string>
+    <string name="tx_setting_name">Nombre</string>
+    <string name="tx_setting_description">Descripción</string>
+
 
     <!-- Customer -->
     <string name="tx_profile_customer_pending_balance">Saldo pendiente</string>
@@ -107,9 +87,29 @@
     <string name="tx_profile_customer_delete">Eliminar</string>
 
     <!-- Componentes generales -->
-    <string name="tx_empty_result">Ups... no encontramos nada</string>
-    <string name="tx_loading_result">Cargando...</string>
-    <string name="tx_error_result">Algo salió mal: %1$s</string>
-    <string name="tx_save_changes">Guardar</string>
-    <string name="tx_save_delete">Eliminar</string>
+    <string name="tx_global_empty_result">Ups... no encontramos nada</string>
+    <string name="tx_global_error_result">Algo salió mal: %1$s</string>
+    <string name="tx_global_loading_result">Cargando...</string>
+    <string name="tx_global_back">Volver</string>
+    <string name="tx_global_search_bar">Buscar...</string>
+    <string name="tx_global_confirm_new">Crear</string>
+    <string name="tx_global_cancel">Cancelar</string>
+    <string name="tx_global_add_new">Agregar</string>
+    <string name="tx_global_delete_changes">Eliminar</string>
+    <string name="tx_global_save_changes">Guardar</string>
+    <string name="tx_global_confirmation">Confirmar</string>
+    <string name="tx_global_confirm_save_subtitle">¿Deseas guardar cambios?</string>
+    <string name="tx_global_confirm_save">Sí, guardar</string>
+    <string name="tx_global_confirm_delete_message">¿Deseas eliminar: %1$s?</string>
+    <string name="tx_global_confirm_delete">Sí, eliminar</string>
+    <string name="tx_global_confirm_edit">Sí, editar</string>
+    <string name="tx_global_category_delete">Eliminar Categoría</string>
+    <string name="tx_global_category_edit">Editar Categoría</string>
+    <string name="tx_global_category_new">Nueva Categoría</string>
+    <string name="tx_global_unit_measure_delete">Eliminar Unidad Medida</string>
+    <string name="tx_global_unit_measure_edit">Editar Unidad Medida</string>
+    <string name="tx_global_unit_measure_new">Nueva Unidad Medida</string>
+    <string name="tx_global_brand_delete">Eliminar Marca</string>
+    <string name="tx_global_brand_edit">Editar Marca</string>
+    <string name="tx_global_brand_new">Nueva Marca</string>
 </resources>

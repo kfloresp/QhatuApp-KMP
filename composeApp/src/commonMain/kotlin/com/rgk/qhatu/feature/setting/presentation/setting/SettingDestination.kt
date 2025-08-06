@@ -13,7 +13,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.ic_question
-import qhatuapp.composeapp.generated.resources.tx_cancel
+import qhatuapp.composeapp.generated.resources.tx_global_cancel
 import qhatuapp.composeapp.generated.resources.tx_logout_confirm
 import qhatuapp.composeapp.generated.resources.tx_logout_prompt
 
@@ -72,7 +72,7 @@ internal fun NavGraphBuilder.settingDestination(
                 onPrimaryClick = {
                     onLogoutClick()
                 },
-                secondaryButtonText = stringResource(Res.string.tx_cancel),
+                secondaryButtonText = stringResource(Res.string.tx_global_cancel),
                 onSecondaryClick = {
                     showCloseSession = false
                 },

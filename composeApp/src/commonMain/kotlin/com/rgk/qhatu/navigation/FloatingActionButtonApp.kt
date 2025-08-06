@@ -28,7 +28,7 @@ fun FloatingActionButtonApp(
     navController: NavController,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
+    val currentRoute = navBackStackEntry?.destination?.route?.substringBefore("/")
 
     if (currentRoute in destinationsWithFab) {
         val viewModel: FabViewModel = viewModel(

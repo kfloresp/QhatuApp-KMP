@@ -7,22 +7,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.rgk.qhatu.common.components.button.ButtonFlotableAction
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.dialog.ContentDialog
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 import com.rgk.qhatu.feature.setting.presentation.brand.component.BrandForm
+import com.rgk.qhatu.navigation.ProvideFabAction
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_setting_brand_delete
-import qhatuapp.composeapp.generated.resources.tx_setting_brand_edit
-import qhatuapp.composeapp.generated.resources.tx_setting_brand_new
-import qhatuapp.composeapp.generated.resources.tx_setting_cancel
-import qhatuapp.composeapp.generated.resources.tx_setting_confirm_delete
-import qhatuapp.composeapp.generated.resources.tx_setting_confirm_delete_message
-import qhatuapp.composeapp.generated.resources.tx_setting_confirm_edit
-import qhatuapp.composeapp.generated.resources.tx_setting_confirm_new
+import qhatuapp.composeapp.generated.resources.tx_global_add_new
+import qhatuapp.composeapp.generated.resources.tx_global_brand_edit
+import qhatuapp.composeapp.generated.resources.tx_global_brand_new
+import qhatuapp.composeapp.generated.resources.tx_global_cancel
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete_message
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_edit
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_new
+import qhatuapp.composeapp.generated.resources.tx_global_confirmation
 
 @Serializable
 data object BrandDestination
@@ -36,6 +39,16 @@ internal fun NavGraphBuilder.brandDestination(
         var selectedBrandToEdit by remember { mutableStateOf<Brand?>(null) }
         var selectedBrandToDelete by remember { mutableStateOf<Brand?>(null) }
         var selectedBrandToNew by remember { mutableStateOf(false) }
+
+        ProvideFabAction {
+            if (!isRefreshing && uiState is BrandUiState.Success || uiState is BrandUiState.Empty) {
+                ButtonFlotableAction(
+                    label = stringResource(Res.string.tx_global_add_new)
+                ) {
+                    selectedBrandToNew = true
+                }
+            }
+        }
 
         BrandScreen(
             uiState = uiState,
@@ -52,12 +65,12 @@ internal fun NavGraphBuilder.brandDestination(
 
         selectedBrandToEdit?.let { brand ->
             ContentDialog(
-                title = stringResource(Res.string.tx_setting_brand_edit),
+                title = stringResource(Res.string.tx_global_brand_edit),
                 content = {
                     BrandForm(
                         initialName = brand.name,
                         initialDescription = brand.description.orEmpty(),
-                        onPrimaryButtonRes = Res.string.tx_setting_confirm_edit,
+                        onPrimaryButtonRes = Res.string.tx_global_confirm_edit,
                         onConfirm = { nameUnitMeasure, descriptionUnitMeasure ->
                             viewModel.onItemClick(
                                 brand.copy(
@@ -80,12 +93,12 @@ internal fun NavGraphBuilder.brandDestination(
 
         if (selectedBrandToNew) {
             ContentDialog(
-                title = stringResource(Res.string.tx_setting_brand_new),
+                title = stringResource(Res.string.tx_global_brand_new),
                 content = {
                     BrandForm(
                         initialName = "",
                         initialDescription = "",
-                        onPrimaryButtonRes = Res.string.tx_setting_confirm_new,
+                        onPrimaryButtonRes = Res.string.tx_global_confirm_new,
                         onConfirm = { nameBrand, descriptionBrand ->
                             viewModel.onItemClick(
                                 Brand(
@@ -108,17 +121,17 @@ internal fun NavGraphBuilder.brandDestination(
 
         selectedBrandToDelete?.let { brand ->
             ConfirmDialog(
-                title = stringResource(Res.string.tx_setting_brand_delete),
+                title = stringResource(Res.string.tx_global_confirmation),
                 description = stringResource(
-                    Res.string.tx_setting_confirm_delete_message,
+                    Res.string.tx_global_confirm_delete_message,
                     brand.name
                 ),
-                primaryButtonText = stringResource(Res.string.tx_setting_confirm_delete),
+                primaryButtonText = stringResource(Res.string.tx_global_confirm_delete),
                 onPrimaryClick = {
                     viewModel.onItemClick(brand.copy(isDeleted = true))
                     selectedBrandToDelete = null
                 },
-                secondaryButtonText = stringResource(Res.string.tx_setting_cancel),
+                secondaryButtonText = stringResource(Res.string.tx_global_cancel),
                 onSecondaryClick = {
                     selectedBrandToDelete = null
                 },
