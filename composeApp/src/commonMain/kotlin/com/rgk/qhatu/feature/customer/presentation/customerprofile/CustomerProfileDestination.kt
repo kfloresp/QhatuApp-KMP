@@ -15,12 +15,12 @@ data class CustomerProfileDestination(val idCustomer: String?)
 
 @OptIn(ExperimentalComposeUiApi::class)
 internal fun NavGraphBuilder.customerProfileDestination(
-    onResumeClick: () -> Unit,
     onBackPopUp: () -> Unit,
+    onResumeClick: (String) -> Unit,
     onEditClick: (String) -> Unit,
 ) {
 
-    composable<CustomerProfileDestination> {
+    composable<CustomerProfileDestination> { destination ->
         val viewModel: CustomerProfileViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
 
@@ -31,9 +31,12 @@ internal fun NavGraphBuilder.customerProfileDestination(
         ProvideAppBar(
             onBackStack = { onBackPopUp.invoke() }
         )
+
         CustomerProfileScreen(
             uiState,
-            onResumeClick = onResumeClick,
+            onResumeClick = {
+                onResumeClick(it.id)
+            },
             onEditClick = {
                 onEditClick(it.id)
             })

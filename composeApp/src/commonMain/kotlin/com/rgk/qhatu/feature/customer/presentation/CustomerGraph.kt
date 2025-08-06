@@ -11,6 +11,8 @@ import com.rgk.qhatu.feature.customer.presentation.customerform.CustomerFormDest
 import com.rgk.qhatu.feature.customer.presentation.customerform.customerFormDestination
 import com.rgk.qhatu.feature.customer.presentation.customerprofile.CustomerProfileDestination
 import com.rgk.qhatu.feature.customer.presentation.customerprofile.customerProfileDestination
+import com.rgk.qhatu.feature.customer.presentation.customersummary.CustomerSummaryDestination
+import com.rgk.qhatu.feature.customer.presentation.customersummary.customerSummaryDestination
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -38,6 +40,7 @@ fun NavGraphBuilder.customerGraph(
         )
         customerProfileDestination(
             onResumeClick = {
+                navController.navigate(CustomerSummaryDestination(it))
             }, onEditClick = {
                 navController.navigate(CustomerFormDestination(it))
             },
@@ -57,5 +60,6 @@ fun NavGraphBuilder.customerGraph(
                 navController.navigate(CustomerDestination)
             }
         )
+        customerSummaryDestination()
     }
 }

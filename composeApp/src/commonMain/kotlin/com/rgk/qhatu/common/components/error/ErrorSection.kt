@@ -1,5 +1,6 @@
 package com.rgk.qhatu.common.components.error
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,14 +18,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.rgk.qhatu.common.components.button.CustomButton
 import com.rgk.qhatu.common.components.lottie.LottieAnimation
 import com.rgk.qhatu.common.components.lottie.LottieResource
+import com.rgk.qhatu.common.theme.QhatuTheme
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_new
 import qhatuapp.composeapp.generated.resources.tx_global_error_result
 
 @Composable
-fun ErrorSection(messageError: String) {
+fun ErrorSection(
+    messageError: String,
+    onClick: (() -> Unit)? = null,
+    buttonPrimary: StringResource? = null,
+) {
     Column(
         modifier = Modifier.fillMaxSize()
             .padding(vertical = 20.dp)
@@ -37,7 +47,7 @@ fun ErrorSection(messageError: String) {
             modifier = Modifier.width(400.dp).height(400.dp)
         )
         Text(
-            text = stringResource(Res.string.tx_global_error_result,messageError),
+            text = stringResource(Res.string.tx_global_error_result, messageError),
             fontSize = 18.sp,
             maxLines = 4,
             overflow = TextOverflow.Ellipsis,
@@ -47,5 +57,19 @@ fun ErrorSection(messageError: String) {
             textAlign = TextAlign.Center,
             color = Color.Gray
         )
+        if (onClick != null && buttonPrimary != null) {
+            CustomButton(text = stringResource(buttonPrimary),
+                onClick = { onClick.invoke() }, modifier = Modifier.padding(horizontal = 10.dp, vertical = 10.dp))
+        }
+    }
+}
+
+@Preview
+@Composable
+fun ErrorSectionPreview() {
+    QhatuTheme {
+        Column(modifier = Modifier.background(Color.White)) {
+            ErrorSection("Error de prueba", onClick = {}, buttonPrimary = Res.string.tx_global_confirm_new)
+        }
     }
 }

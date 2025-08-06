@@ -9,7 +9,7 @@ import com.rgk.qhatu.feature.customer.presentation.customerprofile.component.Pro
 @Composable
 fun CustomerProfileScreen(
     uiState: CustomerProfileUiState,
-    onResumeClick: () -> Unit,
+    onResumeClick: (Customer) -> Unit,
     onEditClick: (Customer) -> Unit,
 ) {
     when (uiState) {
@@ -26,7 +26,7 @@ fun CustomerProfileScreen(
             ProfileCustomer(
                 customer = result,
                 onEditClick = { onEditClick(result) },
-                onResumeClick = onResumeClick,
+                onResumeClick = {onResumeClick(result)},
             )
         }
     }

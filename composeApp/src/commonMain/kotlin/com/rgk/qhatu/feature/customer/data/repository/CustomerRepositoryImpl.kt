@@ -9,8 +9,10 @@ import com.rgk.qhatu.common.util.generateUUID
 import com.rgk.qhatu.feature.customer.domain.mapper.toDomain
 import com.rgk.qhatu.feature.customer.domain.mapper.toEntity
 import com.rgk.qhatu.feature.customer.domain.model.Customer
+import com.rgk.qhatu.feature.customer.domain.model.CustomerSummary
 import com.rgk.qhatu.feature.customer.domain.repository.CustomerRepository
 import com.rgk.qhatu.utils.TimeUtils
+import kotlinx.coroutines.delay
 
 class CustomerRepositoryImpl(
     private val sourceRemote: ClientRemoteDataSource,
@@ -49,6 +51,20 @@ class CustomerRepositoryImpl(
             val data = sourceRemote.fetchCollection().map {
                 it.toDomain()
             }
+            SyncResult.Success(data)
+        } catch (e: Exception) {
+            SyncResult.Error(e)
+        }
+    }
+
+    override suspend fun fetchSummary(idCustomer: String): SyncResult<List<CustomerSummary>> {
+        return try {
+            val data = listOf(
+                CustomerSummary("1","1", "Venta", "5/07/2025", "S/150.0"),
+                CustomerSummary("2","1", "Pago", "5/07/2025", "S/100.0"),
+                CustomerSummary("3", "1","Venta", "5/07/2025", "S/60.0")
+            )
+            delay(1000L)
             SyncResult.Success(data)
         } catch (e: Exception) {
             SyncResult.Error(e)

@@ -1,8 +1,9 @@
 package com.rgk.qhatu.feature.customer.presentation.customersummary
 
+import com.rgk.qhatu.feature.customer.domain.model.CustomerSummary
+
 sealed class CustomerSummaryUiState {
-    data class Success(val result: List<String>, val query: String = "") : CustomerSummaryUiState()
+    data class Success(val result: List<CustomerSummary>) : CustomerSummaryUiState()
     object Loading : CustomerSummaryUiState()
-    object Empty : CustomerSummaryUiState()
     data class Error(val message: String) : CustomerSummaryUiState()
 }

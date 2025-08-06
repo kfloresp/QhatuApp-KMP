@@ -33,8 +33,4 @@ interface CustomerDao {
 
     @Query("SELECT * FROM clients WHERE id = :idCustomer and flag_eliminado = 0")
     suspend fun fetchCustomer(idCustomer: String): List<CustomerEntity>
-
-    @Query("SELECT * FROM clients WHERE razonSocial LIKE '%' || :query || '%' AND flagProveedor = 1")
-    suspend fun fetchProvider(query: String): List<CustomerEntity>
-
 }
