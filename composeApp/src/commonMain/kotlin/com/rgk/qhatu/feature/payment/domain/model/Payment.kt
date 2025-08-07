@@ -1,6 +1,6 @@
 package com.rgk.qhatu.feature.payment.domain.model
 
-data class ClientPayment(
+data class Payment(
     val id: String,
     val clientId: String,
     val paymentDate: Long,

@@ -1,10 +1,10 @@
 package com.rgk.qhatu.feature.payment.domain.mapper
 
-import com.rgk.qhatu.feature.payment.data.database.entity.ClientPaymentEntity
-import com.rgk.qhatu.feature.payment.data.remote.model.ClientPaymentModel
-import com.rgk.qhatu.feature.payment.domain.model.ClientPayment
+import com.rgk.qhatu.feature.payment.data.database.entity.PaymentEntity
+import com.rgk.qhatu.feature.payment.data.remote.model.PaymentModel
+import com.rgk.qhatu.feature.payment.domain.model.Payment
 
-fun ClientPaymentModel.toDomain(): ClientPayment = ClientPayment(
+fun PaymentModel.toDomain(): Payment = Payment(
     id = id,
     clientId = clientId,
     paymentDate = paymentDate,
@@ -15,7 +15,7 @@ fun ClientPaymentModel.toDomain(): ClientPayment = ClientPayment(
     lastUpdated = lastUpdated,
 )
 
-fun ClientPaymentEntity.toDomain(): ClientPayment = ClientPayment(
+fun PaymentEntity.toDomain(): Payment = Payment(
     id = id,
     clientId = clientId,
     paymentDate = paymentDate,
@@ -26,7 +26,7 @@ fun ClientPaymentEntity.toDomain(): ClientPayment = ClientPayment(
     lastUpdated = lastUpdated,
 )
 
-fun ClientPayment.toEntity(): ClientPaymentEntity = ClientPaymentEntity(
+fun Payment.toEntity(): PaymentEntity = PaymentEntity(
     id = id,
     clientId = clientId,
     paymentDate = paymentDate,
@@ -37,7 +37,7 @@ fun ClientPayment.toEntity(): ClientPaymentEntity = ClientPaymentEntity(
     lastUpdated = lastUpdated,
 )
 
-fun ClientPaymentModel.toEntity(): ClientPaymentEntity = ClientPaymentEntity(
+fun PaymentModel.toEntity(): PaymentEntity = PaymentEntity(
     id = id,
     clientId = clientId,
     paymentDate = paymentDate,
@@ -48,7 +48,7 @@ fun ClientPaymentModel.toEntity(): ClientPaymentEntity = ClientPaymentEntity(
     lastUpdated = lastUpdated,
 )
 
-fun ClientPaymentEntity.toModel(): ClientPaymentModel = ClientPaymentModel(
+fun PaymentEntity.toModel(): PaymentModel = PaymentModel(
     id = id,
     clientId = clientId,
     paymentDate = paymentDate,

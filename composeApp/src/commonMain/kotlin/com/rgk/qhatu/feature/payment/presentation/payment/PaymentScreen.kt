@@ -11,7 +11,7 @@ import com.rgk.qhatu.common.components.list.ActionableListContent
 import com.rgk.qhatu.common.components.refresh.RefreshBox
 import com.rgk.qhatu.common.components.search.SearchBar
 import com.rgk.qhatu.common.components.shimmer.ShimmerListVertical
-import com.rgk.qhatu.feature.payment.domain.model.ClientPayment
+import com.rgk.qhatu.feature.payment.domain.model.Payment
 import com.rgk.qhatu.feature.payment.presentation.payment.component.ItemPaymentAction
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -19,7 +19,7 @@ import com.rgk.qhatu.feature.payment.presentation.payment.component.ItemPaymentA
 fun PaymentScreen(
     uiState: PaymentUiState,
     onQueryChange: (String) -> Unit,
-    onItemClick: (ClientPayment) -> Unit,
+    onItemClick: (Payment) -> Unit,
     isRefreshing: Boolean,
     onPullRefresh: () -> Unit,
 ) {

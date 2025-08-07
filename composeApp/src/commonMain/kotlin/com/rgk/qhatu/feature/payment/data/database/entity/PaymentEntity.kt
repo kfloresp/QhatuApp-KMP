@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "client_payments")
-data class ClientPaymentEntity(
+@Entity(tableName = "payments")
+data class PaymentEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String,

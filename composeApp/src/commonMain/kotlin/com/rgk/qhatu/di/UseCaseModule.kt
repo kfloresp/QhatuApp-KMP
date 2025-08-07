@@ -8,8 +8,8 @@ import com.rgk.qhatu.feature.auth.domain.usecase.RegisterUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerSummaryUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
-import com.rgk.qhatu.feature.payment.domain.usecase.GetCustomerPaymentsUseCase
-import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentCustomerUseCase
+import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsUseCase
+import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
 import com.rgk.qhatu.feature.sale.domain.usecase.SyncPaymentTransactionUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetProductFromQueryUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
@@ -33,7 +33,7 @@ val domainModule = module {
     factoryOf(::SyncBrandUseCase)
     factoryOf(::SyncCategoryUseCase)
     factoryOf(::SyncCustomerUseCase)
-    factoryOf(::SyncPaymentCustomerUseCase)
+    factoryOf(::SyncPaymentUseCase)
     factoryOf(::SyncConfigurationUseCase)
     factoryOf(::SyncPaymentTransactionUseCase)
     factoryOf(::SyncProductUseCase)
@@ -51,6 +51,6 @@ val domainModule = module {
     factoryOf(::ObserveCurrentUser)
     factoryOf(::LogoutUseCase)
     factoryOf(::GetCustomerSummaryUseCase)
-    factoryOf(::GetCustomerPaymentsUseCase)
+    factoryOf(::GetPaymentsUseCase)
 
 }

@@ -23,7 +23,7 @@ data object PaymentDestination
 @OptIn(ExperimentalComposeUiApi::class)
 internal fun NavGraphBuilder.paymentDestination(
     onBackPopUp: () -> Unit,
-    onCustomerClick: (String) -> Unit,
+    onPaymentClick: (String) -> Unit,
     onNewPaymentClick: () -> Unit,
 ) {
     composable<PaymentDestination> {
@@ -50,7 +50,7 @@ internal fun NavGraphBuilder.paymentDestination(
             uiState = uiState,
             onQueryChange = viewModel::onQueryChanged,
             onItemClick = {
-                onCustomerClick(it.id)
+                onPaymentClick(it.id)
             },
             onPullRefresh = viewModel::onPullRefresh,
             isRefreshing = isRefreshing,

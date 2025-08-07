@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
-import com.rgk.qhatu.feature.payment.domain.model.ClientPayment
-import com.rgk.qhatu.feature.payment.domain.usecase.GetCustomerPaymentsUseCase
-import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentCustomerUseCase
+import com.rgk.qhatu.feature.payment.domain.model.Payment
+import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsUseCase
+import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,10 +16,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class PaymentViewModel(
-    private val syncPaymentCustomerUseCase: SyncPaymentCustomerUseCase,
-    private val getCustomerPaymentsUseCase: GetCustomerPaymentsUseCase,
+    private val syncPaymentUseCase: SyncPaymentUseCase,
+    private val getPaymentsUseCase: GetPaymentsUseCase,
 ) : ViewModel() {
-    private var allItems: List<ClientPayment> = emptyList()
+    private var allItems: List<Payment> = emptyList()
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
     private val _uiState = MutableStateFlow<PaymentUiState>(PaymentUiState.Loading)
@@ -41,7 +41,7 @@ class PaymentViewModel(
         _uiState.update {
             PaymentUiState.Loading
         }
-        val result = getCustomerPaymentsUseCase()
+        val result = getPaymentsUseCase()
         when (result) {
             is SyncResult.Error -> {
                 _uiState.update {
@@ -49,7 +49,7 @@ class PaymentViewModel(
                 }
             }
 
-            is SyncResult.Success<List<ClientPayment>> -> {
+            is SyncResult.Success<List<Payment>> -> {
                 allItems = result.data
                 if (allItems.isNotEmpty()) {
                     _uiState.update {
@@ -78,14 +78,14 @@ class PaymentViewModel(
         )
     }
 
-    fun onItemClick(item: ClientPayment) {
+    fun onItemClick(item: Payment) {
         if (_uiState.value is PaymentUiState.Loading) {
             return
         }
         _uiState.value = PaymentUiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val result = syncPaymentCustomerUseCase(SyncOperation.UpsertLocal(item))
+                val result = syncPaymentUseCase(SyncOperation.UpsertLocal(item))
                 when (result) {
                     is SyncResult.Error -> {
                         _uiState.value = PaymentUiState.Error(result.exception.message.orEmpty())
@@ -108,7 +108,7 @@ class PaymentViewModel(
         _uiState.value = PaymentUiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val result = syncPaymentCustomerUseCase(SyncOperation.RemoteToLocal())
+                val result = syncPaymentUseCase(SyncOperation.RemoteToLocal())
                 when (result) {
                     is SyncResult.Error -> {
                         _uiState.value = PaymentUiState.Error(result.exception.message.orEmpty())

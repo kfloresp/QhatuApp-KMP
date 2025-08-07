@@ -3,7 +3,7 @@ package com.rgk.qhatu.feature.payment.data.remote.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ClientPaymentModel(
+data class PaymentModel(
     val id: String,
     val clientId: String,
     val paymentDate: Long,

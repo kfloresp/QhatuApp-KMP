@@ -2,11 +2,11 @@ package com.rgk.qhatu.feature.payment.domain.usecase
 
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
-import com.rgk.qhatu.feature.payment.domain.model.ClientPayment
-import com.rgk.qhatu.feature.payment.domain.repository.ClientPaymentRepository
+import com.rgk.qhatu.feature.payment.domain.model.Payment
+import com.rgk.qhatu.feature.payment.domain.repository.PaymentRepository
 
-class SyncPaymentCustomerUseCase(private val repository: ClientPaymentRepository) {
-    suspend operator fun invoke(operation: SyncOperation<ClientPayment>): SyncResult<*> {
+class SyncPaymentUseCase(private val repository: PaymentRepository) {
+    suspend operator fun invoke(operation: SyncOperation<Payment>): SyncResult<*> {
         return when (operation) {
             is SyncOperation.SaveLocal -> repository.saveLocal(operation.registers)
             is SyncOperation.UpsertLocal -> repository.updateLocal(operation.register)
