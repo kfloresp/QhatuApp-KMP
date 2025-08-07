@@ -13,12 +13,19 @@ import com.rgk.qhatu.utils.TimeUtils
 
 class PaymentRepositoryImpl(
     private val sourceRemote: ClientPaymentRemoteDataSource,
-    private val sourceLocal: PaymentDao
+    private val sourceLocal: PaymentDao,
 ) : PaymentRepository {
-    override suspend fun fetchLocal(): SyncResult<List<Payment>> {
+    override suspend fun fetchLocal(idPayment: String?): SyncResult<List<Payment>> {
         return try {
-            val data = sourceLocal.fetchAll().map {
-                it.toDomain()
+            var data: List<Payment> = emptyList()
+            idPayment?.let {
+                data = sourceLocal.fetchById(idPayment).map {
+                    it.toDomain()
+                }
+            } ?: run {
+                data = sourceLocal.fetchAll().map {
+                    it.toDomain()
+                }
             }
             SyncResult.Success(data)
         } catch (e: Exception) {
@@ -34,6 +41,7 @@ class PaymentRepositoryImpl(
             SyncResult.Error(e)
         }
     }
+
     override suspend fun fetchRemote(): SyncResult<List<Payment>> {
         return try {
             val data = sourceRemote.fetchCollection().map {

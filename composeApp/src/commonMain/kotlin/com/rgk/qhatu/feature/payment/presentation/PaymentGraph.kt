@@ -7,6 +7,8 @@ import androidx.navigation.navigation
 import com.rgk.qhatu.common.extension.navigateToHomeWithPopUp
 import com.rgk.qhatu.feature.payment.presentation.payment.PaymentDestination
 import com.rgk.qhatu.feature.payment.presentation.payment.paymentDestination
+import com.rgk.qhatu.feature.payment.presentation.paymentform.PaymentFormDestination
+import com.rgk.qhatu.feature.payment.presentation.paymentform.paymentFormDestination
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -24,8 +26,20 @@ fun NavGraphBuilder.paymentGraph(
     ) {
         paymentDestination(
             onBackPopUp = { navController.navigateToHomeWithPopUp() },
-            onCustomerClick = {},
-            onNewPaymentClick = {}
+            onPaymentClick = {
+                navController.navigate(PaymentFormDestination(idPayment = it))
+            },
+            onNewPaymentClick = {
+                navController.navigate(PaymentFormDestination(idPayment = ""))
+            }
+        )
+        paymentFormDestination(
+            onBackPopUp = {
+                navController.navigate(PaymentDestination)
+            },
+            onDeletePopUp = {
+                navController.navigate(PaymentDestination)
+            }
         )
     }
 }

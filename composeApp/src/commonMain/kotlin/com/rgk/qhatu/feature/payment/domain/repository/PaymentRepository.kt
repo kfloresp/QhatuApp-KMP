@@ -5,7 +5,7 @@ import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.feature.payment.domain.model.Payment
 
 interface PaymentRepository {
-    suspend fun fetchLocal(): SyncResult<List<Payment>>
+    suspend fun fetchLocal(idPayment: String?): SyncResult<List<Payment>>
     suspend fun getStats(): SyncResult<SyncStats>
     suspend fun fetchRemote(): SyncResult<List<Payment>>
     suspend fun updateLocal(register: Payment): SyncResult<Unit>

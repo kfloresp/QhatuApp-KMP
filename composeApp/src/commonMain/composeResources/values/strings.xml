@@ -86,6 +86,11 @@
     <string name="tx_profile_customer_email">Email</string>
     <string name="tx_profile_customer_delete">Eliminar</string>
 
+    <!-- Payment -->
+
+    <string name="tx_payment_new_title">Nuevo pago</string>
+    <string name="tx_payment_view_title">Visualización de pago</string>
+
     <!-- Componentes generales -->
     <string name="tx_global_empty_result">Ups... no encontramos nada</string>
     <string name="tx_global_error_result">Algo salió mal: %1$s</string>

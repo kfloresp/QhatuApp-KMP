@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.rgk.qhatu.common.model.SyncStats
+import com.rgk.qhatu.feature.customer.data.database.entity.CustomerEntity
 import com.rgk.qhatu.feature.payment.data.database.entity.PaymentEntity
 
 @Dao
@@ -30,4 +31,7 @@ interface PaymentDao {
 
     @Query("DELETE FROM payments WHERE isSynced != 1")
     suspend fun deleteUnsynced()
+
+    @Query("SELECT * FROM payments WHERE id = :id and isDeleted = false")
+    suspend fun fetchById(id: String): List<PaymentEntity>
 }
