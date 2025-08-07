@@ -9,7 +9,7 @@ import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerSummaryUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentCustomerUseCase
-import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentTransactionUseCase
+import com.rgk.qhatu.feature.sale.domain.usecase.SyncPaymentTransactionUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetProductFromQueryUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
 import com.rgk.qhatu.feature.sale.domain.usecase.SyncSaleDetailUseCase

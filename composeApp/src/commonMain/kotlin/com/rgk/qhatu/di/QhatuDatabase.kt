@@ -9,9 +9,9 @@ import com.rgk.qhatu.feature.audit.data.database.entity.AuditLogEntity
 import com.rgk.qhatu.feature.customer.data.database.dao.CustomerDao
 import com.rgk.qhatu.feature.customer.data.database.entity.CustomerEntity
 import com.rgk.qhatu.feature.payment.data.database.dao.ClientPaymentDao
-import com.rgk.qhatu.feature.payment.data.database.dao.PaymentTransactionDao
+import com.rgk.qhatu.feature.sale.data.database.dao.PaymentTransactionDao
 import com.rgk.qhatu.feature.payment.data.database.entity.ClientPaymentEntity
-import com.rgk.qhatu.feature.payment.data.database.entity.PaymentTransactionEntity
+import com.rgk.qhatu.feature.sale.data.database.entity.PaymentTransactionEntity
 import com.rgk.qhatu.feature.product.data.database.dao.ProductDao
 import com.rgk.qhatu.feature.product.data.database.entity.ProductEntity
 import com.rgk.qhatu.feature.sale.data.database.dao.TransactionDao

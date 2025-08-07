@@ -1,15 +1,14 @@
-package com.rgk.qhatu.feature.payment.data.repository
+package com.rgk.qhatu.feature.sale.data.repository
 
 import com.rgk.qhatu.common.extension.safeCall
-import com.rgk.qhatu.feature.payment.data.database.dao.PaymentTransactionDao
-import com.rgk.qhatu.feature.payment.data.remote.PaymentTransactionRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
-import com.rgk.qhatu.feature.payment.domain.mapper.toDomain
-import com.rgk.qhatu.feature.payment.domain.mapper.toEntity
-import com.rgk.qhatu.feature.payment.domain.mapper.toModel
-import com.rgk.qhatu.feature.payment.domain.model.PaymentTransaction
-import com.rgk.qhatu.feature.payment.domain.repository.PaymentTransactionRepository
+import com.rgk.qhatu.feature.sale.domain.mapper.toDomain
+import com.rgk.qhatu.feature.sale.domain.mapper.toEntity
+import com.rgk.qhatu.feature.sale.domain.model.PaymentTransaction
+import com.rgk.qhatu.feature.sale.domain.repository.PaymentTransactionRepository
+import com.rgk.qhatu.feature.sale.data.database.dao.PaymentTransactionDao
+import com.rgk.qhatu.feature.sale.data.remote.PaymentTransactionRemoteDataSource
 import com.rgk.qhatu.utils.TimeUtils
 
 class PaymentTransactionRepositoryImpl(

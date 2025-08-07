@@ -1,21 +1,22 @@
-package com.rgk.qhatu.feature.payment.data.database.dao
+package com.rgk.qhatu.feature.sale.data.database.dao
+
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.rgk.qhatu.feature.payment.data.database.entity.PaymentTransactionEntity
 import com.rgk.qhatu.common.model.SyncStats
+import com.rgk.qhatu.feature.sale.data.database.entity.PaymentTransactionEntity
 
 @Dao
 interface PaymentTransactionDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun save(entity: PaymentTransactionEntity)
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
+    @Update(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun update(entity: PaymentTransactionEntity)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun save(entity: List<PaymentTransactionEntity>)
 
     @Query("SELECT * FROM payment_transactions")

@@ -1,17 +1,33 @@
 package com.rgk.qhatu.feature.payment.data.database.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "client_payments")
 data class ClientPaymentEntity(
-    @PrimaryKey(autoGenerate = true)
-    val idInternal: Int,
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     val id: String,
-    val cliente_id: String,
-    val fecha_pago: Long,
-    val monto_pagado: Double,
-    val metodo_pago_id: String?,
-    val fecha_sincronizado: Long,
-    val flag_sincronizado: Int
+
+    @ColumnInfo(name = "clientId")
+    val clientId: String,
+
+    @ColumnInfo(name = "paymentDate")
+    val paymentDate: Long,
+
+    @ColumnInfo(name = "amountPaid")
+    val amountPaid: Double,
+
+    @ColumnInfo(name = "paymentMethodId")
+    val paymentMethodId: String,
+
+    @ColumnInfo(name = "isSynced")
+    val isSynced: Boolean = false,
+
+    @ColumnInfo(name = "isDeleted")
+    val isDeleted: Boolean = false,
+
+    @ColumnInfo(name = "lastUpdated")
+    val lastUpdated: Long = 0L,
 )

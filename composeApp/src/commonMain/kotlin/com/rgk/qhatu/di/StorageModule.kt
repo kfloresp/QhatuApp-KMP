@@ -4,7 +4,7 @@ import androidx.room.RoomDatabase
 import com.rgk.qhatu.feature.audit.data.database.dao.AuditLogDao
 import com.rgk.qhatu.feature.customer.data.database.dao.CustomerDao
 import com.rgk.qhatu.feature.payment.data.database.dao.ClientPaymentDao
-import com.rgk.qhatu.feature.payment.data.database.dao.PaymentTransactionDao
+import com.rgk.qhatu.feature.sale.data.database.dao.PaymentTransactionDao
 import com.rgk.qhatu.feature.product.data.database.dao.ProductDao
 import com.rgk.qhatu.feature.sale.data.database.dao.TransactionDao
 import com.rgk.qhatu.feature.sale.data.database.dao.TransactionDetailDao

@@ -1,8 +1,8 @@
-package com.rgk.qhatu.feature.payment.domain.repository
+package com.rgk.qhatu.feature.sale.domain.repository
 
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
-import com.rgk.qhatu.feature.payment.domain.model.PaymentTransaction
+import com.rgk.qhatu.feature.sale.domain.model.PaymentTransaction
 
 interface PaymentTransactionRepository {
     suspend fun fetchLocal(): SyncResult<List<PaymentTransaction>>
