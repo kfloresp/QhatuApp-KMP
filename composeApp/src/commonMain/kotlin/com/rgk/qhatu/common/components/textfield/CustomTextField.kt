@@ -1,5 +1,7 @@
 package com.rgk.qhatu.common.components.textfield
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -8,7 +10,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.SelectAll
 import androidx.compose.material.icons.filled.UnfoldMore
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -18,11 +19,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -40,31 +42,42 @@ fun CustomTextField(
     params: CustomTextFieldParams
 ) {
     Column(modifier = params.modifier) {
-        OutlinedTextField(
-            value = value,
-            onValueChange = {
-                if (it.length <= params.maxLength) onValueChange(it)
-            },
-            label = { Text(params.label) },
-            isError = params.error != null,
-            keyboardOptions = params.keyboardOptions,
-            keyboardActions = params.keyboardActions,
-            singleLine = params.singleLine,
-            enabled = params.enabled,
-            readOnly = params.readOnly || params.clickable,
-            trailingIcon = params.trailingIcon,
-            leadingIcon = params.leadingIcon,
-            placeholder = params.placeholder?.let { { Text(it) } },
-            modifier = Modifier
-                .fillMaxWidth()
-                .then(params.focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier)
-                .then(
-                    if (params.clickable && params.onClick != null) {
-                        Modifier.clickable(onClick = params.onClick)
-                    } else Modifier
-                ),
-            shape = RoundedCornerShape(12.dp)
-        )
+        Box {
+            OutlinedTextField(
+                value = value,
+                onValueChange = {
+                    if (it.length <= params.maxLength) onValueChange(it)
+                },
+                label = { Text(params.label) },
+                isError = params.error != null,
+                keyboardOptions = params.keyboardOptions,
+                keyboardActions = params.keyboardActions,
+                singleLine = params.singleLine,
+                enabled = params.enabled,
+                readOnly = params.readOnly || params.clickable,
+                trailingIcon = params.trailingIcon,
+                leadingIcon = params.leadingIcon,
+                placeholder = params.placeholder?.let { { Text(it) } },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .then(params.focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier),
+                shape = RoundedCornerShape(12.dp)
+            )
+
+            if (params.clickable && params.onClick != null) {
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .clip(RoundedCornerShape(12.dp))
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null
+                        ) {
+                            params.onClick.invoke()
+                        }
+                )
+            }
+        }
 
         params.error?.let {
             Text(
@@ -171,9 +184,8 @@ fun SearchField(
 
 @Composable
 fun ClickableTextField(
-    label: String,
     selectedText: String,
-    placeholder: String = "",
+    label: String,
     onClick: () -> Unit,
 ) {
     CustomTextField(
@@ -181,7 +193,6 @@ fun ClickableTextField(
         onValueChange = {},
         params = CustomTextFieldParams(
             label = label,
-            placeholder = placeholder,
             enabled = true,
             readOnly = true,
             clickable = true,
@@ -194,7 +205,6 @@ fun ClickableTextField(
                 )
             },
             maxLength = Int.MAX_VALUE,
-            modifier = Modifier.fillMaxWidth()
         )
     )
 }

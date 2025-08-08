@@ -24,6 +24,7 @@ import com.rgk.qhatu.common.components.loading.LoadingSection
 import com.rgk.qhatu.common.components.textfield.ClickableTextField
 import com.rgk.qhatu.common.components.textfield.CustomTextField
 import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
+import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.payment.domain.model.Payment
 import com.rgk.qhatu.feature.setting.domain.model.Configuration
 import org.jetbrains.compose.resources.stringResource
@@ -39,16 +40,17 @@ fun PaymentFormScreen(
     onFieldChange: (Payment.() -> Payment) -> Unit,
     onSaveClick: (Payment) -> Unit,
     onDeleteClick: (Payment) -> Unit,
+    onCustomerClick: () -> Unit,
+    selectedCustomer: Customer? = null,
     onBackPopUp: () -> Unit,
     onDeletePopUp: () -> Unit,
 ) {
     val fields = formState.fields
-    val methodPayments: List<Configuration> =
-        listOf(
-            Configuration(id = "1", name = "Yape"),
-            Configuration(id = "2", name = "Efectivo"),
-            Configuration(id = "3", name = "Crédito")
-        )
+    val methodPayments: List<Configuration> = listOf(
+        Configuration(id = "1", name = "Yape"),
+        Configuration(id = "2", name = "Efectivo"),
+        Configuration(id = "3", name = "Crédito")
+    )
 
     when (uiState) {
         is PaymentFormUiState.Error -> {
@@ -60,12 +62,16 @@ fun PaymentFormScreen(
         }
 
         is PaymentFormUiState.Success -> {
+            val selectedName = selectedCustomer?.nameCustomer.orEmpty()
+            val pendingAmount = selectedCustomer?.pendingCustomer
+            val hasPendingAmount = selectedCustomer?.havePendingAmount == true
+
+
             Column(
                 modifier = Modifier.fillMaxWidth().padding(12.dp)
-                    .verticalScroll(rememberScrollState())
-                    .imePadding(),
+                    .verticalScroll(rememberScrollState()).imePadding(),
             ) {
-                Column{
+                Column {
                     Text(
                         text = "Cliente",
                         style = MaterialTheme.typography.titleLarge,
@@ -73,18 +79,20 @@ fun PaymentFormScreen(
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                     ClickableTextField(
-                        "",
-                        selectedText = "Kevin Flores",
+                        selectedText = selectedName,
                         "Seleccionar cliente",
                         onClick = {
-
-                        })
-                    Spacer(Modifier.height(12.dp))
-                    Text(
-                        text = "Saldo actual: S/.500.00",
-                        style = MaterialTheme.typography.titleSmall,
-                        textAlign = TextAlign.Center
+                            onCustomerClick.invoke()
+                        }
                     )
+                    if (hasPendingAmount && pendingAmount != null) {
+                        Spacer(Modifier.height(12.dp))
+                        Text(
+                            text = "Saldo actual: $pendingAmount",
+                            style = MaterialTheme.typography.titleSmall,
+                            textAlign = TextAlign.Center
+                        )
+                    }
                     Text(
                         text = "Detalles del pago",
                         style = MaterialTheme.typography.titleLarge,
@@ -98,25 +106,17 @@ fun PaymentFormScreen(
                     )
                     Spacer(Modifier.height(12.dp))
                     CustomTextField(
-                        value = "S/. 500.00",
-                        onValueChange = {
+                        value = "S/. 500.00", onValueChange = {
 
-                        },
-                        params = CustomTextFieldParams(
-                            label = "Monto de pago",
-                            singleLine = true,
-                            maxLength = 50
+                        }, params = CustomTextFieldParams(
+                            label = "Monto de pago", singleLine = true, maxLength = 50
                         )
                     )
                     CustomTextField(
-                        value = "",
-                        onValueChange = {
+                        value = "", onValueChange = {
 
-                        },
-                        params = CustomTextFieldParams(
-                            label = "Comentario (Opcional)",
-                            singleLine = true,
-                            maxLength = 50
+                        }, params = CustomTextFieldParams(
+                            label = "Comentario (Opcional)", singleLine = true, maxLength = 50
                         )
                     )
                     Text(
@@ -130,8 +130,7 @@ fun PaymentFormScreen(
                         keySelector = { it.id },
                         valueSelector = { it.name },
                         selectedKey = "2",
-                        onChipClick = {
-                        },
+                        onChipClick = {},
                         errorText = ""
                     )
                 }
@@ -154,8 +153,7 @@ fun PaymentFormScreen(
                             onSaveClick(fields)
                         },
                         secondaryButtonText = stringResource(Res.string.tx_global_delete_changes),
-                        onSecondaryClick = { onDeleteClick(fields.copy(isDeleted = true)) }
-                    )
+                        onSecondaryClick = { onDeleteClick(fields.copy(isDeleted = true)) })
                 }
             }
         }

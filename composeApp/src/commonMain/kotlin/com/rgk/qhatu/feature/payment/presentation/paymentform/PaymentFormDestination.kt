@@ -9,7 +9,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.backhandler.BackHandler
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.rgk.qhatu.common.components.bottomsheet.CustomBottomSheet
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
+import com.rgk.qhatu.common.components.search.SearchSection
+import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.payment.domain.model.Payment
 import com.rgk.qhatu.navigation.ProvideAppBar
 import kotlinx.serialization.Serializable
@@ -40,9 +43,12 @@ internal fun NavGraphBuilder.paymentFormDestination(
         val uiState by viewModel.uiState.collectAsState()
         val isNewCustomer by viewModel.isNewPayment.collectAsState()
         val formState by viewModel.formState.collectAsState()
+        val customerList by viewModel.customerList.collectAsState()
 
         var selectedPaymentToDelete by remember { mutableStateOf<Payment?>(null) }
         var selectedPaymentToSave by remember { mutableStateOf<Payment?>(null) }
+        var selectedCustomerToClick by remember { mutableStateOf(false) }
+        var selectedCustomer by remember { mutableStateOf<Customer?>(null) }
 
         ProvideAppBar(
             title = if (isNewCustomer) stringResource(Res.string.tx_payment_new_title)
@@ -64,9 +70,29 @@ internal fun NavGraphBuilder.paymentFormDestination(
             onDeleteClick = {
                 selectedPaymentToDelete = it
             },
+            onCustomerClick = {
+                selectedCustomerToClick = true
+            },
+            selectedCustomer = selectedCustomer,
             onBackPopUp = { onBackPopUp.invoke() },
             onDeletePopUp = { onDeletePopUp.invoke() }
         )
+
+        if (selectedCustomerToClick) {
+            CustomBottomSheet(isVisible = true, onDismiss = { selectedCustomerToClick = false }) {
+                SearchSection(
+                    items = customerList,
+                    keySelector = { it.id },
+                    valueSelector = { it.nameCustomer },
+                    onSearch = {
+                        viewModel.searchCustomer(it)
+                    },
+                    onSelectItem = {
+                        selectedCustomer = it
+                        selectedCustomerToClick = false
+                    })
+            }
+        }
 
         selectedPaymentToSave?.let {
             ConfirmDialog(

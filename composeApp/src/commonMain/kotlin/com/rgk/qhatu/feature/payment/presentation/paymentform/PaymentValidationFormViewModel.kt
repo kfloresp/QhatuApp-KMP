@@ -6,6 +6,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
+import com.rgk.qhatu.feature.customer.domain.model.Customer
+import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
+import com.rgk.qhatu.feature.customer.presentation.customerprofile.CustomerProfileUiState
 import com.rgk.qhatu.feature.payment.domain.model.Payment
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
@@ -18,6 +21,7 @@ import kotlinx.coroutines.launch
 class PaymentValidationFormViewModel(
     private val syncPaymentUseCase: SyncPaymentUseCase,
     private val getPaymentsUseCase: GetPaymentsUseCase,
+    private val getCustomersUseCase: GetCustomersUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val _uiState =
@@ -32,6 +36,10 @@ class PaymentValidationFormViewModel(
 
     private val destinationArgs = savedStateHandle.toRoute<PaymentFormDestination>()
     val idPayment get():String = destinationArgs.idPayment
+
+    private val _customerList = MutableStateFlow<List<Customer>>(emptyList())
+    val customerList: StateFlow<List<Customer>> = _customerList.asStateFlow()
+
 
     init {
         if (idPayment.isEmpty()) {
@@ -107,5 +115,20 @@ class PaymentValidationFormViewModel(
                 fields.amountPaid > 0 &&
                 fields.clientId.isNotBlank() &&
                 fields.paymentMethodId.isNotBlank()
+    }
+
+    fun searchCustomer(query: String) {
+        viewModelScope.launch {
+            val result = getCustomersUseCase(query = query)
+            when (result) {
+                is SyncResult.Error -> {
+                    _customerList.value = emptyList()
+                }
+
+                is SyncResult.Success<List<Customer>> -> {
+                    _customerList.value = result.data
+                }
+            }
+        }
     }
 }

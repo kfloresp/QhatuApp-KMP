@@ -19,14 +19,24 @@ class CustomerRepositoryImpl(
     private val sourceLocal: CustomerDao,
 ) : CustomerRepository {
 
-    override suspend fun fetchLocal(idCustomer: String?): SyncResult<List<Customer>> {
+    override suspend fun fetchLocal(
+        idCustomer: String?,
+        query: String?,
+    ): SyncResult<List<Customer>> {
         return try {
             var data: List<Customer> = emptyList()
-            idCustomer?.let {
-                data = sourceLocal.fetchCustomer(idCustomer).map {
-                    it.toDomain()
+            if (idCustomer != null || query != null) {
+                idCustomer?.let {
+                    data = sourceLocal.fetchCustomer(idCustomer).map {
+                        it.toDomain()
+                    }
                 }
-            } ?: run {
+                query?.let {
+                    data = sourceLocal.fetchCustomerFromQuery(query).map {
+                        it.toDomain()
+                    }
+                }
+            }else{
                 data = sourceLocal.fetchAll().map {
                     it.toDomain()
                 }
@@ -60,9 +70,9 @@ class CustomerRepositoryImpl(
     override suspend fun fetchSummary(idCustomer: String): SyncResult<List<CustomerSummary>> {
         return try {
             val data = listOf(
-                CustomerSummary("1","1", "Venta", "5/07/2025", "S/150.0"),
-                CustomerSummary("2","1", "Pago", "5/07/2025", "S/100.0"),
-                CustomerSummary("3", "1","Venta", "5/07/2025", "S/60.0")
+                CustomerSummary("1", "1", "Venta", "5/07/2025", "S/150.0"),
+                CustomerSummary("2", "1", "Pago", "5/07/2025", "S/100.0"),
+                CustomerSummary("3", "1", "Venta", "5/07/2025", "S/60.0")
             )
             delay(1000L)
             SyncResult.Success(data)

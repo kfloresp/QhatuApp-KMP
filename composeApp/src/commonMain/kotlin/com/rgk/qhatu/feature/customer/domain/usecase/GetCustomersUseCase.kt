@@ -5,7 +5,10 @@ import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.customer.domain.repository.CustomerRepository
 
 class GetCustomersUseCase(private val repository: CustomerRepository) {
-    suspend operator fun invoke(idCustomer: String? = null): SyncResult<List<Customer>> {
-        return repository.fetchLocal(idCustomer)
+    suspend operator fun invoke(
+        idCustomer: String? = null,
+        query: String? = null,
+    ): SyncResult<List<Customer>> {
+        return repository.fetchLocal(idCustomer,query)
     }
 }

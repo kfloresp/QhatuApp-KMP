@@ -33,4 +33,12 @@ interface CustomerDao {
 
     @Query("SELECT * FROM clients WHERE id = :idCustomer and flag_eliminado = 0")
     suspend fun fetchCustomer(idCustomer: String): List<CustomerEntity>
+    @Query("""
+    SELECT * 
+    FROM clients
+    WHERE flag_eliminado = 0
+      AND LOWER(nombre || ' ' || apellidoPaterno || ' ' || apellidoMaterno) LIKE '%' || LOWER(:query) || '%'
+""")
+    suspend fun fetchCustomerFromQuery(query: String): List<CustomerEntity>
+
 }
