@@ -1,21 +1,31 @@
 package com.rgk.qhatu.feature.payment.presentation.paymentform
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.components.button.ButtonActions
+import com.rgk.qhatu.common.components.chip.ChipGroup
 import com.rgk.qhatu.common.components.error.ErrorSection
 import com.rgk.qhatu.common.components.loading.LoadingSection
+import com.rgk.qhatu.common.components.textfield.ClickableTextField
 import com.rgk.qhatu.common.components.textfield.CustomTextField
 import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
 import com.rgk.qhatu.feature.payment.domain.model.Payment
+import com.rgk.qhatu.feature.setting.domain.model.Configuration
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_global_delete_changes
@@ -31,9 +41,14 @@ fun PaymentFormScreen(
     onDeleteClick: (Payment) -> Unit,
     onBackPopUp: () -> Unit,
     onDeletePopUp: () -> Unit,
-){
+) {
     val fields = formState.fields
-
+    val methodPayments: List<Configuration> =
+        listOf(
+            Configuration(id = "1", name = "Yape"),
+            Configuration(id = "2", name = "Efectivo"),
+            Configuration(id = "3", name = "Crédito")
+        )
 
     when (uiState) {
         is PaymentFormUiState.Error -> {
@@ -46,37 +61,80 @@ fun PaymentFormScreen(
 
         is PaymentFormUiState.Success -> {
             Column(
-                verticalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier.fillMaxWidth().padding(12.dp)
                     .verticalScroll(rememberScrollState())
                     .imePadding(),
             ) {
-                CustomTextField(
-                    value = fields.clientId,
-                    onValueChange = {
-                        onFieldChange {
-                            copy(clientId = it)
-                        }
-                    },
-                    params = CustomTextFieldParams(
-                        label = "Cliente",
-                        singleLine = true,
-                        maxLength = 50
+                Column{
+                    Text(
+                        text = "Cliente",
+                        style = MaterialTheme.typography.titleLarge,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(vertical = 8.dp)
                     )
-                )
-                CustomTextField(
-                    value = fields.paymentMethodId,
-                    onValueChange = {
-                        onFieldChange {
-                            copy(paymentMethodId = it)
-                        }
-                    },
-                    params = CustomTextFieldParams(
-                        label = "Método de pago",
-                        singleLine = true,
-                        maxLength = 50
+                    ClickableTextField(
+                        "",
+                        selectedText = "Kevin Flores",
+                        "Seleccionar cliente",
+                        onClick = {
+
+                        })
+                    Spacer(Modifier.height(12.dp))
+                    Text(
+                        text = "Saldo actual: S/.500.00",
+                        style = MaterialTheme.typography.titleSmall,
+                        textAlign = TextAlign.Center
                     )
-                )
+                    Text(
+                        text = "Detalles del pago",
+                        style = MaterialTheme.typography.titleLarge,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                    Text(
+                        text = "Fecha: 15 de Agosto, 2025",
+                        style = MaterialTheme.typography.titleSmall,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(Modifier.height(12.dp))
+                    CustomTextField(
+                        value = "S/. 500.00",
+                        onValueChange = {
+
+                        },
+                        params = CustomTextFieldParams(
+                            label = "Monto de pago",
+                            singleLine = true,
+                            maxLength = 50
+                        )
+                    )
+                    CustomTextField(
+                        value = "",
+                        onValueChange = {
+
+                        },
+                        params = CustomTextFieldParams(
+                            label = "Comentario (Opcional)",
+                            singleLine = true,
+                            maxLength = 50
+                        )
+                    )
+                    Text(
+                        text = "Método de pago",
+                        style = MaterialTheme.typography.titleLarge,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                    ChipGroup(
+                        items = methodPayments,
+                        keySelector = { it.id },
+                        valueSelector = { it.name },
+                        selectedKey = "2",
+                        onChipClick = {
+                        },
+                        errorText = ""
+                    )
+                }
 
                 if (isNew) {
                     ButtonActions(

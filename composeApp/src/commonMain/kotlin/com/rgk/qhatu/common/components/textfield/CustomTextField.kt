@@ -8,10 +8,13 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.SelectAll
+import androidx.compose.material.icons.filled.UnfoldMore
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -165,6 +169,35 @@ fun SearchField(
     )
 }
 
+@Composable
+fun ClickableTextField(
+    label: String,
+    selectedText: String,
+    placeholder: String = "",
+    onClick: () -> Unit,
+) {
+    CustomTextField(
+        value = selectedText,
+        onValueChange = {},
+        params = CustomTextFieldParams(
+            label = label,
+            placeholder = placeholder,
+            enabled = true,
+            readOnly = true,
+            clickable = true,
+            onClick = onClick,
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.UnfoldMore,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            },
+            maxLength = Int.MAX_VALUE,
+            modifier = Modifier.fillMaxWidth()
+        )
+    )
+}
 data class CustomTextFieldParams(
     val label: String,
     val modifier: Modifier = Modifier,
