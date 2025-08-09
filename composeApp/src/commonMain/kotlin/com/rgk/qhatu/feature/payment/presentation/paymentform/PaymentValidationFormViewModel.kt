@@ -111,8 +111,7 @@ class PaymentValidationFormViewModel(
     }
 
     private fun validateFields(fields: Payment): Boolean {
-        return fields.paymentDate > 0 &&
-                fields.amountPaid > 0 &&
+        return fields.amountPaid > 0 &&
                 fields.clientId.isNotBlank() &&
                 fields.paymentMethodId.isNotBlank()
     }

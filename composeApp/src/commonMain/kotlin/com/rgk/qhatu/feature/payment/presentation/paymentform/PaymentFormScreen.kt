@@ -1,7 +1,5 @@
 package com.rgk.qhatu.feature.payment.presentation.paymentform
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,7 +12,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.components.button.ButtonActions
@@ -41,6 +38,7 @@ fun PaymentFormScreen(
     onSaveClick: (Payment) -> Unit,
     onDeleteClick: (Payment) -> Unit,
     onCustomerClick: () -> Unit,
+    onClearCustomer: () -> Unit,
     selectedCustomer: Customer? = null,
     onBackPopUp: () -> Unit,
     onDeletePopUp: () -> Unit,
@@ -65,7 +63,13 @@ fun PaymentFormScreen(
             val selectedName = selectedCustomer?.nameCustomer.orEmpty()
             val pendingAmount = selectedCustomer?.pendingCustomer
             val hasPendingAmount = selectedCustomer?.havePendingAmount == true
+            val selectedId = selectedCustomer?.id.orEmpty()
 
+            if (selectedId.isNotEmpty()) {
+                onFieldChange {
+                    copy(clientId = selectedId)
+                }
+            }
 
             Column(
                 modifier = Modifier.fillMaxWidth().padding(12.dp)
@@ -83,6 +87,9 @@ fun PaymentFormScreen(
                         "Seleccionar cliente",
                         onClick = {
                             onCustomerClick.invoke()
+                        },
+                        onClear = {
+                            onClearCustomer.invoke()
                         }
                     )
                     if (hasPendingAmount && pendingAmount != null) {
@@ -101,20 +108,30 @@ fun PaymentFormScreen(
                     )
                     Text(
                         text = "Fecha: 15 de Agosto, 2025",
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center
                     )
                     Spacer(Modifier.height(12.dp))
                     CustomTextField(
-                        value = "S/. 500.00", onValueChange = {
-
+                        value = fields.amountPaid.toString(), onValueChange = {
+                            onFieldChange {
+                                copy(amountPaid = it.toDouble())
+                            }
                         }, params = CustomTextFieldParams(
-                            label = "Monto de pago", singleLine = true, maxLength = 50
+                            label = "Monto de pago",
+                            singleLine = true,
+                            maxLength = 50,
+                            leadingIcon = {
+                                Text("S/.")
+                            }
                         )
                     )
+                    Spacer(Modifier.height(12.dp))
                     CustomTextField(
-                        value = "", onValueChange = {
-
+                        value = fields.comments, onValueChange = {
+                            onFieldChange {
+                                copy(comments = it)
+                            }
                         }, params = CustomTextFieldParams(
                             label = "Comentario (Opcional)", singleLine = true, maxLength = 50
                         )
@@ -129,8 +146,12 @@ fun PaymentFormScreen(
                         items = methodPayments,
                         keySelector = { it.id },
                         valueSelector = { it.name },
-                        selectedKey = "2",
-                        onChipClick = {},
+                        selectedKey = fields.paymentMethodId,
+                        onChipClick = { methodPayment ->
+                            onFieldChange {
+                                copy(paymentMethodId = methodPayment.id)
+                            }
+                        },
                         errorText = ""
                     )
                 }

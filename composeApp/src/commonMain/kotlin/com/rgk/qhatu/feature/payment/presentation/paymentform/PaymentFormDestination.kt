@@ -11,7 +11,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.bottomsheet.CustomBottomSheet
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
-import com.rgk.qhatu.common.components.search.SearchSection
+import com.rgk.qhatu.common.components.search.SearchContent
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.payment.domain.model.Payment
 import com.rgk.qhatu.navigation.ProvideAppBar
@@ -73,6 +73,9 @@ internal fun NavGraphBuilder.paymentFormDestination(
             onCustomerClick = {
                 selectedCustomerToClick = true
             },
+            onClearCustomer = {
+                selectedCustomer = null
+            },
             selectedCustomer = selectedCustomer,
             onBackPopUp = { onBackPopUp.invoke() },
             onDeletePopUp = { onDeletePopUp.invoke() }
@@ -80,7 +83,7 @@ internal fun NavGraphBuilder.paymentFormDestination(
 
         if (selectedCustomerToClick) {
             CustomBottomSheet(isVisible = true, onDismiss = { selectedCustomerToClick = false }) {
-                SearchSection(
+                SearchContent(
                     items = customerList,
                     keySelector = { it.id },
                     valueSelector = { it.nameCustomer },

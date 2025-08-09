@@ -2,6 +2,7 @@ package com.rgk.qhatu.common.components.empty
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -15,29 +16,36 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rgk.qhatu.common.components.lottie.LottieAnimation
 import com.rgk.qhatu.common.components.lottie.LottieResource
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_global_empty_result
 
 @Composable
-fun EmptySection() {
+fun EmptySection(
+    textResource: StringResource = Res.string.tx_global_empty_result,
+    paddingValues: PaddingValues = PaddingValues(vertical = 20.dp),
+    width: Dp = 400.dp,
+    height: Dp = 400.dp,
+) {
     Column(
         modifier = Modifier.fillMaxSize()
-            .padding(vertical = 20.dp)
+            .padding(paddingValues)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         LottieResource(
             LottieAnimation.EMPTY_BOX,
-            modifier = Modifier.width(400.dp).height(400.dp)
+            modifier = Modifier.width(width).height(height)
         )
         Text(
-            text = stringResource(Res.string.tx_global_empty_result),
+            text = stringResource(textResource),
             fontSize = 18.sp,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,

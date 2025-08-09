@@ -93,6 +93,7 @@
 
     <!-- Componentes generales -->
     <string name="tx_global_empty_result">Ups... no encontramos nada</string>
+    <string name="tx_global_search_result">¿Qué buscaremos hoy?</string>
     <string name="tx_global_error_result">Algo salió mal: %1$s</string>
     <string name="tx_global_loading_result">Cargando...</string>
     <string name="tx_global_back">Volver</string>
