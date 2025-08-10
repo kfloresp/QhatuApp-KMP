@@ -19,7 +19,9 @@ class CustomerRepositoryImpl(
     private val sourceLocal: CustomerDao,
 ) : CustomerRepository {
 
-    override suspend fun fetchLocal(idCustomer: String?): SyncResult<List<Customer>> {
+    override suspend fun fetchLocal(
+        idCustomer: String?,
+    ): SyncResult<List<Customer>> {
         return try {
             var data: List<Customer> = emptyList()
             idCustomer?.let {
@@ -30,6 +32,18 @@ class CustomerRepositoryImpl(
                 data = sourceLocal.fetchAll().map {
                     it.toDomain()
                 }
+            }
+            SyncResult.Success(data)
+        } catch (e: Exception) {
+            SyncResult.Error(e)
+        }
+    }
+
+    override suspend fun fetchCustomerWithDebt(
+    ): SyncResult<List<Customer>> {
+        return try {
+            val data = sourceLocal.fetchCustomerWithDebt().map {
+                it.toDomain()
             }
             SyncResult.Success(data)
         } catch (e: Exception) {
@@ -60,9 +74,9 @@ class CustomerRepositoryImpl(
     override suspend fun fetchSummary(idCustomer: String): SyncResult<List<CustomerSummary>> {
         return try {
             val data = listOf(
-                CustomerSummary("1","1", "Venta", "5/07/2025", "S/150.0"),
-                CustomerSummary("2","1", "Pago", "5/07/2025", "S/100.0"),
-                CustomerSummary("3", "1","Venta", "5/07/2025", "S/60.0")
+                CustomerSummary("1", "1", "Venta", "5/07/2025", "S/150.0"),
+                CustomerSummary("2", "1", "Pago", "5/07/2025", "S/100.0"),
+                CustomerSummary("3", "1", "Venta", "5/07/2025", "S/60.0")
             )
             delay(1000L)
             SyncResult.Success(data)
@@ -106,4 +120,19 @@ class CustomerRepositoryImpl(
             })
         }
     }
+    override suspend fun updatePendingAmountLocal(
+        idCustomer: String,
+        amountPaid: String,
+    ): SyncResult<Unit> {
+        return safeCall {
+            val amountPaidDouble = amountPaid.toDoubleOrNull() ?: 0.0
+            val customer = sourceLocal.fetchCustomer(idCustomer).first()
+            val pendingAmount = customer.pendingAmount ?: 0.0
+            if (pendingAmount > 0.0 && amountPaidDouble > 0.0) {
+                val amountActual = (pendingAmount - amountPaidDouble).coerceAtLeast(0.0)
+                sourceLocal.update(customer.copy(pendingAmount = amountActual))
+            }
+        }
+    }
+
 }

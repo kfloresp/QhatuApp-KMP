@@ -1,4 +1,4 @@
-package com.rgk.qhatu.feature.payment.data.database.entity
+package com.rgk.qhatu.feature.sale.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

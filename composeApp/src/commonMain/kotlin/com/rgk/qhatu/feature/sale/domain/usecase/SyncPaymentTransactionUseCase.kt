@@ -1,9 +1,9 @@
-package com.rgk.qhatu.feature.payment.domain.usecase
+package com.rgk.qhatu.feature.sale.domain.usecase
 
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
-import com.rgk.qhatu.feature.payment.domain.model.PaymentTransaction
-import com.rgk.qhatu.feature.payment.domain.repository.PaymentTransactionRepository
+import com.rgk.qhatu.feature.sale.domain.model.PaymentTransaction
+import com.rgk.qhatu.feature.sale.domain.repository.PaymentTransactionRepository
 
 class SyncPaymentTransactionUseCase(private val repository: PaymentTransactionRepository) {
     suspend operator fun invoke(operation: SyncOperation<PaymentTransaction>): SyncResult<*> {

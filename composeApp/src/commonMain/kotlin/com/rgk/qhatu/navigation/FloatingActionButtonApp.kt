@@ -12,6 +12,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.rgk.qhatu.feature.customer.presentation.customer.CustomerDestination
+import com.rgk.qhatu.feature.payment.presentation.payment.PaymentDestination
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandDestination
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryDestination
 import com.rgk.qhatu.feature.setting.presentation.unitmeasure.UnitMeasureDestination
@@ -21,6 +22,7 @@ private val destinationsWithFab = listOf(
     BrandDestination::class.qualifiedName,
     UnitMeasureDestination::class.qualifiedName,
     CustomerDestination::class.qualifiedName,
+    PaymentDestination::class.qualifiedName,
 )
 
 @Composable

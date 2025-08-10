@@ -1,25 +1,28 @@
 package com.rgk.qhatu.feature.payment.data.repository
 
 import com.rgk.qhatu.common.extension.safeCall
-import com.rgk.qhatu.feature.payment.data.database.dao.PaymentTransactionDao
-import com.rgk.qhatu.feature.payment.data.remote.PaymentTransactionRemoteDataSource
+import com.rgk.qhatu.feature.payment.data.database.dao.PaymentDao
+import com.rgk.qhatu.feature.payment.data.remote.ClientPaymentRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
+import com.rgk.qhatu.common.util.generateUUID
 import com.rgk.qhatu.feature.payment.domain.mapper.toDomain
 import com.rgk.qhatu.feature.payment.domain.mapper.toEntity
-import com.rgk.qhatu.feature.payment.domain.mapper.toModel
-import com.rgk.qhatu.feature.payment.domain.model.PaymentTransaction
-import com.rgk.qhatu.feature.payment.domain.repository.PaymentTransactionRepository
+import com.rgk.qhatu.feature.payment.domain.model.Payment
+import com.rgk.qhatu.feature.payment.domain.repository.PaymentRepository
 import com.rgk.qhatu.utils.TimeUtils
 
-class PaymentTransactionRepositoryImpl(
-    private val sourceRemote: PaymentTransactionRemoteDataSource,
-    private val sourceLocal: PaymentTransactionDao,
-) : PaymentTransactionRepository {
-    override suspend fun fetchLocal(): SyncResult<List<PaymentTransaction>> {
+class PaymentRepositoryImpl(
+    private val sourceRemote: ClientPaymentRemoteDataSource,
+    private val sourceLocal: PaymentDao,
+) : PaymentRepository {
+    override suspend fun fetchLocal(idPayment: String?): SyncResult<List<Payment>> {
         return try {
-            val data = sourceLocal.fetchAll().map {
-                it.toDomain()
+            var data: List<Payment> = emptyList()
+            idPayment?.let {
+                data = sourceLocal.fetchById(idPayment)
+            } ?: run {
+                data = sourceLocal.getPaymentsWithDetails()
             }
             SyncResult.Success(data)
         } catch (e: Exception) {
@@ -36,7 +39,7 @@ class PaymentTransactionRepositoryImpl(
         }
     }
 
-    override suspend fun fetchRemote(): SyncResult<List<PaymentTransaction>> {
+    override suspend fun fetchRemote(): SyncResult<List<Payment>> {
         return try {
             val data = sourceRemote.fetchCollection().map {
                 it.toDomain()
@@ -47,13 +50,18 @@ class PaymentTransactionRepositoryImpl(
         }
     }
 
-    override suspend fun updateLocal(register: PaymentTransaction): SyncResult<Unit> {
+    override suspend fun upsertLocal(register: Payment): SyncResult<Unit> {
         return safeCall {
-            sourceLocal.update(register.toEntity())
+            val isNew = register.id.isEmpty()
+            if (isNew) {
+                sourceLocal.save(register.toEntity().copy(id = generateUUID()))
+            } else {
+                sourceLocal.update(register.toEntity())
+            }
         }
     }
 
-    override suspend fun saveLocal(registers: List<PaymentTransaction>): SyncResult<Unit> {
+    override suspend fun saveLocal(registers: List<Payment>): SyncResult<Unit> {
         return safeCall {
             sourceLocal.save(registers.map { it.toEntity() })
         }
@@ -70,7 +78,7 @@ class PaymentTransactionRepositoryImpl(
             sourceLocal.deleteUnsynced()
             val newClients = remoteClients.filterNot { it.id in localSyncedIds }
             sourceLocal.save(newClients.map {
-                it.toEntity().copy(fecha_sincronizado = TimeUtils.getCurrentTimestamp())
+                it.toEntity().copy(paymentDate = TimeUtils.getCurrentTimestamp())
             })
         }
     }

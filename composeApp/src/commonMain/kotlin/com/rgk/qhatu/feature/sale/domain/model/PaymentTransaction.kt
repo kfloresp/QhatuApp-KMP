@@ -1,8 +1,6 @@
-package com.rgk.qhatu.feature.payment.data.remote.model
-import kotlinx.serialization.Serializable
+package com.rgk.qhatu.feature.sale.domain.model
 
-@Serializable
-data class PaymentTransactionModel(
+data class PaymentTransaction(
     val id: String,
     val pago_id: String,
     val movimiento_id: String,

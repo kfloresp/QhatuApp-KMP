@@ -1,6 +1,5 @@
 package com.rgk.qhatu.feature.customer.presentation.customer
 
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -14,9 +13,7 @@ import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_customer_new_title
 import qhatuapp.composeapp.generated.resources.tx_global_add_new
-import qhatuapp.composeapp.generated.resources.tx_profile_customer_edit
 
 @Serializable
 data object CustomerDestination

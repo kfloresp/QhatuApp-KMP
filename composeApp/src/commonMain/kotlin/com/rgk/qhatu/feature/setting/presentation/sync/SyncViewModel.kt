@@ -6,7 +6,7 @@ import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.audit.domain.usecase.SyncAuditLogUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
-import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentTransactionUseCase
+import com.rgk.qhatu.feature.sale.domain.usecase.SyncPaymentTransactionUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
 import com.rgk.qhatu.feature.sale.domain.usecase.SyncSaleDetailUseCase
 import com.rgk.qhatu.feature.sale.domain.usecase.SyncSaleUseCase

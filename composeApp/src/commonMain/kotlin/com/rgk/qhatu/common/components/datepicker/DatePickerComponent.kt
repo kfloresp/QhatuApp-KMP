@@ -1,22 +1,29 @@
 package com.rgk.qhatu.common.components.datepicker
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import com.rgk.qhatu.common.theme.QhatuTheme
 import kotlinx.datetime.*
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SimpleDatePicker(
+fun DatePickerComponent(
     showPicker: Boolean,
-    initialDate: LocalDate? = null,
-    onDateSelected: (LocalDate?) -> Unit,
-    onDismiss: () -> Unit
+    initialDate: Long,
+    onDateSelected: (Long) -> Unit,
+    onDismiss: () -> Unit,
 ) {
     val today = Clock.System.today()
     val oneWeekAgo = today.minusDays(7)
     if (showPicker) {
         val datePickerState = rememberDatePickerState(
             yearRange = oneWeekAgo.year..today.year,
-            initialSelectedDateMillis = initialDate?.toEpochMilliseconds(),
+            initialSelectedDateMillis = initialDate,
             selectableDates = object : SelectableDates {
                 override fun isSelectableDate(utcTimeMillis: Long): Boolean {
                     return Instant.fromEpochMilliseconds(utcTimeMillis)
@@ -33,10 +40,9 @@ fun SimpleDatePicker(
                 TextButton(
                     onClick = {
                         datePickerState.selectedDateMillis?.let { millis ->
-                            val date = Instant.fromEpochMilliseconds(millis)
-                                .toLocalDateTime(TimeZone.UTC).date
-                            onDateSelected(date)
-                        } ?: onDateSelected(null)
+                            onDateSelected(millis)
+                        } ?: onDateSelected(0L)
+                        onDismiss()
                     }
                 ) {
                     Text("OK")
@@ -91,5 +97,40 @@ fun LocalDate?.toFormat(): String {
             .toLocalDateTime(TimeZone.currentSystemDefault())
             .date
         today.formatWithPattern()
+    }
+}
+
+fun Long.toFormattedDate(): String {
+    val instant = Instant.fromEpochMilliseconds(this)
+    val dateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+
+    val months = listOf(
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    )
+
+    val day = dateTime.dayOfMonth + 1
+    val month = months[dateTime.monthNumber - 1]
+    val year = dateTime.year
+
+    return "$day de $month, $year"
+}
+
+@Preview
+@Composable
+fun DatePickerPreview() {
+    QhatuTheme {
+        Column(modifier = Modifier.background(Color.White)) {
+            DatePickerComponent(
+                showPicker = true,
+                initialDate = Clock.System.today().toEpochMilliseconds(),
+                onDateSelected = {
+
+                },
+                onDismiss = {
+
+                }
+            )
+        }
     }
 }

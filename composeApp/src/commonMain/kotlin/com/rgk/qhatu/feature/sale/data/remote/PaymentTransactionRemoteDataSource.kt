@@ -1,6 +1,6 @@
-package com.rgk.qhatu.feature.payment.data.remote
+package com.rgk.qhatu.feature.sale.data.remote
 
-import com.rgk.qhatu.feature.payment.data.remote.model.PaymentTransactionModel
+import com.rgk.qhatu.feature.sale.data.remote.model.PaymentTransactionModel
 import dev.gitlive.firebase.firestore.FirebaseFirestore
 
 private const val COLLECTION = "pagomovimiento"

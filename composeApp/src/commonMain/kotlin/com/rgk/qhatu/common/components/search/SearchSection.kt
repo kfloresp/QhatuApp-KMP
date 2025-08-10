@@ -1,4 +1,4 @@
-package com.rgk.qhatu.common.components.empty
+package com.rgk.qhatu.common.components.search
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,11 +24,11 @@ import com.rgk.qhatu.common.components.lottie.LottieResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_global_empty_result
+import qhatuapp.composeapp.generated.resources.tx_global_search_result
 
 @Composable
-fun EmptySection(
-    textResource: StringResource = Res.string.tx_global_empty_result,
+fun SearchSection(
+    textResource: StringResource = Res.string.tx_global_search_result,
     paddingValues: PaddingValues = PaddingValues(vertical = 20.dp),
     width: Dp = 400.dp,
     height: Dp = 400.dp,
@@ -41,7 +41,7 @@ fun EmptySection(
         verticalArrangement = Arrangement.Center,
     ) {
         LottieResource(
-            LottieAnimation.EMPTY_BOX,
+            LottieAnimation.SEARCH,
             modifier = Modifier.width(width).height(height)
         )
         Text(

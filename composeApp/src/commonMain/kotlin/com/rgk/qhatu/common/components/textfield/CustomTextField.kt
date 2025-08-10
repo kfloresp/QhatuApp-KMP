@@ -1,20 +1,27 @@
 package com.rgk.qhatu.common.components.textfield
+
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Cancel
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -28,12 +35,11 @@ import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_email
 import qhatuapp.composeapp.generated.resources.tx_password
 import qhatuapp.composeapp.generated.resources.tx_search
-
 @Composable
 fun CustomTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    params: CustomTextFieldParams
+    params: CustomTextFieldParams,
 ) {
     Column(modifier = params.modifier) {
         OutlinedTextField(
@@ -56,7 +62,12 @@ fun CustomTextField(
                 .then(params.focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier)
                 .then(
                     if (params.clickable && params.onClick != null) {
-                        Modifier.clickable(onClick = params.onClick)
+                        Modifier.clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null
+                        ) {
+                            params.onClick.invoke()
+                        }
                     } else Modifier
                 ),
             shape = RoundedCornerShape(12.dp)
@@ -80,7 +91,7 @@ fun EmailField(
     error: String?,
     onValueChange: (String) -> Unit,
     focusRequester: FocusRequester,
-    keyboardActions: KeyboardActions
+    keyboardActions: KeyboardActions,
 ) {
     val params = CustomTextFieldParams(
         label = stringResource(Res.string.tx_email),
@@ -110,7 +121,7 @@ fun PasswordField(
     visible: Boolean,
     onToggleVisibility: () -> Unit,
     focusRequester: FocusRequester,
-    keyboardActions: KeyboardActions
+    keyboardActions: KeyboardActions,
 ) {
     val icon = if (visible) Icons.Default.Visibility else Icons.Default.VisibilityOff
 
@@ -144,24 +155,79 @@ fun PasswordField(
 fun SearchField(
     value: String,
     onValueChange: (String) -> Unit,
-    placeholder: String = stringResource(Res.string.tx_search)
+    paddingValues: PaddingValues = PaddingValues(horizontal = 12.dp),
+    label: String = stringResource(Res.string.tx_search),
+    placeholder: String = stringResource(Res.string.tx_search),
 ) {
     val params = CustomTextFieldParams(
-        label = "",
+        label = label,
         placeholder = placeholder,
         leadingIcon = {
             Icon(imageVector = Icons.Default.Search, contentDescription = null)
         },
+        trailingIcon = {
+            if (value.isNotEmpty()) {
+                IconButton(onClick = { onValueChange("") }) {
+                    Icon(
+                        imageVector = Icons.Default.Cancel,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
+        },
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = KeyboardType.Text,
             imeAction = ImeAction.Search
-        )
+        ),
+        modifier = Modifier.padding(paddingValues)
     )
 
     CustomTextField(
         value = value,
         onValueChange = onValueChange,
         params = params
+    )
+}
+
+@Composable
+fun ClickableTextField(
+    selectedText: String,
+    label: String,
+    onClick: () -> Unit,
+    onClear: () -> Unit,
+) {
+    CustomTextField(
+        value = selectedText,
+        onValueChange = {},
+        params = CustomTextFieldParams(
+            label = label,
+            enabled = true,
+            readOnly = true,
+            clickable = true,
+            onClick = onClick,
+            leadingIcon = {
+                IconButton(onClick = onClick) {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            },
+            trailingIcon = {
+                if (selectedText.isNotEmpty()) {
+                    IconButton(onClick = onClear) {
+                        Icon(
+                            imageVector = Icons.Default.Cancel,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+            },
+            maxLength = Int.MAX_VALUE,
+        )
     )
 }
 
@@ -180,7 +246,7 @@ data class CustomTextFieldParams(
     val onClick: (() -> Unit)? = null,
     val trailingIcon: @Composable (() -> Unit)? = null,
     val leadingIcon: @Composable (() -> Unit)? = null,
-    val placeholder: String? = null
+    val placeholder: String? = null,
 )
 
 

@@ -32,5 +32,6 @@ fun LottieResource(animation: LottieAnimation, modifier: Modifier = Modifier) {
 enum class LottieAnimation(val fileName: String) {
     EMPTY_BOX("empty_box.json"),
     ERROR_CAT("error_cat.json"),
-    LOADING_INFINITE("loader.json")
+    LOADING_INFINITE("loader.json"),
+    SEARCH("search.json")
 }
