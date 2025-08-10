@@ -23,6 +23,9 @@ interface ConfigurationDao {
     @Query("SELECT * FROM configurations where flag_eliminado = false")
     suspend fun fetchAll(): List<ConfigurationEntity>
 
+    @Query("SELECT * FROM configurations where flag_eliminado = false and tipo = :param")
+    suspend fun fetchParam(param: String): List<ConfigurationEntity>
+
     @Query("SELECT COUNT(*) as count, MAX(fecha_actualizacion) as lastUpdated FROM configurations")
     suspend fun getStats(): SyncStats
 

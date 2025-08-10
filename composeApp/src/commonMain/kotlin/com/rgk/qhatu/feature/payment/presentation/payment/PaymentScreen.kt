@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.rgk.qhatu.common.components.datepicker.toFormattedDate
 import com.rgk.qhatu.common.components.empty.EmptySection
 import com.rgk.qhatu.common.components.error.ErrorSection
 import com.rgk.qhatu.common.components.list.ActionableListContent
@@ -53,11 +54,11 @@ fun PaymentScreen(
                         onActionClick = {},
                         itemContent = { item, onClick, onAction ->
                             ItemPaymentAction(
-                                customerPayment = item.clientId,
-                                datePayment = item.paymentDate.toString(),
-                                methodPayment = item.paymentMethodId,
+                                customerPayment = item.customer,
+                                datePayment = item.paymentDate.toFormattedDate(),
+                                methodPayment = "Pago: ${item.paymentMethod}",
+                                amountPayment = item.amountPaidWithCurrency,
                                 onItemClick = onClick,
-                                onActionClick = onAction
                             )
                         }
                     )

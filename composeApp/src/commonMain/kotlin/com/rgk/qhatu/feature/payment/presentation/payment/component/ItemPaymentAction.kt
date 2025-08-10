@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Money
+import androidx.compose.material.icons.filled.Payments
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.theme.QhatuTheme
@@ -35,8 +36,7 @@ fun ItemPaymentAction(
     customerPayment: String,
     datePayment: String,
     methodPayment: String,
-    onActionClick: () -> Unit,
-    imageVector: ImageVector = Icons.Default.Call,
+    amountPayment: String,
     onItemClick: () -> Unit = {},
 ) {
     Row(
@@ -53,10 +53,10 @@ fun ItemPaymentAction(
                 .background(Color.Black.copy(alpha = 0.05f)),
             contentAlignment = Alignment.Center
         ) {
-//            Text(firstLetter,
-//                style = MaterialTheme.typography.bodyLarge,
-//                fontWeight = FontWeight.SemiBold,
-//            )
+            Icon(
+                imageVector = Icons.Default.Payments,
+                contentDescription = null
+            )
         }
 
         Spacer(modifier = Modifier.width(16.dp))
@@ -86,13 +86,11 @@ fun ItemPaymentAction(
                     color = Color.Gray
                 )
             }
-            IconButton(onClick = onActionClick, modifier = Modifier.size(48.dp)) {
-                Icon(
-                    imageVector = imageVector,
-                    contentDescription = null,
-                    tint = Color.Gray
-                )
-            }
+            Text(
+                text = amountPayment,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold
+            )
         }
     }
 }
@@ -106,8 +104,8 @@ private fun ItemPaymentActionPreview() {
                 customerPayment = "Ana Martínez",
                 datePayment = "7/9/2025",
                 methodPayment = "Pago: Yape",
+                amountPayment = "100",
                 onItemClick = {},
-                onActionClick = {},
             )
         }
     }

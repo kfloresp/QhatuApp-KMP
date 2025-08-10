@@ -8,6 +8,7 @@ import androidx.room.Update
 import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.feature.customer.data.database.entity.CustomerEntity
 import com.rgk.qhatu.feature.payment.data.database.entity.PaymentEntity
+import com.rgk.qhatu.feature.payment.domain.model.Payment
 
 @Dao
 interface PaymentDao {
@@ -32,6 +33,45 @@ interface PaymentDao {
     @Query("DELETE FROM payments WHERE isSynced != 1")
     suspend fun deleteUnsynced()
 
-    @Query("SELECT * FROM payments WHERE id = :id and isDeleted = false")
-    suspend fun fetchById(id: String): List<PaymentEntity>
+    @Query("""
+        SELECT 
+            p.id,
+            cu.id AS customerId,
+            cu.nombre || ' ' || cu.apellidoPaterno || ' ' || cu.apellidoMaterno AS customer,
+            p.paymentDate,
+            p.amountPaid,
+            co.id AS paymentMethodId,
+            co.nombre AS paymentMethod,
+            p.comments,
+            p.numberOperation,
+            p.isSynced,
+            p.isDeleted,
+            p.lastUpdated
+        FROM payments p
+        INNER JOIN clients cu ON p.clientId = cu.id
+        INNER JOIN configurations co ON p.paymentMethodId = co.id
+        WHERE p.id = :id and p.isDeleted = false
+    """)
+    suspend fun fetchById(id: String): List<Payment>
+
+    @Query("""
+        SELECT 
+            p.id, 
+            cu.id AS customerId,
+            cu.nombre || ' ' || cu.apellidoPaterno || ' ' || cu.apellidoMaterno AS customer,
+            p.paymentDate,
+            p.amountPaid,
+            co.id AS paymentMethodId,
+            co.nombre AS paymentMethod,
+            p.comments,
+            p.numberOperation,
+            p.isSynced,
+            p.isDeleted,
+            p.lastUpdated
+        FROM payments p
+        INNER JOIN clients cu ON p.clientId = cu.id
+        INNER JOIN configurations co ON p.paymentMethodId = co.id
+        WHERE p.isDeleted = false
+    """)
+    suspend fun getPaymentsWithDetails(): List<Payment>
 }

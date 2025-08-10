@@ -70,7 +70,7 @@ class PaymentViewModel(
         if (_uiState.value !is PaymentUiState.Success) return
 
         val filtered = if (query.isBlank()) allItems
-        else allItems.filter { it.clientId.orEmpty().contains(query, ignoreCase = true) }
+        else allItems.filter { it.customer.contains(query, ignoreCase = true) }
 
         _uiState.value = PaymentUiState.Success(
             result = filtered,

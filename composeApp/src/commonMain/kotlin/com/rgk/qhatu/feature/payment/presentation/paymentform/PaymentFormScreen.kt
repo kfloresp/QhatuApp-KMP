@@ -1,5 +1,6 @@
 package com.rgk.qhatu.feature.payment.presentation.paymentform
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -7,15 +8,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.components.button.ButtonActions
 import com.rgk.qhatu.common.components.chip.ChipGroup
+import com.rgk.qhatu.common.components.datepicker.toFormattedDate
 import com.rgk.qhatu.common.components.error.ErrorSection
 import com.rgk.qhatu.common.components.loading.LoadingSection
 import com.rgk.qhatu.common.components.textfield.ClickableTextField
@@ -38,18 +43,14 @@ fun PaymentFormScreen(
     onSaveClick: (Payment) -> Unit,
     onDeleteClick: (Payment) -> Unit,
     onCustomerClick: () -> Unit,
+    onDatePickerClick: () -> Unit,
     onClearCustomer: () -> Unit,
     selectedCustomer: Customer? = null,
+    methodPayments: List<Configuration>,
     onBackPopUp: () -> Unit,
     onDeletePopUp: () -> Unit,
 ) {
     val fields = formState.fields
-    val methodPayments: List<Configuration> = listOf(
-        Configuration(id = "1", name = "Yape"),
-        Configuration(id = "2", name = "Efectivo"),
-        Configuration(id = "3", name = "Crédito")
-    )
-
     when (uiState) {
         is PaymentFormUiState.Error -> {
             ErrorSection(uiState.message)
@@ -67,7 +68,7 @@ fun PaymentFormScreen(
 
             if (selectedId.isNotEmpty()) {
                 onFieldChange {
-                    copy(clientId = selectedId)
+                    copy(customerId = selectedId)
                 }
             }
 
@@ -76,12 +77,6 @@ fun PaymentFormScreen(
                     .verticalScroll(rememberScrollState()).imePadding(),
             ) {
                 Column {
-                    Text(
-                        text = "Cliente",
-                        style = MaterialTheme.typography.titleLarge,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(vertical = 8.dp)
-                    )
                     ClickableTextField(
                         selectedText = selectedName,
                         "Seleccionar cliente",
@@ -102,28 +97,38 @@ fun PaymentFormScreen(
                     }
                     Text(
                         text = "Detalles del pago",
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                     Text(
-                        text = "Fecha: 15 de Agosto, 2025",
+                        text = "Fecha: ${fields.paymentDate.toFormattedDate()}",
                         style = MaterialTheme.typography.titleMedium,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.clickable(enabled = true, onClick = {
+                            onDatePickerClick.invoke()
+                        })
                     )
                     Spacer(Modifier.height(12.dp))
                     CustomTextField(
-                        value = fields.amountPaid.toString(), onValueChange = {
-                            onFieldChange {
-                                copy(amountPaid = it.toDouble())
+                        value = fields.amountPaid, onValueChange = { newValue ->
+                            val regex = Regex("^\\d{0,9}(\\.\\d{0,2})?$")
+                            if (newValue.matches(regex)) {
+                                onFieldChange {
+                                    copy(amountPaid = newValue)
+                                }
                             }
                         }, params = CustomTextFieldParams(
                             label = "Monto de pago",
                             singleLine = true,
-                            maxLength = 50,
+                            maxLength = 6,
                             leadingIcon = {
                                 Text("S/.")
-                            }
+                            },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number
+                            )
                         )
                     )
                     Spacer(Modifier.height(12.dp))
@@ -138,8 +143,9 @@ fun PaymentFormScreen(
                     )
                     Text(
                         text = "Método de pago",
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                     ChipGroup(
@@ -154,6 +160,19 @@ fun PaymentFormScreen(
                         },
                         errorText = ""
                     )
+                    if (fields.paymentMethodId != "MP0001" && fields.paymentMethodId.isNotEmpty()) {
+                        CustomTextField(
+                            value = fields.numberOperation, onValueChange = {
+                                onFieldChange {
+                                    copy(numberOperation = it)
+                                }
+                            }, params = CustomTextFieldParams(
+                                label = "Número de operación (Opcional)",
+                                singleLine = true,
+                                maxLength = 10,
+                            )
+                        )
+                    }
                 }
 
                 if (isNew) {

@@ -36,8 +36,6 @@ data class Customer(
 
     val lastUpdated: Long = 0L,
 ) {
-    private val NO_DEBT = "Sin deuda"
-    private val CURRENCY_SYMBOL = "S/."
     private val fullName: String
         get() = listOfNotNull(firstName, lastName, motherLastName)
             .joinToString(" ")
@@ -67,5 +65,7 @@ data class Customer(
             val lastInitial = lastName?.firstOrNull()?.uppercaseChar() ?: ""
             "$firstInitial$lastInitial"
         }
-
 }
+
+private val NO_DEBT = "Sin deuda"
+private val CURRENCY_SYMBOL = "S/."

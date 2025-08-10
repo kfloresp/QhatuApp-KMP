@@ -22,6 +22,12 @@ data class PaymentEntity(
     @ColumnInfo(name = "paymentMethodId")
     val paymentMethodId: String,
 
+    @ColumnInfo(name = "comments")
+    val comments: String,
+
+    @ColumnInfo(name = "numberOperation")
+    val numberOperation: String,
+
     @ColumnInfo(name = "isSynced")
     val isSynced: Boolean = false,
 

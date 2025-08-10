@@ -8,6 +8,7 @@ import com.rgk.qhatu.feature.auth.domain.usecase.RegisterUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerSummaryUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
+import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsMethodUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
 import com.rgk.qhatu.feature.sale.domain.usecase.SyncPaymentTransactionUseCase
@@ -52,5 +53,6 @@ val domainModule = module {
     factoryOf(::LogoutUseCase)
     factoryOf(::GetCustomerSummaryUseCase)
     factoryOf(::GetPaymentsUseCase)
+    factoryOf(::GetPaymentsMethodUseCase)
 
 }

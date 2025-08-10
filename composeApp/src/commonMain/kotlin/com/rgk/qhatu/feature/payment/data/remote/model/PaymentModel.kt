@@ -9,6 +9,8 @@ data class PaymentModel(
     val paymentDate: Long,
     val amountPaid: Double,
     val paymentMethodId: String,
+    val comments: String,
+    val numberOperation: String,
     val isSynced: Boolean = false,
     val isDeleted: Boolean = false,
     val lastUpdated: Long = 0L,

@@ -10,6 +10,7 @@ import androidx.compose.ui.backhandler.BackHandler
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.bottomsheet.CustomBottomSheet
+import com.rgk.qhatu.common.components.datepicker.DatePickerComponent
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.search.SearchContent
 import com.rgk.qhatu.feature.customer.domain.model.Customer
@@ -44,11 +45,13 @@ internal fun NavGraphBuilder.paymentFormDestination(
         val isNewCustomer by viewModel.isNewPayment.collectAsState()
         val formState by viewModel.formState.collectAsState()
         val customerList by viewModel.customerList.collectAsState()
+        val methodPaymentList by viewModel.methodPaymentList.collectAsState()
 
         var selectedPaymentToDelete by remember { mutableStateOf<Payment?>(null) }
         var selectedPaymentToSave by remember { mutableStateOf<Payment?>(null) }
         var selectedCustomerToClick by remember { mutableStateOf(false) }
         var selectedCustomer by remember { mutableStateOf<Customer?>(null) }
+        var selectedDatePicker by remember { mutableStateOf(false) }
 
         ProvideAppBar(
             title = if (isNewCustomer) stringResource(Res.string.tx_payment_new_title)
@@ -77,10 +80,26 @@ internal fun NavGraphBuilder.paymentFormDestination(
                 selectedCustomer = null
             },
             selectedCustomer = selectedCustomer,
+            methodPayments = methodPaymentList,
+            onDatePickerClick = {
+                selectedDatePicker = true
+            },
             onBackPopUp = { onBackPopUp.invoke() },
             onDeletePopUp = { onDeletePopUp.invoke() }
         )
 
+        DatePickerComponent(
+            showPicker = selectedDatePicker,
+            onDateSelected = { date ->
+                viewModel.onFieldChange {
+                    copy(paymentDate = date)
+                }
+            },
+            initialDate = formState.fields.paymentDate,
+            onDismiss = {
+                selectedDatePicker = false
+            }
+        )
         if (selectedCustomerToClick) {
             CustomBottomSheet(isVisible = true, onDismiss = { selectedCustomerToClick = false }) {
                 SearchContent(
@@ -103,6 +122,7 @@ internal fun NavGraphBuilder.paymentFormDestination(
                 description = stringResource(Res.string.tx_global_confirm_save_subtitle),
                 primaryButtonText = stringResource(Res.string.tx_global_confirm_save),
                 onPrimaryClick = {
+                    println("Payment: $it")
                     viewModel.onUpsertLocal(it)
                     selectedPaymentToSave = null
                 },

@@ -13,12 +13,19 @@ import com.rgk.qhatu.utils.TimeUtils
 
 class ConfigurationRepositoryImpl(
     private val sourceRemote: ConfigurationRemoteDataSource,
-    private val sourceLocal: ConfigurationDao
+    private val sourceLocal: ConfigurationDao,
 ) : ConfigurationRepository {
-    override suspend fun fetchLocal(): SyncResult<List<Configuration>> {
+    override suspend fun fetchLocal(param: String?): SyncResult<List<Configuration>> {
         return try {
-            val data = sourceLocal.fetchAll().map {
-                it.toDomain()
+            var data: List<Configuration> = listOf()
+            param?.let { params ->
+                data = sourceLocal.fetchParam(params).map {
+                    it.toDomain()
+                }
+            } ?: run {
+                data = sourceLocal.fetchAll().map {
+                    it.toDomain()
+                }
             }
             SyncResult.Success(data)
         } catch (e: Exception) {

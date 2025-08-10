@@ -9,7 +9,7 @@ class SyncPaymentUseCase(private val repository: PaymentRepository) {
     suspend operator fun invoke(operation: SyncOperation<Payment>): SyncResult<*> {
         return when (operation) {
             is SyncOperation.SaveLocal -> repository.saveLocal(operation.registers)
-            is SyncOperation.UpsertLocal -> repository.updateLocal(operation.register)
+            is SyncOperation.UpsertLocal -> repository.upsertLocal(operation.register)
             is SyncOperation.LocalToRemote -> repository.syncLocalToRemote()
             is SyncOperation.RemoteToLocal -> repository.syncRemoteToLocal()
         }
