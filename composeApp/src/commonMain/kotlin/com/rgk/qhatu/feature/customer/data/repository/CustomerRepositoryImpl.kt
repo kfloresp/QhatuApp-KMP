@@ -21,25 +21,29 @@ class CustomerRepositoryImpl(
 
     override suspend fun fetchLocal(
         idCustomer: String?,
-        query: String?,
     ): SyncResult<List<Customer>> {
         return try {
             var data: List<Customer> = emptyList()
-            if (idCustomer != null || query != null) {
-                idCustomer?.let {
-                    data = sourceLocal.fetchCustomer(idCustomer).map {
-                        it.toDomain()
-                    }
+            idCustomer?.let {
+                data = sourceLocal.fetchCustomer(idCustomer).map {
+                    it.toDomain()
                 }
-                query?.let {
-                    data = sourceLocal.fetchCustomerFromQuery(query).map {
-                        it.toDomain()
-                    }
-                }
-            }else{
+            } ?: run {
                 data = sourceLocal.fetchAll().map {
                     it.toDomain()
                 }
+            }
+            SyncResult.Success(data)
+        } catch (e: Exception) {
+            SyncResult.Error(e)
+        }
+    }
+
+    override suspend fun fetchCustomerWithDebt(
+    ): SyncResult<List<Customer>> {
+        return try {
+            val data = sourceLocal.fetchCustomerWithDebt().map {
+                it.toDomain()
             }
             SyncResult.Success(data)
         } catch (e: Exception) {
@@ -116,4 +120,19 @@ class CustomerRepositoryImpl(
             })
         }
     }
+    override suspend fun updatePendingAmountLocal(
+        idCustomer: String,
+        amountPaid: String,
+    ): SyncResult<Unit> {
+        return safeCall {
+            val amountPaidDouble = amountPaid.toDoubleOrNull() ?: 0.0
+            val customer = sourceLocal.fetchCustomer(idCustomer).first()
+            val pendingAmount = customer.pendingAmount ?: 0.0
+            if (pendingAmount > 0.0 && amountPaidDouble > 0.0) {
+                val amountActual = (pendingAmount - amountPaidDouble).coerceAtLeast(0.0)
+                sourceLocal.update(customer.copy(pendingAmount = amountActual))
+            }
+        }
+    }
+
 }

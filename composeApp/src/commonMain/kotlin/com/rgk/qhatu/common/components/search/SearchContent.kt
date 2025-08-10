@@ -36,18 +36,14 @@ fun <T> SearchContent(
     items: List<T>,
     keySelector: (T) -> String,
     valueSelector: (T) -> String,
-    onSearch: (String) -> Unit,
-    onSelectItem: (T) -> Unit
+    query: String,
+    onQueryChange: (String) -> Unit,
+    onSelectItem: (T) -> Unit,
 ) {
-    var query by remember { mutableStateOf("") }
-
     Column(modifier = modifier.fillMaxWidth()) {
-        SearchField(
-            value = query,
-            onValueChange = {
-                query = it
-                onSearch(it)
-            }
+        SearchBar(
+            query = query,
+            onQueryChange = onQueryChange
         )
 
         Spacer(Modifier.height(12.dp))
@@ -59,17 +55,6 @@ fun <T> SearchContent(
                 .clip(RoundedCornerShape(8.dp))
         ) {
             when {
-                query.isBlank() -> {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        SearchSection(width = 200.dp, height = 200.dp)
-                    }
-                }
                 items.isEmpty() -> {
                     Column(
                         modifier = Modifier
@@ -81,6 +66,7 @@ fun <T> SearchContent(
                         EmptySection(width = 200.dp, height = 200.dp)
                     }
                 }
+
                 else -> {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),

@@ -90,6 +90,19 @@
 
     <string name="tx_payment_new_title">Nuevo pago</string>
     <string name="tx_payment_view_title">Visualización de pago</string>
+    <string name="tx_payment_select_customer">Seleccionar cliente</string>
+    <string name="tx_payment_current_balance">Saldo actual: %1$s</string>
+    <string name="tx_payment_payment_details">Detalles del pago</string>
+    <string name="tx_payment_date">Fecha: %1$s</string>
+    <string name="tx_payment_amount_exceeds">El monto no puede ser mayor a %1$s</string>
+    <string name="tx_payment_amount">Monto de pago</string>
+    <string name="tx_payment_method">Método de pago</string>
+    <string name="tx_payment_currency_symbol">S/.</string>
+    <string name="tx_payment_operation_number_optional">Número de operación (Opcional)</string>
+    <string name="tx_payment_customer_data">Datos del cliente</string>
+    <string name="tx_payment_comment">Comentario: %1$s</string>
+    <string name="tx_payment_type">Tipo: %1$s</string>
+    <string name="tx_payment_operation_number">Número operación: %1$s</string>
 
     <!-- Componentes generales -->
     <string name="tx_global_empty_result">Ups... no encontramos nada</string>

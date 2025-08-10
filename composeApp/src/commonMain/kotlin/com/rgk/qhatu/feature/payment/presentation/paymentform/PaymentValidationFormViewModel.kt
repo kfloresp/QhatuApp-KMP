@@ -7,11 +7,12 @@ import androidx.navigation.toRoute
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.customer.domain.model.Customer
-import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
+import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersWithDebtUseCase
 import com.rgk.qhatu.feature.payment.domain.model.Payment
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsMethodUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
+import com.rgk.qhatu.feature.payment.presentation.payment.PaymentUiState
 import com.rgk.qhatu.feature.setting.domain.model.Configuration
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,7 +23,7 @@ import kotlinx.coroutines.launch
 class PaymentValidationFormViewModel(
     private val syncPaymentUseCase: SyncPaymentUseCase,
     private val getPaymentsUseCase: GetPaymentsUseCase,
-    private val getCustomersUseCase: GetCustomersUseCase,
+    private val getCustomerWithDebtsUseCase: GetCustomersWithDebtUseCase,
     private val getPaymentsMethodUseCase: GetPaymentsMethodUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -41,6 +42,8 @@ class PaymentValidationFormViewModel(
 
     private val _customerList = MutableStateFlow<List<Customer>>(emptyList())
     val customerList: StateFlow<List<Customer>> = _customerList.asStateFlow()
+
+    private var allItemsCustomer: List<Customer> = emptyList()
     private val _methodPaymentList = MutableStateFlow<List<Configuration>>(emptyList())
     val methodPaymentList: StateFlow<List<Configuration>> = _methodPaymentList.asStateFlow()
 
@@ -137,9 +140,9 @@ class PaymentValidationFormViewModel(
                 fields.paymentMethodId.isNotBlank()
     }
 
-    fun searchCustomer(query: String) {
+    fun searchCustomer() {
         viewModelScope.launch {
-            val result = getCustomersUseCase(query = query)
+            val result = getCustomerWithDebtsUseCase()
             when (result) {
                 is SyncResult.Error -> {
                     _customerList.value = emptyList()
@@ -147,8 +150,15 @@ class PaymentValidationFormViewModel(
 
                 is SyncResult.Success<List<Customer>> -> {
                     _customerList.value = result.data
+                    allItemsCustomer = result.data
                 }
             }
         }
+    }
+
+    fun onSearchCustomer(query: String) {
+        val filtered = if (query.isBlank()) allItemsCustomer
+        else allItemsCustomer.filter { it.nameCustomer.contains(query, ignoreCase = true) }
+        _customerList.value = filtered
     }
 }

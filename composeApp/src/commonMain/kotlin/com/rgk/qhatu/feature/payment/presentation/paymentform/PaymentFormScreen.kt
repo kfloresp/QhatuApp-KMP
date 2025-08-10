@@ -13,6 +13,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -33,7 +38,18 @@ import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_global_delete_changes
 import qhatuapp.composeapp.generated.resources.tx_global_save_changes
+import qhatuapp.composeapp.generated.resources.tx_payment_amount
+import qhatuapp.composeapp.generated.resources.tx_payment_amount_exceeds
+import qhatuapp.composeapp.generated.resources.tx_payment_currency_symbol
+import qhatuapp.composeapp.generated.resources.tx_payment_current_balance
+import qhatuapp.composeapp.generated.resources.tx_payment_date
+import qhatuapp.composeapp.generated.resources.tx_payment_method
+import qhatuapp.composeapp.generated.resources.tx_payment_operation_number_optional
+import qhatuapp.composeapp.generated.resources.tx_payment_payment_details
+import qhatuapp.composeapp.generated.resources.tx_payment_select_customer
 
+const val ID_CONFIG_TYPE_PAYMENT_DEFAULT = "MP0001"
+const val PATTERNS = "^\\d{0,9}(\\.\\d{0,2})?$"
 @Composable
 fun PaymentFormScreen(
     isNew: Boolean = false,
@@ -51,6 +67,9 @@ fun PaymentFormScreen(
     onDeletePopUp: () -> Unit,
 ) {
     val fields = formState.fields
+    var amountError by remember { mutableStateOf<String?>(null) }
+    var amountEnabled by remember { mutableStateOf(false) }
+
     when (uiState) {
         is PaymentFormUiState.Error -> {
             ErrorSection(uiState.message)
@@ -62,9 +81,18 @@ fun PaymentFormScreen(
 
         is PaymentFormUiState.Success -> {
             val selectedName = selectedCustomer?.nameCustomer.orEmpty()
-            val pendingAmount = selectedCustomer?.pendingCustomer
+            val pendingCustomer = selectedCustomer?.pendingCustomer
+            val pendingAmount = selectedCustomer?.pendingAmount ?: 0.0
             val hasPendingAmount = selectedCustomer?.havePendingAmount == true
             val selectedId = selectedCustomer?.id.orEmpty()
+
+            LaunchedEffect(selectedId) {
+                amountError = null
+                amountEnabled = selectedId.isNotEmpty()
+                onFieldChange {
+                    copy(amountPaid = "")
+                }
+            }
 
             if (selectedId.isNotEmpty()) {
                 onFieldChange {
@@ -79,31 +107,36 @@ fun PaymentFormScreen(
                 Column {
                     ClickableTextField(
                         selectedText = selectedName,
-                        "Seleccionar cliente",
+                        stringResource(Res.string.tx_payment_select_customer),
                         onClick = {
                             onCustomerClick.invoke()
                         },
                         onClear = {
                             onClearCustomer.invoke()
+                            amountError = null
+                            amountEnabled = false
+                            onFieldChange {
+                                copy(amountPaid = "")
+                            }
                         }
                     )
-                    if (hasPendingAmount && pendingAmount != null) {
+                    if (hasPendingAmount && pendingCustomer != null) {
                         Spacer(Modifier.height(12.dp))
                         Text(
-                            text = "Saldo actual: $pendingAmount",
+                            text = stringResource(Res.string.tx_payment_current_balance,pendingCustomer),
                             style = MaterialTheme.typography.titleSmall,
                             textAlign = TextAlign.Center
                         )
                     }
                     Text(
-                        text = "Detalles del pago",
+                        text = stringResource(Res.string.tx_payment_payment_details),
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                     Text(
-                        text = "Fecha: ${fields.paymentDate.toFormattedDate()}",
+                        text = stringResource(Res.string.tx_payment_date,fields.paymentDate.toFormattedDate()),
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.clickable(enabled = true, onClick = {
@@ -113,36 +146,41 @@ fun PaymentFormScreen(
                     Spacer(Modifier.height(12.dp))
                     CustomTextField(
                         value = fields.amountPaid, onValueChange = { newValue ->
-                            val regex = Regex("^\\d{0,9}(\\.\\d{0,2})?$")
+                            if (newValue.isEmpty()) {
+                                amountError = null
+                                onFieldChange {
+                                    copy(amountPaid = "")
+                                }
+                                return@CustomTextField
+                            }
+                            val regex = Regex(PATTERNS)
                             if (newValue.matches(regex)) {
+                                val numericValue = newValue.toDouble()
+                                amountError = if (numericValue <= pendingAmount) {
+                                    null
+                                } else {
+                                     "El monto no puede ser mayor a $pendingCustomer"
+                                }
                                 onFieldChange {
                                     copy(amountPaid = newValue)
                                 }
                             }
                         }, params = CustomTextFieldParams(
-                            label = "Monto de pago",
+                            label = stringResource(Res.string.tx_payment_amount),
+                            error = amountError,
                             singleLine = true,
                             maxLength = 6,
+                            enabled = amountEnabled,
                             leadingIcon = {
-                                Text("S/.")
+                                Text(stringResource(Res.string.tx_payment_currency_symbol))
                             },
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Number
                             )
                         )
                     )
-                    Spacer(Modifier.height(12.dp))
-                    CustomTextField(
-                        value = fields.comments, onValueChange = {
-                            onFieldChange {
-                                copy(comments = it)
-                            }
-                        }, params = CustomTextFieldParams(
-                            label = "Comentario (Opcional)", singleLine = true, maxLength = 50
-                        )
-                    )
                     Text(
-                        text = "Método de pago",
+                        text = stringResource(Res.string.tx_payment_method),
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.SemiBold,
@@ -160,14 +198,14 @@ fun PaymentFormScreen(
                         },
                         errorText = ""
                     )
-                    if (fields.paymentMethodId != "MP0001" && fields.paymentMethodId.isNotEmpty()) {
+                    if (fields.paymentMethodId != ID_CONFIG_TYPE_PAYMENT_DEFAULT && fields.paymentMethodId.isNotEmpty()) {
                         CustomTextField(
                             value = fields.numberOperation, onValueChange = {
                                 onFieldChange {
                                     copy(numberOperation = it)
                                 }
                             }, params = CustomTextFieldParams(
-                                label = "Número de operación (Opcional)",
+                                label = stringResource(Res.string.tx_payment_operation_number_optional),
                                 singleLine = true,
                                 maxLength = 10,
                             )
@@ -179,7 +217,7 @@ fun PaymentFormScreen(
                     ButtonActions(
                         modifier = Modifier.padding(12.dp),
                         primaryButtonText = stringResource(Res.string.tx_global_save_changes),
-                        isEnabled = formState.isValid,
+                        isEnabled = formState.isValid && amountError == null,
                         onPrimaryClick = {
                             onSaveClick(fields)
                         },

@@ -36,9 +36,8 @@ interface CustomerDao {
     @Query("""
     SELECT * 
     FROM clients
-    WHERE flag_eliminado = 0
-      AND LOWER(nombre || ' ' || apellidoPaterno || ' ' || apellidoMaterno) LIKE '%' || LOWER(:query) || '%'
+    WHERE flag_eliminado = 0 and saldoPendiente > 0 order by nombre asc
 """)
-    suspend fun fetchCustomerFromQuery(query: String): List<CustomerEntity>
+    suspend fun fetchCustomerWithDebt(): List<CustomerEntity>
 
 }

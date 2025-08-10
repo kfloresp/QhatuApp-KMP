@@ -52,6 +52,7 @@ internal fun NavGraphBuilder.paymentFormDestination(
         var selectedCustomerToClick by remember { mutableStateOf(false) }
         var selectedCustomer by remember { mutableStateOf<Customer?>(null) }
         var selectedDatePicker by remember { mutableStateOf(false) }
+        var queryCustomer by remember { mutableStateOf("") }
 
         ProvideAppBar(
             title = if (isNewCustomer) stringResource(Res.string.tx_payment_new_title)
@@ -62,31 +63,36 @@ internal fun NavGraphBuilder.paymentFormDestination(
             onBackPopUp.invoke()
         }
 
-        PaymentFormScreen(
-            isNew = isNewCustomer,
-            uiState = uiState,
-            formState = formState,
-            onFieldChange = { viewModel.onFieldChange(it) },
-            onSaveClick = {
-                selectedPaymentToSave = it
-            },
-            onDeleteClick = {
-                selectedPaymentToDelete = it
-            },
-            onCustomerClick = {
-                selectedCustomerToClick = true
-            },
-            onClearCustomer = {
-                selectedCustomer = null
-            },
-            selectedCustomer = selectedCustomer,
-            methodPayments = methodPaymentList,
-            onDatePickerClick = {
-                selectedDatePicker = true
-            },
-            onBackPopUp = { onBackPopUp.invoke() },
-            onDeletePopUp = { onDeletePopUp.invoke() }
-        )
+        if (!isNewCustomer) {
+            PaymentViewerScreen(uiState = uiState)
+        } else {
+            PaymentFormScreen(
+                isNew = isNewCustomer,
+                uiState = uiState,
+                formState = formState,
+                onFieldChange = { viewModel.onFieldChange(it) },
+                onSaveClick = {
+                    selectedPaymentToSave = it
+                },
+                onDeleteClick = {
+                    selectedPaymentToDelete = it
+                },
+                onCustomerClick = {
+                    viewModel.searchCustomer()
+                    selectedCustomerToClick = true
+                },
+                onClearCustomer = {
+                    selectedCustomer = null
+                },
+                selectedCustomer = selectedCustomer,
+                methodPayments = methodPaymentList,
+                onDatePickerClick = {
+                    selectedDatePicker = true
+                },
+                onBackPopUp = { onBackPopUp.invoke() },
+                onDeletePopUp = { onDeletePopUp.invoke() }
+            )
+        }
 
         DatePickerComponent(
             showPicker = selectedDatePicker,
@@ -106,10 +112,13 @@ internal fun NavGraphBuilder.paymentFormDestination(
                     items = customerList,
                     keySelector = { it.id },
                     valueSelector = { it.nameCustomer },
-                    onSearch = {
-                        viewModel.searchCustomer(it)
+                    query = queryCustomer,
+                    onQueryChange = {
+                        queryCustomer = it
+                        viewModel.onSearchCustomer(it)
                     },
                     onSelectItem = {
+                        queryCustomer = ""
                         selectedCustomer = it
                         selectedCustomerToClick = false
                     })
@@ -122,7 +131,6 @@ internal fun NavGraphBuilder.paymentFormDestination(
                 description = stringResource(Res.string.tx_global_confirm_save_subtitle),
                 primaryButtonText = stringResource(Res.string.tx_global_confirm_save),
                 onPrimaryClick = {
-                    println("Payment: $it")
                     viewModel.onUpsertLocal(it)
                     selectedPaymentToSave = null
                 },
