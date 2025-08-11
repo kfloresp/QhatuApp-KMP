@@ -8,8 +8,9 @@ import com.rgk.qhatu.feature.customer.presentation.customerprofile.CustomerProfi
 import com.rgk.qhatu.feature.customer.presentation.customersummary.CustomerSummaryViewModel
 import com.rgk.qhatu.feature.home.presentation.home.HomeViewModel
 import com.rgk.qhatu.feature.payment.presentation.payment.PaymentViewModel
-import com.rgk.qhatu.feature.payment.presentation.paymentform.PaymentValidationFormViewModel
+import com.rgk.qhatu.feature.payment.presentation.paymentform.PaymentFormViewModel
 import com.rgk.qhatu.feature.product.presentation.product.ProductViewModel
+import com.rgk.qhatu.feature.product.presentation.productoform.ProductFormViewModel
 import com.rgk.qhatu.feature.search.presentation.search.SearchViewModel
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandViewModel
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryViewModel
@@ -36,6 +37,7 @@ val viewModelModule = module {
     viewModelOf(::CustomerSummaryViewModel)
     viewModelOf(::CustomerFormViewModel)
     viewModelOf(::PaymentViewModel)
-    viewModelOf(::PaymentValidationFormViewModel)
+    viewModelOf(::PaymentFormViewModel)
     viewModelOf(::ProductViewModel)
+    viewModelOf(::ProductFormViewModel)
 }
