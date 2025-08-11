@@ -21,6 +21,7 @@ import com.rgk.qhatu.feature.customer.presentation.customerprofile.CustomerProfi
 import com.rgk.qhatu.feature.customer.presentation.customersummary.CustomerSummaryDestination
 import com.rgk.qhatu.feature.payment.presentation.payment.PaymentDestination
 import com.rgk.qhatu.feature.payment.presentation.paymentform.PaymentFormDestination
+import com.rgk.qhatu.feature.product.presentation.product.ProductDestination
 import com.rgk.qhatu.feature.search.presentation.search.SearchDestination
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandDestination
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryDestination
@@ -38,6 +39,7 @@ import qhatuapp.composeapp.generated.resources.tx_customer_profile_title
 import qhatuapp.composeapp.generated.resources.tx_customer_resume_summary_title
 import qhatuapp.composeapp.generated.resources.tx_customer_title
 import qhatuapp.composeapp.generated.resources.tx_payment_customer_title
+import qhatuapp.composeapp.generated.resources.tx_product_title
 import qhatuapp.composeapp.generated.resources.tx_profile_title
 import qhatuapp.composeapp.generated.resources.tx_sync_title
 import qhatuapp.composeapp.generated.resources.tx_units_title
@@ -55,6 +57,7 @@ private val destinationsWithToolbar = mapOf(
     CustomerSummaryDestination::class.qualifiedName to Res.string.tx_customer_resume_summary_title,
     PaymentDestination::class.qualifiedName to Res.string.tx_payment_customer_title,
     PaymentFormDestination::class.qualifiedName to Res.string.tx_payment_customer_title,
+    ProductDestination::class.qualifiedName to Res.string.tx_product_title,
 )
 private val cartToolbarDestinations = mapOf(
     SearchDestination::class.qualifiedName to Res.string.title_search

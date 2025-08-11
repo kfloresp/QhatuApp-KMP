@@ -8,7 +8,6 @@ import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.feature.product.domain.mapper.toDomain
 import com.rgk.qhatu.feature.product.domain.mapper.toEntity
-import com.rgk.qhatu.feature.product.domain.mapper.toModel
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.repository.ProductRepository
 import com.rgk.qhatu.common.util.SearchType
