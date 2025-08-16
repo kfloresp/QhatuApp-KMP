@@ -104,6 +104,11 @@
     <string name="tx_payment_type">Tipo: %1$s</string>
     <string name="tx_payment_operation_number">Número operación: %1$s</string>
 
+    <!-- Product -->
+
+    <string name="tx_product_new_title">Nuevo producto</string>
+    <string name="tx_product_view_title">Visualización de producto</string>
+
     <!-- Componentes generales -->
     <string name="tx_global_empty_result">Ups... no encontramos nada</string>
     <string name="tx_global_search_result">¿Qué buscaremos hoy?</string>

@@ -5,6 +5,8 @@ import com.rgk.qhatu.feature.product.data.database.dao.ProductDao
 import com.rgk.qhatu.feature.product.data.remote.ProductRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
+import com.rgk.qhatu.common.util.generateUUID
+import com.rgk.qhatu.feature.payment.domain.mapper.toEntity
 import com.rgk.qhatu.feature.product.domain.mapper.toDomain
 import com.rgk.qhatu.feature.product.domain.mapper.toEntity
 import com.rgk.qhatu.feature.product.domain.model.Product
@@ -51,9 +53,15 @@ class ProductRepositoryImpl(
         }
     }
 
-    override suspend fun updateLocal(register: Product): SyncResult<Unit> {
+    override suspend fun upsertLocal(register: Product): SyncResult<Unit> {
         return safeCall {
-            sourceLocal.update(register.toEntity())
+            val isNew = register.id.isEmpty()
+            if (isNew) {
+                val register = register.toEntity().copy(id = generateUUID())
+                sourceLocal.save(register)
+            } else {
+                sourceLocal.update(register.toEntity())
+            }
         }
     }
 

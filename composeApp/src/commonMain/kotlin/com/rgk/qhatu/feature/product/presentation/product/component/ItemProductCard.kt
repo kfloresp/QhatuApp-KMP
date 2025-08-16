@@ -95,7 +95,7 @@ fun ProductItemCardPreview() {
         ean = "123456789",
         name = "Leche Gloria Entera Evaporada",
         brand = "Gloria",
-        unitPrice = 4.50,
+        unitPrice = "4.50",
         unitMeasure = "Lata 400ml"
     )
     QhatuTheme {

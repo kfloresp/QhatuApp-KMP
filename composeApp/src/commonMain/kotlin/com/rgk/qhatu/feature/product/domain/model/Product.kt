@@ -1,7 +1,6 @@
 package com.rgk.qhatu.feature.product.domain.model
 
 import com.rgk.qhatu.common.util.formatAmount
-import com.rgk.qhatu.common.util.orZero
 
 data class Product(
     val id: String = "",
@@ -13,7 +12,7 @@ data class Product(
     val storageType:String = "",
     val brandId: String? = null,
     val brand:String = "",
-    val unitPrice: Double = 0.0,
+    val unitPrice: String = "",
     val unitMeasureId: String = "",
     val unitMeasure: String = "",
     val isBatch: Boolean = false,
@@ -24,6 +23,6 @@ data class Product(
     val lastUpdated: Long = 0,
 ){
     val unitPriceValue: String
-        get() = unitPrice.formatAmount(CURRENCY_SYMBOL)
+        get() = unitPrice.toDouble().formatAmount(CURRENCY_SYMBOL)
 }
 private val CURRENCY_SYMBOL = "S/."

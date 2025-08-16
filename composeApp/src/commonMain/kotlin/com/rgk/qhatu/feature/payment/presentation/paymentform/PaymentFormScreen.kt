@@ -38,8 +38,6 @@ import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_global_delete_changes
 import qhatuapp.composeapp.generated.resources.tx_global_save_changes
-import qhatuapp.composeapp.generated.resources.tx_payment_amount
-import qhatuapp.composeapp.generated.resources.tx_payment_amount_exceeds
 import qhatuapp.composeapp.generated.resources.tx_payment_currency_symbol
 import qhatuapp.composeapp.generated.resources.tx_payment_current_balance
 import qhatuapp.composeapp.generated.resources.tx_payment_date
@@ -82,7 +80,6 @@ fun PaymentFormScreen(
         is PaymentFormUiState.Success -> {
             val selectedName = selectedCustomer?.nameCustomer.orEmpty()
             val pendingCustomer = selectedCustomer?.pendingCustomer
-            val pendingAmount = selectedCustomer?.pendingAmount ?: 0.0
             val hasPendingAmount = selectedCustomer?.havePendingAmount == true
             val selectedId = selectedCustomer?.id.orEmpty()
 
@@ -155,18 +152,12 @@ fun PaymentFormScreen(
                             }
                             val regex = Regex(PATTERNS)
                             if (newValue.matches(regex)) {
-                                val numericValue = newValue.toDouble()
-                                amountError = if (numericValue <= pendingAmount) {
-                                    null
-                                } else {
-                                     "El monto no puede ser mayor a $pendingCustomer"
-                                }
                                 onFieldChange {
                                     copy(amountPaid = newValue)
                                 }
                             }
                         }, params = CustomTextFieldParams(
-                            label = stringResource(Res.string.tx_payment_amount),
+                            label = "Precio unitario",
                             error = amountError,
                             singleLine = true,
                             maxLength = 6,
