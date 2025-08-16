@@ -22,6 +22,7 @@ import com.rgk.qhatu.feature.customer.presentation.customersummary.CustomerSumma
 import com.rgk.qhatu.feature.payment.presentation.payment.PaymentDestination
 import com.rgk.qhatu.feature.payment.presentation.paymentform.PaymentFormDestination
 import com.rgk.qhatu.feature.product.presentation.product.ProductDestination
+import com.rgk.qhatu.feature.product.presentation.productoform.ProductFormDestination
 import com.rgk.qhatu.feature.search.presentation.search.SearchDestination
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandDestination
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryDestination
@@ -58,6 +59,7 @@ private val destinationsWithToolbar = mapOf(
     PaymentDestination::class.qualifiedName to Res.string.tx_payment_customer_title,
     PaymentFormDestination::class.qualifiedName to Res.string.tx_payment_customer_title,
     ProductDestination::class.qualifiedName to Res.string.tx_product_title,
+    ProductFormDestination::class.qualifiedName to Res.string.tx_product_title,
 )
 private val cartToolbarDestinations = mapOf(
     SearchDestination::class.qualifiedName to Res.string.title_search

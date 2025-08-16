@@ -7,9 +7,6 @@ import androidx.compose.ui.backhandler.BackHandler
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.button.ButtonFlotableAction
-import com.rgk.qhatu.feature.payment.presentation.payment.PaymentScreen
-import com.rgk.qhatu.feature.payment.presentation.payment.PaymentUiState
-import com.rgk.qhatu.feature.payment.presentation.payment.PaymentViewModel
 import com.rgk.qhatu.navigation.ProvideAppBar
 import com.rgk.qhatu.navigation.ProvideFabAction
 import kotlinx.serialization.Serializable

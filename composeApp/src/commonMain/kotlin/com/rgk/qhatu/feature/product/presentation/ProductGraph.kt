@@ -7,6 +7,8 @@ import androidx.navigation.navigation
 import com.rgk.qhatu.common.extension.navigateToHomeWithPopUp
 import com.rgk.qhatu.feature.product.presentation.product.ProductDestination
 import com.rgk.qhatu.feature.product.presentation.product.productDestination
+import com.rgk.qhatu.feature.product.presentation.productoform.ProductFormDestination
+import com.rgk.qhatu.feature.product.presentation.productoform.productFormDestination
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -17,13 +19,22 @@ fun NavController.navigateToProductGraph(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.productGraph(
-    navController: NavController
+    navController: NavController,
 ) {
     navigation<ProductGraph>(
         startDestination = ProductDestination
     ) {
         productDestination(onBackPopUp = {
             navController.navigateToHomeWithPopUp()
-        }, onProductClick = {}, onNewProductClick = {})
+        }, onProductClick = {
+            navController.navigate(ProductFormDestination(it))
+        }, onNewProductClick = {
+            navController.navigate(ProductFormDestination(""))
+        })
+        productFormDestination(onBackPopUp = {
+            navController.popBackStack()
+        }, onDeletePopUp = {
+            navController.popBackStack()
+        })
     }
 }

@@ -57,7 +57,6 @@ fun ProductScreen(
                             bottom = 80.dp,
                             start = 8.dp,
                             end = 8.dp,
-                            top = 8.dp
                         )
                     ) {
                         items(uiState.result) { product ->
