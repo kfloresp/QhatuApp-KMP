@@ -5,7 +5,7 @@ import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.repository.ProductRepository
 
 class GetProductsUseCase(private val productRepository: ProductRepository) {
-    suspend operator fun invoke(): SyncResult<List<Product>> {
-        return productRepository.fetchLocal()
+    suspend operator fun invoke(productId: String? = null): SyncResult<List<Product>> {
+        return productRepository.fetchLocal(productId)
     }
 }

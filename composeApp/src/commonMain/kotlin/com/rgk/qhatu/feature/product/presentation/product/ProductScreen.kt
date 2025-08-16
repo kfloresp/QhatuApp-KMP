@@ -1,18 +1,22 @@
 package com.rgk.qhatu.feature.product.presentation.product
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.components.empty.EmptySection
 import com.rgk.qhatu.common.components.error.ErrorSection
-import com.rgk.qhatu.common.components.list.ActionableListContent
 import com.rgk.qhatu.common.components.refresh.RefreshBox
 import com.rgk.qhatu.common.components.search.SearchBar
 import com.rgk.qhatu.common.components.shimmer.ShimmerListVertical
 import com.rgk.qhatu.feature.product.domain.model.Product
-import com.rgk.qhatu.feature.product.presentation.product.component.ItemProductAction
+import com.rgk.qhatu.feature.product.presentation.product.component.ItemProductCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,19 +49,23 @@ fun ProductScreen(
                         query = query,
                         onQueryChange = onQueryChange
                     )
-                    ActionableListContent(
-                        modifier = Modifier,
-                        items = uiState.result,
-                        itemKey = { it.id },
-                        onItemClick = onItemClick,
-                        onActionClick = {},
-                        itemContent = { item, onClick, onAction ->
-                            ItemProductAction(
-                                product = item,
-                                onActionClick = onAction,
-                            )
+
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(
+                            bottom = 80.dp,
+                            start = 8.dp,
+                            end = 8.dp,
+                            top = 8.dp
+                        )
+                    ) {
+                        items(uiState.result) { product ->
+                            ItemProductCard(product = product) {
+                                onItemClick(it)
+                            }
                         }
-                    )
+                    }
                 }
 
                 ProductUiState.Empty -> {

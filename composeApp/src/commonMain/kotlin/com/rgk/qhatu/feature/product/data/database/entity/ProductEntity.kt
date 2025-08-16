@@ -5,18 +5,19 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "products")
 data class ProductEntity(
-    @PrimaryKey(autoGenerate = true)
-    val idInternal: Int,
+    @PrimaryKey
     val id: String,
     val ean: String,
-    val nombre: String,
-    val categoria_id: String?,
-    val tipo_almacenamiento_id: String?,
-    val marca_id: String?,
-    val precio_unitario: Double,
-    val unidad_medida_id: String,
-    val flag_lote: Int,
-    val flag_activo: Int,
-    val fecha_sincronizado: Long,
-    val flag_sincronizado: Int
+    val name: String,
+    val categoryId: String?,
+    val storageTypeId: String?,
+    val brandId: String?,
+    val unitPrice: Double,
+    val unitMeasureId: String,
+    val isBatch: Boolean = false,
+    val isActive: Boolean = false,
+    val syncedDate: Long = 0L,
+    val isSynced: Boolean = false,
+    val isDeleted: Boolean = false,
+    val lastUpdated: Long = 0L,
 )

@@ -26,8 +26,6 @@ internal fun NavGraphBuilder.searchDestination(
     openScanQR: () -> Unit,
 ) {
     composable<SearchDestination> {
-        val viewModel: SearchViewModel = koinViewModel()
-        val uiState by viewModel.uiState.collectAsState()
 
         ProvideAppBar(
             actions = {
@@ -37,18 +35,15 @@ internal fun NavGraphBuilder.searchDestination(
                     fontWeight = FontWeight.SemiBold
                 )
                 Spacer(Modifier.width(8.dp))
-                VerticalDivider( Modifier
-                    .height(24.dp)
-                    .width(1.dp),thickness = 1.dp)
+                VerticalDivider(
+                    Modifier
+                        .height(24.dp)
+                        .width(1.dp), thickness = 1.dp
+                )
                 Spacer(Modifier.width(8.dp))
                 CartIconWithBadge(itemCount = 100)
             }
         )
 
-        SearchScreen(
-            uiState = uiState,
-            navigateToCart = navigateToCart,
-            openScanQR = openScanQR
-        )
     }
 }

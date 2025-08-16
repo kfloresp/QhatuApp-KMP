@@ -70,7 +70,7 @@ class ProductViewModel(
         if (_uiState.value !is ProductUiState.Success) return
 
         val filtered = if (query.isBlank()) allItems
-        else allItems.filter { it.nombre.contains(query, ignoreCase = true) }
+        else allItems.filter { it.name.contains(query, ignoreCase = true) }
 
         _uiState.value = ProductUiState.Success(
             result = filtered,
