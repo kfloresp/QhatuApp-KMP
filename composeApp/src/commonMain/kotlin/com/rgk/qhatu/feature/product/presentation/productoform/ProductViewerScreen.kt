@@ -23,6 +23,18 @@ import com.rgk.qhatu.feature.product.domain.model.Product
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_global_delete_changes
+import qhatuapp.composeapp.generated.resources.tx_product_brand
+import qhatuapp.composeapp.generated.resources.tx_product_category
+import qhatuapp.composeapp.generated.resources.tx_product_code
+import qhatuapp.composeapp.generated.resources.tx_product_edit
+import qhatuapp.composeapp.generated.resources.tx_product_has_batch
+import qhatuapp.composeapp.generated.resources.tx_product_is_active
+import qhatuapp.composeapp.generated.resources.tx_product_name
+import qhatuapp.composeapp.generated.resources.tx_product_no
+import qhatuapp.composeapp.generated.resources.tx_product_price
+import qhatuapp.composeapp.generated.resources.tx_product_storage
+import qhatuapp.composeapp.generated.resources.tx_product_unit
+import qhatuapp.composeapp.generated.resources.tx_product_yes
 
 @Composable
 fun ProductViewerScreen(
@@ -57,7 +69,7 @@ fun ProductViewerScreen(
                         .weight(1f)
                 ) {
                     Text(
-                        text = "Nombre del producto",
+                        text = stringResource(Res.string.tx_product_name),
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.SemiBold,
@@ -69,7 +81,7 @@ fun ProductViewerScreen(
                         textAlign = TextAlign.Center
                     )
                     Text(
-                        text = "EAN",
+                        text = stringResource(Res.string.tx_product_code),
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.SemiBold,
@@ -81,7 +93,7 @@ fun ProductViewerScreen(
                         textAlign = TextAlign.Center
                     )
                     Text(
-                        text = "Precio",
+                        text = stringResource(Res.string.tx_product_price),
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.SemiBold,
@@ -93,7 +105,7 @@ fun ProductViewerScreen(
                         textAlign = TextAlign.Center
                     )
                     Text(
-                        text = "Unidad de medida",
+                        text = stringResource(Res.string.tx_product_unit),
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.SemiBold,
@@ -105,7 +117,7 @@ fun ProductViewerScreen(
                         textAlign = TextAlign.Center
                     )
                     Text(
-                        text = "Categoria",
+                        text = stringResource(Res.string.tx_product_category),
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.SemiBold,
@@ -117,7 +129,7 @@ fun ProductViewerScreen(
                         textAlign = TextAlign.Center
                     )
                     Text(
-                        text = "Marca",
+                        text = stringResource(Res.string.tx_product_brand),
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.SemiBold,
@@ -129,7 +141,7 @@ fun ProductViewerScreen(
                         textAlign = TextAlign.Center
                     )
                     Text(
-                        text = "Tipo almacenamiento",
+                        text = stringResource(Res.string.tx_product_storage),
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.SemiBold,
@@ -141,14 +153,22 @@ fun ProductViewerScreen(
                         textAlign = TextAlign.Center
                     )
                     Text(
-                        text = "Tiene Lote: ${if (product.isBatch) "Si" else "No"}",
+                        text = "${stringResource(Res.string.tx_product_has_batch)}: ${
+                            if (product.isActive) stringResource(
+                                Res.string.tx_product_yes
+                            ) else stringResource(Res.string.tx_product_no)
+                        }",
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(top = 8.dp)
                     )
                     Text(
-                        text = "Esta activo: ${if (product.isActive) "Si" else "No"}",
+                        text = "${stringResource(Res.string.tx_product_is_active)}: ${
+                            if (product.isActive) stringResource(
+                                Res.string.tx_product_yes
+                            ) else stringResource(Res.string.tx_product_no)
+                        }",
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.SemiBold,
@@ -162,7 +182,7 @@ fun ProductViewerScreen(
                     onPrimaryClick = {
                         onDeleteClick(product)
                     },
-                    secondaryButtonText = "Editar",
+                    secondaryButtonText = stringResource(Res.string.tx_product_edit),
                     onSecondaryClick = {
                         onEditClick(product)
                     })

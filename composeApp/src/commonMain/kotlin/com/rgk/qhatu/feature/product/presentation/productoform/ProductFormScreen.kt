@@ -31,8 +31,16 @@ import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_global_delete_changes
 import qhatuapp.composeapp.generated.resources.tx_global_save_changes
-import qhatuapp.composeapp.generated.resources.tx_payment_amount
 import qhatuapp.composeapp.generated.resources.tx_payment_currency_symbol
+import qhatuapp.composeapp.generated.resources.tx_product_brand
+import qhatuapp.composeapp.generated.resources.tx_product_category
+import qhatuapp.composeapp.generated.resources.tx_product_code
+import qhatuapp.composeapp.generated.resources.tx_product_has_batch
+import qhatuapp.composeapp.generated.resources.tx_product_is_active
+import qhatuapp.composeapp.generated.resources.tx_product_name
+import qhatuapp.composeapp.generated.resources.tx_product_price
+import qhatuapp.composeapp.generated.resources.tx_product_storage
+import qhatuapp.composeapp.generated.resources.tx_product_unit
 
 @Composable
 fun ProductFormScreen(
@@ -121,7 +129,7 @@ fun ProductFormScreen(
                                 copy(ean = newValue)
                             }
                         }, params = CustomTextFieldParams(
-                            label = "Código EAN",
+                            label = stringResource(Res.string.tx_product_code),
                             singleLine = true,
                             maxLength = 50,
                         )
@@ -134,7 +142,7 @@ fun ProductFormScreen(
                                 copy(name = newValue)
                             }
                         }, params = CustomTextFieldParams(
-                            label = "Nombre del producto",
+                            label = stringResource(Res.string.tx_product_name),
                             singleLine = true,
                             maxLength = 50,
                         )
@@ -155,7 +163,7 @@ fun ProductFormScreen(
                                 }
                             }
                         }, params = CustomTextFieldParams(
-                            label = stringResource(Res.string.tx_payment_amount),
+                            label = stringResource(Res.string.tx_product_price),
                             singleLine = true,
                             maxLength = 6,
                             leadingIcon = {
@@ -168,7 +176,7 @@ fun ProductFormScreen(
                     )
                     ClickableTextField(
                         selectedText = formState.fields.storageType,
-                        "Tipo almacenamiento",
+                        stringResource(Res.string.tx_product_storage),
                         onClick = {
                             onStorageClick.invoke()
                         },
@@ -178,7 +186,7 @@ fun ProductFormScreen(
                     )
                     ClickableTextField(
                         selectedText = formState.fields.unitMeasure,
-                        "Unidad medida",
+                        stringResource(Res.string.tx_product_unit),
                         onClick = {
                             onUnitMeasureClick.invoke()
                         },
@@ -188,7 +196,7 @@ fun ProductFormScreen(
                     )
                     ClickableTextField(
                         selectedText = formState.fields.category,
-                        "Categoria",
+                        stringResource(Res.string.tx_product_category),
                         onClick = {
                             onCategoryClick.invoke()
                         },
@@ -198,7 +206,7 @@ fun ProductFormScreen(
                     )
                     ClickableTextField(
                         selectedText = formState.fields.brand,
-                        "Marca",
+                        stringResource(Res.string.tx_product_brand),
                         onClick = {
                             onBrandClick.invoke()
                         },
@@ -219,7 +227,7 @@ fun ProductFormScreen(
                             },
                         )
                         Text(
-                            text = "Tiene lote",
+                            text = stringResource(Res.string.tx_product_has_batch),
                         )
                     }
                     Row(
@@ -235,7 +243,7 @@ fun ProductFormScreen(
                             },
                         )
                         Text(
-                            text = "Esta activo",
+                            text = stringResource(Res.string.tx_product_is_active),
                         )
                     }
 
