@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -69,7 +70,7 @@ fun ItemProductCard(
         )
 
         Text(
-            text = product.brand,
+            text = product.unitMeasure,
             style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -80,7 +81,8 @@ fun ItemProductCard(
 
         Text(
             text = product.unitPriceValue, style = MaterialTheme.typography.bodyLarge.copy(
-                color = MaterialTheme.colorScheme.primary,
+                color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.SemiBold
             ), modifier = Modifier.padding(horizontal = 8.dp).fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
@@ -88,7 +90,7 @@ fun ItemProductCard(
 }
 
 @Preview()
-@Composable
+@Composable 
 fun ProductItemCardPreview() {
     val sampleProduct = Product(
         id = "1",
