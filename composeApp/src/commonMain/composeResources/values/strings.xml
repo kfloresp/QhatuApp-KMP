@@ -104,6 +104,22 @@
     <string name="tx_payment_type">Tipo: %1$s</string>
     <string name="tx_payment_operation_number">Número operación: %1$s</string>
 
+    <!-- Product -->
+    <string name="tx_product_new_title">Nuevo producto</string>
+    <string name="tx_product_view_title">Visualización de producto</string>
+    <string name="tx_product_code">Código EAN</string>
+    <string name="tx_product_name">Nombre del producto</string>
+    <string name="tx_product_price">Precio unitario</string>
+    <string name="tx_product_storage">Tipo almacenamiento</string>
+    <string name="tx_product_unit">Unidad medida</string>
+    <string name="tx_product_category">Categoria</string>
+    <string name="tx_product_brand">Marca</string>
+    <string name="tx_product_has_batch">Tiene lote</string>
+    <string name="tx_product_is_active">Esta activo</string>
+    <string name="tx_product_yes">Si</string>
+    <string name="tx_product_no">No</string>
+    <string name="tx_product_edit">Editar</string>
+
     <!-- Componentes generales -->
     <string name="tx_global_empty_result">Ups... no encontramos nada</string>
     <string name="tx_global_search_result">¿Qué buscaremos hoy?</string>
@@ -120,6 +136,7 @@
     <string name="tx_global_confirm_save_subtitle">¿Deseas guardar cambios?</string>
     <string name="tx_global_confirm_save">Sí, guardar</string>
     <string name="tx_global_confirm_delete_message">¿Deseas eliminar: %1$s?</string>
+    <string name="tx_global_confirm_delete_register_message">¿Deseas eliminar registro?</string>
     <string name="tx_global_confirm_delete">Sí, eliminar</string>
     <string name="tx_global_confirm_edit">Sí, editar</string>
     <string name="tx_global_category_delete">Eliminar Categoría</string>

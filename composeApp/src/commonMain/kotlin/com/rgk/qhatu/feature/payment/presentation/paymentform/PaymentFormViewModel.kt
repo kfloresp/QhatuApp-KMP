@@ -12,7 +12,6 @@ import com.rgk.qhatu.feature.payment.domain.model.Payment
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsMethodUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
-import com.rgk.qhatu.feature.payment.presentation.payment.PaymentUiState
 import com.rgk.qhatu.feature.setting.domain.model.Configuration
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +19,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class PaymentValidationFormViewModel(
+class PaymentFormViewModel(
     private val syncPaymentUseCase: SyncPaymentUseCase,
     private val getPaymentsUseCase: GetPaymentsUseCase,
     private val getCustomerWithDebtsUseCase: GetCustomersWithDebtUseCase,

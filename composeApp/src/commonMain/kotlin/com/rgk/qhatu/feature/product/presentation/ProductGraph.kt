@@ -4,8 +4,11 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
+import com.rgk.qhatu.common.extension.navigateToHomeWithPopUp
 import com.rgk.qhatu.feature.product.presentation.product.ProductDestination
 import com.rgk.qhatu.feature.product.presentation.product.productDestination
+import com.rgk.qhatu.feature.product.presentation.productform.ProductFormDestination
+import com.rgk.qhatu.feature.product.presentation.productform.productFormDestination
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,10 +19,22 @@ fun NavController.navigateToProductGraph(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.productGraph(
+    navController: NavController,
 ) {
     navigation<ProductGraph>(
         startDestination = ProductDestination
     ) {
-        productDestination()
+        productDestination(onBackPopUp = {
+            navController.navigateToHomeWithPopUp()
+        }, onProductClick = {
+            navController.navigate(ProductFormDestination(it))
+        }, onNewProductClick = {
+            navController.navigate(ProductFormDestination(""))
+        })
+        productFormDestination(onBackPopUp = {
+            navController.navigate(ProductDestination)
+        }, onDeletePopUp = {
+            navController.navigate(ProductDestination)
+        })
     }
 }

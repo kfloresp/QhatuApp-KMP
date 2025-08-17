@@ -40,7 +40,7 @@ internal fun NavGraphBuilder.paymentFormDestination(
     onDeletePopUp: () -> Unit,
 ) {
     composable<PaymentFormDestination> { destination ->
-        val viewModel: PaymentValidationFormViewModel = koinViewModel()
+        val viewModel: PaymentFormViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
         val isNewCustomer by viewModel.isNewPayment.collectAsState()
         val formState by viewModel.formState.collectAsState()
