@@ -22,7 +22,7 @@ import com.rgk.qhatu.feature.customer.presentation.customersummary.CustomerSumma
 import com.rgk.qhatu.feature.payment.presentation.payment.PaymentDestination
 import com.rgk.qhatu.feature.payment.presentation.paymentform.PaymentFormDestination
 import com.rgk.qhatu.feature.product.presentation.product.ProductDestination
-import com.rgk.qhatu.feature.product.presentation.productoform.ProductFormDestination
+import com.rgk.qhatu.feature.product.presentation.productform.ProductFormDestination
 import com.rgk.qhatu.feature.search.presentation.search.SearchDestination
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandDestination
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryDestination

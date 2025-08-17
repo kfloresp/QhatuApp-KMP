@@ -10,7 +10,7 @@ import com.rgk.qhatu.feature.home.presentation.home.HomeViewModel
 import com.rgk.qhatu.feature.payment.presentation.payment.PaymentViewModel
 import com.rgk.qhatu.feature.payment.presentation.paymentform.PaymentFormViewModel
 import com.rgk.qhatu.feature.product.presentation.product.ProductViewModel
-import com.rgk.qhatu.feature.product.presentation.productoform.ProductFormViewModel
+import com.rgk.qhatu.feature.product.presentation.productform.ProductFormViewModel
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandViewModel
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryViewModel
 import com.rgk.qhatu.feature.setting.presentation.store.StoreViewModel

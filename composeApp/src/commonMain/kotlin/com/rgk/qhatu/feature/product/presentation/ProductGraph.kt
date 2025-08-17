@@ -7,8 +7,8 @@ import androidx.navigation.navigation
 import com.rgk.qhatu.common.extension.navigateToHomeWithPopUp
 import com.rgk.qhatu.feature.product.presentation.product.ProductDestination
 import com.rgk.qhatu.feature.product.presentation.product.productDestination
-import com.rgk.qhatu.feature.product.presentation.productoform.ProductFormDestination
-import com.rgk.qhatu.feature.product.presentation.productoform.productFormDestination
+import com.rgk.qhatu.feature.product.presentation.productform.ProductFormDestination
+import com.rgk.qhatu.feature.product.presentation.productform.productFormDestination
 import kotlinx.serialization.Serializable
 
 @Serializable

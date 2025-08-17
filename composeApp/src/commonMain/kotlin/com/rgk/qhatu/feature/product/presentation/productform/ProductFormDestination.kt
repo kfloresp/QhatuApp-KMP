@@ -1,4 +1,4 @@
-package com.rgk.qhatu.feature.product.presentation.productoform
+package com.rgk.qhatu.feature.product.presentation.productform
 
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue

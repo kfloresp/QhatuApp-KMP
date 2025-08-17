@@ -1,4 +1,4 @@
-package com.rgk.qhatu.feature.product.presentation.productoform
+package com.rgk.qhatu.feature.product.presentation.productform
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

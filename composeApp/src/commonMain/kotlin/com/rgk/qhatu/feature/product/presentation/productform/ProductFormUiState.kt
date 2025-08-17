@@ -1,4 +1,4 @@
-package com.rgk.qhatu.feature.product.presentation.productoform
+package com.rgk.qhatu.feature.product.presentation.productform
 
 import com.rgk.qhatu.feature.product.domain.model.Product
 
