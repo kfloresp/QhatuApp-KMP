@@ -55,6 +55,7 @@ interface ProductDao {
         LEFT JOIN configurations ta ON p.storageTypeId = ta.id
         LEFT JOIN brands m ON p.brandId = m.id
         LEFT JOIN unit_measures um ON p.unitMeasureId = um.id
+         WHERE p.isDeleted = false
         """
     )
     suspend fun getProductsWithDetails(): List<Product>
@@ -68,7 +69,7 @@ interface ProductDao {
             p.categoryId,
             c.nombre AS category,
             p.storageTypeId,
-            ta.nombre AS storageType,
+            ta.nombre || ' (' || ta.descripcion|| ')'  AS storageType,
             p.brandId,
             m.nombre AS brand,
             p.unitPrice,
@@ -85,7 +86,7 @@ interface ProductDao {
         LEFT JOIN configurations ta ON p.storageTypeId = ta.id
         LEFT JOIN brands m ON p.brandId = m.id
         LEFT JOIN unit_measures um ON p.unitMeasureId = um.id
-        WHERE p.id = :productId
+        WHERE p.id = :productId and p.isDeleted = false
         """
     )
     suspend fun getProductsWithDetailsById(productId: String): List<Product>

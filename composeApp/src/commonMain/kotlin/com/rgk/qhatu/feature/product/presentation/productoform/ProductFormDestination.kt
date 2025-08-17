@@ -24,7 +24,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_global_cancel
 import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete
-import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete_message
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete_register_message
 import qhatuapp.composeapp.generated.resources.tx_global_confirm_save
 import qhatuapp.composeapp.generated.resources.tx_global_confirm_save_subtitle
 import qhatuapp.composeapp.generated.resources.tx_global_confirmation
@@ -64,7 +64,7 @@ internal fun NavGraphBuilder.productFormDestination(
         var queryBrand by remember { mutableStateOf("") }
         var queryUnitMeasure by remember { mutableStateOf("") }
         var queryStorage by remember { mutableStateOf("") }
-
+        val isEditing by viewModel.isEditing.collectAsState()
 
         ProvideAppBar(
             title = if (isNewProduct) stringResource(Res.string.tx_product_new_title)
@@ -75,8 +75,17 @@ internal fun NavGraphBuilder.productFormDestination(
         BackHandler {
             onBackPopUp.invoke()
         }
-        if (!isNewProduct) {
-            ProductViewerScreen(uiState = uiState)
+        if (!isNewProduct && !isEditing) {
+            ProductViewerScreen(
+                uiState = uiState,
+                onEditClick = {
+                    viewModel.enterEditMode()
+                },
+                onDeleteClick = {
+                    selectedProductToDelete = it
+                },
+                onDeletePopUp = { onDeletePopUp.invoke() }
+            )
         } else {
             ProductFormScreen(
                 uiState = uiState,
@@ -155,7 +164,7 @@ internal fun NavGraphBuilder.productFormDestination(
                 SearchContent(
                     items = storageList,
                     keySelector = { it.id },
-                    valueSelector = { it.name },
+                    valueSelector = { it.nameFull },
                     query = queryStorage,
                     onQueryChange = {
                         queryStorage = it
@@ -235,7 +244,7 @@ internal fun NavGraphBuilder.productFormDestination(
             ConfirmDialog(
                 title = stringResource(Res.string.tx_global_confirmation),
                 description = stringResource(
-                    Res.string.tx_global_confirm_delete_message
+                    Res.string.tx_global_confirm_delete_register_message
                 ),
                 primaryButtonText = stringResource(Res.string.tx_global_confirm_delete),
                 onPrimaryClick = {

@@ -9,4 +9,10 @@ data class Configuration(
     val isSynced: Boolean = false,
     val isDeleted: Boolean = false,
     val lastUpdated: Long = 0,
-)
+) {
+    val nameFull = if (description.isNullOrEmpty()) {
+        name
+    } else {
+        "$name ($description)"
+    }
+}

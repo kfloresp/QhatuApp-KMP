@@ -1,14 +1,17 @@
 package com.rgk.qhatu.feature.product.presentation.productoform
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -95,7 +98,7 @@ fun ProductFormScreen(
                     )
                 }
             }
-            val selectedStorageName = selectedStorage?.name.orEmpty()
+            val selectedStorageName = selectedStorage?.nameFull.orEmpty()
             val selectedStorageId = selectedStorage?.id.orEmpty()
             if (selectedStorageId.isNotEmpty()) {
                 onFieldChange {
@@ -164,7 +167,7 @@ fun ProductFormScreen(
                         )
                     )
                     ClickableTextField(
-                        selectedText = selectedStorageName,
+                        selectedText = formState.fields.storageType,
                         "Tipo almacenamiento",
                         onClick = {
                             onStorageClick.invoke()
@@ -174,7 +177,7 @@ fun ProductFormScreen(
                         }
                     )
                     ClickableTextField(
-                        selectedText = selectedUnitMeasureName,
+                        selectedText = formState.fields.unitMeasure,
                         "Unidad medida",
                         onClick = {
                             onUnitMeasureClick.invoke()
@@ -184,7 +187,7 @@ fun ProductFormScreen(
                         }
                     )
                     ClickableTextField(
-                        selectedText = selectedCategoryName,
+                        selectedText = formState.fields.category,
                         "Categoria",
                         onClick = {
                             onCategoryClick.invoke()
@@ -194,7 +197,7 @@ fun ProductFormScreen(
                         }
                     )
                     ClickableTextField(
-                        selectedText = selectedBrandName,
+                        selectedText = formState.fields.brand,
                         "Marca",
                         onClick = {
                             onBrandClick.invoke()
@@ -203,6 +206,39 @@ fun ProductFormScreen(
                             onClearBrand.invoke()
                         }
                     )
+                    Row(
+                        modifier = Modifier.padding(top = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Checkbox(
+                            checked = fields.isBatch,
+                            onCheckedChange = { isChecked ->
+                                onFieldChange {
+                                    copy(isBatch = isChecked)
+                                }
+                            },
+                        )
+                        Text(
+                            text = "Tiene lote",
+                        )
+                    }
+                    Row(
+                        modifier = Modifier.padding(top = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Checkbox(
+                            checked = fields.isActive,
+                            onCheckedChange = { isChecked ->
+                                onFieldChange {
+                                    copy(isActive = isChecked)
+                                }
+                            },
+                        )
+                        Text(
+                            text = "Esta activo",
+                        )
+                    }
+
                 }
 
                 if (isNew) {

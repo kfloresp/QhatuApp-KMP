@@ -58,6 +58,16 @@ class ProductFormViewModel(
     private var allItemsBrand: List<Brand> = emptyList()
     private var allItemsStorage: List<Configuration> = emptyList()
 
+    private val _isEditing = MutableStateFlow(false)
+    val isEditing: StateFlow<Boolean> = _isEditing
+
+    fun enterEditMode() {
+        _isEditing.value = true
+    }
+
+    fun exitEditMode() {
+        _isEditing.value = false
+    }
 
     init {
         if (productId.isEmpty()) {
@@ -156,7 +166,7 @@ class ProductFormViewModel(
 
     private fun validateFields(fields: Product): Boolean {
         return fields.name.isNotBlank() &&
-                fields.ean.toDouble() > 0 &&
+                fields.ean.isNotBlank() &&
                 fields.categoryId.orEmpty().isNotBlank() &&
                 fields.unitMeasureId.isNotBlank() &&
                 fields.brandId.orEmpty().isNotBlank()
