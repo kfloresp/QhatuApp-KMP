@@ -9,14 +9,19 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.components.button.ButtonActions
 import com.rgk.qhatu.common.components.error.ErrorSection
+import com.rgk.qhatu.common.components.imagepicker.ImagePicker
 import com.rgk.qhatu.common.components.loading.LoadingSection
 import com.rgk.qhatu.common.components.textfield.ClickableTextField
 import com.rgk.qhatu.common.components.textfield.CustomTextField
@@ -64,6 +69,8 @@ fun ProductFormScreen(
     selectedStorage: Configuration? = null,
     onBackPopUp: () -> Unit,
     onDeletePopUp: () -> Unit,
+    imageBitmapList: List<ImageBitmap> = emptyList(),
+    onImagePickerClick:() -> Unit,
 ) {
     val fields = formState.fields
     when (uiState) {
@@ -246,7 +253,16 @@ fun ProductFormScreen(
                             text = stringResource(Res.string.tx_product_is_active),
                         )
                     }
-
+                    Text(
+                        text = "Fotos del producto",
+                        style = MaterialTheme.typography.titleMedium,
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                    ImagePicker(images = imageBitmapList) {
+                        onImagePickerClick()
+                    }
                 }
 
                 if (isNew) {

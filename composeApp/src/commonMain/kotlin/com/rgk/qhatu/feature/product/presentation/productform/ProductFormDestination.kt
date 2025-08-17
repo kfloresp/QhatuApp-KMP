@@ -1,16 +1,27 @@
 package com.rgk.qhatu.feature.product.presentation.productform
 
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.bottomsheet.CustomBottomSheet
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
+import com.rgk.qhatu.common.components.dialog.ContentDialog
 import com.rgk.qhatu.common.components.search.SearchContent
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.setting.domain.model.Brand
@@ -18,6 +29,15 @@ import com.rgk.qhatu.feature.setting.domain.model.Category
 import com.rgk.qhatu.feature.setting.domain.model.Configuration
 import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
 import com.rgk.qhatu.navigation.ProvideAppBar
+import com.rgk.qhatu.shared.PermissionCallback
+import com.rgk.qhatu.shared.PermissionStatus
+import com.rgk.qhatu.shared.PermissionType
+import com.rgk.qhatu.shared.createPermissionsManager
+import com.rgk.qhatu.shared.rememberCameraManager
+import com.rgk.qhatu.shared.rememberGalleryManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -65,6 +85,111 @@ internal fun NavGraphBuilder.productFormDestination(
         var queryUnitMeasure by remember { mutableStateOf("") }
         var queryStorage by remember { mutableStateOf("") }
         val isEditing by viewModel.isEditing.collectAsState()
+
+        val coroutineScope = rememberCoroutineScope()
+        var imageBitmapList by remember { mutableStateOf<List<ImageBitmap>>(emptyList()) }
+
+        var imageSourceOptionDialog by remember { mutableStateOf(value = false) }
+        var launchCamera by remember { mutableStateOf(value = false) }
+        var launchGallery by remember { mutableStateOf(value = false) }
+        var launchSetting by remember { mutableStateOf(value = false) }
+        var permissionRationalDialog by remember { mutableStateOf(value = false) }
+        val permissionsManager = createPermissionsManager(object : PermissionCallback {
+            override fun onPermissionStatus(
+                permissionType: PermissionType,
+                status: PermissionStatus,
+            ) {
+                when (status) {
+                    PermissionStatus.GRANTED -> {
+                        when (permissionType) {
+                            PermissionType.CAMERA -> launchCamera = true
+                            PermissionType.GALLERY -> launchGallery = true
+                        }
+                    }
+
+                    else -> {
+                        permissionRationalDialog = true
+                    }
+                }
+            }
+        })
+        val cameraManager = rememberCameraManager {
+            coroutineScope.launch {
+                val bitmap = withContext(Dispatchers.Default) {
+                    it?.toImageBitmap()
+                }
+                if (bitmap != null) {
+                    imageBitmapList = imageBitmapList + bitmap
+                }
+            }
+        }
+
+        val galleryManager = rememberGalleryManager {
+            coroutineScope.launch {
+                val bitmap = withContext(Dispatchers.Default) {
+                    it?.toImageBitmap()
+                }
+                if (bitmap != null) {
+                    imageBitmapList = imageBitmapList + bitmap
+                }
+            }
+        }
+        if (imageSourceOptionDialog) {
+            ContentDialog("Añadir fotos", onDismiss = { imageSourceOptionDialog = false }) {
+                Text("Elige una opción")
+                Row(modifier = Modifier.padding(top = 8.dp)) {
+                    Button(onClick = {
+                        imageSourceOptionDialog = false
+                        launchGallery = true
+                    }) {
+                        Text(text = "Galeria")
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(onClick = {
+                        imageSourceOptionDialog = false
+                        launchCamera = true
+                    }) {
+                        Text(text = "Cámara")
+                    }
+                }
+            }
+        }
+        if (launchGallery) {
+            if (permissionsManager.isPermissionGranted(PermissionType.GALLERY)) {
+                galleryManager.launch()
+            } else {
+                permissionsManager.askPermission(PermissionType.GALLERY)
+            }
+            launchGallery = false
+        }
+        if (launchCamera) {
+            if (permissionsManager.isPermissionGranted(PermissionType.CAMERA)) {
+                cameraManager.launch()
+            } else {
+                permissionsManager.askPermission(PermissionType.CAMERA)
+            }
+            launchCamera = false
+        }
+        if (launchSetting) {
+            permissionsManager.launchSettings()
+            launchSetting = false
+        }
+        if (permissionRationalDialog) {
+            ConfirmDialog(
+                title = "Permission Required",
+                description = "To set your profile picture, please grant this permission. You can manage permissions in your device settings.",
+                primaryButtonText = "Settings",
+                secondaryButtonText = "Cancel",
+                onPrimaryClick = {
+                    permissionRationalDialog = false
+                    launchSetting = true
+
+                },
+                onSecondaryClick = {
+                    permissionRationalDialog = false
+                })
+
+        }
 
         ProvideAppBar(
             title = if (isNewProduct) stringResource(Res.string.tx_product_new_title)
@@ -131,7 +256,11 @@ internal fun NavGraphBuilder.productFormDestination(
                 selectedBrand = selectedBrand,
                 selectedStorage = selectedStorage,
                 onBackPopUp = onBackPopUp,
-                onDeletePopUp = onDeletePopUp
+                onDeletePopUp = onDeletePopUp,
+                onImagePickerClick = {
+                    imageSourceOptionDialog = true
+                },
+                imageBitmapList = imageBitmapList,
             )
         }
 

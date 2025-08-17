@@ -90,7 +90,7 @@ fun ItemProductCard(
 }
 
 @Preview()
-@Composable 
+@Composable
 fun ProductItemCardPreview() {
     val sampleProduct = Product(
         id = "1",
