@@ -1,6 +1,5 @@
 package com.rgk.qhatu.feature.product.presentation.product.component
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -32,7 +31,6 @@ import qhatuapp.composeapp.generated.resources.image_place_holder
 @Composable
 fun ItemProductCard(
     product: Product,
-    imageUrl: String? = null,
     onClick: (Product) -> Unit = {},
 ) {
     Column(
@@ -46,8 +44,9 @@ fun ItemProductCard(
                 shape = RoundedCornerShape(12.dp)
             )
     ) {
+
         AsyncImage(
-            model = imageUrl,
+            model = product.imageProduct.firstOrNull()?.filename ?: "",
             contentDescription = product.name,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxWidth()
@@ -103,7 +102,7 @@ fun ProductItemCardPreview() {
     QhatuTheme {
         Column(Modifier.background(color = Color.White)) {
             ItemProductCard(
-                product = sampleProduct, imageUrl = "https://via.placeholder.com/150"
+                product = sampleProduct
             )
         }
     }

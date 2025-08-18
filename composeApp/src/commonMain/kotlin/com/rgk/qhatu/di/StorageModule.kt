@@ -4,6 +4,7 @@ import androidx.room.RoomDatabase
 import com.rgk.qhatu.feature.audit.data.database.dao.AuditLogDao
 import com.rgk.qhatu.feature.customer.data.database.dao.CustomerDao
 import com.rgk.qhatu.feature.payment.data.database.dao.PaymentDao
+import com.rgk.qhatu.feature.product.data.database.dao.ImageProductDao
 import com.rgk.qhatu.feature.sale.data.database.dao.PaymentTransactionDao
 import com.rgk.qhatu.feature.product.data.database.dao.ProductDao
 import com.rgk.qhatu.feature.sale.data.database.dao.TransactionDao
@@ -31,4 +32,5 @@ val databaseModule = module {
     single<TransactionDetailDao> { get<AppDataBase>().transactionDetailDao() }
     single<UnitMeasureDao> { get<AppDataBase>().unitMeasureDao() }
     single<StoreDao> { get<AppDataBase>().storeDao() }
+    single<ImageProductDao> { get<AppDataBase>().imageProductDao() }
 }

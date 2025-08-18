@@ -11,8 +11,10 @@ import com.rgk.qhatu.feature.customer.data.database.entity.CustomerEntity
 import com.rgk.qhatu.feature.payment.data.database.dao.PaymentDao
 import com.rgk.qhatu.feature.sale.data.database.dao.PaymentTransactionDao
 import com.rgk.qhatu.feature.payment.data.database.entity.PaymentEntity
+import com.rgk.qhatu.feature.product.data.database.dao.ImageProductDao
 import com.rgk.qhatu.feature.sale.data.database.entity.PaymentTransactionEntity
 import com.rgk.qhatu.feature.product.data.database.dao.ProductDao
+import com.rgk.qhatu.feature.product.data.database.entity.ImageProductEntity
 import com.rgk.qhatu.feature.product.data.database.entity.ProductEntity
 import com.rgk.qhatu.feature.sale.data.database.dao.TransactionDao
 import com.rgk.qhatu.feature.sale.data.database.dao.TransactionDetailDao
@@ -31,21 +33,25 @@ import com.rgk.qhatu.feature.setting.data.database.entity.UnitMeasureEntity
 
 const val DATABASE_NAME = "qhatu_database.db"
 
-@Database(entities = [  ConfigurationEntity::class,
-    AuditLogEntity::class,
-    BrandEntity::class,
-    CategoryEntity::class,
-    CustomerEntity::class,
-    PaymentEntity::class,
-    PaymentTransactionEntity::class,
-    ProductEntity::class,
-    TransactionDetailEntity::class,
-    TransactionEntity::class,
-    UnitMeasureEntity::class,
-    StoreEntity::class,
-                     ], version = 1, exportSchema = false)
+@Database(
+    entities = [
+        ConfigurationEntity::class,
+        AuditLogEntity::class,
+        BrandEntity::class,
+        CategoryEntity::class,
+        CustomerEntity::class,
+        PaymentEntity::class,
+        PaymentTransactionEntity::class,
+        ProductEntity::class,
+        TransactionDetailEntity::class,
+        TransactionEntity::class,
+        UnitMeasureEntity::class,
+        StoreEntity::class,
+        ImageProductEntity::class,
+    ], version = 1, exportSchema = false
+)
 @ConstructedBy(AppDatabaseConstructor::class)
-abstract class AppDataBase : RoomDatabase(){
+abstract class AppDataBase : RoomDatabase() {
     abstract fun configurationDao(): ConfigurationDao
     abstract fun auditLogDao(): AuditLogDao
     abstract fun brandDao(): BrandDao
@@ -58,7 +64,9 @@ abstract class AppDataBase : RoomDatabase(){
     abstract fun transactionDao(): TransactionDao
     abstract fun unitMeasureDao(): UnitMeasureDao
     abstract fun storeDao(): StoreDao
+    abstract fun imageProductDao(): ImageProductDao
 }
+
 @Suppress("NO_ACTUAL_FOR_EXPECT")
 expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDataBase> {
     override fun initialize(): AppDataBase

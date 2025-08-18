@@ -1,14 +1,17 @@
 package com.rgk.qhatu.feature.product.presentation.productform
 
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
+import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.usecase.GetProductsUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetStorageTypeUseCase
+import com.rgk.qhatu.feature.product.domain.usecase.SyncImageProductUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 import com.rgk.qhatu.feature.setting.domain.model.Category
@@ -17,6 +20,7 @@ import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
 import com.rgk.qhatu.feature.setting.domain.usecase.GetBrandsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoriesUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetUnitsMeasureUseCase
+import com.rgk.qhatu.shared.SharedImageStorage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,6 +34,7 @@ class ProductFormViewModel(
     private val getProductsUseCase: GetProductsUseCase,
     private val syncProductUseCase: SyncProductUseCase,
     private val getStorageTypeUseCase: GetStorageTypeUseCase,
+    private val syncImageProductUseCase: SyncImageProductUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<ProductFormUiState>(ProductFormUiState.Loading)
@@ -190,7 +195,7 @@ class ProductFormViewModel(
         _unitMeasureList.value = filtered
     }
 
-    fun onUpsertLocal(product: Product) {
+    fun onUpsertLocal(product: Product, imageBitmapList: List<ImageBitmap>) {
         viewModelScope.launch {
             _uiState.update {
                 ProductFormUiState.Loading
@@ -204,9 +209,8 @@ class ProductFormViewModel(
                 }
 
                 is SyncResult.Success<*> -> {
-                    _uiState.update {
-                        ProductFormUiState.SuccessUpsert(product.isDeleted)
-                    }
+                    val productId = result.data as String
+                    saveImagesProduct(productId, imageBitmapList)
                 }
             }
         }
@@ -232,5 +236,33 @@ class ProductFormViewModel(
         val filtered = if (query.isBlank()) allItemsStorage
         else allItemsStorage.filter { it.name.contains(query, ignoreCase = true) }
         _storageList.value = filtered
+    }
+
+    fun saveImagesProduct(
+        productId: String,
+        imagePaths: List<ImageBitmap>,
+    ) {
+        viewModelScope.launch {
+            var imageProduct: List<ImageProduct> = listOf()
+            imagePaths.forEachIndexed { index, path ->
+                val filename = "${productId}_$index.png"
+                val absoluteFilename = SharedImageStorage.saveImage(path, filename)
+                imageProduct = imageProduct + ImageProduct(productId = productId, filename = absoluteFilename)
+            }
+            val result = syncImageProductUseCase(SyncOperation.SaveLocal(imageProduct))
+            when (result) {
+                is SyncResult.Error -> {
+                    _uiState.update {
+                        ProductFormUiState.Error(result.exception.message.orEmpty())
+                    }
+                }
+
+                is SyncResult.Success<*> -> {
+                    _uiState.update {
+                        ProductFormUiState.SuccessUpsert
+                    }
+                }
+            }
+        }
     }
 }

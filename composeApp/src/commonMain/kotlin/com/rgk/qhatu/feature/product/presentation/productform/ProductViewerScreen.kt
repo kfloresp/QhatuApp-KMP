@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.components.button.ButtonActions
+import com.rgk.qhatu.common.components.carousel.ImageCarousel
 import com.rgk.qhatu.common.components.error.ErrorSection
 import com.rgk.qhatu.common.components.loading.LoadingSection
 import com.rgk.qhatu.feature.product.domain.model.Product
@@ -68,6 +69,14 @@ fun ProductViewerScreen(
                         .fillMaxHeight()
                         .weight(1f)
                 ) {
+                    Text(
+                        text = "Fotos del producto",
+                        style = MaterialTheme.typography.titleMedium,
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                    ImageCarousel(product.imageProduct)
                     Text(
                         text = stringResource(Res.string.tx_product_name),
                         style = MaterialTheme.typography.titleMedium,

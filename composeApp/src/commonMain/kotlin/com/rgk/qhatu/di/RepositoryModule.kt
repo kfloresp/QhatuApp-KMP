@@ -37,7 +37,7 @@ val repositoryModule = module {
     factory<CustomerRepository> { CustomerRepositoryImpl(get(), get()) }
     factory<ConfigurationRepository> { ConfigurationRepositoryImpl(get(), get()) }
     factory<PaymentTransactionRepository> { PaymentTransactionRepositoryImpl(get(), get()) }
-    factory<ProductRepository> { ProductRepositoryImpl(get(), get()) }
+    factory<ProductRepository> { ProductRepositoryImpl(get(), get(), get()) }
     factory<TransactionDetailRepository> { TransactionDetailRepositoryImpl(get(), get()) }
     factory<TransactionRepository> { TransactionRepositoryImpl(get(), get()) }
     factory<UnitMeasureRepository> { UnitMeasureRepositoryImpl(get(), get()) }

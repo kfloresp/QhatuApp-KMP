@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.rgk.qhatu.feature.product.data.database.entity.ProductEntity
 import com.rgk.qhatu.common.model.SyncStats
+import com.rgk.qhatu.feature.product.data.database.entity.ProductWithDetail
 import com.rgk.qhatu.feature.product.domain.model.Product
 
 @Dao
@@ -58,7 +59,7 @@ interface ProductDao {
          WHERE p.isDeleted = false
         """
     )
-    suspend fun getProductsWithDetails(): List<Product>
+    suspend fun getProductsWithDetails(): List<ProductWithDetail>
 
     @Query(
         """
@@ -89,6 +90,6 @@ interface ProductDao {
         WHERE p.id = :productId and p.isDeleted = false
         """
     )
-    suspend fun getProductsWithDetailsById(productId: String): List<Product>
+    suspend fun getProductsWithDetailsById(productId: String): List<ProductWithDetail>
 
 }

@@ -32,6 +32,7 @@ import com.rgk.qhatu.navigation.ProvideAppBar
 import com.rgk.qhatu.shared.PermissionCallback
 import com.rgk.qhatu.shared.PermissionStatus
 import com.rgk.qhatu.shared.PermissionType
+import com.rgk.qhatu.shared.SharedImageStorage
 import com.rgk.qhatu.shared.createPermissionsManager
 import com.rgk.qhatu.shared.rememberCameraManager
 import com.rgk.qhatu.shared.rememberGalleryManager
@@ -57,7 +58,6 @@ data class ProductFormDestination(val productId: String)
 @OptIn(ExperimentalComposeUiApi::class)
 internal fun NavGraphBuilder.productFormDestination(
     onBackPopUp: () -> Unit,
-    onDeletePopUp: () -> Unit,
 ) {
     composable<ProductFormDestination> { destination ->
         val viewModel: ProductFormViewModel = koinViewModel()
@@ -209,7 +209,7 @@ internal fun NavGraphBuilder.productFormDestination(
                 onDeleteClick = {
                     selectedProductToDelete = it
                 },
-                onDeletePopUp = { onDeletePopUp.invoke() }
+                onDeletePopUp = { onBackPopUp.invoke() }
             )
         } else {
             ProductFormScreen(
@@ -256,7 +256,6 @@ internal fun NavGraphBuilder.productFormDestination(
                 selectedBrand = selectedBrand,
                 selectedStorage = selectedStorage,
                 onBackPopUp = onBackPopUp,
-                onDeletePopUp = onDeletePopUp,
                 onImagePickerClick = {
                     imageSourceOptionDialog = true
                 },
@@ -358,7 +357,7 @@ internal fun NavGraphBuilder.productFormDestination(
                 description = stringResource(Res.string.tx_global_confirm_save_subtitle),
                 primaryButtonText = stringResource(Res.string.tx_global_confirm_save),
                 onPrimaryClick = {
-                    viewModel.onUpsertLocal(it)
+                    viewModel.onUpsertLocal(it,imageBitmapList)
                     selectedProductToSave = null
                 },
                 secondaryButtonText = stringResource(Res.string.tx_global_cancel),
@@ -377,7 +376,7 @@ internal fun NavGraphBuilder.productFormDestination(
                 ),
                 primaryButtonText = stringResource(Res.string.tx_global_confirm_delete),
                 onPrimaryClick = {
-                    viewModel.onUpsertLocal(it.copy(isDeleted = true))
+                    viewModel.onUpsertLocal(it.copy(isDeleted = true), imageBitmapList)
                     selectedProductToDelete = null
                 },
                 secondaryButtonText = stringResource(Res.string.tx_global_cancel),
@@ -387,6 +386,5 @@ internal fun NavGraphBuilder.productFormDestination(
                 }
             )
         }
-
     }
 }

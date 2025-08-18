@@ -68,9 +68,8 @@ fun ProductFormScreen(
     selectedBrand: Brand? = null,
     selectedStorage: Configuration? = null,
     onBackPopUp: () -> Unit,
-    onDeletePopUp: () -> Unit,
     imageBitmapList: List<ImageBitmap> = emptyList(),
-    onImagePickerClick:() -> Unit,
+    onImagePickerClick: () -> Unit,
 ) {
     val fields = formState.fields
     when (uiState) {
@@ -289,12 +288,7 @@ fun ProductFormScreen(
         }
 
         is ProductFormUiState.SuccessUpsert -> {
-            val isDeleted = uiState.isDeleted
-            if (isDeleted) {
-                onDeletePopUp()
-            } else {
-                onBackPopUp()
-            }
+            onBackPopUp()
         }
     }
 
