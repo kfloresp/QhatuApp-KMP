@@ -108,6 +108,7 @@
     <string name="tx_product_new_title">Nuevo producto</string>
     <string name="tx_product_view_title">Visualización de producto</string>
     <string name="tx_product_code">Código EAN</string>
+    <string name="tx_product_details_title">Detalles del producto:</string>
     <string name="tx_product_name">Nombre del producto</string>
     <string name="tx_product_price">Precio unitario</string>
     <string name="tx_product_storage">Tipo almacenamiento</string>
@@ -116,6 +117,7 @@
     <string name="tx_product_brand">Marca</string>
     <string name="tx_product_has_batch">Tiene lote</string>
     <string name="tx_product_is_active">Esta activo</string>
+    <string name="tx_product_photos">Fotos del producto</string>
     <string name="tx_product_yes">Si</string>
     <string name="tx_product_no">No</string>
     <string name="tx_product_edit">Editar</string>

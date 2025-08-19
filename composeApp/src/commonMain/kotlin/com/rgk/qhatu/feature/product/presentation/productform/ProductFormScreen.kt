@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -43,6 +42,7 @@ import qhatuapp.composeapp.generated.resources.tx_product_code
 import qhatuapp.composeapp.generated.resources.tx_product_has_batch
 import qhatuapp.composeapp.generated.resources.tx_product_is_active
 import qhatuapp.composeapp.generated.resources.tx_product_name
+import qhatuapp.composeapp.generated.resources.tx_product_photos
 import qhatuapp.composeapp.generated.resources.tx_product_price
 import qhatuapp.composeapp.generated.resources.tx_product_storage
 import qhatuapp.composeapp.generated.resources.tx_product_unit
@@ -68,7 +68,6 @@ fun ProductFormScreen(
     selectedBrand: Brand? = null,
     selectedStorage: Configuration? = null,
     onBackPopUp: () -> Unit,
-    imageBitmapList: List<ImageBitmap> = emptyList(),
     onImagePickerClick: () -> Unit,
 ) {
     val fields = formState.fields
@@ -253,13 +252,13 @@ fun ProductFormScreen(
                         )
                     }
                     Text(
-                        text = "Fotos del producto",
+                        text = stringResource(Res.string.tx_product_photos),
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
-                    ImagePicker(images = imageBitmapList) {
+                    ImagePicker(images = fields.imageProduct) {
                         onImagePickerClick()
                     }
                 }

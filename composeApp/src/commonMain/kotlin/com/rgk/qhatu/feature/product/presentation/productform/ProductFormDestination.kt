@@ -23,6 +23,7 @@ import com.rgk.qhatu.common.components.bottomsheet.CustomBottomSheet
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.dialog.ContentDialog
 import com.rgk.qhatu.common.components.search.SearchContent
+import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 import com.rgk.qhatu.feature.setting.domain.model.Category
@@ -87,7 +88,6 @@ internal fun NavGraphBuilder.productFormDestination(
         val isEditing by viewModel.isEditing.collectAsState()
 
         val coroutineScope = rememberCoroutineScope()
-        var imageBitmapList by remember { mutableStateOf<List<ImageBitmap>>(emptyList()) }
 
         var imageSourceOptionDialog by remember { mutableStateOf(value = false) }
         var launchCamera by remember { mutableStateOf(value = false) }
@@ -119,7 +119,18 @@ internal fun NavGraphBuilder.productFormDestination(
                     it?.toImageBitmap()
                 }
                 if (bitmap != null) {
-                    imageBitmapList = imageBitmapList + bitmap
+                    SharedImageStorage.saveTempImage(bitmap).let { path ->
+                        if (path.isNotBlank()) {
+                            viewModel.onFieldChange {
+                                copy(
+                                    imageProduct = imageProduct + ImageProduct(
+                                        filename = path,
+                                        isTemp = true,
+                                    )
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -130,7 +141,18 @@ internal fun NavGraphBuilder.productFormDestination(
                     it?.toImageBitmap()
                 }
                 if (bitmap != null) {
-                    imageBitmapList = imageBitmapList + bitmap
+                    SharedImageStorage.saveTempImage(bitmap).let { path ->
+                        if (path.isNotBlank()) {
+                            viewModel.onFieldChange {
+                                copy(
+                                    imageProduct = imageProduct + ImageProduct(
+                                        filename = path,
+                                        isTemp = true,
+                                    )
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -259,7 +281,6 @@ internal fun NavGraphBuilder.productFormDestination(
                 onImagePickerClick = {
                     imageSourceOptionDialog = true
                 },
-                imageBitmapList = imageBitmapList,
             )
         }
 
@@ -357,7 +378,7 @@ internal fun NavGraphBuilder.productFormDestination(
                 description = stringResource(Res.string.tx_global_confirm_save_subtitle),
                 primaryButtonText = stringResource(Res.string.tx_global_confirm_save),
                 onPrimaryClick = {
-                    viewModel.onUpsertLocal(it,imageBitmapList)
+                    viewModel.onUpsertLocal(it)
                     selectedProductToSave = null
                 },
                 secondaryButtonText = stringResource(Res.string.tx_global_cancel),
@@ -376,7 +397,7 @@ internal fun NavGraphBuilder.productFormDestination(
                 ),
                 primaryButtonText = stringResource(Res.string.tx_global_confirm_delete),
                 onPrimaryClick = {
-                    viewModel.onUpsertLocal(it.copy(isDeleted = true), imageBitmapList)
+                    viewModel.onUpsertLocal(it.copy(isDeleted = true))
                     selectedProductToDelete = null
                 },
                 secondaryButtonText = stringResource(Res.string.tx_global_cancel),

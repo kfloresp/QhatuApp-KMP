@@ -195,7 +195,7 @@ class ProductFormViewModel(
         _unitMeasureList.value = filtered
     }
 
-    fun onUpsertLocal(product: Product, imageBitmapList: List<ImageBitmap>) {
+    fun onUpsertLocal(product: Product) {
         viewModelScope.launch {
             _uiState.update {
                 ProductFormUiState.Loading
@@ -210,7 +210,7 @@ class ProductFormViewModel(
 
                 is SyncResult.Success<*> -> {
                     val productId = result.data as String
-                    saveImagesProduct(productId, imageBitmapList)
+                    saveImagesProduct(productId, product.imageProduct.filter { it.isTemp })
                 }
             }
         }
@@ -240,14 +240,16 @@ class ProductFormViewModel(
 
     fun saveImagesProduct(
         productId: String,
-        imagePaths: List<ImageBitmap>,
+        imagePaths: List<ImageProduct>,
     ) {
+        _uiState.update {
+            ProductFormUiState.Loading
+        }
         viewModelScope.launch {
             var imageProduct: List<ImageProduct> = listOf()
             imagePaths.forEachIndexed { index, path ->
-                val filename = "${productId}_$index.png"
-                val absoluteFilename = SharedImageStorage.saveImage(path, filename)
-                imageProduct = imageProduct + ImageProduct(productId = productId, filename = absoluteFilename)
+                val finalFilename = SharedImageStorage.saveImageFromTemp(path.filename, productId)
+                imageProduct = imageProduct + ImageProduct(productId = productId, filename = finalFilename)
             }
             val result = syncImageProductUseCase(SyncOperation.SaveLocal(imageProduct))
             when (result) {

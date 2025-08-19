@@ -29,6 +29,7 @@ import qhatuapp.composeapp.generated.resources.image_place_holder
 fun ImageCarousel(
     imagesFromUrl: List<ImageProduct>? = null,
 ) {
+    if (imagesFromUrl.isNullOrEmpty()) return
     Column(
         modifier = Modifier
             .padding(vertical = 8.dp, horizontal = 4.dp)
@@ -48,11 +49,10 @@ fun ImageCarousel(
                         .wrapContentSize(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    imagesFromUrl?.let { product ->
-                        items(product.size) { index ->
+                        items(imagesFromUrl.size) { index ->
                             AsyncImage(
-                                model = product[index].filename,
-                                contentDescription = product[index].productId,
+                                model = imagesFromUrl[index].filename,
+                                contentDescription = imagesFromUrl[index].productId,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier.fillMaxWidth()
                                     .height(300.dp)
@@ -62,7 +62,6 @@ fun ImageCarousel(
                                 error = painterResource(resource = Res.drawable.image_place_holder)
                             )
                         }
-                    }
                 }
             }
         }

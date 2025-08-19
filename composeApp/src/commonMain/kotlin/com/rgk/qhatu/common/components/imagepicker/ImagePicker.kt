@@ -1,7 +1,5 @@
 package com.rgk.qhatu.common.components.imagepicker
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,20 +7,24 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.rgk.qhatu.common.theme.QhatuTheme
+import com.rgk.qhatu.feature.product.domain.model.ImageProduct
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.image_place_holder
 
 @Composable
 fun ImagePicker(
-    images: List<ImageBitmap>,
+    images: List<ImageProduct>,
     modifier: Modifier = Modifier,
     onUploadClick: () -> Unit,
 ) {
@@ -51,12 +53,15 @@ fun ImagePicker(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         items(images.size) { index ->
-                            Image(
-                                painter = BitmapPainter(images[index]),
-                                contentDescription = "Imagen $index",
-                                modifier = Modifier
+                            AsyncImage(
+                                model = images[index].filename,
+                                contentDescription = images[index].productId,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxWidth()
                                     .size(150.dp)
-                                    .background(Color.Gray, RoundedCornerShape(8.dp))
+                                    .clip(RoundedCornerShape(8.dp)),
+                                placeholder = painterResource(resource = Res.drawable.image_place_holder),
+                                error = painterResource(resource = Res.drawable.image_place_holder)
                             )
                         }
                     }
