@@ -5,6 +5,7 @@ data class ImageProduct(
     val productId: String = "",
     val filename:String = "",
     val isTemp: Boolean = false,
+    val isLoading: Boolean = false,
     val syncedDate: Long = 0L,
     val isSynced: Boolean = false,
     val lastUpdated: Long = 0L,

@@ -19,4 +19,8 @@ actual object SharedImageStorage {
     actual suspend fun saveImageFromTemp(tempPath: String, suffix: String?): String {
         TODO("Not yet implemented")
     }
+
+    actual suspend fun saveSharedImage(image: SharedImage): String {
+        TODO("Not yet implemented")
+    }
 }

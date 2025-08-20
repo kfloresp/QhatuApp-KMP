@@ -4,6 +4,7 @@ import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
+import com.rgk.qhatu.shared.SharedImage
 
 interface ProductRepository {
     suspend fun fetchLocal(productId: String?): SyncResult<List<Product>>
@@ -15,4 +16,5 @@ interface ProductRepository {
     suspend fun saveLocal(registers: List<Product>): SyncResult<Unit>
     suspend fun syncLocalToRemote(): SyncResult<Unit>
     suspend fun syncRemoteToLocal(): SyncResult<Unit>
+    suspend fun saveImageProductLocal(image: SharedImage): SyncResult<String>
 }

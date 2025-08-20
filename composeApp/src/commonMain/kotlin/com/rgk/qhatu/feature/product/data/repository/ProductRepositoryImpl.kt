@@ -13,6 +13,7 @@ import com.rgk.qhatu.feature.product.domain.mapper.toEntity
 import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.repository.ProductRepository
+import com.rgk.qhatu.shared.SharedImage
 import com.rgk.qhatu.shared.SharedImageStorage
 import com.rgk.qhatu.utils.TimeUtils
 
@@ -166,6 +167,12 @@ class ProductRepositoryImpl(
             sourceLocal.save(newClients.map {
                 it.toEntity().copy(syncedDate = TimeUtils.getCurrentTimestamp())
             })
+        }
+    }
+
+    override suspend fun saveImageProductLocal(image: SharedImage): SyncResult<String> {
+        return safeCall {
+            SharedImageStorage.saveSharedImage(image)
         }
     }
 

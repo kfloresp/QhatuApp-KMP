@@ -2,7 +2,6 @@ package com.rgk.qhatu.feature.splash.presentation.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rgk.qhatu.feature.auth.domain.usecase.AuthUseCase
 import com.rgk.qhatu.feature.auth.domain.usecase.ObserveCurrentUser
 import com.rgk.qhatu.shared.SharedImageStorage
 import kotlinx.coroutines.Dispatchers

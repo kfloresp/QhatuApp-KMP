@@ -59,38 +59,50 @@ fun ImagePicker(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         items(images.size) { index ->
+                            val image = images[index]
                             Box(
                                 modifier = Modifier
                                     .size(150.dp)
                                     .clip(RoundedCornerShape(8.dp))
                             ) {
-                                AsyncImage(
-                                    model = images[index].filename,
-                                    contentDescription = images[index].productId,
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    placeholder = painterResource(resource = Res.drawable.image_place_holder),
-                                    error = painterResource(resource = Res.drawable.image_place_holder)
-                                )
-
-                                IconButton(
-                                    onClick = { onDeleteClick(images[index]) },
-                                    modifier = Modifier
-                                        .align(Alignment.TopEnd)
-                                        .padding(end = 8.dp, top = 8.dp)
-                                        .background(
-                                            color = Color.Black.copy(alpha = 0.4f),
-                                            shape = CircleShape
-                                        )
-                                        .size(28.dp)
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Close,
-                                        contentDescription = "Eliminar",
-                                        tint = Color.White,
-                                        modifier = Modifier.size(18.dp)
+                                if (image.isLoading){
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .background(Color.LightGray.copy(alpha = 0.4f)),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        CircularProgressIndicator()
+                                    }
+                                }else{
+                                    AsyncImage(
+                                        model = image.filename,
+                                        contentDescription = image.productId,
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        placeholder = painterResource(resource = Res.drawable.image_place_holder),
+                                        error = painterResource(resource = Res.drawable.image_place_holder)
                                     )
+
+                                    IconButton(
+                                        onClick = { onDeleteClick(image) },
+                                        modifier = Modifier
+                                            .align(Alignment.TopEnd)
+                                            .padding(end = 8.dp, top = 8.dp)
+                                            .background(
+                                                color = Color.Black.copy(alpha = 0.4f),
+                                                shape = CircleShape
+                                            )
+                                            .size(28.dp)
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Close,
+                                            contentDescription = "Eliminar",
+                                            tint = Color.White,
+                                            modifier = Modifier.size(18.dp)
+                                        )
+                                    }
                                 }
                             }
                         }

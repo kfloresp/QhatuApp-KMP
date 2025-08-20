@@ -11,6 +11,7 @@ import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.usecase.GetProductsUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetStorageTypeUseCase
+import com.rgk.qhatu.feature.product.domain.usecase.SaveImageProductUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 import com.rgk.qhatu.feature.setting.domain.model.Category
@@ -19,11 +20,15 @@ import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
 import com.rgk.qhatu.feature.setting.domain.usecase.GetBrandsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoriesUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetUnitsMeasureUseCase
+import com.rgk.qhatu.shared.SharedImage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.collections.plus
 
 class ProductFormViewModel(
     private val getUnitMeasureUseCase: GetUnitsMeasureUseCase,
@@ -32,6 +37,7 @@ class ProductFormViewModel(
     private val getProductsUseCase: GetProductsUseCase,
     private val syncProductUseCase: SyncProductUseCase,
     private val getStorageTypeUseCase: GetStorageTypeUseCase,
+    private val saveImageProductUseCase: SaveImageProductUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<ProductFormUiState>(ProductFormUiState.Loading)
@@ -59,7 +65,6 @@ class ProductFormViewModel(
     private var allItemsUnitMeasure: List<UnitMeasure> = emptyList()
     private var allItemsBrand: List<Brand> = emptyList()
     private var allItemsStorage: List<Configuration> = emptyList()
-    private var allItemsImageProduct: List<ImageProduct> = emptyList()
 
     private val _isEditing = MutableStateFlow(false)
     val isEditing: StateFlow<Boolean> = _isEditing
@@ -99,7 +104,6 @@ class ProductFormViewModel(
 
                 is SyncResult.Success<List<Product>> -> {
                     val product = result.data.first()
-                    allItemsImageProduct = product.imageProduct
                     _uiState.update {
                         ProductFormUiState.Success(
                             result = product
@@ -237,5 +241,37 @@ class ProductFormViewModel(
         else allItemsStorage.filter { it.name.contains(query, ignoreCase = true) }
         _storageList.value = filtered
     }
-    
+
+    fun newImageCaptured(result: SharedImage) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val tempImage = ImageProduct(
+                isLoading = true,
+            )
+            onFieldChange {
+                copy(
+                    imageProduct = imageProduct + tempImage
+                )
+            }
+            val result = saveImageProductUseCase(result)
+            when (result) {
+                is SyncResult.Error -> {
+                    ProductFormUiState.Error(result.exception.message.orEmpty())
+                }
+
+                is SyncResult.Success<String> -> {
+                    val path = result.data
+                    if (path.isNotBlank()) {
+                        onFieldChange {
+                            copy(
+                                imageProduct = imageProduct - tempImage + ImageProduct(
+                                    filename = path,
+                                    isTemp = true,
+                                )
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

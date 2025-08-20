@@ -87,4 +87,14 @@ actual object SharedImageStorage {
         }
     }
 
+    actual suspend fun saveSharedImage(image: SharedImage): String {
+        val file = File(appContext.cacheDir, generateFilename())
+        image.getBitmap()?.let { bitmap ->
+            FileOutputStream(file).use { out ->
+                bitmap.compress(Bitmap.CompressFormat.PNG, 50, out)
+            }
+        }
+        return file.absolutePath
+    }
+
 }

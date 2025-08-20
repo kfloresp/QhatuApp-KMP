@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import java.io.ByteArrayOutputStream
 
 actual class SharedImage(private val bitmap: android.graphics.Bitmap?) {
+    fun getBitmap(): android.graphics.Bitmap? = bitmap
     actual fun toByteArray(): ByteArray? {
         return if (bitmap != null) {
             val byteArrayOutputStream = ByteArrayOutputStream()

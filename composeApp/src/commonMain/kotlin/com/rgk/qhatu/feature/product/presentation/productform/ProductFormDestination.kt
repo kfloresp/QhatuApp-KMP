@@ -23,7 +23,6 @@ import com.rgk.qhatu.common.components.bottomsheet.CustomBottomSheet
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.dialog.ContentDialog
 import com.rgk.qhatu.common.components.search.SearchContent
-import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 import com.rgk.qhatu.feature.setting.domain.model.Category
@@ -33,13 +32,9 @@ import com.rgk.qhatu.navigation.ProvideAppBar
 import com.rgk.qhatu.shared.PermissionCallback
 import com.rgk.qhatu.shared.PermissionStatus
 import com.rgk.qhatu.shared.PermissionType
-import com.rgk.qhatu.shared.SharedImageStorage
 import com.rgk.qhatu.shared.createPermissionsManager
 import com.rgk.qhatu.shared.rememberCameraManager
 import com.rgk.qhatu.shared.rememberGalleryManager
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -87,8 +82,6 @@ internal fun NavGraphBuilder.productFormDestination(
         var queryStorage by remember { mutableStateOf("") }
         val isEditing by viewModel.isEditing.collectAsState()
 
-        val coroutineScope = rememberCoroutineScope()
-
         var imageSourceOptionDialog by remember { mutableStateOf(value = false) }
         var launchCamera by remember { mutableStateOf(value = false) }
         var launchGallery by remember { mutableStateOf(value = false) }
@@ -113,49 +106,18 @@ internal fun NavGraphBuilder.productFormDestination(
                 }
             }
         })
-        val cameraManager = rememberCameraManager {
-            coroutineScope.launch {
-                val bitmap = withContext(Dispatchers.Default) {
-                    it?.toImageBitmap()
-                }
-                if (bitmap != null) {
-                    SharedImageStorage.saveTempImage(bitmap).let { path ->
-                        if (path.isNotBlank()) {
-                            viewModel.onFieldChange {
-                                copy(
-                                    imageProduct = imageProduct + ImageProduct(
-                                        filename = path,
-                                        isTemp = true,
-                                    )
-                                )
-                            }
-                        }
-                    }
-                }
+        val cameraManager = rememberCameraManager { result ->
+            result?.let {
+                viewModel.newImageCaptured(it)
             }
         }
 
-        val galleryManager = rememberGalleryManager {
-            coroutineScope.launch {
-                val bitmap = withContext(Dispatchers.Default) {
-                    it?.toImageBitmap()
-                }
-                if (bitmap != null) {
-                    SharedImageStorage.saveTempImage(bitmap).let { path ->
-                        if (path.isNotBlank()) {
-                            viewModel.onFieldChange {
-                                copy(
-                                    imageProduct = imageProduct + ImageProduct(
-                                        filename = path,
-                                        isTemp = true,
-                                    )
-                                )
-                            }
-                        }
-                    }
-                }
+        val galleryManager = rememberGalleryManager { result ->
+            result?.let {
+                viewModel.newImageCaptured(it)
             }
         }
+
         if (imageSourceOptionDialog) {
             ContentDialog("Añadir fotos", onDismiss = { imageSourceOptionDialog = false }) {
                 Text("Elige una opción")
@@ -198,10 +160,10 @@ internal fun NavGraphBuilder.productFormDestination(
         }
         if (permissionRationalDialog) {
             ConfirmDialog(
-                title = "Permission Required",
-                description = "To set your profile picture, please grant this permission. You can manage permissions in your device settings.",
-                primaryButtonText = "Settings",
-                secondaryButtonText = "Cancel",
+                title = "Permiso requerido",
+                description = "Para configurar su foto de perfil, otorgue este permiso. Puede administrar los permisos en la configuración de su dispositivo.",
+                primaryButtonText = "Ajustes",
+                secondaryButtonText = "Cancelar",
                 onPrimaryClick = {
                     permissionRationalDialog = false
                     launchSetting = true
