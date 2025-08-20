@@ -5,14 +5,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.rgk.qhatu.common.model.ImageOperation
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.usecase.GetProductsUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetStorageTypeUseCase
-import com.rgk.qhatu.feature.product.domain.usecase.SyncImageProductUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 import com.rgk.qhatu.feature.setting.domain.model.Category
@@ -21,7 +19,6 @@ import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
 import com.rgk.qhatu.feature.setting.domain.usecase.GetBrandsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoriesUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetUnitsMeasureUseCase
-import com.rgk.qhatu.shared.SharedImageStorage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -35,7 +32,6 @@ class ProductFormViewModel(
     private val getProductsUseCase: GetProductsUseCase,
     private val syncProductUseCase: SyncProductUseCase,
     private val getStorageTypeUseCase: GetStorageTypeUseCase,
-    private val syncImageProductUseCase: SyncImageProductUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<ProductFormUiState>(ProductFormUiState.Loading)
@@ -212,17 +208,8 @@ class ProductFormViewModel(
                 }
 
                 is SyncResult.Success<*> -> {
-                    val productId = result.data as String
-
-                    val deletedImages = allItemsImageProduct.filter { old ->
-                        product.imageProduct.none { current -> current.filename == old.filename }
-                    }
-                    if (deletedImages.isNotEmpty()) {
-                        deleteImagesProduct(deletedImages)
-                    }
-                    val newImages = product.imageProduct.filter { it.isTemp }
-                    if (newImages.isNotEmpty()) {
-                        saveImagesProduct(productId, newImages)
+                    _uiState.update {
+                        ProductFormUiState.SuccessUpsert
                     }
                 }
             }
@@ -250,56 +237,5 @@ class ProductFormViewModel(
         else allItemsStorage.filter { it.name.contains(query, ignoreCase = true) }
         _storageList.value = filtered
     }
-
-    fun saveImagesProduct(
-        productId: String,
-        imagePaths: List<ImageProduct>,
-    ) {
-        _uiState.update {
-            ProductFormUiState.Loading
-        }
-        viewModelScope.launch {
-            var imageProduct: List<ImageProduct> = listOf()
-            imagePaths.forEachIndexed { index, path ->
-                val finalFilename = SharedImageStorage.saveImageFromTemp(path.filename, productId)
-                imageProduct =
-                    imageProduct + ImageProduct(productId = productId, filename = finalFilename)
-            }
-            val result = syncImageProductUseCase(ImageOperation.SaveLocal(imageProduct))
-            when (result) {
-                is SyncResult.Error -> {
-                    _uiState.update {
-                        ProductFormUiState.Error(result.exception.message.orEmpty())
-                    }
-                }
-
-                is SyncResult.Success<*> -> {
-                    _uiState.update {
-                        ProductFormUiState.SuccessUpsert
-                    }
-                }
-            }
-        }
-    }
-    fun deleteImagesProduct(imagePaths: List<ImageProduct>) {
-        _uiState.update {
-            ProductFormUiState.Loading
-        }
-        viewModelScope.launch {
-            val result = syncImageProductUseCase(ImageOperation.DeleteLocal(imagePaths))
-            when (result) {
-                is SyncResult.Error -> {
-                    _uiState.update {
-                        ProductFormUiState.Error(result.exception.message.orEmpty())
-                    }
-                }
-
-                is SyncResult.Success<*> -> {
-                    imagePaths.forEachIndexed { index, product ->
-                        SharedImageStorage.deleteImage(product.filename)
-                    }
-                }
-            }
-        }
-    }
+    
 }

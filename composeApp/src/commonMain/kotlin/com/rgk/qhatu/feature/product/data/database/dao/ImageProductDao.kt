@@ -23,7 +23,7 @@ interface ImageProductDao {
     suspend fun save(entity: List<ImageProductEntity>)
 
     @Delete
-    suspend fun deleteAll(entity: List<ImageProductEntity>)
+    suspend fun delete(entity: ImageProductEntity)
 
     @Query(
         """

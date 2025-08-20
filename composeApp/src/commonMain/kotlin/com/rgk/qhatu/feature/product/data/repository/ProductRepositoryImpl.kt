@@ -7,11 +7,13 @@ import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.common.util.generateUUID
 import com.rgk.qhatu.feature.product.data.database.dao.ImageProductDao
+import com.rgk.qhatu.feature.product.data.database.entity.ImageProductEntity
 import com.rgk.qhatu.feature.product.domain.mapper.toDomain
 import com.rgk.qhatu.feature.product.domain.mapper.toEntity
 import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.repository.ProductRepository
+import com.rgk.qhatu.shared.SharedImageStorage
 import com.rgk.qhatu.utils.TimeUtils
 
 class ProductRepositoryImpl(
@@ -81,16 +83,39 @@ class ProductRepositoryImpl(
         }
     }
 
-    override suspend fun upsertLocal(register: Product): SyncResult<String> = safeCall {
+    override suspend fun upsertLocal(register: Product): SyncResult<Unit> = safeCall {
         val productId = register.id.ifEmpty { generateUUID() }
         val entity = register.toEntity().copy(id = productId)
 
+        // 1. Eliminar imágenes que ya no existen en el registro actual
+        val oldImageProduct: List<ImageProductEntity> = imageSourceLocal
+            .getImagesForProduct(productId)
+            .filter { old ->
+                register.imageProduct.none { current -> current.filename == old.filename }
+            }
+
+        oldImageProduct.forEach {
+            SharedImageStorage.deleteImage(it.toDomain().filename)
+            imageSourceLocal.delete(it)
+        }
+
+        // 2. Guardar imágenes nuevas (solo las que están en temp)
+        val newImages = register.imageProduct.filter { it.isTemp }
+        val imageEntities: List<ImageProduct> = newImages.map { item ->
+            val newPath = SharedImageStorage.saveImageFromTemp(item.filename)
+            item.copy(filename = newPath, productId = productId, isTemp = false)
+        }
+
+        if (imageEntities.isNotEmpty()) {
+            upsertImageProduct(imageEntities)
+        }
+
+        // 3. Guardar producto (insert o update)
         if (register.id.isEmpty()) {
             sourceLocal.save(entity)
         } else {
             sourceLocal.update(entity)
         }
-        productId
     }
 
 
@@ -106,13 +131,6 @@ class ProductRepositoryImpl(
                     imageSourceLocal.update(it)
                 }
             }
-        }
-    }
-
-    override suspend fun deleteImageProduct(register: List<ImageProduct>): SyncResult<Unit> {
-        return safeCall {
-            val entities = register.map { it.toEntity() }
-            imageSourceLocal.deleteAll(entities)
         }
     }
 
