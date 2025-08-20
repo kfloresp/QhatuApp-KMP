@@ -109,6 +109,13 @@ class ProductRepositoryImpl(
         }
     }
 
+    override suspend fun deleteImageProduct(register: List<ImageProduct>): SyncResult<Unit> {
+        return safeCall {
+            val entities = register.map { it.toEntity() }
+            imageSourceLocal.deleteAll(entities)
+        }
+    }
+
     override suspend fun fetchImageProduct(
         productId: String,
     ): SyncResult<List<ImageProduct>> {

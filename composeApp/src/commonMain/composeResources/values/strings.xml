@@ -139,6 +139,7 @@
     <string name="tx_global_confirm_save">Sí, guardar</string>
     <string name="tx_global_confirm_delete_message">¿Deseas eliminar: %1$s?</string>
     <string name="tx_global_confirm_delete_register_message">¿Deseas eliminar registro?</string>
+    <string name="tx_global_confirm_delete_photo_message">¿Deseas eliminar foto?</string>
     <string name="tx_global_confirm_delete">Sí, eliminar</string>
     <string name="tx_global_confirm_edit">Sí, editar</string>
     <string name="tx_global_category_delete">Eliminar Categoría</string>

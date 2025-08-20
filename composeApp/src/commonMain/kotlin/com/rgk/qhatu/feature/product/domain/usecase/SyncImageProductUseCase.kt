@@ -1,22 +1,20 @@
 package com.rgk.qhatu.feature.product.domain.usecase
 
-import com.rgk.qhatu.common.model.SyncOperation
+import com.rgk.qhatu.common.model.ImageOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.repository.ProductRepository
 
 class SyncImageProductUseCase(private val repository: ProductRepository) {
-    suspend operator fun invoke(operation: SyncOperation<ImageProduct>): SyncResult<*> {
+    suspend operator fun invoke(operation: ImageOperation<ImageProduct>): SyncResult<*> {
         return when (operation) {
-            is SyncOperation.SaveLocal -> repository.upsertImageProduct(operation.registers)
-            is SyncOperation.UpsertLocal -> {
-                TODO()
+
+            is ImageOperation.DeleteLocal -> {
+                repository.deleteImageProduct(operation.registers)
             }
-            is SyncOperation.LocalToRemote -> {
-                TODO()
-            }
-            is SyncOperation.RemoteToLocal -> {
-                TODO()
+
+            is ImageOperation.SaveLocal -> {
+                repository.upsertImageProduct(operation.registers)
             }
         }
     }

@@ -1,8 +1,12 @@
 package com.rgk.qhatu.common.components.imagepicker
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -10,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
@@ -26,6 +31,7 @@ import qhatuapp.composeapp.generated.resources.image_place_holder
 fun ImagePicker(
     images: List<ImageProduct>,
     modifier: Modifier = Modifier,
+    onDeleteClick: (ImageProduct) -> Unit,
     onUploadClick: () -> Unit,
 ) {
     Column(
@@ -53,16 +59,40 @@ fun ImagePicker(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         items(images.size) { index ->
-                            AsyncImage(
-                                model = images[index].filename,
-                                contentDescription = images[index].productId,
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier.fillMaxWidth()
+                            Box(
+                                modifier = Modifier
                                     .size(150.dp)
-                                    .clip(RoundedCornerShape(8.dp)),
-                                placeholder = painterResource(resource = Res.drawable.image_place_holder),
-                                error = painterResource(resource = Res.drawable.image_place_holder)
-                            )
+                                    .clip(RoundedCornerShape(8.dp))
+                            ) {
+                                AsyncImage(
+                                    model = images[index].filename,
+                                    contentDescription = images[index].productId,
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier
+                                        .fillMaxSize(),
+                                    placeholder = painterResource(resource = Res.drawable.image_place_holder),
+                                    error = painterResource(resource = Res.drawable.image_place_holder)
+                                )
+
+                                IconButton(
+                                    onClick = { onDeleteClick(images[index]) },
+                                    modifier = Modifier
+                                        .align(Alignment.TopEnd)
+                                        .padding(end = 8.dp, top = 8.dp)
+                                        .background(
+                                            color = Color.Black.copy(alpha = 0.4f),
+                                            shape = CircleShape
+                                        )
+                                        .size(28.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Close,
+                                        contentDescription = "Eliminar",
+                                        tint = Color.White,
+                                        modifier = Modifier.size(18.dp)
+                                    )
+                                }
+                            }
                         }
                     }
                     Spacer(modifier = Modifier.height(12.dp))
@@ -126,7 +156,8 @@ fun ImagePickerCardPreviewEmpty() {
     QhatuTheme {
         ImagePicker(
             images = emptyList(),
-            onUploadClick = {}
+            onUploadClick = {},
+            onDeleteClick = {}
         )
     }
 }
@@ -137,8 +168,17 @@ fun ImagePickerCardPreviewWithImages() {
     QhatuTheme {
         ImagePicker(
             images = listOf(
+                ImageProduct(
+                    productId = "P0001",
+                    filename = "/data/user/0/com.rgk.ingenieros/files/P0001_0.png"
+                ),
+                ImageProduct(
+                    productId = "P0002",
+                    filename = "/data/user/0/com.rgk.ingenieros/files/P0002_0.png"
+                ),
             ),
-            onUploadClick = {}
+            onUploadClick = {},
+            onDeleteClick = {}
         )
     }
 }

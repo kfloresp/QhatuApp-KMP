@@ -1,6 +1,7 @@
 package com.rgk.qhatu.feature.product.data.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -20,6 +21,9 @@ interface ImageProductDao {
 
     @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun save(entity: List<ImageProductEntity>)
+
+    @Delete
+    suspend fun deleteAll(entity: List<ImageProductEntity>)
 
     @Query(
         """

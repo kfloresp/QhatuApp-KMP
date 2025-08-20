@@ -12,6 +12,10 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -19,6 +23,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.components.button.ButtonActions
+import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.error.ErrorSection
 import com.rgk.qhatu.common.components.imagepicker.ImagePicker
 import com.rgk.qhatu.common.components.loading.LoadingSection
@@ -26,6 +31,7 @@ import com.rgk.qhatu.common.components.textfield.ClickableTextField
 import com.rgk.qhatu.common.components.textfield.CustomTextField
 import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
 import com.rgk.qhatu.feature.payment.presentation.paymentform.PATTERNS
+import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 import com.rgk.qhatu.feature.setting.domain.model.Category
@@ -33,6 +39,10 @@ import com.rgk.qhatu.feature.setting.domain.model.Configuration
 import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_global_cancel
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete_photo_message
+import qhatuapp.composeapp.generated.resources.tx_global_confirmation
 import qhatuapp.composeapp.generated.resources.tx_global_delete_changes
 import qhatuapp.composeapp.generated.resources.tx_global_save_changes
 import qhatuapp.composeapp.generated.resources.tx_payment_currency_symbol
@@ -70,6 +80,7 @@ fun ProductFormScreen(
     onBackPopUp: () -> Unit,
     onImagePickerClick: () -> Unit,
 ) {
+    var selectedImageProduct by remember { mutableStateOf<ImageProduct?>(null) }
     val fields = formState.fields
     when (uiState) {
         is ProductFormUiState.Error -> {
@@ -258,9 +269,14 @@ fun ProductFormScreen(
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
-                    ImagePicker(images = fields.imageProduct) {
-                        onImagePickerClick()
-                    }
+                    ImagePicker(
+                        images = fields.imageProduct,
+                        onDeleteClick = { imageToDelete ->
+                            selectedImageProduct = imageToDelete
+                        }, onUploadClick = {
+                            onImagePickerClick()
+                        }
+                    )
                 }
 
                 if (isNew) {
@@ -289,6 +305,27 @@ fun ProductFormScreen(
         is ProductFormUiState.SuccessUpsert -> {
             onBackPopUp()
         }
+    }
+
+    selectedImageProduct?.let { imageDelete ->
+        ConfirmDialog(
+            title = stringResource(Res.string.tx_global_confirmation),
+            description = stringResource(
+                Res.string.tx_global_confirm_delete_photo_message
+            ),
+            primaryButtonText = stringResource(Res.string.tx_global_confirm_delete),
+            onPrimaryClick = {
+                onFieldChange {
+                    copy(imageProduct = imageProduct.filter { it.filename != imageDelete.filename })
+                }
+                selectedImageProduct = null
+            },
+            secondaryButtonText = stringResource(Res.string.tx_global_cancel),
+            onSecondaryClick = { selectedImageProduct = null },
+            onDismiss = {
+                selectedImageProduct = null
+            }
+        )
     }
 
 }
