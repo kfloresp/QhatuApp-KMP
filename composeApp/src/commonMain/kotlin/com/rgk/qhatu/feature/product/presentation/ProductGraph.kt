@@ -33,8 +33,7 @@ fun NavGraphBuilder.productGraph(
         })
         productFormDestination(onBackPopUp = {
             navController.navigate(ProductDestination)
-        }, onDeletePopUp = {
-            navController.navigate(ProductDestination)
-        })
+        }
+        )
     }
 }

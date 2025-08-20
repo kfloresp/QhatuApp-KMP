@@ -2,8 +2,8 @@ package com.rgk.qhatu.feature.splash.presentation.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rgk.qhatu.feature.auth.domain.usecase.AuthUseCase
 import com.rgk.qhatu.feature.auth.domain.usecase.ObserveCurrentUser
+import com.rgk.qhatu.shared.SharedImageStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
@@ -17,7 +17,15 @@ class SplashViewModel(private val observeCurrentUser: ObserveCurrentUser) : View
     val uiState: StateFlow<SplashUiState> = _uiState.asStateFlow()
 
     init {
+        clearCache()
         validateSession()
+    }
+
+    private fun clearCache() {
+        _uiState.value = SplashUiState.Loading
+        viewModelScope.launch {
+            SharedImageStorage.clearImageCache()
+        }
     }
 
     private fun validateSession() {

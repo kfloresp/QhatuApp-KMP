@@ -25,8 +25,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun ContentDialog(
     title: String,
-    content: @Composable ColumnScope.() -> Unit,
     onDismiss: (() -> Unit)? = null,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     Dialog(onDismissRequest = { onDismiss?.invoke() }) {
         Surface(

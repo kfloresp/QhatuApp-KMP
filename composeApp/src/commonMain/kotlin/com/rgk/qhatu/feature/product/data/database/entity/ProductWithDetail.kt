@@ -1,8 +1,6 @@
-package com.rgk.qhatu.feature.product.domain.model
+package com.rgk.qhatu.feature.product.data.database.entity
 
-import com.rgk.qhatu.common.util.formatAmount
-
-data class Product(
+data class ProductWithDetail(
     val id: String = "",
     val ean: String = "",
     val name: String = "",
@@ -21,10 +19,4 @@ data class Product(
     val isSynced: Boolean = false,
     val isDeleted: Boolean = false,
     val lastUpdated: Long = 0,
-    val imageProduct: List<ImageProduct> = emptyList(),
-) {
-    val unitPriceValue: String
-        get() = unitPrice.toDouble().formatAmount(CURRENCY_SYMBOL)
-}
-
-private val CURRENCY_SYMBOL = "S/."
+)

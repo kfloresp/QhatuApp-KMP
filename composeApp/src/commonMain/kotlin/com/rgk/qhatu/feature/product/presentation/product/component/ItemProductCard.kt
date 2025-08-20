@@ -1,6 +1,5 @@
 package com.rgk.qhatu.feature.product.presentation.product.component
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -18,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -31,7 +31,6 @@ import qhatuapp.composeapp.generated.resources.image_place_holder
 @Composable
 fun ItemProductCard(
     product: Product,
-    imageUrl: String? = null,
     onClick: (Product) -> Unit = {},
 ) {
     Column(
@@ -45,8 +44,9 @@ fun ItemProductCard(
                 shape = RoundedCornerShape(12.dp)
             )
     ) {
+
         AsyncImage(
-            model = imageUrl,
+            model = product.imageProduct.firstOrNull()?.filename ?: "",
             contentDescription = product.name,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxWidth()
@@ -69,7 +69,7 @@ fun ItemProductCard(
         )
 
         Text(
-            text = product.brand,
+            text = product.unitMeasure,
             style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -80,7 +80,8 @@ fun ItemProductCard(
 
         Text(
             text = product.unitPriceValue, style = MaterialTheme.typography.bodyLarge.copy(
-                color = MaterialTheme.colorScheme.primary,
+                color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.SemiBold
             ), modifier = Modifier.padding(horizontal = 8.dp).fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
@@ -101,7 +102,7 @@ fun ProductItemCardPreview() {
     QhatuTheme {
         Column(Modifier.background(color = Color.White)) {
             ItemProductCard(
-                product = sampleProduct, imageUrl = "https://via.placeholder.com/150"
+                product = sampleProduct
             )
         }
     }
