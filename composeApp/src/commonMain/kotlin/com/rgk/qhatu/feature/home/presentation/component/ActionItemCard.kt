@@ -38,7 +38,10 @@ fun ActionItemCard(
         onClick = onClick,
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
-        border = BorderStroke(1.dp, Color.LightGray.copy(alpha = 0.5f))
+            border = BorderStroke(1.dp, Color.LightGray.copy(alpha = 0.5f)),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.Transparent
+        )
     ) {
         Row(
             modifier = Modifier
