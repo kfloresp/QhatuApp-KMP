@@ -52,7 +52,7 @@ fun SearchBar(
                 }
             }
         },
-        shape = RoundedCornerShape(50),
+        shape = RoundedCornerShape(12.dp),
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = Color.Transparent,
             unfocusedBorderColor = Color.Transparent,

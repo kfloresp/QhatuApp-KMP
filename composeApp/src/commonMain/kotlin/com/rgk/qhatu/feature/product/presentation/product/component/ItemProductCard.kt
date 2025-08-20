@@ -45,6 +45,7 @@ import qhatuapp.composeapp.generated.resources.image_place_holder
 @Composable
 fun ItemProductCard(
     product: Product,
+    productActions: ProductActions? = null,
     onClick: (Product) -> Unit = {},
 ) {
     var count by remember { mutableIntStateOf(0) }
@@ -102,35 +103,46 @@ fun ItemProductCard(
         )
         Spacer(modifier = Modifier.height(4.dp))
 
-        Box(
-            modifier = Modifier.fillMaxWidth()
-                .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
-            contentAlignment = Alignment.BottomEnd
-        ) {
-            if (count == 0) {
-                IconButton(
-                    onClick = { count++ },
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(MaterialTheme.colorScheme.surfaceVariant)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Aumentar",
-                        tint = MaterialTheme.colorScheme.primary
+        productActions?.let {
+            Box(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+                contentAlignment = Alignment.BottomEnd
+            ) {
+                if (count == 0) {
+                    IconButton(
+                        onClick = {
+                            count++
+                            it.onAddProduct(product, count)
+                        },
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(MaterialTheme.colorScheme.surfaceVariant)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Aumentar",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                } else {
+                    ProductActionSection(
+                        quantity = count,
+                        onAddClick = {
+                            count++
+                            it.onUpdateQuantityProduct(product, count)
+                        },
+                        onRemoveClick = {
+                            if (count > 0) {
+                                count--
+                                it.onUpdateQuantityProduct(product, count)
+                            }
+                            if (count == 0) {
+                                it.onRemoveProduct(product)
+                            }
+                        }
                     )
                 }
-            } else {
-                ProductActionSection(
-                    quantity = count,
-                    onAddClick = { count++ },
-                    onRemoveClick = {
-                        if (count > 0) count--
-                        if (count == 0) {
-
-                        }
-                    }
-                )
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.rgk.qhatu.feature.search.presentation.search
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -14,6 +15,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.cart.CartIconWithBadge
+import com.rgk.qhatu.feature.product.presentation.product.ProductScreen
+import com.rgk.qhatu.feature.product.presentation.product.ProductViewModel
 import com.rgk.qhatu.navigation.ProvideAppBar
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
@@ -24,9 +27,12 @@ data object SearchDestination
 internal fun NavGraphBuilder.searchDestination(
     navigateToCart: () -> Unit,
     openScanQR: () -> Unit,
+    onProductClick: (String) -> Unit,
 ) {
     composable<SearchDestination> {
-
+        val viewModel: ProductViewModel = koinViewModel()
+        val uiState by viewModel.uiState.collectAsState()
+        val isRefreshing by viewModel.isRefreshing.collectAsState()
         ProvideAppBar(
             actions = {
                 Text(
@@ -41,9 +47,21 @@ internal fun NavGraphBuilder.searchDestination(
                         .width(1.dp), thickness = 1.dp
                 )
                 Spacer(Modifier.width(8.dp))
-                CartIconWithBadge(itemCount = 100)
+                CartIconWithBadge(
+                    itemCount = 100,
+                    modifier = Modifier.clickable(true, onClick = navigateToCart)
+                )
             }
         )
 
+        SearchScreen(
+            uiState = uiState,
+            onQueryChange = viewModel::onQueryChanged,
+            onItemClick = {
+                onProductClick(it.id)
+            },
+            onPullRefresh = viewModel::onPullRefresh,
+            isRefreshing = isRefreshing,
+        )
     }
 }

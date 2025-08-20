@@ -25,6 +25,9 @@ fun NavGraphBuilder.searchGraph(
         searchDestination(
             navigateToCart = navigateToCart,
             openScanQR = openScanQR,
+            onProductClick = {
+                //navigate("${ProductDestination}/${it.id}")
+            },
         )
     }
 }
