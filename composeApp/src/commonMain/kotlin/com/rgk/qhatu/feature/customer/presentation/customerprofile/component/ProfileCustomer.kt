@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.rgk.qhatu.common.components.button.ButtonActions
 import com.rgk.qhatu.common.components.button.PrimaryButton
 import com.rgk.qhatu.common.components.button.SecondaryButton
 import com.rgk.qhatu.common.components.image.CircularIcon
@@ -27,6 +28,8 @@ import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.setting.presentation.setting.component.SettingItem
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_global_delete_changes
+import qhatuapp.composeapp.generated.resources.tx_global_save_changes
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_address
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_edit
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_pending_balance
@@ -37,7 +40,6 @@ import qhatuapp.composeapp.generated.resources.tx_profile_customer_view_debt_sum
 fun ProfileCustomer(customer: Customer, onEditClick: () -> Unit, onResumeClick: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize()
-            .background(MaterialTheme.colorScheme.onPrimary)
     ) {
         Column(
             modifier = Modifier.weight(1f).padding(top = 40.dp).fillMaxWidth(),
@@ -78,18 +80,28 @@ fun ProfileCustomer(customer: Customer, onEditClick: () -> Unit, onResumeClick: 
                 )
             }
         }
-        Column(modifier = Modifier.fillMaxWidth().padding(10.dp)) {
-            PrimaryButton(
-                text = stringResource(Res.string.tx_profile_customer_edit),
-                onClick = onEditClick
+        if (customer.havePendingCustomer) {
+            ButtonActions(
+                modifier = Modifier.padding(12.dp),
+                primaryButtonText = stringResource(Res.string.tx_profile_customer_edit),
+                isEnabled = true,
+                isColumn = true,
+                onPrimaryClick = {
+                    onEditClick()
+                },
+                secondaryButtonText = stringResource(Res.string.tx_profile_customer_view_debt_summary),
+                onSecondaryClick = { onResumeClick() }
             )
-            if (customer.havePendingCustomer) {
-                Spacer(Modifier.height(8.dp))
-                SecondaryButton(
-                    text = stringResource(Res.string.tx_profile_customer_view_debt_summary),
-                    onClick = onResumeClick
-                )
-            }
+        }else{
+            ButtonActions(
+                modifier = Modifier.padding(12.dp),
+                primaryButtonText = stringResource(Res.string.tx_profile_customer_edit),
+                isEnabled = true,
+                isColumn = true,
+                onPrimaryClick = {
+                    onEditClick()
+                },
+            )
         }
     }
 }

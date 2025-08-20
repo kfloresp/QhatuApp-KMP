@@ -48,7 +48,6 @@ fun ConfirmDialog(
         Surface(
             shape = RoundedCornerShape(16.dp),
             tonalElevation = 8.dp,
-            color = Color.White
         ) {
             Column(
                 modifier = Modifier

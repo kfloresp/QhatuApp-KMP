@@ -39,16 +39,6 @@ actual object SharedImageStorage {
         return finalFile.absolutePath
     }
 
-
-    actual suspend fun saveTempImage(image: ImageBitmap): String {
-        val file = File(appContext.cacheDir, generateFilename())
-        val bitmap: Bitmap = image.asAndroidBitmap()
-        FileOutputStream(file).use { out ->
-            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out)
-        }
-        return file.absolutePath
-    }
-
     actual suspend fun deleteImage(path: String): Boolean {
         if (path.isBlank()) return false
 
