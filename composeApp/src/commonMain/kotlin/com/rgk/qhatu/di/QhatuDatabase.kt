@@ -6,6 +6,10 @@ import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import com.rgk.qhatu.feature.audit.data.database.dao.AuditLogDao
 import com.rgk.qhatu.feature.audit.data.database.entity.AuditLogEntity
+import com.rgk.qhatu.feature.cart.data.database.dao.CartDao
+import com.rgk.qhatu.feature.cart.data.database.dao.CartItemDao
+import com.rgk.qhatu.feature.cart.data.database.entity.CartEntity
+import com.rgk.qhatu.feature.cart.data.database.entity.CartItemEntity
 import com.rgk.qhatu.feature.customer.data.database.dao.CustomerDao
 import com.rgk.qhatu.feature.customer.data.database.entity.CustomerEntity
 import com.rgk.qhatu.feature.payment.data.database.dao.PaymentDao
@@ -48,6 +52,8 @@ const val DATABASE_NAME = "qhatu_database.db"
         UnitMeasureEntity::class,
         StoreEntity::class,
         ImageProductEntity::class,
+        CartEntity::class,
+        CartItemEntity::class,
     ], version = 1, exportSchema = false
 )
 @ConstructedBy(AppDatabaseConstructor::class)
@@ -65,6 +71,8 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun unitMeasureDao(): UnitMeasureDao
     abstract fun storeDao(): StoreDao
     abstract fun imageProductDao(): ImageProductDao
+    abstract fun cartDao(): CartDao
+    abstract fun cartItemDao(): CartItemDao
 }
 
 @Suppress("NO_ACTUAL_FOR_EXPECT")

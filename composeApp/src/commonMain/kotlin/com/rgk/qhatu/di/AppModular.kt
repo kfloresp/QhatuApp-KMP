@@ -13,8 +13,8 @@ fun initKoin(config: KoinAppDeclaration? = null) {
             firebaseModule,
             databaseModule,
             dataSourceModule,
+            useCaseModule,
             repositoryModule,
-            domainModule,
             viewModelModule,
             nativeModule
         )

@@ -24,6 +24,7 @@ import com.rgk.qhatu.feature.product.presentation.product.component.ProductActio
 @Composable
 fun SearchScreen(
     uiState: ProductUiState,
+    productActions: ProductActions,
     onQueryChange: (String) -> Unit,
     onItemClick: (Product) -> Unit,
     isRefreshing: Boolean,
@@ -62,27 +63,7 @@ fun SearchScreen(
                         )
                     ) {
                         items(uiState.result) { product ->
-                            ItemProductCard(product = product, productActions = object:
-                                ProductActions {
-                                override fun onAddProduct(
-                                    product: Product,
-                                    count: Int,
-                                ) {
-
-                                }
-
-                                override fun onUpdateQuantityProduct(
-                                    product: Product,
-                                    count: Int,
-                                ) {
-
-                                }
-
-                                override fun onRemoveProduct(product: Product) {
-
-                                }
-
-                            }) {
+                            ItemProductCard(product = product, productActions = productActions) {
                                 onItemClick(it)
                             }
                         }

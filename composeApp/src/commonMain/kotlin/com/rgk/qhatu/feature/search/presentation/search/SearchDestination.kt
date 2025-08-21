@@ -15,8 +15,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.cart.CartIconWithBadge
+import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.presentation.product.ProductScreen
 import com.rgk.qhatu.feature.product.presentation.product.ProductViewModel
+import com.rgk.qhatu.feature.product.presentation.product.component.ProductActions
 import com.rgk.qhatu.navigation.ProvideAppBar
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
@@ -31,12 +33,14 @@ internal fun NavGraphBuilder.searchDestination(
 ) {
     composable<SearchDestination> {
         val viewModel: ProductViewModel = koinViewModel()
+        val searchViewModel: SearchViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
         val isRefreshing by viewModel.isRefreshing.collectAsState()
+        val carTotal by searchViewModel.totalCart.collectAsState()
         ProvideAppBar(
             actions = {
                 Text(
-                    text = "S/1000.0",
+                    text = "S/${carTotal}",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -62,6 +66,31 @@ internal fun NavGraphBuilder.searchDestination(
             },
             onPullRefresh = viewModel::onPullRefresh,
             isRefreshing = isRefreshing,
+            productActions = object :
+                ProductActions {
+                override fun onAddProduct(
+                    product: Product,
+                    count: Int,
+                ) {
+                    searchViewModel.addItemToCart(product.id, count, product.unitPrice.toDouble())
+                }
+
+                override fun onUpdateQuantityProduct(
+                    product: Product,
+                    count: Int,
+                ) {
+                    searchViewModel.updateItemToCart(
+                        product.id,
+                        count,
+                        product.unitPrice.toDouble()
+                    )
+                }
+
+                override fun onRemoveProduct(product: Product) {
+                    searchViewModel.removeItemToCart(product.id)
+                }
+
+            }
         )
     }
 }
