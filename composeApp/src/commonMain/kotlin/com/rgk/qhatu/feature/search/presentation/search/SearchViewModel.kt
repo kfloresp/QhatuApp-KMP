@@ -10,11 +10,8 @@ import com.rgk.qhatu.feature.cart.domain.usecase.UpdateItemToCartUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class SearchViewModel(
@@ -29,9 +26,6 @@ class SearchViewModel(
 
     init {
         cartSummary()
-    }
-    init {
-        println("CartViewModel creado -> ${this.hashCode()} useCase=${observeCartTotalUseCase.hashCode()}")
     }
     fun cartSummary() {
         viewModelScope.launch {
