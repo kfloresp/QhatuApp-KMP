@@ -5,6 +5,11 @@ import com.rgk.qhatu.feature.auth.domain.usecase.AuthUseCase
 import com.rgk.qhatu.feature.auth.domain.usecase.LogoutUseCase
 import com.rgk.qhatu.feature.auth.domain.usecase.ObserveCurrentUser
 import com.rgk.qhatu.feature.auth.domain.usecase.RegisterUseCase
+import com.rgk.qhatu.feature.cart.domain.usecase.AddItemToCartUseCase
+import com.rgk.qhatu.feature.cart.domain.usecase.GetCartTotalUseCase
+import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartTotalUseCase
+import com.rgk.qhatu.feature.cart.domain.usecase.RemoveItemToCartUseCase
+import com.rgk.qhatu.feature.cart.domain.usecase.UpdateItemToCartUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerSummaryUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersWithDebtUseCase
@@ -31,7 +36,7 @@ import com.rgk.qhatu.feature.setting.domain.usecase.SyncUnitMeasureUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
-val domainModule = module {
+val useCaseModule = module {
     factory<AuthUseCase> { AuthUseCase(get()) }
     factoryOf(::SyncAuditLogUseCase)
     factoryOf(::SyncBrandUseCase)
@@ -60,5 +65,10 @@ val domainModule = module {
     factoryOf(::GetProductsUseCase)
     factoryOf(::GetStorageTypeUseCase)
     factoryOf(::SaveImageProductUseCase)
+    factoryOf(::ObserveCartTotalUseCase)
+    factoryOf(::AddItemToCartUseCase)
+    factoryOf(::RemoveItemToCartUseCase)
+    factoryOf(::UpdateItemToCartUseCase)
+    factoryOf(::GetCartTotalUseCase)
 
 }

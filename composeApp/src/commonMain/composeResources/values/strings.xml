@@ -122,6 +122,12 @@
     <string name="tx_product_no">No</string>
     <string name="tx_product_edit">Editar</string>
 
+    <!-- Cart -->
+    <string name="tx_cart_title">Carrito de compras</string>
+
+    <!-- Sales -->
+    <string name="tx_sales_title">Historial de ventas</string>
+
     <!-- Componentes generales -->
     <string name="tx_global_empty_result">Ups... no encontramos nada</string>
     <string name="tx_global_search_result">¿Qué buscaremos hoy?</string>

@@ -12,6 +12,8 @@ import com.rgk.qhatu.MainViewModel
 import com.rgk.qhatu.common.extension.navigateToAuthGraphWithPopUp
 import com.rgk.qhatu.common.extension.navigateToHomeWithPopUp
 import com.rgk.qhatu.feature.auth.presentation.authGraph
+import com.rgk.qhatu.feature.cart.presentation.cartGraph
+import com.rgk.qhatu.feature.cart.presentation.navigateToCartGraph
 import com.rgk.qhatu.feature.customer.presentation.customerGraph
 import com.rgk.qhatu.feature.customer.presentation.navigateToCustomerGraph
 import com.rgk.qhatu.feature.home.presentation.homeGraph
@@ -61,10 +63,13 @@ fun AppNavHost(
             navigateToCustomer = { navController.navigateToCustomerGraph() },
         )
         searchGraph(
-            navigateToCart = {},
+            navigateToCart = { navController.navigateToCartGraph() },
             openScanQR = {}
         )
         saleGraph()
+        cartGraph(
+            navController = navController,
+        )
         settingGraph(
             navController = navController,
             closeSession = closeSession,

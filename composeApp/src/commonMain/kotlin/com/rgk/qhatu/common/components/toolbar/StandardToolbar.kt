@@ -56,7 +56,7 @@ fun QhatuToolbar(
                 }
             }
 
-            Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+            Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
                 Text(
                     title,
                     style = MaterialTheme.typography.bodyLarge,

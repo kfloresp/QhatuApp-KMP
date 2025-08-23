@@ -138,7 +138,7 @@ fun ProductViewerScreen(
 }
 
 @Composable
-private fun SectionHeader(text: String) {
+fun SectionHeader(text: String) {
     Text(
         text = text,
         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),

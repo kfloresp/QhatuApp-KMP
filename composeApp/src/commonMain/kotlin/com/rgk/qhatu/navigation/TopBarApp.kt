@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.rgk.qhatu.common.components.toolbar.QhatuCartToolbar
 import com.rgk.qhatu.common.components.toolbar.QhatuToolbar
+import com.rgk.qhatu.feature.cart.presentation.cart.CartDestination
 import com.rgk.qhatu.feature.customer.presentation.customer.CustomerDestination
 import com.rgk.qhatu.feature.customer.presentation.customerform.CustomerFormDestination
 import com.rgk.qhatu.feature.customer.presentation.customerprofile.CustomerProfileDestination
@@ -23,6 +24,7 @@ import com.rgk.qhatu.feature.payment.presentation.payment.PaymentDestination
 import com.rgk.qhatu.feature.payment.presentation.paymentform.PaymentFormDestination
 import com.rgk.qhatu.feature.product.presentation.product.ProductDestination
 import com.rgk.qhatu.feature.product.presentation.productform.ProductFormDestination
+import com.rgk.qhatu.feature.sale.presentation.sale.SaleDestination
 import com.rgk.qhatu.feature.search.presentation.search.SearchDestination
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandDestination
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryDestination
@@ -35,6 +37,7 @@ import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.title_search
 import qhatuapp.composeapp.generated.resources.title_setting
 import qhatuapp.composeapp.generated.resources.tx_brands_title
+import qhatuapp.composeapp.generated.resources.tx_cart_title
 import qhatuapp.composeapp.generated.resources.tx_categories_title
 import qhatuapp.composeapp.generated.resources.tx_customer_profile_title
 import qhatuapp.composeapp.generated.resources.tx_customer_resume_summary_title
@@ -42,6 +45,7 @@ import qhatuapp.composeapp.generated.resources.tx_customer_title
 import qhatuapp.composeapp.generated.resources.tx_payment_customer_title
 import qhatuapp.composeapp.generated.resources.tx_product_title
 import qhatuapp.composeapp.generated.resources.tx_profile_title
+import qhatuapp.composeapp.generated.resources.tx_sales_title
 import qhatuapp.composeapp.generated.resources.tx_sync_title
 import qhatuapp.composeapp.generated.resources.tx_units_title
 
@@ -60,6 +64,8 @@ private val destinationsWithToolbar = mapOf(
     PaymentFormDestination::class.qualifiedName to Res.string.tx_payment_customer_title,
     ProductDestination::class.qualifiedName to Res.string.tx_product_title,
     ProductFormDestination::class.qualifiedName to Res.string.tx_product_title,
+    CartDestination::class.qualifiedName to Res.string.tx_cart_title,
+    SaleDestination::class.qualifiedName to Res.string.tx_sales_title,
 )
 private val cartToolbarDestinations = mapOf(
     SearchDestination::class.qualifiedName to Res.string.title_search
