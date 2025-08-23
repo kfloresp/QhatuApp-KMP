@@ -64,6 +64,7 @@ class SearchViewModel(
                                 result = allItems
                             )
                         }
+                        observeCartItems()
                     } else {
                         _uiState.update {
                             SearchUiState.Empty
@@ -85,6 +86,7 @@ class SearchViewModel(
             query = query
         )
     }
+
     private fun refreshCartSummary() {
         viewModelScope.launch {
             val result = getRefreshCartSummaryUseCase()
@@ -97,7 +99,6 @@ class SearchViewModel(
 
                 is SyncResult.Success<*> -> {
                     observeCartSummary()
-                    observeCartItems()
                 }
             }
         }
@@ -122,19 +123,24 @@ class SearchViewModel(
                 .collect { items ->
                     val cartItemsMap = items.associateBy { it.productId }
 
-                    val updatedItems = allItems.map { product ->
+                    allItems = allItems.map { product ->
                         val cartItem = cartItemsMap[product.id]
                         product.copy(cartItem = cartItem)
                     }
+                    val currentQuery = (_uiState.value as? SearchUiState.Success)?.query.orEmpty()
 
-                    _uiState.update {
-                        if (updatedItems.isNotEmpty()) {
-                            SearchUiState.Success(
-                                result = updatedItems,
-                                query = (_uiState.value as? SearchUiState.Success)?.query.orEmpty()
-                            )
-                        } else {
-                            SearchUiState.Empty
+                    if (currentQuery.isNotEmpty()) {
+                        onQueryChanged(currentQuery)
+                    } else {
+                        _uiState.update {
+                            if (allItems.isNotEmpty()) {
+                                SearchUiState.Success(
+                                    result = allItems,
+                                    query = currentQuery
+                                )
+                            } else {
+                                SearchUiState.Empty
+                            }
                         }
                     }
                 }

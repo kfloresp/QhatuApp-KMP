@@ -33,13 +33,11 @@ class CartRepositoryImpl(
             ).toEntity()
         )
         refreshCartSummary()
-        refreshCartItems()
     }
 
     override suspend fun deleteCart(cartId: String) {
         cartDao.deleteCart(cartId)
         refreshCartSummary()
-        refreshCartItems()
     }
 
     override suspend fun getCartById(cartId: String): Cart? {
@@ -58,7 +56,6 @@ class CartRepositoryImpl(
         cartDao.deactivateAllCarts()
         cartDao.setActiveCart(cartId)
         refreshCartSummary()
-        refreshCartItems()
     }
 
     override suspend fun addItemToCart(item: CartItem) {
@@ -78,7 +75,6 @@ class CartRepositoryImpl(
                 cartItemDao.insertItem(newItem.toEntity())
             }
             refreshCartSummary()
-            refreshCartItems()
         }
     }
 
@@ -93,7 +89,6 @@ class CartRepositoryImpl(
                 item.totalPrice
             )
             refreshCartSummary()
-            refreshCartItems()
         }
     }
 
@@ -102,7 +97,6 @@ class CartRepositoryImpl(
         activeCart?.let {
             cartItemDao.deleteItem(activeCart.id, productId)
             refreshCartSummary()
-            refreshCartItems()
         }
     }
 
@@ -115,17 +109,15 @@ class CartRepositoryImpl(
         var totalCart = 0.0
         var itemCount = 0
         activeCart?.let { cart ->
+            refreshCartItems(cart.id)
             totalCart = cartDao.getCartTotal(cart.id) ?: 0.0
             itemCount = cartItemDao.getItemsByCart(cart.id).size
         }
         _observeCartSummary.value = CartSummary(total = totalCart, itemCount = itemCount)
     }
 
-    suspend fun refreshCartItems() {
-        val activeCart = cartDao.getActiveCart()
-        val items = activeCart?.let { cart ->
-            cartItemDao.getItemsByCart(cart.id).map { it.toDomain() }
-        } ?: emptyList()
+    private suspend fun refreshCartItems(cartId: String) {
+        val items = cartItemDao.getItemsByCart(cartId).map { it.toDomain() }
         _observeCartItems.value = items
     }
 
