@@ -22,45 +22,24 @@ class ProductRepositoryImpl(
     private val sourceLocal: ProductDao,
     private val imageSourceLocal: ImageProductDao,
 ) : ProductRepository {
-    override suspend fun fetchLocal(
-        productId: String?,
-    ): SyncResult<List<Product>> {
-        return try {
-            var data: List<Product> = emptyList()
-            productId?.let {
-                data = sourceLocal.getProductsWithDetailsById(productId).map {
-                    val result = fetchImageProduct(it.id)
-                    var productImageList: List<ImageProduct> = emptyList()
-                    when (result) {
-                        is SyncResult.Error -> {
-                            SyncResult.Error(result.exception)
-                        }
 
-                        is SyncResult.Success<List<ImageProduct>> -> {
-                            productImageList = result.data
-                        }
-                    }
-                    it.toDomain().copy(imageProduct = productImageList)
+    override suspend fun fetchAllProducts(): SyncResult<List<Product>> = safeCall {
+        sourceLocal.getProductsWithDetails()?.map { source ->
+            val productImageList: List<ImageProduct> =
+                imageSourceLocal.getImagesForProduct(source.id).map {
+                    it.toDomain()
                 }
-            } ?: run {
-                data = sourceLocal.getProductsWithDetails().map {
-                    val result = fetchImageProduct(it.id)
-                    var productImageList: List<ImageProduct> = emptyList()
-                    when (result) {
-                        is SyncResult.Error -> {
-                            SyncResult.Error(result.exception)
-                        }
+            source.toDomain()
+                .copy(imageProduct = productImageList)
+        } ?: emptyList()
+    }
 
-                        is SyncResult.Success<List<ImageProduct>> -> {
-                            productImageList = result.data
-                        }
-                    }
-                    it.toDomain().copy(imageProduct = productImageList)
-                }
-            }
-            SyncResult.Success(data)
-        } catch (e: Exception) {
-            SyncResult.Error(e)
+    override suspend fun fetchProductById(productId: String): SyncResult<Product?> = safeCall {
+        sourceLocal.getProductsWithDetailsById(productId)?.let { source ->
+            val productImageList: List<ImageProduct> =
+                imageSourceLocal.getImagesForProduct(productId).map { it.toDomain() }
+            source.toDomain()
+                .copy(imageProduct = productImageList)
         }
     }
 
@@ -88,7 +67,6 @@ class ProductRepositoryImpl(
         val productId = register.id.ifEmpty { generateUUID() }
         val entity = register.toEntity().copy(id = productId)
 
-        // 1. Eliminar imágenes que ya no existen en el registro actual
         val oldImageProduct: List<ImageProductEntity> = imageSourceLocal
             .getImagesForProduct(productId)
             .filter { old ->
@@ -100,7 +78,6 @@ class ProductRepositoryImpl(
             imageSourceLocal.delete(it)
         }
 
-        // 2. Guardar imágenes nuevas (solo las que están en temp)
         val newImages = register.imageProduct.filter { it.isTemp }
         val imageEntities: List<ImageProduct> = newImages.map { item ->
             val newPath = SharedImageStorage.saveImageFromTemp(item.filename)
@@ -111,7 +88,6 @@ class ProductRepositoryImpl(
             upsertImageProduct(imageEntities)
         }
 
-        // 3. Guardar producto (insert o update)
         if (register.id.isEmpty()) {
             sourceLocal.save(entity)
         } else {
@@ -134,19 +110,6 @@ class ProductRepositoryImpl(
             }
         }
     }
-
-    override suspend fun fetchImageProduct(
-        productId: String,
-    ): SyncResult<List<ImageProduct>> {
-        return try {
-            val data: List<ImageProduct> =
-                imageSourceLocal.getImagesForProduct(productId).map { it.toDomain() }
-            SyncResult.Success(data)
-        } catch (e: Exception) {
-            SyncResult.Error(e)
-        }
-    }
-
 
     override suspend fun saveLocal(registers: List<Product>): SyncResult<Unit> {
         return safeCall {

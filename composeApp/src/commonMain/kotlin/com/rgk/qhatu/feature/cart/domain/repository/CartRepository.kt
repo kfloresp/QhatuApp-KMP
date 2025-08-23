@@ -1,8 +1,9 @@
 package com.rgk.qhatu.feature.cart.domain.repository
 
+import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.cart.domain.model.Cart
 import com.rgk.qhatu.feature.cart.domain.model.CartItem
-import com.rgk.qhatu.feature.cart.domain.model.CartItemDetail
+import com.rgk.qhatu.feature.cart.domain.model.CartSummary
 import kotlinx.coroutines.flow.StateFlow
 
 interface CartRepository {
@@ -16,7 +17,7 @@ interface CartRepository {
     suspend fun updateCartItem(item: CartItem)
     suspend fun deleteCartItem(productId: String)
     suspend fun getCartItems(cartId: String): List<CartItem>
-    suspend fun cartTotalFlow(): Double
-    val observeCartTotalFlow: StateFlow<Double?>
-    suspend fun getCartItemsWithDetail(cartId: String): List<CartItemDetail>
+    suspend fun refreshCartSummary(): SyncResult<Unit>
+    val observeCartSummary: StateFlow<CartSummary?>
+    val observeCartItems: StateFlow<List<CartItem>?>
 }

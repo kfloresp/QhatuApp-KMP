@@ -1,6 +1,5 @@
 package com.rgk.qhatu.feature.product.presentation.productform
 
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +8,7 @@ import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
-import com.rgk.qhatu.feature.product.domain.usecase.GetProductsUseCase
+import com.rgk.qhatu.feature.product.domain.usecase.GetAllProductsUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetStorageTypeUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SaveImageProductUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
@@ -34,7 +33,7 @@ class ProductFormViewModel(
     private val getUnitMeasureUseCase: GetUnitsMeasureUseCase,
     private val getCategoryUseCase: GetCategoriesUseCase,
     private val getBrandsUseCase: GetBrandsUseCase,
-    private val getProductsUseCase: GetProductsUseCase,
+    private val getAllProductsUseCase: GetAllProductsUseCase,
     private val syncProductUseCase: SyncProductUseCase,
     private val getStorageTypeUseCase: GetStorageTypeUseCase,
     private val saveImageProductUseCase: SaveImageProductUseCase,
@@ -94,7 +93,7 @@ class ProductFormViewModel(
             _uiState.update {
                 ProductFormUiState.Loading
             }
-            val result = getProductsUseCase(productId)
+            val result = getAllProductsUseCase()
             when (result) {
                 is SyncResult.Error -> {
                     _uiState.update {

@@ -32,15 +32,13 @@ internal fun NavGraphBuilder.searchDestination(
     onProductClick: (String) -> Unit,
 ) {
     composable<SearchDestination> {
-        val viewModel: ProductViewModel = koinViewModel()
-        val searchViewModel: SearchViewModel = koinViewModel()
+        val viewModel: SearchViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
-        val isRefreshing by viewModel.isRefreshing.collectAsState()
-        val carTotal by searchViewModel.totalCart.collectAsState()
+        val cartSummary by viewModel.cartSummary.collectAsState()
         ProvideAppBar(
             actions = {
                 Text(
-                    text = "S/${carTotal}",
+                    text = "S/${cartSummary?.total ?: 0}",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -52,7 +50,7 @@ internal fun NavGraphBuilder.searchDestination(
                 )
                 Spacer(Modifier.width(8.dp))
                 CartIconWithBadge(
-                    itemCount = 100,
+                    itemCount = cartSummary?.itemCount ?: 0,
                     modifier = Modifier.clickable(true, onClick = navigateToCart)
                 )
             }
@@ -64,22 +62,24 @@ internal fun NavGraphBuilder.searchDestination(
             onItemClick = {
                 onProductClick(it.id)
             },
-            onPullRefresh = viewModel::onPullRefresh,
-            isRefreshing = isRefreshing,
             productActions = object :
                 ProductActions {
                 override fun onAddProduct(
                     product: Product,
                     count: Int,
                 ) {
-                    searchViewModel.addItemToCart(product.id, count, product.unitPrice.toDouble())
+                    viewModel.addItemToCart(
+                        product.id,
+                        count,
+                        product.unitPrice.toDouble()
+                    )
                 }
 
                 override fun onUpdateQuantityProduct(
                     product: Product,
                     count: Int,
                 ) {
-                    searchViewModel.updateItemToCart(
+                    viewModel.updateItemToCart(
                         product.id,
                         count,
                         product.unitPrice.toDouble()
@@ -87,7 +87,7 @@ internal fun NavGraphBuilder.searchDestination(
                 }
 
                 override fun onRemoveProduct(product: Product) {
-                    searchViewModel.removeItemToCart(product.id)
+                    viewModel.removeItemToCart(product.id)
                 }
 
             }

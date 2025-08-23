@@ -1,12 +1,14 @@
 package com.rgk.qhatu.feature.cart.data.repository
 
+import com.rgk.qhatu.common.extension.safeCall
+import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.cart.data.database.dao.CartDao
 import com.rgk.qhatu.feature.cart.data.database.dao.CartItemDao
 import com.rgk.qhatu.feature.cart.domain.mapper.toDomain
 import com.rgk.qhatu.feature.cart.domain.mapper.toEntity
 import com.rgk.qhatu.feature.cart.domain.model.Cart
 import com.rgk.qhatu.feature.cart.domain.model.CartItem
-import com.rgk.qhatu.feature.cart.domain.model.CartItemDetail
+import com.rgk.qhatu.feature.cart.domain.model.CartSummary
 import com.rgk.qhatu.feature.cart.domain.repository.CartRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,8 +19,12 @@ class CartRepositoryImpl(
     private val cartItemDao: CartItemDao,
 ) : CartRepository {
 
-    private val _observeCartTotalFlow = MutableStateFlow<Double?>(null)
-    override val observeCartTotalFlow: StateFlow<Double?> get() = _observeCartTotalFlow.asStateFlow()
+    private val _observeCartSummary = MutableStateFlow<CartSummary?>(null)
+    override val observeCartSummary: StateFlow<CartSummary?> get() = _observeCartSummary.asStateFlow()
+
+    private val _observeCartItems = MutableStateFlow<List<CartItem>?>(null)
+    override val observeCartItems: StateFlow<List<CartItem>?> get() = _observeCartItems.asStateFlow()
+
     override suspend fun createCart(cart: Cart) {
         cartDao.deactivateAllCarts()
         cartDao.insertCart(
@@ -26,12 +32,14 @@ class CartRepositoryImpl(
                 isActive = true,
             ).toEntity()
         )
-        cartTotalFlow()
+        refreshCartSummary()
+        refreshCartItems()
     }
 
     override suspend fun deleteCart(cartId: String) {
         cartDao.deleteCart(cartId)
-        cartTotalFlow()
+        refreshCartSummary()
+        refreshCartItems()
     }
 
     override suspend fun getCartById(cartId: String): Cart? {
@@ -49,6 +57,8 @@ class CartRepositoryImpl(
     override suspend fun setActiveCart(cartId: String) {
         cartDao.deactivateAllCarts()
         cartDao.setActiveCart(cartId)
+        refreshCartSummary()
+        refreshCartItems()
     }
 
     override suspend fun addItemToCart(item: CartItem) {
@@ -60,9 +70,15 @@ class CartRepositoryImpl(
         }
 
         activeCart?.let {
-            val newItem = item.copy(cartId = it.id)
-            cartItemDao.insertItem(newItem.toEntity())
-            cartTotalFlow()
+            val itemExist = cartItemDao.getProductByCart(cartId = it.id, productId = item.productId)
+            itemExist?.let {
+                updateCartItem(item)
+            } ?: run {
+                val newItem = item.copy(cartId = it.id)
+                cartItemDao.insertItem(newItem.toEntity())
+            }
+            refreshCartSummary()
+            refreshCartItems()
         }
     }
 
@@ -76,7 +92,8 @@ class CartRepositoryImpl(
                 item.unitPrice,
                 item.totalPrice
             )
-            cartTotalFlow()
+            refreshCartSummary()
+            refreshCartItems()
         }
     }
 
@@ -84,22 +101,32 @@ class CartRepositoryImpl(
         val activeCart = cartDao.getActiveCart()
         activeCart?.let {
             cartItemDao.deleteItem(activeCart.id, productId)
-            cartTotalFlow()
+            refreshCartSummary()
+            refreshCartItems()
         }
     }
 
     override suspend fun getCartItems(cartId: String): List<CartItem> {
         return cartItemDao.getItemsByCart(cartId).map { it.toDomain() }
     }
-    override suspend fun getCartItemsWithDetail(cartId: String): List<CartItemDetail> {
-        return cartItemDao.getItemsWithDetail(cartId).map { it.toDomain() }
+
+    override suspend fun refreshCartSummary(): SyncResult<Unit> = safeCall {
+        val activeCart = cartDao.getActiveCart()
+        var totalCart = 0.0
+        var itemCount = 0
+        activeCart?.let { cart ->
+            totalCart = cartDao.getCartTotal(cart.id) ?: 0.0
+            itemCount = cartItemDao.getItemsByCart(cart.id).size
+        }
+        _observeCartSummary.value = CartSummary(total = totalCart, itemCount = itemCount)
     }
 
-
-    override suspend fun cartTotalFlow(): Double {
-        val total = cartDao.getActiveCartTotal() ?: 0.0
-        _observeCartTotalFlow.value = total
-        return total
+    suspend fun refreshCartItems() {
+        val activeCart = cartDao.getActiveCart()
+        val items = activeCart?.let { cart ->
+            cartItemDao.getItemsByCart(cart.id).map { it.toDomain() }
+        } ?: emptyList()
+        _observeCartItems.value = items
     }
 
 }
