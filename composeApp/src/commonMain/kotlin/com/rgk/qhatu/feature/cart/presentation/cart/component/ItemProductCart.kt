@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -38,15 +40,19 @@ import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.presentation.product.component.ProductActionSection
 import com.rgk.qhatu.feature.product.presentation.product.component.ProductActions
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.ic_remove_shopping_cart_24
 import qhatuapp.composeapp.generated.resources.image_place_holder
+import qhatuapp.composeapp.generated.resources.tx_cart_title
+import qhatuapp.composeapp.generated.resources.tx_cart_total_text
 
 @Composable
 fun ItemProductCart(
     product: Product,
     productActions: ProductActions? = null,
-    onClick: (Product) -> Unit = {},
+    onRemoveProduct: (Product) -> Unit,
 ) {
     val cartItem = product.cartItem
     val count = cartItem?.quantity ?: 0
@@ -55,8 +61,7 @@ fun ItemProductCart(
 
     Column(
         modifier = Modifier.fillMaxWidth()
-            .clickable { onClick(product) }
-            .padding(8.dp).border(
+            .padding(start = 8.dp, end = 8.dp).border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.outlineVariant,
                 shape = RoundedCornerShape(12.dp)
@@ -74,9 +79,7 @@ fun ItemProductCart(
             )
 
             Spacer(modifier = Modifier.width(12.dp))
-            Column(
-
-            )  {
+            Column {
                 Text(
                     text = product.name,
                     style = MaterialTheme.typography.bodyLarge,
@@ -85,22 +88,40 @@ fun ItemProductCart(
                     overflow = TextOverflow.Ellipsis
                 )
 
-                Text(
-                    text = product.unitMeasure,
-                    style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(vertical = 2.dp)
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = product.unitMeasure,
+                            style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.padding(vertical = 2.dp)
+                        )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                        Spacer(modifier = Modifier.height(4.dp))
 
-                Text(
-                    text = unitPriceAmount, style = MaterialTheme.typography.bodyLarge.copy(
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                )
+                        Text(
+                            text = unitPriceAmount, style = MaterialTheme.typography.bodyLarge.copy(
+                                color = MaterialTheme.colorScheme.onSurface,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        )
+                    }
+                    if (count > 1) {
+                        IconButton(
+                            onClick = {
+                                onRemoveProduct(product)
+                            },
+                            modifier = Modifier.clip(RoundedCornerShape(8.dp))
+                        ) {
+                            Icon(
+                                Icons.Default.Delete,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(6.dp))
             }
@@ -110,7 +131,7 @@ fun ItemProductCart(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = "Total: $totalPriceAmount",
+                text = stringResource(Res.string.tx_cart_total_text) + totalPriceAmount,
                 style = MaterialTheme.typography.bodyLarge.copy(
                     color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.SemiBold
@@ -132,7 +153,7 @@ fun ItemProductCart(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Add,
-                                contentDescription = "Aumentar",
+                                contentDescription = null,
                                 tint = MaterialTheme.colorScheme.primary
                             )
                         }
@@ -177,7 +198,7 @@ fun PreviewItemProductCart() {
 
         Column(Modifier.background(Color.White)) {
             ItemProductCart(
-                product = sampleProduct, productActions = fakeActions, onClick = {})
+                product = sampleProduct, productActions = fakeActions, onRemoveProduct = {})
         }
     }
 }

@@ -54,7 +54,6 @@ fun CartRightSection(
         Spacer(Modifier.width(8.dp))
         CartIconWithBadge(
             itemCount = shoppingCartQuantity,
-            modifier = Modifier.clickable(true, onClick = onShoppingCartClick)
         )
     }
 }

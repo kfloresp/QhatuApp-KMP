@@ -2,6 +2,7 @@ package com.rgk.qhatu.feature.cart.presentation.cart
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.ShoppingCartCheckout
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -64,7 +65,7 @@ internal fun NavGraphBuilder.cartDestination(
                             showDeleteAllCart = true
                         }) {
                             Icon(
-                                painter = painterResource(Res.drawable.ic_remove_shopping_cart_24),
+                                Icons.Default.DeleteSweep,
                                 contentDescription = null
                             )
                         }
@@ -73,13 +74,14 @@ internal fun NavGraphBuilder.cartDestination(
             }
         )
         ProvideBottomBarApp {
-            CartSummarySection(
-                cartSummary?.totalSummary.orEmpty(),
-                onShoppingCartClick = {
+            if (cartSummary?.hasItems ?: false) {
+                CartSummarySection(
+                    cartSummary?.totalSummary.orEmpty(),
+                    onShoppingCartClick = {
 
-                },
-                isEnabled = false
-            )
+                    },
+                )
+            }
         }
 
         LaunchedEffect(operationCart) {
@@ -118,6 +120,9 @@ internal fun NavGraphBuilder.cartDestination(
                     viewModel.removeItemToCart(product.id)
                 }
             },
+            onRemoveProduct = {
+                viewModel.removeItemToCart(it.id)
+            }
         )
 
         if (showDeleteAllCart) {

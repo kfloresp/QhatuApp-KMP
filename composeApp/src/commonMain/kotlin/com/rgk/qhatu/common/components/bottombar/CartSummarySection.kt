@@ -18,12 +18,13 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_cart_confirm
+import qhatuapp.composeapp.generated.resources.tx_cart_total_summary
 
 @Composable
 fun CartSummarySection(
     shoppingCartTotal: String,
     onShoppingCartClick: () -> Unit,
-    isEnabled: Boolean = false,
+    isEnabled: Boolean = true,
 ) {
     Row(
         modifier = Modifier
@@ -33,7 +34,7 @@ fun CartSummarySection(
     ) {
         Column(Modifier.weight(1f).padding(horizontal = 15.dp)) {
             Text(
-                text = "Total a pagar",
+                text = stringResource(Res.string.tx_cart_total_summary),
                 style = MaterialTheme.typography.titleSmall,
                 textAlign = TextAlign.Start
             )
