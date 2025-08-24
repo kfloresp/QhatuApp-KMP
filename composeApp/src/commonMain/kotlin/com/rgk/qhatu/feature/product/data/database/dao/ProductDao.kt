@@ -59,7 +59,7 @@ interface ProductDao {
          WHERE p.isDeleted = false
         """
     )
-    suspend fun getProductsWithDetails(): List<ProductWithDetail>
+    suspend fun getProductsWithDetails(): List<ProductWithDetail>?
 
     @Query(
         """
@@ -87,9 +87,10 @@ interface ProductDao {
         LEFT JOIN configurations ta ON p.storageTypeId = ta.id
         LEFT JOIN brands m ON p.brandId = m.id
         LEFT JOIN unit_measures um ON p.unitMeasureId = um.id
-        WHERE p.id = :productId and p.isDeleted = false
+        WHERE p.id = :productId and p.isDeleted = false 
+        LIMIT 1
         """
     )
-    suspend fun getProductsWithDetailsById(productId: String): List<ProductWithDetail>
+    suspend fun getProductsWithDetailsById(productId: String): ProductWithDetail?
 
 }

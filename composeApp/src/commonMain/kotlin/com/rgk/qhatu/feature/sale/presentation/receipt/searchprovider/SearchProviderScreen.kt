@@ -15,7 +15,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.rgk.qhatu.common.components.loading.LoadingView
+import com.rgk.qhatu.common.components.loading.LoadingOverlay
 
 @Composable
 fun SearchProviderScreen(
@@ -55,7 +55,7 @@ fun SearchProviderScreen(
         }
 
         if (uiState is SearchProviderUiState.Loading) {
-            LoadingView()
+            LoadingOverlay()
         }
 
         if (uiState is SearchProviderUiState.Error) {

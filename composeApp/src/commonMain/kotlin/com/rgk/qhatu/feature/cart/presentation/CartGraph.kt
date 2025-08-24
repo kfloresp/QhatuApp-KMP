@@ -19,11 +19,16 @@ fun NavController.navigateToCartGraph(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.cartGraph(
     navController: NavController,
+    setLoading: (Boolean) -> Unit,
 ) {
     navigation<CartGraph>(
         startDestination = CartDestination
     ) {
         cartDestination(
+            setLoading = setLoading,
+            onBackPopUp = {
+                navController.popBackStack()
+            }
         )
     }
 }

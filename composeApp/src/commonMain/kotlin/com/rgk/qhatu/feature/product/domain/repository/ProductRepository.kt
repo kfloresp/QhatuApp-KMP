@@ -7,12 +7,12 @@ import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.shared.SharedImage
 
 interface ProductRepository {
-    suspend fun fetchLocal(productId: String?): SyncResult<List<Product>>
+    suspend fun fetchAllProducts(): SyncResult<List<Product>>
+    suspend fun fetchProductById(productId: String): SyncResult<Product?>
     suspend fun getStats(): SyncResult<SyncStats>
     suspend fun fetchRemote(): SyncResult<List<Product>>
     suspend fun upsertLocal(register: Product): SyncResult<Unit>
     suspend fun upsertImageProduct(register: List<ImageProduct>): SyncResult<Unit>
-    suspend fun fetchImageProduct(productId: String): SyncResult<List<ImageProduct>>
     suspend fun saveLocal(registers: List<Product>): SyncResult<Unit>
     suspend fun syncLocalToRemote(): SyncResult<Unit>
     suspend fun syncRemoteToLocal(): SyncResult<Unit>

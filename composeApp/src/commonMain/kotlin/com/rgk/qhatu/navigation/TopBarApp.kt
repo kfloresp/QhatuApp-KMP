@@ -12,9 +12,10 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.rgk.qhatu.common.components.toolbar.QhatuCartToolbar
 import com.rgk.qhatu.common.components.toolbar.QhatuToolbar
+import com.rgk.qhatu.feature.auth.presentation.auth.AuthDestination
 import com.rgk.qhatu.feature.cart.presentation.cart.CartDestination
 import com.rgk.qhatu.feature.customer.presentation.customer.CustomerDestination
 import com.rgk.qhatu.feature.customer.presentation.customerform.CustomerFormDestination
@@ -32,6 +33,7 @@ import com.rgk.qhatu.feature.setting.presentation.setting.SettingDestination
 import com.rgk.qhatu.feature.setting.presentation.store.StoreDestination
 import com.rgk.qhatu.feature.setting.presentation.sync.SyncDestination
 import com.rgk.qhatu.feature.setting.presentation.unitmeasure.UnitMeasureDestination
+import com.rgk.qhatu.feature.splash.presentation.splash.SplashDestination
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.title_search
@@ -49,7 +51,7 @@ import qhatuapp.composeapp.generated.resources.tx_sales_title
 import qhatuapp.composeapp.generated.resources.tx_sync_title
 import qhatuapp.composeapp.generated.resources.tx_units_title
 
-private val destinationsWithToolbar = mapOf(
+private val allDestinations = mapOf(
     SettingDestination::class.qualifiedName to Res.string.title_setting,
     CategoryDestination::class.qualifiedName to Res.string.tx_categories_title,
     BrandDestination::class.qualifiedName to Res.string.tx_brands_title,
@@ -66,12 +68,12 @@ private val destinationsWithToolbar = mapOf(
     ProductFormDestination::class.qualifiedName to Res.string.tx_product_title,
     CartDestination::class.qualifiedName to Res.string.tx_cart_title,
     SaleDestination::class.qualifiedName to Res.string.tx_sales_title,
-)
-private val cartToolbarDestinations = mapOf(
     SearchDestination::class.qualifiedName to Res.string.title_search
 )
-
-private val allDestinations = destinationsWithToolbar + cartToolbarDestinations
+val routesWithoutTopBar = listOf(
+    SplashDestination::class,
+    AuthDestination::class
+)
 
 @Composable
 fun TopBarApp(
@@ -79,34 +81,28 @@ fun TopBarApp(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     navBackStackEntry?.let { entry ->
-        val currentRoute = navBackStackEntry?.destination?.route?.substringBefore("/")
-        val titleDestination = getTitleDestination(currentRoute)
-        if (currentRoute in allDestinations) {
-            val viewModel: TopAppBarViewModel = viewModel(
-                viewModelStoreOwner = entry,
-                initializer = { TopAppBarViewModel() },
-            )
-            when (currentRoute) {
-                in cartToolbarDestinations -> {
-                    QhatuCartToolbar(
-                        title = viewModel.title ?: titleDestination,
-                        onBackClick = {
-                            viewModel.onBackStack?.invoke() ?: navController.popBackStack()
-                        },
-                        actions = viewModel.actions,
-                    )
-                }
 
-                in destinationsWithToolbar -> {
-                    QhatuToolbar(
-                        title = viewModel.title ?: titleDestination,
-                        onBackClick = {
-                            viewModel.onBackStack?.invoke() ?: navController.popBackStack()
-                        },
-                        actions = viewModel.actions,
-                    )
-                }
-            }
+        val currentRoute = entry.destination
+
+        val viewModel: TopBarAppViewModel = viewModel(
+            viewModelStoreOwner = entry,
+            initializer = { TopBarAppViewModel() },
+        )
+        val shouldShowTopBar = routesWithoutTopBar.none { currentRoute.hasRoute(it) }
+        if (shouldShowTopBar) {
+            QhatuToolbar(
+                title = viewModel.title ?: getTitleDestination(currentRoute.route),
+                showAppIcon = viewModel.showAppIcon,
+                showBackNavigation = viewModel.showBackNavigation,
+                onBackNavigationClick = {
+                    viewModel.onBackStack?.let {
+                        it()
+                    } ?: run {
+                        navController.popBackStack()
+                    }
+                },
+                actions = viewModel.actions,
+            )
         }
     }
 }
@@ -122,24 +118,30 @@ fun ProvideAppBar(
     actions: (@Composable RowScope.() -> Unit) = { },
     title: String? = null,
     onBackStack: (() -> Unit)? = null,
+    showAppIcon: Boolean = false,
+    showBackNavigation: Boolean = true,
 ) {
     val viewModelStoreOwner = LocalViewModelStoreOwner.current
     (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
-        val viewModel: TopAppBarViewModel = viewModel(
+        val viewModel: TopBarAppViewModel = viewModel(
             viewModelStoreOwner = owner,
-            initializer = { TopAppBarViewModel() },
+            initializer = { TopBarAppViewModel() },
         )
-        LaunchedEffect(actions, title, onBackStack) {
+        LaunchedEffect(actions, title, onBackStack, showAppIcon, showBackNavigation) {
             viewModel.actions = actions
             viewModel.title = title
             viewModel.onBackStack = onBackStack
+            viewModel.showAppIcon = showAppIcon
+            viewModel.showBackNavigation = showBackNavigation
         }
     }
 }
 
 
-private class TopAppBarViewModel : ViewModel() {
+private class TopBarAppViewModel : ViewModel() {
     var actions by mutableStateOf<@Composable RowScope.() -> Unit>({ }, referentialEqualityPolicy())
     var title by mutableStateOf<String?>(null, referentialEqualityPolicy())
+    var showAppIcon by mutableStateOf(false, referentialEqualityPolicy())
+    var showBackNavigation by mutableStateOf(true, referentialEqualityPolicy())
     var onBackStack by mutableStateOf<(() -> Unit)?>(null, referentialEqualityPolicy())
 }

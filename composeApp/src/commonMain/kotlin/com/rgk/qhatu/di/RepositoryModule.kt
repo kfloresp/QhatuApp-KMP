@@ -7,7 +7,6 @@ import com.rgk.qhatu.feature.product.data.repository.ProductRepositoryImpl
 import com.rgk.qhatu.feature.setting.data.repository.BrandRepositoryImpl
 import com.rgk.qhatu.feature.setting.data.repository.CategoryRepositoryImpl
 import com.rgk.qhatu.feature.payment.data.repository.PaymentRepositoryImpl
-import com.rgk.qhatu.feature.sale.data.repository.PaymentTransactionRepositoryImpl
 import com.rgk.qhatu.feature.setting.data.repository.UnitMeasureRepositoryImpl
 import com.rgk.qhatu.feature.sale.data.repository.TransactionDetailRepositoryImpl
 import com.rgk.qhatu.feature.sale.data.repository.TransactionRepositoryImpl
@@ -18,7 +17,6 @@ import com.rgk.qhatu.feature.cart.data.repository.CartRepositoryImpl
 import com.rgk.qhatu.feature.cart.domain.repository.CartRepository
 import com.rgk.qhatu.feature.payment.domain.repository.PaymentRepository
 import com.rgk.qhatu.feature.customer.domain.repository.CustomerRepository
-import com.rgk.qhatu.feature.sale.domain.repository.PaymentTransactionRepository
 import com.rgk.qhatu.feature.product.domain.repository.ProductRepository
 import com.rgk.qhatu.feature.sale.domain.repository.TransactionDetailRepository
 import com.rgk.qhatu.feature.sale.domain.repository.TransactionRepository
@@ -41,7 +39,6 @@ val repositoryModule = module {
     factoryOf(::PaymentRepositoryImpl) bind PaymentRepository::class
     factoryOf(::CustomerRepositoryImpl) bind CustomerRepository::class
     factoryOf(::ConfigurationRepositoryImpl) bind ConfigurationRepository::class
-    factoryOf(::PaymentTransactionRepositoryImpl) bind PaymentTransactionRepository::class
     factoryOf(::ProductRepositoryImpl) bind ProductRepository::class
     factoryOf(::TransactionDetailRepositoryImpl) bind TransactionDetailRepository::class
     factoryOf(::TransactionRepositoryImpl) bind TransactionRepository::class

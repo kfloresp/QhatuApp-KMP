@@ -65,11 +65,6 @@ fun getSyncsOptions(): List<SyncsOption> {
             title = Res.string.tx_payment_customer_title,
         ),
         SyncsOption(
-            type = SyncType.PAYMENT_TRANSACTION,
-            icon = Icons.Outlined.Backup,
-            title = Res.string.tx_paymnet_transaction_title,
-        ),
-        SyncsOption(
             type = SyncType.PRODUCT,
             icon = Icons.Outlined.Backup,
             title = Res.string.tx_product_title,

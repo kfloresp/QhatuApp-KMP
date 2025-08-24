@@ -37,6 +37,9 @@ interface CartDao {
     @Query("UPDATE cart SET isActive = 1 WHERE id = :cartId")
     suspend fun setCartActive(cartId: String)
 
+    @Query("UPDATE cart SET isActive = 0 WHERE id = :cartId")
+    suspend fun setCartResume(cartId: String)
+
     @Query("SELECT SUM(totalPrice) FROM cart_item WHERE cartId = :cartId")
     suspend fun getCartTotal(cartId: String): Double?
 

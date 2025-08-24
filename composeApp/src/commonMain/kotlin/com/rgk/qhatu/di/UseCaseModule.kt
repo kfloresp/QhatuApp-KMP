@@ -6,9 +6,12 @@ import com.rgk.qhatu.feature.auth.domain.usecase.LogoutUseCase
 import com.rgk.qhatu.feature.auth.domain.usecase.ObserveCurrentUser
 import com.rgk.qhatu.feature.auth.domain.usecase.RegisterUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.AddItemToCartUseCase
-import com.rgk.qhatu.feature.cart.domain.usecase.GetCartTotalUseCase
-import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartTotalUseCase
+import com.rgk.qhatu.feature.cart.domain.usecase.DeleteCartUseCase
+import com.rgk.qhatu.feature.cart.domain.usecase.GetRefreshCartSummaryUseCase
+import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartItemsUseCase
+import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartSummaryUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.RemoveItemToCartUseCase
+import com.rgk.qhatu.feature.cart.domain.usecase.ResumeCartUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.UpdateItemToCartUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerSummaryUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
@@ -17,8 +20,8 @@ import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsMethodUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
-import com.rgk.qhatu.feature.sale.domain.usecase.SyncPaymentTransactionUseCase
-import com.rgk.qhatu.feature.product.domain.usecase.GetProductsUseCase
+import com.rgk.qhatu.feature.product.domain.usecase.GetAllProductsUseCase
+import com.rgk.qhatu.feature.product.domain.usecase.GetProductByIdUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetStorageTypeUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SaveImageProductUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
@@ -44,7 +47,6 @@ val useCaseModule = module {
     factoryOf(::SyncCustomerUseCase)
     factoryOf(::SyncPaymentUseCase)
     factoryOf(::SyncConfigurationUseCase)
-    factoryOf(::SyncPaymentTransactionUseCase)
     factoryOf(::SyncProductUseCase)
     factoryOf(::SyncSaleUseCase)
     factoryOf(::SyncSaleDetailUseCase)
@@ -62,13 +64,16 @@ val useCaseModule = module {
     factoryOf(::GetPaymentsUseCase)
     factoryOf(::GetPaymentsMethodUseCase)
     factoryOf(::GetCustomersWithDebtUseCase)
-    factoryOf(::GetProductsUseCase)
+    factoryOf(::GetAllProductsUseCase)
     factoryOf(::GetStorageTypeUseCase)
     factoryOf(::SaveImageProductUseCase)
-    factoryOf(::ObserveCartTotalUseCase)
+    factoryOf(::ObserveCartSummaryUseCase)
     factoryOf(::AddItemToCartUseCase)
     factoryOf(::RemoveItemToCartUseCase)
     factoryOf(::UpdateItemToCartUseCase)
-    factoryOf(::GetCartTotalUseCase)
-
+    factoryOf(::GetRefreshCartSummaryUseCase)
+    factoryOf(::GetProductByIdUseCase)
+    factoryOf(::ObserveCartItemsUseCase)
+    factoryOf(::DeleteCartUseCase)
+    factoryOf(::ResumeCartUseCase)
 }

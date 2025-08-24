@@ -1,6 +1,7 @@
 package com.rgk.qhatu.common.components.loading
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.stringResource
@@ -23,7 +26,7 @@ import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_loading
 
 @Composable
-fun LoadingView(
+fun LoadingOverlay(
     modifier: Modifier = Modifier,
     text: String = stringResource(Res.string.tx_loading),
     icon: ImageVector? = null,
@@ -35,12 +38,14 @@ fun LoadingView(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(backgroundColor),
+            .background(backgroundColor)
+            .clickable(enabled = false) {}
+            .semantics { contentDescription = "Loading Overlay" },
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             icon?.let {
-                Icon(imageVector = it, contentDescription = null)
+                Icon(imageVector = it, contentDescription = null, tint = textColor)
                 Spacer(modifier = Modifier.height(16.dp))
             }
             CircularProgressIndicator(

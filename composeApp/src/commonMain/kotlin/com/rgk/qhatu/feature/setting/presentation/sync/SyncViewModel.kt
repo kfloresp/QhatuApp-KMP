@@ -6,7 +6,7 @@ import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.audit.domain.usecase.SyncAuditLogUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
-import com.rgk.qhatu.feature.sale.domain.usecase.SyncPaymentTransactionUseCase
+import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
 import com.rgk.qhatu.feature.sale.domain.usecase.SyncSaleDetailUseCase
 import com.rgk.qhatu.feature.sale.domain.usecase.SyncSaleUseCase
@@ -29,8 +29,7 @@ class SyncViewModel(
     private val syncUnitMeasure: SyncUnitMeasureUseCase,
     private val syncAuditLog: SyncAuditLogUseCase,
     private val syncCustomer: SyncCustomerUseCase,
-    private val syncPaymentCustomer: SyncPaymentTransactionUseCase,
-    private val syncPaymentTransaction: SyncPaymentTransactionUseCase,
+    private val syncPayment: SyncPaymentUseCase,
     private val syncProduct: SyncProductUseCase,
     private val syncSale: SyncSaleUseCase,
     private val syncSaleDetail: SyncSaleDetailUseCase,
@@ -89,11 +88,7 @@ class SyncViewModel(
                 }
 
                 SyncType.PAYMENT_CUSTOMER -> {
-                    syncPaymentCustomer(SyncOperation.RemoteToLocal())
-                }
-
-                SyncType.PAYMENT_TRANSACTION -> {
-                    syncPaymentTransaction(SyncOperation.RemoteToLocal())
+                    syncPayment(SyncOperation.RemoteToLocal())
                 }
 
                 SyncType.PRODUCT -> {

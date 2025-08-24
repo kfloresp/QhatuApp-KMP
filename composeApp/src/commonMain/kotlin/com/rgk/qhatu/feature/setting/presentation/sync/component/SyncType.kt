@@ -8,7 +8,6 @@ enum class SyncType {
     AUDIT,
     CUSTOMER,
     PAYMENT_CUSTOMER,
-    PAYMENT_TRANSACTION,
     PRODUCT,
     SALE,
     SALE_DETAIL,

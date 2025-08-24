@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.product.domain.model.Product
-import com.rgk.qhatu.feature.product.domain.usecase.GetProductsUseCase
+import com.rgk.qhatu.feature.product.domain.usecase.GetAllProductsUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class ProductViewModel(
     private val syncProductUseCase: SyncProductUseCase,
-    private val getProductsUseCase: GetProductsUseCase,
+    private val getAllProductsUseCase: GetAllProductsUseCase,
 ) : ViewModel() {
     private var allItems: List<Product> = emptyList()
     private val _isRefreshing = MutableStateFlow(false)
@@ -41,7 +41,7 @@ class ProductViewModel(
         _uiState.update {
             ProductUiState.Loading
         }
-        val result = getProductsUseCase()
+        val result = getAllProductsUseCase()
         when (result) {
             is SyncResult.Error -> {
                 _uiState.update {

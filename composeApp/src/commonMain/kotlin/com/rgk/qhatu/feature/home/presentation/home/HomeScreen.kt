@@ -15,18 +15,18 @@ import com.rgk.qhatu.feature.home.presentation.component.ActionItemCard
 import com.rgk.qhatu.feature.home.presentation.component.HomeHeader
 import com.rgk.qhatu.feature.home.presentation.component.provideMenu
 import com.rgk.qhatu.feature.product.presentation.productform.SectionHeader
-import com.rgk.qhatu.feature.splash.presentation.splash.SplashUiState
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HomeScreen(
-    uiState: SplashUiState,
+    uiState: HomeUiState,
     navigateToSearch: () -> Unit,
     navigateToSale: () -> Unit,
     navigateToPayment: () -> Unit,
     navigateToCustomer: () -> Unit,
     navigateToProduct: () -> Unit,
     navigateToSetting: () -> Unit,
+    setLoading: (Boolean) -> Unit,
 ) {
     val menuSections = provideMenu(
         onSearchClick = navigateToSearch,
@@ -45,7 +45,6 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(24.dp))
         menuSections.forEach { section ->
             SectionHeader(section.title)
-
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier.padding(vertical = 8.dp)
@@ -60,4 +59,5 @@ fun HomeScreen(
             }
         }
     }
+    setLoading(uiState is HomeUiState.Loading)
 }

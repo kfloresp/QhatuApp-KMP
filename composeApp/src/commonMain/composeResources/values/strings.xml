@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QhatuApp</string>
+    <string name="app_name">Qhatu</string>
     <string name="theme">Tema claro</string>
     <string name="tx_title_login">¡Bienvenido!</string>
     <string name="bt_start_login">Comenzar</string>
@@ -123,7 +123,13 @@
     <string name="tx_product_edit">Editar</string>
 
     <!-- Cart -->
-    <string name="tx_cart_title">Carrito de compras</string>
+    <string name="tx_cart_title">Carrito</string>
+    <string name="tx_cart_empty">Tu carrito está vacío, agrega productos para comenzar</string>
+    <string name="tx_cart_confirm_delete_all">¿Seguro que quieres vaciar tu carrito?</string>
+    <string name="tx_cart_confirm_resume_all">¿Quieres guardar tu carrito para más tarde?</string>
+    <string name="tx_cart_total_summary">Total a pagar</string>
+    <string name="tx_cart_total_text">Total:</string>
+    <string name="tx_cart_confirm">Continuar</string>
 
     <!-- Sales -->
     <string name="tx_sales_title">Historial de ventas</string>
@@ -148,6 +154,7 @@
     <string name="tx_global_confirm_delete_photo_message">¿Deseas eliminar foto?</string>
     <string name="tx_global_confirm_delete">Sí, eliminar</string>
     <string name="tx_global_confirm_edit">Sí, editar</string>
+    <string name="tx_global_confirm_continue">Sí, continuar</string>
     <string name="tx_global_category_delete">Eliminar Categoría</string>
     <string name="tx_global_category_edit">Editar Categoría</string>
     <string name="tx_global_category_new">Nueva Categoría</string>

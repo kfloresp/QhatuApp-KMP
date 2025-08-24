@@ -7,7 +7,6 @@ import com.rgk.qhatu.feature.cart.data.database.dao.CartItemDao
 import com.rgk.qhatu.feature.customer.data.database.dao.CustomerDao
 import com.rgk.qhatu.feature.payment.data.database.dao.PaymentDao
 import com.rgk.qhatu.feature.product.data.database.dao.ImageProductDao
-import com.rgk.qhatu.feature.sale.data.database.dao.PaymentTransactionDao
 import com.rgk.qhatu.feature.product.data.database.dao.ProductDao
 import com.rgk.qhatu.feature.sale.data.database.dao.TransactionDao
 import com.rgk.qhatu.feature.sale.data.database.dao.TransactionDetailDao
@@ -27,7 +26,6 @@ val databaseModule = module {
     single<CategoryDao> { get<AppDataBase>().categoryDao() }
     single<CustomerDao> { get<AppDataBase>().clientDao() }
     single<PaymentDao> { get<AppDataBase>().clientPaymentDao() }
-    single<PaymentTransactionDao> { get<AppDataBase>().paymentTransactionDao() }
     single<ConfigurationDao> { get<AppDataBase>().configurationDao() }
     single<ProductDao> { get<AppDataBase>().productDao() }
     single<TransactionDao> { get<AppDataBase>().transactionDao() }
