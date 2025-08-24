@@ -1,24 +1,11 @@
 package com.rgk.qhatu.feature.search.presentation.search
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.rgk.qhatu.common.components.cart.CartIconWithBadge
-import com.rgk.qhatu.common.components.toolbar.RightCartToolbar
+import com.rgk.qhatu.common.components.toolbar.CartRightSection
 import com.rgk.qhatu.feature.product.domain.model.Product
-import com.rgk.qhatu.feature.product.presentation.product.ProductScreen
-import com.rgk.qhatu.feature.product.presentation.product.ProductViewModel
 import com.rgk.qhatu.feature.product.presentation.product.component.ProductActions
 import com.rgk.qhatu.navigation.ProvideAppBar
 import kotlinx.serialization.Serializable
@@ -38,7 +25,7 @@ internal fun NavGraphBuilder.searchDestination(
         val cartSummary by viewModel.cartSummary.collectAsState()
         ProvideAppBar(
             actions = {
-                RightCartToolbar(
+                CartRightSection(
                     shoppingCartPrice = cartSummary?.totalSummary.orEmpty(),
                     shoppingCartQuantity = cartSummary?.itemCount ?: 0,
                     onShoppingCartClick = navigateToCart

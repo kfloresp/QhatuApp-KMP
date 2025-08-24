@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QhatuApp</string>
+    <string name="app_name">Qhatu</string>
     <string name="theme">Tema claro</string>
     <string name="tx_title_login">¡Bienvenido!</string>
     <string name="bt_start_login">Comenzar</string>

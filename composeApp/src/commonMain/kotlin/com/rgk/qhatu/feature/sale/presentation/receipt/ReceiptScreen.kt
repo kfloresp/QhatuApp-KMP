@@ -35,9 +35,9 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.rgk.qhatu.common.components.loading.LoadingView
 import com.rgk.qhatu.common.components.button.PrimaryButton
 import com.rgk.qhatu.common.components.datepicker.toFormat
+import com.rgk.qhatu.common.components.loading.LoadingOverlay
 import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -179,7 +179,7 @@ fun ReceiptScreen(
     }
 
     if (uiState is ReceiptState.Loading) {
-        LoadingView()
+        LoadingOverlay()
     }
     LaunchedEffect(uiState) {
         if (uiState is ReceiptState.Single) {

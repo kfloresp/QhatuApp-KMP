@@ -25,16 +25,14 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rgk.qhatu.common.components.textfield.EmailField
-import com.rgk.qhatu.common.components.loading.LoadingView
 import com.rgk.qhatu.common.components.button.PrimaryButton
+import com.rgk.qhatu.common.components.loading.LoadingOverlay
 import com.rgk.qhatu.common.components.textfield.PasswordField
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.bt_start_login
 import qhatuapp.composeapp.generated.resources.ic_leaf
-import qhatuapp.composeapp.generated.resources.tx_acept
-import qhatuapp.composeapp.generated.resources.tx_error
 import qhatuapp.composeapp.generated.resources.tx_title_login
 
 @Composable
@@ -117,7 +115,7 @@ fun AuthScreen(
 
     }
     if (uiState is AuthState.Loading) {
-        LoadingView()
+        LoadingOverlay()
     }
 }
 

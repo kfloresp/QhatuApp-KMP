@@ -4,11 +4,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import com.rgk.qhatu.MainViewModel
+import com.rgk.qhatu.common.components.loading.LoadingOverlay
 import com.rgk.qhatu.common.extension.navigateToAuthGraphWithPopUp
 import com.rgk.qhatu.common.extension.navigateToHomeWithPopUp
 import com.rgk.qhatu.feature.auth.presentation.authGraph
@@ -30,13 +32,13 @@ import com.rgk.qhatu.feature.setting.presentation.navigateToSettingGraph
 import com.rgk.qhatu.feature.setting.presentation.settingGraph
 import com.rgk.qhatu.feature.splash.presentation.SplashGraph
 import com.rgk.qhatu.feature.splash.presentation.splashGraph
-import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun AppNavHost(
     modifier: Modifier,
     navController: NavHostController,
     closeSession: () -> Unit,
+    setLoading: (Boolean) -> Unit
 ) {
     NavHost(
         modifier = modifier,
@@ -55,12 +57,14 @@ fun AppNavHost(
             navigateToHomeGraph = { navController.navigateToHomeGraph() }
         )
         homeGraph(
+            setLoading = setLoading,
             navigateToSearch = { navController.navigateToSearchGraph() },
             navigateToSale = { navController.navigateToSaleGraph() },
             navigateToSetting = { navController.navigateToSettingGraph() },
             navigateToPayment = { navController.navigateToPaymentGraph() },
             navigateToProduct = { navController.navigateToProductGraph() },
             navigateToCustomer = { navController.navigateToCustomerGraph() },
+            navigateToCart = { navController.navigateToCartGraph() }
         )
         searchGraph(
             navigateToCart = { navController.navigateToCartGraph() },
@@ -86,6 +90,7 @@ fun AppNavGraph(
     navController: NavHostController,
     closeSession: () -> Unit,
 ) {
+    val isLoading by viewModel.isLoading.collectAsState()
     Scaffold(
         modifier = Modifier.safeDrawingPadding(),
         topBar = {
@@ -108,6 +113,13 @@ fun AppNavGraph(
             modifier = Modifier.padding(innerPadding),
             navController = navController,
             closeSession = closeSession,
+            setLoading = { active ->
+                if (active) viewModel.showLoading()
+                else viewModel.hideLoading()
+            }
         )
+    }
+    if (isLoading) {
+        LoadingOverlay()
     }
 }
