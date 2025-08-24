@@ -13,10 +13,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.rgk.qhatu.common.components.bottombar.CartSummarySection
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.presentation.product.component.ProductActions
 import com.rgk.qhatu.navigation.ProvideAppBar
+import com.rgk.qhatu.navigation.ProvideBottomBarApp
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -25,6 +27,7 @@ import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.ic_remove_shopping_cart_24
 import qhatuapp.composeapp.generated.resources.tx_cart_confirm_delete_all
 import qhatuapp.composeapp.generated.resources.tx_cart_confirm_resume_all
+import qhatuapp.composeapp.generated.resources.tx_cart_title
 import qhatuapp.composeapp.generated.resources.tx_global_cancel
 import qhatuapp.composeapp.generated.resources.tx_global_confirm_continue
 import qhatuapp.composeapp.generated.resources.tx_global_confirmation
@@ -45,7 +48,7 @@ internal fun NavGraphBuilder.cartDestination(
         val operationCart by viewModel.operationCart.collectAsState()
 
         ProvideAppBar(
-            title = "Carrito ${cartSummary?.itemCountSummary}",
+            title = "${stringResource(Res.string.tx_cart_title)} ${cartSummary?.itemCountSummary.orEmpty()}",
             actions = {
                 if (cartSummary?.hasItems ?: false) {
                     Row {
@@ -54,7 +57,7 @@ internal fun NavGraphBuilder.cartDestination(
                         }) {
                             Icon(
                                 Icons.Default.ShoppingCartCheckout,
-                                contentDescription = "Pausar"
+                                contentDescription = null
                             )
                         }
                         IconButton(onClick = {
@@ -62,13 +65,22 @@ internal fun NavGraphBuilder.cartDestination(
                         }) {
                             Icon(
                                 painter = painterResource(Res.drawable.ic_remove_shopping_cart_24),
-                                contentDescription = "Remove"
+                                contentDescription = null
                             )
                         }
                     }
                 }
             }
         )
+        ProvideBottomBarApp {
+            CartSummarySection(
+                cartSummary?.totalSummary.orEmpty(),
+                onShoppingCartClick = {
+
+                },
+                isEnabled = false
+            )
+        }
 
         LaunchedEffect(operationCart) {
             if (operationCart) {

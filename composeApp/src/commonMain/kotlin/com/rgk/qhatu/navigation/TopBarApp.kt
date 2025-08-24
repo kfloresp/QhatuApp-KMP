@@ -84,9 +84,9 @@ fun TopBarApp(
 
         val currentRoute = entry.destination
 
-        val viewModel: TopAppBarViewModel = viewModel(
+        val viewModel: TopBarAppViewModel = viewModel(
             viewModelStoreOwner = entry,
-            initializer = { TopAppBarViewModel() },
+            initializer = { TopBarAppViewModel() },
         )
         val shouldShowTopBar = routesWithoutTopBar.none { currentRoute.hasRoute(it) }
         if (shouldShowTopBar) {
@@ -123,11 +123,11 @@ fun ProvideAppBar(
 ) {
     val viewModelStoreOwner = LocalViewModelStoreOwner.current
     (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
-        val viewModel: TopAppBarViewModel = viewModel(
+        val viewModel: TopBarAppViewModel = viewModel(
             viewModelStoreOwner = owner,
-            initializer = { TopAppBarViewModel() },
+            initializer = { TopBarAppViewModel() },
         )
-        LaunchedEffect(actions, title, onBackStack) {
+        LaunchedEffect(actions, title, onBackStack, showAppIcon, showBackNavigation) {
             viewModel.actions = actions
             viewModel.title = title
             viewModel.onBackStack = onBackStack
@@ -138,7 +138,7 @@ fun ProvideAppBar(
 }
 
 
-private class TopAppBarViewModel : ViewModel() {
+private class TopBarAppViewModel : ViewModel() {
     var actions by mutableStateOf<@Composable RowScope.() -> Unit>({ }, referentialEqualityPolicy())
     var title by mutableStateOf<String?>(null, referentialEqualityPolicy())
     var showAppIcon by mutableStateOf(false, referentialEqualityPolicy())

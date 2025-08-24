@@ -31,6 +31,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.rgk.qhatu.common.theme.QhatuTheme
+import com.rgk.qhatu.common.util.orZero
+import com.rgk.qhatu.feature.cart.domain.model.CartItem
 import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.presentation.product.component.ProductActionSection
@@ -48,8 +50,10 @@ fun ItemProductCart(
 ) {
     val cartItem = product.cartItem
     val count = cartItem?.quantity ?: 0
+    val unitPriceAmount = cartItem?.unitPriceAmount.orEmpty()
+    val totalPriceAmount = cartItem?.totalPriceAmount.orEmpty()
 
-    Row(
+    Column(
         modifier = Modifier.fillMaxWidth()
             .clickable { onClick(product) }
             .padding(8.dp).border(
@@ -58,45 +62,61 @@ fun ItemProductCart(
                 shape = RoundedCornerShape(12.dp)
             ).padding(8.dp)
     ) {
-        AsyncImage(
-            model = product.imageProduct.firstOrNull()?.filename ?: "",
-            contentDescription = product.name,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.size(100.dp)
-                .clip(RoundedCornerShape(8.dp)),
-            placeholder = painterResource(resource = Res.drawable.image_place_holder),
-            error = painterResource(resource = Res.drawable.image_place_holder)
-        )
-
-        Spacer(modifier = Modifier.width(12.dp))
-
-        Column() {
-            Text(
-                text = product.name,
-                style = MaterialTheme.typography.bodyLarge,
-                maxLines = 2,
-                minLines = 2,
-                overflow = TextOverflow.Ellipsis
+        Row {
+            AsyncImage(
+                model = product.imageProduct.firstOrNull()?.filename ?: "",
+                contentDescription = product.name,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.size(100.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                placeholder = painterResource(resource = Res.drawable.image_place_holder),
+                error = painterResource(resource = Res.drawable.image_place_holder)
             )
 
-            Text(
-                text = product.unitMeasure,
-                style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(vertical = 2.dp)
-            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Column(
 
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(
-                text = product.unitPriceValue, style = MaterialTheme.typography.bodyLarge.copy(
-                    color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.SemiBold
+            )  {
+                Text(
+                    text = product.name,
+                    style = MaterialTheme.typography.bodyLarge,
+                    maxLines = 2,
+                    minLines = 2,
+                    overflow = TextOverflow.Ellipsis
                 )
+
+                Text(
+                    text = product.unitMeasure,
+                    style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(vertical = 2.dp)
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = unitPriceAmount, style = MaterialTheme.typography.bodyLarge.copy(
+                        color = MaterialTheme.colorScheme.onSurface,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(6.dp))
+            }
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = "Total: $totalPriceAmount",
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontWeight = FontWeight.SemiBold
+                ),
+                modifier = Modifier.padding(start = 20.dp)
             )
-
-            Spacer(modifier = Modifier.height(6.dp))
-
             productActions?.let {
                 Box(
                     modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomEnd
@@ -139,14 +159,14 @@ fun ItemProductCart(
 @Preview()
 @Composable
 fun PreviewItemProductCart() {
-    MaterialTheme {
+    QhatuTheme {
         val sampleProduct = Product(
             id = "1",
-            name = "Manzanas Rojas Extra Frescas",
+            name = "Manzanas Rojas Extra Frescas Frescas Frescas",
             unitMeasure = "X Kilogramo",
-            unitPrice = "5.50",
+            unitPrice = "5.40",
             imageProduct = listOf(ImageProduct(filename = "")),
-            cartItem = null
+            cartItem = CartItem(productId = "1", quantity = 37, unitPrice = 5.3)
         )
 
         val fakeActions = object : ProductActions {
