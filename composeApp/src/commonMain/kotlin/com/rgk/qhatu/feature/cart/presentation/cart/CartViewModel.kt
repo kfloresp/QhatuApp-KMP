@@ -36,7 +36,7 @@ class CartViewModel(
     private val _cartSummary = MutableStateFlow<CartSummary?>(null)
     val cartSummary: StateFlow<CartSummary?> = _cartSummary.asStateFlow()
 
-    private val _operationCart = MutableStateFlow(true)
+    private val _operationCart = MutableStateFlow(false)
     val operationCart: StateFlow<Boolean> = _operationCart.asStateFlow()
 
     private val _uiState = MutableStateFlow<CartUiState>(CartUiState.Loading)

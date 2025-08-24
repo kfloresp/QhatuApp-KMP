@@ -8,6 +8,10 @@ data class CartSummary(
 ) {
     val totalSummary: String
         get() = total.formatAmount()
+
     val itemCountSummary: String
         get() = if (itemCount > 0) "(${itemCount})" else ""
+
+    val hasItems: Boolean
+        get() = if (itemCount > 0) true else false
 }

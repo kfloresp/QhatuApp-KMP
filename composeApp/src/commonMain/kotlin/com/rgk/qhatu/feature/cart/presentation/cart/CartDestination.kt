@@ -47,32 +47,34 @@ internal fun NavGraphBuilder.cartDestination(
         ProvideAppBar(
             title = "Carrito ${cartSummary?.itemCountSummary}",
             actions = {
-                Row {
-                    IconButton(onClick = {
-                        showResumeCart = true
-                    }) {
-                        Icon(
-                            Icons.Default.ShoppingCartCheckout,
-                            contentDescription = "Pausar"
-                        )
-                    }
-                    IconButton(onClick = {
-                        showDeleteAllCart = true
-                    }) {
-                        Icon(
-                            painter = painterResource(Res.drawable.ic_remove_shopping_cart_24),
-                            contentDescription = "Remove"
-                        )
+                if (cartSummary?.hasItems ?: false) {
+                    Row {
+                        IconButton(onClick = {
+                            showResumeCart = true
+                        }) {
+                            Icon(
+                                Icons.Default.ShoppingCartCheckout,
+                                contentDescription = "Pausar"
+                            )
+                        }
+                        IconButton(onClick = {
+                            showDeleteAllCart = true
+                        }) {
+                            Icon(
+                                painter = painterResource(Res.drawable.ic_remove_shopping_cart_24),
+                                contentDescription = "Remove"
+                            )
+                        }
                     }
                 }
             }
         )
 
-//        LaunchedEffect(operationCart) {
-//            if (operationCart) {
-//                onBackPopUp()
-//            }
-//        }
+        LaunchedEffect(operationCart) {
+            if (operationCart) {
+                onBackPopUp()
+            }
+        }
 
         CartScreen(
             uiState = uiState,
