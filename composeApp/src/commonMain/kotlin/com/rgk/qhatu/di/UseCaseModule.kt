@@ -6,10 +6,12 @@ import com.rgk.qhatu.feature.auth.domain.usecase.LogoutUseCase
 import com.rgk.qhatu.feature.auth.domain.usecase.ObserveCurrentUser
 import com.rgk.qhatu.feature.auth.domain.usecase.RegisterUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.AddItemToCartUseCase
+import com.rgk.qhatu.feature.cart.domain.usecase.DeleteCartUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.GetRefreshCartSummaryUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartItemsUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartSummaryUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.RemoveItemToCartUseCase
+import com.rgk.qhatu.feature.cart.domain.usecase.ResumeCartUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.UpdateItemToCartUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerSummaryUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
@@ -74,4 +76,6 @@ val useCaseModule = module {
     factoryOf(::GetRefreshCartSummaryUseCase)
     factoryOf(::GetProductByIdUseCase)
     factoryOf(::ObserveCartItemsUseCase)
+    factoryOf(::DeleteCartUseCase)
+    factoryOf(::ResumeCartUseCase)
 }

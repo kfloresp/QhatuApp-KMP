@@ -25,6 +25,14 @@ class CartRepositoryImpl(
     private val _observeCartItems = MutableStateFlow<List<CartItem>?>(null)
     override val observeCartItems: StateFlow<List<CartItem>?> get() = _observeCartItems.asStateFlow()
 
+    override suspend fun resumeCart(): SyncResult<Unit> = safeCall {
+        val activeCart = cartDao.getActiveCart()
+        activeCart?.let {
+            cartDao.setCartResume(it.id)
+            refreshCartSummary()
+        }
+    }
+
     override suspend fun createCart(cart: Cart) {
         cartDao.deactivateAllCarts()
         cartDao.insertCart(
@@ -35,9 +43,12 @@ class CartRepositoryImpl(
         refreshCartSummary()
     }
 
-    override suspend fun deleteCart(cartId: String) {
-        cartDao.deleteCart(cartId)
-        refreshCartSummary()
+    override suspend fun deleteCart(): SyncResult<Unit> = safeCall {
+        val activeCart = cartDao.getActiveCart()
+        activeCart?.let {
+            cartDao.deleteCart(it.id)
+            refreshCartSummary()
+        }
     }
 
     override suspend fun getCartById(cartId: String): Cart? {
@@ -108,17 +119,23 @@ class CartRepositoryImpl(
         val activeCart = cartDao.getActiveCart()
         var totalCart = 0.0
         var itemCount = 0
+        var cartId: String? = null
         activeCart?.let { cart ->
-            refreshCartItems(cart.id)
-            totalCart = cartDao.getCartTotal(cart.id) ?: 0.0
-            itemCount = cartItemDao.getItemsByCart(cart.id).size
+            cartId = cart.id
+            totalCart = cartDao.getCartTotal(cartId) ?: 0.0
+            itemCount = cartItemDao.getItemsByCart(cartId).size
         }
+        refreshCartItems(cartId)
         _observeCartSummary.value = CartSummary(total = totalCart, itemCount = itemCount)
     }
 
-    private suspend fun refreshCartItems(cartId: String) {
-        val items = cartItemDao.getItemsByCart(cartId).map { it.toDomain() }
-        _observeCartItems.value = items
+    private suspend fun refreshCartItems(cartId: String?) {
+        cartId?.let {
+            val items = cartItemDao.getItemsByCart(cartId).map { it.toDomain() }
+            _observeCartItems.value = items
+        } ?: run {
+            _observeCartItems.value = emptyList()
+        }
     }
 
 }

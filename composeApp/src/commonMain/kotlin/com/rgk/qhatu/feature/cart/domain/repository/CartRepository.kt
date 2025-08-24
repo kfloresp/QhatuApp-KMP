@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface CartRepository {
     suspend fun createCart(cart: Cart)
-    suspend fun deleteCart(cartId: String)
+    suspend fun deleteCart(): SyncResult<Unit>
     suspend fun getCartById(cartId: String): Cart?
     suspend fun getAllCarts(): List<Cart>
     suspend fun getActiveCart(): Cart?
@@ -20,4 +20,5 @@ interface CartRepository {
     suspend fun refreshCartSummary(): SyncResult<Unit>
     val observeCartSummary: StateFlow<CartSummary?>
     val observeCartItems: StateFlow<List<CartItem>?>
+    suspend fun resumeCart(): SyncResult<Unit>
 }

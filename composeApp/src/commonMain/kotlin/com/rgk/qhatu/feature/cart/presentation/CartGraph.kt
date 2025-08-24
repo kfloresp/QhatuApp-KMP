@@ -25,7 +25,10 @@ fun NavGraphBuilder.cartGraph(
         startDestination = CartDestination
     ) {
         cartDestination(
-            setLoading = setLoading
+            setLoading = setLoading,
+            onBackPopUp = {
+                navController.popBackStack()
+            }
         )
     }
 }
