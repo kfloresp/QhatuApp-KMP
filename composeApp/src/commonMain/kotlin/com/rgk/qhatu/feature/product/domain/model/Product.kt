@@ -26,7 +26,5 @@ data class Product(
     val cartItem: CartItem? = null,
     ) {
     val unitPriceValue: String
-        get() = unitPrice.toDouble().formatAmount(CURRENCY_SYMBOL)
+        get() = unitPrice.toDouble().formatAmount()
 }
-
-private val CURRENCY_SYMBOL = "S/."

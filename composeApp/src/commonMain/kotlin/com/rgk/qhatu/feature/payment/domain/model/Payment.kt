@@ -20,7 +20,5 @@ data class Payment(
     val lastUpdated: Long = 0L,
 ) {
     val amountPaidWithCurrency: String
-        get() = amountPaid.toDouble().formatAmount(CURRENCY_SYMBOL)
+        get() = amountPaid.toDouble().formatAmount()
 }
-
-private val CURRENCY_SYMBOL = "S/."

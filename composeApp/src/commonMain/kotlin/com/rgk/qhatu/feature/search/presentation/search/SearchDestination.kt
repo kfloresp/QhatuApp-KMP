@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.cart.CartIconWithBadge
+import com.rgk.qhatu.common.components.toolbar.RightCartToolbar
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.presentation.product.ProductScreen
 import com.rgk.qhatu.feature.product.presentation.product.ProductViewModel
@@ -37,21 +38,10 @@ internal fun NavGraphBuilder.searchDestination(
         val cartSummary by viewModel.cartSummary.collectAsState()
         ProvideAppBar(
             actions = {
-                Text(
-                    text = "S/${cartSummary?.total ?: 0}",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-                Spacer(Modifier.width(8.dp))
-                VerticalDivider(
-                    Modifier
-                        .height(24.dp)
-                        .width(1.dp), thickness = 1.dp
-                )
-                Spacer(Modifier.width(8.dp))
-                CartIconWithBadge(
-                    itemCount = cartSummary?.itemCount ?: 0,
-                    modifier = Modifier.clickable(true, onClick = navigateToCart)
+                RightCartToolbar(
+                    shoppingCartPrice = cartSummary?.totalSummary.orEmpty(),
+                    shoppingCartQuantity = cartSummary?.itemCount ?: 0,
+                    onShoppingCartClick = navigateToCart
                 )
             }
         )

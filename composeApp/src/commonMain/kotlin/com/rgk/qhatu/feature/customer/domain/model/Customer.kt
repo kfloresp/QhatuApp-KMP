@@ -45,7 +45,7 @@ data class Customer(
 
     val pendingCustomer: String
         get() = if (pendingAmount.orZero() > 0.0) pendingAmount.orZero()
-            .formatAmount(CURRENCY_SYMBOL) else NO_DEBT
+            .formatAmount() else NO_DEBT
 
     val havePendingAmount: Boolean
         get() = pendingAmount.orZero() > 0.0
@@ -68,4 +68,3 @@ data class Customer(
 }
 
 private val NO_DEBT = "Sin deuda"
-private val CURRENCY_SYMBOL = "S/."
