@@ -38,24 +38,18 @@ fun AppNavHost(
     modifier: Modifier,
     navController: NavHostController,
     closeSession: () -> Unit,
-    setLoading: (Boolean) -> Unit
+    setLoading: (Boolean) -> Unit,
 ) {
     NavHost(
-        modifier = modifier,
-        navController = navController,
-        startDestination = SplashGraph
+        modifier = modifier, navController = navController, startDestination = SplashGraph
     ) {
-        splashGraph(
-            navigateToAuthGraph = {
-                navController.navigateToAuthGraphWithPopUp()
-            },
-            navigateToHomeGraph = {
-                navController.navigateToHomeWithPopUp()
-            }
-        )
+        splashGraph(navigateToAuthGraph = {
+            navController.navigateToAuthGraphWithPopUp()
+        }, navigateToHomeGraph = {
+            navController.navigateToHomeWithPopUp()
+        })
         authGraph(
-            navigateToHomeGraph = { navController.navigateToHomeGraph() }
-        )
+            navigateToHomeGraph = { navController.navigateToHomeGraph() })
         homeGraph(
             setLoading = setLoading,
             navigateToSearch = { navController.navigateToSearchGraph() },
@@ -64,15 +58,11 @@ fun AppNavHost(
             navigateToPayment = { navController.navigateToPaymentGraph() },
             navigateToProduct = { navController.navigateToProductGraph() },
             navigateToCustomer = { navController.navigateToCustomerGraph() },
-            navigateToCart = { navController.navigateToCartGraph() }
-        )
-        searchGraph(
-            navigateToCart = { navController.navigateToCartGraph() },
-            openScanQR = {}
-        )
+            navigateToCart = { navController.navigateToCartGraph() })
+        searchGraph(navigateToCart = { navController.navigateToCartGraph() }, openScanQR = {})
         saleGraph()
         cartGraph(
-            navController = navController,
+            navController = navController, setLoading = setLoading
         )
         settingGraph(
             navController = navController,
@@ -116,8 +106,7 @@ fun AppNavGraph(
             setLoading = { active ->
                 if (active) viewModel.showLoading()
                 else viewModel.hideLoading()
-            }
-        )
+            })
     }
     if (isLoading) {
         LoadingOverlay()

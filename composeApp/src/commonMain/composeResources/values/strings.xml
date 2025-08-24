@@ -124,6 +124,7 @@
 
     <!-- Cart -->
     <string name="tx_cart_title">Carrito de compras</string>
+    <string name="tx_cart_empty">Tu carrito está vacío, agrega productos para comenzar</string>
 
     <!-- Sales -->
     <string name="tx_sales_title">Historial de ventas</string>
