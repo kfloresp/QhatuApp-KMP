@@ -127,6 +127,8 @@
     <string name="tx_cart_empty">Tu carrito está vacío, agrega productos para comenzar</string>
     <string name="tx_cart_confirm_delete_all">¿Seguro que quieres vaciar tu carrito?</string>
     <string name="tx_cart_confirm_resume_all">¿Quieres guardar tu carrito para más tarde?</string>
+    <string name="tx_cart_total_summary">Total a pagar</string>
+    <string name="tx_cart_total_text">Total:</string>
     <string name="tx_cart_confirm">Continuar</string>
 
     <!-- Sales -->

@@ -20,7 +20,6 @@ import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsMethodUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
-import com.rgk.qhatu.feature.sale.domain.usecase.SyncPaymentTransactionUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetAllProductsUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetProductByIdUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetStorageTypeUseCase
@@ -48,7 +47,6 @@ val useCaseModule = module {
     factoryOf(::SyncCustomerUseCase)
     factoryOf(::SyncPaymentUseCase)
     factoryOf(::SyncConfigurationUseCase)
-    factoryOf(::SyncPaymentTransactionUseCase)
     factoryOf(::SyncProductUseCase)
     factoryOf(::SyncSaleUseCase)
     factoryOf(::SyncSaleDetailUseCase)

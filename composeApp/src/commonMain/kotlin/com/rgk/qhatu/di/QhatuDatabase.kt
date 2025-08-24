@@ -13,10 +13,8 @@ import com.rgk.qhatu.feature.cart.data.database.entity.CartItemEntity
 import com.rgk.qhatu.feature.customer.data.database.dao.CustomerDao
 import com.rgk.qhatu.feature.customer.data.database.entity.CustomerEntity
 import com.rgk.qhatu.feature.payment.data.database.dao.PaymentDao
-import com.rgk.qhatu.feature.sale.data.database.dao.PaymentTransactionDao
 import com.rgk.qhatu.feature.payment.data.database.entity.PaymentEntity
 import com.rgk.qhatu.feature.product.data.database.dao.ImageProductDao
-import com.rgk.qhatu.feature.sale.data.database.entity.PaymentTransactionEntity
 import com.rgk.qhatu.feature.product.data.database.dao.ProductDao
 import com.rgk.qhatu.feature.product.data.database.entity.ImageProductEntity
 import com.rgk.qhatu.feature.product.data.database.entity.ProductEntity
@@ -45,7 +43,6 @@ const val DATABASE_NAME = "qhatu_database.db"
         CategoryEntity::class,
         CustomerEntity::class,
         PaymentEntity::class,
-        PaymentTransactionEntity::class,
         ProductEntity::class,
         TransactionDetailEntity::class,
         TransactionEntity::class,
@@ -64,7 +61,6 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun clientDao(): CustomerDao
     abstract fun clientPaymentDao(): PaymentDao
-    abstract fun paymentTransactionDao(): PaymentTransactionDao
     abstract fun productDao(): ProductDao
     abstract fun transactionDetailDao(): TransactionDetailDao
     abstract fun transactionDao(): TransactionDao
