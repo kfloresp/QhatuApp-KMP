@@ -10,7 +10,7 @@ import com.rgk.qhatu.feature.setting.domain.mapper.toDomain
 import com.rgk.qhatu.feature.setting.domain.mapper.toEntity
 import com.rgk.qhatu.feature.setting.domain.model.Category
 import com.rgk.qhatu.feature.setting.domain.repository.CategoryRepository
-import com.rgk.qhatu.utils.TimeUtils
+import com.rgk.qhatu.common.util.TimeUtils
 
 class CategoryRepositoryImpl(
     private val sourceRemote: CategoryRemoteDataSource,

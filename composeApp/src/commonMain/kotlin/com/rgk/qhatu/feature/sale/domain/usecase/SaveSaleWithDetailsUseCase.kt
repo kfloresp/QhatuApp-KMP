@@ -2,6 +2,7 @@ package com.rgk.qhatu.feature.sale.domain.usecase
 
 import com.rgk.qhatu.common.extension.safeCall
 import com.rgk.qhatu.common.model.SyncResult
+import com.rgk.qhatu.feature.operation.domain.model.OperationStatus
 import com.rgk.qhatu.feature.operation.domain.model.OperationType
 import com.rgk.qhatu.feature.operation.domain.repository.OperationDetailRepository
 import com.rgk.qhatu.feature.operation.domain.repository.OperationRepository
@@ -15,6 +16,7 @@ class SaveSaleWithDetailsUseCase(
 ) {
     suspend operator fun invoke(saleWithOperation: SaleWithOperation): SyncResult<Unit> = safeCall {
         val operationId = saleWithOperation.operation.operationId
+        val operationStatus: OperationStatus
         operationRepository.insertOperation(saleWithOperation.operation.copy(type = OperationType.SALE))
         saleRepository.insertSale(saleWithOperation.sale.copy(operationId = operationId))
         if (saleWithOperation.details.isNotEmpty()) {
@@ -23,6 +25,10 @@ class SaveSaleWithDetailsUseCase(
                     operationId = operationId
                 )
             })
+            operationStatus = OperationStatus.COMPLETED
+        } else {
+            operationStatus = OperationStatus.CANCELLED
         }
+        operationRepository.updateOperation(saleWithOperation.operation.copy(status = operationStatus))
     }
 }

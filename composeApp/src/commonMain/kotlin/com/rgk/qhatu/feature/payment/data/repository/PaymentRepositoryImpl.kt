@@ -10,7 +10,7 @@ import com.rgk.qhatu.feature.payment.domain.mapper.toDomain
 import com.rgk.qhatu.feature.payment.domain.mapper.toEntity
 import com.rgk.qhatu.feature.payment.domain.model.Payment
 import com.rgk.qhatu.feature.payment.domain.repository.PaymentRepository
-import com.rgk.qhatu.utils.TimeUtils
+import com.rgk.qhatu.common.util.TimeUtils
 
 class PaymentRepositoryImpl(
     private val sourceRemote: ClientPaymentRemoteDataSource,

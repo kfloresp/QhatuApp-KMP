@@ -1,8 +1,10 @@
 package com.rgk.qhatu.feature.operation.domain.model
 
+import com.rgk.qhatu.common.util.generateUUID
+
 data class OperationDetail(
-    val detailId: String,
-    val operationId: String,
+    val detailId: String = generateUUID(),
+    val operationId: String? = null,
     val productId: String,
     val quantity: Double,
     val unitPrice: Double,

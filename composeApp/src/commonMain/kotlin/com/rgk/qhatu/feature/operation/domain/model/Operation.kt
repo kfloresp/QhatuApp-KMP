@@ -1,11 +1,14 @@
 package com.rgk.qhatu.feature.operation.domain.model
 
+import com.rgk.qhatu.common.util.TimeUtils.getCurrentTimestamp
+import com.rgk.qhatu.common.util.generateUUID
+
 data class Operation(
-    val operationId: String,
+    val operationId: String = generateUUID(),
     val type: OperationType,
-    val status: OperationStatus,
-    val operationDate: Long,
-    val lastUpdated: Long = 0L,
+    val status: OperationStatus = OperationStatus.PENDING,
+    val operationDate: Long = getCurrentTimestamp(),
+    val lastUpdated: Long = getCurrentTimestamp(),
     val isSynced: Boolean = false,
     val syncedDate: Long = 0L,
     val isDeleted: Boolean = false,
