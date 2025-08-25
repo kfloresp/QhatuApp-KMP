@@ -2,9 +2,8 @@ package com.rgk.qhatu.feature.cart.domain.model
 
 import com.rgk.qhatu.common.util.formatAmount
 import com.rgk.qhatu.common.util.generateUUID
-import com.rgk.qhatu.utils.TimeUtils
+import com.rgk.qhatu.common.util.TimeUtils
 import kotlin.String
-import kotlin.text.toDouble
 
 data class CartItem(
     val id: String = generateUUID(),

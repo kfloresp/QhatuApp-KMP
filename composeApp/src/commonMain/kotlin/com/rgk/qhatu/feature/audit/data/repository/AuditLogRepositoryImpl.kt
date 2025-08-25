@@ -7,10 +7,9 @@ import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.feature.audit.domain.mapper.toDomain
 import com.rgk.qhatu.feature.audit.domain.mapper.toEntity
-import com.rgk.qhatu.feature.audit.domain.mapper.toModel
 import com.rgk.qhatu.feature.audit.domain.model.AuditLog
 import com.rgk.qhatu.feature.audit.domain.repository.AuditLogRepository
-import com.rgk.qhatu.utils.TimeUtils
+import com.rgk.qhatu.common.util.TimeUtils
 
 class AuditLogRepositoryImpl(
     private val sourceRemote: AuditLogRemoteDataSource,

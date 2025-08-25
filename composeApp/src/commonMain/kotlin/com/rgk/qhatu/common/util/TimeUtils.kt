@@ -1,4 +1,4 @@
-package com.rgk.qhatu.utils
+package com.rgk.qhatu.common.util
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant

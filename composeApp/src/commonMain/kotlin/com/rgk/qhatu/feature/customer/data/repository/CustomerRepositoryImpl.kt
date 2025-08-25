@@ -11,7 +11,7 @@ import com.rgk.qhatu.feature.customer.domain.mapper.toEntity
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.customer.domain.model.CustomerSummary
 import com.rgk.qhatu.feature.customer.domain.repository.CustomerRepository
-import com.rgk.qhatu.utils.TimeUtils
+import com.rgk.qhatu.common.util.TimeUtils
 import kotlinx.coroutines.delay
 
 class CustomerRepositoryImpl(

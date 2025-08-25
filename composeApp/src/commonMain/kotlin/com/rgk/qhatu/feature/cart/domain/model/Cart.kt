@@ -1,7 +1,7 @@
 package com.rgk.qhatu.feature.cart.domain.model
 
 import com.rgk.qhatu.common.util.generateUUID
-import com.rgk.qhatu.utils.TimeUtils
+import com.rgk.qhatu.common.util.TimeUtils
 
 data class Cart(
     val id: String = generateUUID(),
