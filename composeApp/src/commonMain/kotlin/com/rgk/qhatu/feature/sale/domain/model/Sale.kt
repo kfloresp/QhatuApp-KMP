@@ -1,7 +1,7 @@
 package com.rgk.qhatu.feature.sale.domain.model
 
 data class Sale(
-    val operationId: String? = null,
+    val operationId: String = "",
     val customerId: String,
     val paymentMethodId: String? = null,
     val paymentOperationNo: String? = null,

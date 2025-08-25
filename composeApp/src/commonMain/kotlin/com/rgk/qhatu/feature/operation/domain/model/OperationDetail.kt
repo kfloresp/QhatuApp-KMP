@@ -4,7 +4,7 @@ import com.rgk.qhatu.common.util.generateUUID
 
 data class OperationDetail(
     val detailId: String = generateUUID(),
-    val operationId: String? = null,
+    val operationId: String = "",
     val productId: String,
     val quantity: Double,
     val unitPrice: Double,
