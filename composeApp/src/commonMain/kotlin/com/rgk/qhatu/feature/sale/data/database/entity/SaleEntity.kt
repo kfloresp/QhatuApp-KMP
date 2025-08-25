@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.rgk.qhatu.feature.transaction.data.database.entity.OperationEntity
+import com.rgk.qhatu.feature.operation.data.database.entity.OperationEntity
 
 @Entity(
     tableName = "sale",

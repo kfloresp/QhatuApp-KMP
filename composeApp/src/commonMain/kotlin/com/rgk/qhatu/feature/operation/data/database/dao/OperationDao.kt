@@ -1,4 +1,4 @@
-package com.rgk.qhatu.feature.transaction.data.database.dao
+package com.rgk.qhatu.feature.operation.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -7,8 +7,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.rgk.qhatu.feature.transaction.data.database.entity.OperationEntity
-import com.rgk.qhatu.feature.transaction.data.database.entity.OperationWithDetails
+import com.rgk.qhatu.feature.operation.data.database.entity.OperationEntity
+import com.rgk.qhatu.feature.operation.data.database.entity.OperationWithDetailRelation
 
 @Dao
 interface OperationDao {
@@ -23,9 +23,9 @@ interface OperationDao {
 
     @Transaction
     @Query("SELECT * FROM operation WHERE operationId = :operationId")
-    suspend fun getOperationWithDetails(operationId: String): OperationWithDetails?
+    suspend fun getOperationWithDetails(operationId: String): OperationWithDetailRelation?
 
     @Transaction
     @Query("SELECT * FROM operation")
-    suspend fun getAllOperationsWithDetails(): List<OperationWithDetails>
+    suspend fun getAllOperationsWithDetails(): List<OperationWithDetailRelation>
 }

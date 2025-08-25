@@ -28,12 +28,12 @@ import com.rgk.qhatu.feature.setting.data.database.entity.CategoryEntity
 import com.rgk.qhatu.feature.setting.data.database.entity.ConfigurationEntity
 import com.rgk.qhatu.feature.setting.data.database.entity.StoreEntity
 import com.rgk.qhatu.feature.setting.data.database.entity.UnitMeasureEntity
-import com.rgk.qhatu.feature.transaction.data.database.dao.OperationDao
-import com.rgk.qhatu.feature.transaction.data.database.dao.OperationDetailDao
+import com.rgk.qhatu.feature.operation.data.database.dao.OperationDao
+import com.rgk.qhatu.feature.operation.data.database.dao.OperationDetailDao
 import com.rgk.qhatu.feature.purchase.data.database.dao.PurchaseDao
 import com.rgk.qhatu.feature.sale.data.database.dao.SaleDao
-import com.rgk.qhatu.feature.transaction.data.database.entity.OperationDetailEntity
-import com.rgk.qhatu.feature.transaction.data.database.entity.OperationEntity
+import com.rgk.qhatu.feature.operation.data.database.entity.OperationDetailEntity
+import com.rgk.qhatu.feature.operation.data.database.entity.OperationEntity
 import com.rgk.qhatu.feature.purchase.data.database.entity.PurchaseEntity
 import com.rgk.qhatu.feature.sale.data.database.entity.SaleEntity
 

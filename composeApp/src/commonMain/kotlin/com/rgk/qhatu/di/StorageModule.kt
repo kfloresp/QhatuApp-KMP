@@ -13,8 +13,8 @@ import com.rgk.qhatu.feature.setting.data.database.dao.CategoryDao
 import com.rgk.qhatu.feature.setting.data.database.dao.ConfigurationDao
 import com.rgk.qhatu.feature.setting.data.database.dao.StoreDao
 import com.rgk.qhatu.feature.setting.data.database.dao.UnitMeasureDao
-import com.rgk.qhatu.feature.transaction.data.database.dao.OperationDao
-import com.rgk.qhatu.feature.transaction.data.database.dao.OperationDetailDao
+import com.rgk.qhatu.feature.operation.data.database.dao.OperationDao
+import com.rgk.qhatu.feature.operation.data.database.dao.OperationDetailDao
 import com.rgk.qhatu.feature.purchase.data.database.dao.PurchaseDao
 import com.rgk.qhatu.feature.sale.data.database.dao.SaleDao
 import org.koin.dsl.module

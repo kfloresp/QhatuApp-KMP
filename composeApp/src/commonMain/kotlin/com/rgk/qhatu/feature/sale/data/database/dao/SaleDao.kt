@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.rgk.qhatu.feature.sale.data.database.entity.SaleEntity
-import com.rgk.qhatu.feature.transaction.data.database.entity.SaleWithOperation
+import com.rgk.qhatu.feature.sale.data.database.entity.SaleWithOperationRelation
 
 @Dao
 interface SaleDao {
@@ -16,9 +16,10 @@ interface SaleDao {
 
     @Transaction
     @Query("SELECT * FROM sale WHERE operationId = :id")
-    suspend fun getSaleWithOperation(id: String): SaleWithOperation?
+    suspend fun getSaleWithOperation(id: String): SaleWithOperationRelation?
 
     @Transaction
     @Query("SELECT * FROM sale")
-    suspend fun getAllSalesWithOperations(): List<SaleWithOperation>
+    suspend fun getAllSalesWithOperations(): List<SaleWithOperationRelation>
+
 }

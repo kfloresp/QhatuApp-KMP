@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.rgk.qhatu.feature.purchase.data.database.entity.PurchaseEntity
-import com.rgk.qhatu.feature.transaction.data.database.entity.PurchaseWithOperation
+import com.rgk.qhatu.feature.purchase.data.database.entity.PurchaseWithOperationRelation
 
 @Dao
 interface PurchaseDao {
@@ -20,5 +20,6 @@ interface PurchaseDao {
 
     @Transaction
     @Query("SELECT * FROM purchase")
-    suspend fun getAllPurchasesWithOperations(): List<PurchaseWithOperation>
+    suspend fun getAllPurchasesWithOperations(): List<PurchaseWithOperationRelation>
+
 }

@@ -1,4 +1,4 @@
-package com.rgk.qhatu.feature.transaction.data.database.entity
+package com.rgk.qhatu.feature.operation.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 data class OperationDetailEntity(
     @PrimaryKey
     val detailId: String,
-    val operationId: Long,
-    val productId: Long,
+    val operationId: String,
+    val productId: String,
     val quantity: Double,
     val unitPrice: Double,
     val totalPrice: Double = quantity * unitPrice,
