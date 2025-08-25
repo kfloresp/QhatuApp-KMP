@@ -5,8 +5,6 @@ import com.rgk.qhatu.feature.auth.data.remote.AuthRemoteDataSource
 import com.rgk.qhatu.feature.customer.data.remote.ClientRemoteDataSource
 import com.rgk.qhatu.feature.payment.data.remote.ClientPaymentRemoteDataSource
 import com.rgk.qhatu.feature.product.data.remote.ProductRemoteDataSource
-import com.rgk.qhatu.feature.sale.data.remote.TransactionDetailRemoteDataSource
-import com.rgk.qhatu.feature.sale.data.remote.TransactionRemoteDataSource
 import com.rgk.qhatu.feature.setting.data.remote.BrandRemoteDataSource
 import com.rgk.qhatu.feature.setting.data.remote.CategoryRemoteDataSource
 import com.rgk.qhatu.feature.setting.data.remote.ConfigurationRemoteDataSource
@@ -24,8 +22,6 @@ val dataSourceModule = module {
     factoryOf(::ClientRemoteDataSource)
     factoryOf(::ConfigurationRemoteDataSource)
     factoryOf(::ProductRemoteDataSource)
-    factoryOf(::TransactionDetailRemoteDataSource)
-    factoryOf(::TransactionRemoteDataSource)
     factoryOf(::UnitMeasureRemoteDataSource)
     factoryOf(::StoreRemoteDataSource)
 }

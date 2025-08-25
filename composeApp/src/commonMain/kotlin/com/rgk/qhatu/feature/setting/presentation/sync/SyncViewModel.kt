@@ -8,8 +8,6 @@ import com.rgk.qhatu.feature.audit.domain.usecase.SyncAuditLogUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
-import com.rgk.qhatu.feature.sale.domain.usecase.SyncSaleDetailUseCase
-import com.rgk.qhatu.feature.sale.domain.usecase.SyncSaleUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncBrandUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncCategoryUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncConfigurationUseCase
@@ -31,8 +29,6 @@ class SyncViewModel(
     private val syncCustomer: SyncCustomerUseCase,
     private val syncPayment: SyncPaymentUseCase,
     private val syncProduct: SyncProductUseCase,
-    private val syncSale: SyncSaleUseCase,
-    private val syncSaleDetail: SyncSaleDetailUseCase,
     private val syncConfiguration: SyncConfigurationUseCase,
 ) : ViewModel() {
     private val DELAY_TIME = 500L
@@ -96,11 +92,9 @@ class SyncViewModel(
                 }
 
                 SyncType.SALE -> {
-                    syncSale(SyncOperation.RemoteToLocal())
                 }
 
                 SyncType.SALE_DETAIL -> {
-                    syncSaleDetail(SyncOperation.RemoteToLocal())
                 }
 
                 SyncType.CONFIGURATION -> {

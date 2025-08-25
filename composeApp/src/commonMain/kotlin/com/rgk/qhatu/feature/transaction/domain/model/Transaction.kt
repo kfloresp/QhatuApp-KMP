@@ -1,4 +1,4 @@
-package com.rgk.qhatu.feature.sale.domain.model
+package com.rgk.qhatu.feature.transaction.domain.model
 
 data class Transaction(
     val id: String,
@@ -12,3 +12,15 @@ data class Transaction(
     val fecha_sincronizado: Long = 0,
     val flag_sincronizado: Int = 0
 )
+
+enum class TransactionType(val value: String) {
+    SALE("Sale"),
+    PURCHASE("Purchase"),
+    INVENTORY("Inventory");
+}
+
+enum class TransactionStatus(val value: String) {
+    PENDING("Pending"),
+    COMPLETED("Completed"),
+    CANCELLED("Cancelled");
+}

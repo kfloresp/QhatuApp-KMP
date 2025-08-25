@@ -1,8 +1,6 @@
-package com.rgk.qhatu.feature.sale.data.remote.model
-import kotlinx.serialization.Serializable
+package com.rgk.qhatu.feature.transaction.domain.model
 
-@Serializable
-data class TransactionDetailModel(
+data class TransactionDetail(
     val id: String,
     val movimiento_id: String,
     val producto_id: String,
@@ -14,3 +12,5 @@ data class TransactionDetailModel(
     val fecha_sincronizado: Long = 0,
     val flag_sincronizado: Int = 0
 )
+
+
