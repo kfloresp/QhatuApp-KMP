@@ -17,6 +17,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.rgk.qhatu.common.components.toolbar.QhatuToolbar
 import com.rgk.qhatu.feature.auth.presentation.auth.AuthDestination
 import com.rgk.qhatu.feature.cart.presentation.cart.CartDestination
+import com.rgk.qhatu.feature.cart.presentation.checkout.CheckoutDestination
 import com.rgk.qhatu.feature.customer.presentation.customer.CustomerDestination
 import com.rgk.qhatu.feature.customer.presentation.customerform.CustomerFormDestination
 import com.rgk.qhatu.feature.customer.presentation.customerprofile.CustomerProfileDestination
@@ -41,6 +42,7 @@ import qhatuapp.composeapp.generated.resources.title_setting
 import qhatuapp.composeapp.generated.resources.tx_brands_title
 import qhatuapp.composeapp.generated.resources.tx_cart_title
 import qhatuapp.composeapp.generated.resources.tx_categories_title
+import qhatuapp.composeapp.generated.resources.tx_checkout_title
 import qhatuapp.composeapp.generated.resources.tx_customer_profile_title
 import qhatuapp.composeapp.generated.resources.tx_customer_resume_summary_title
 import qhatuapp.composeapp.generated.resources.tx_customer_title
@@ -68,7 +70,8 @@ private val allDestinations = mapOf(
     ProductFormDestination::class.qualifiedName to Res.string.tx_product_title,
     CartDestination::class.qualifiedName to Res.string.tx_cart_title,
     SaleDestination::class.qualifiedName to Res.string.tx_sales_title,
-    SearchDestination::class.qualifiedName to Res.string.title_search
+    SearchDestination::class.qualifiedName to Res.string.title_search,
+    CheckoutDestination::class.qualifiedName to Res.string.tx_checkout_title,
 )
 val routesWithoutTopBar = listOf(
     SplashDestination::class,

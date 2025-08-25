@@ -2,12 +2,10 @@ package com.rgk.qhatu.feature.cart.presentation.cart.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,7 +15,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,7 +30,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.rgk.qhatu.common.theme.QhatuTheme
-import com.rgk.qhatu.common.util.orZero
 import com.rgk.qhatu.feature.cart.domain.model.CartItem
 import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
@@ -43,16 +39,14 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.ic_remove_shopping_cart_24
 import qhatuapp.composeapp.generated.resources.image_place_holder
-import qhatuapp.composeapp.generated.resources.tx_cart_title
 import qhatuapp.composeapp.generated.resources.tx_cart_total_text
 
 @Composable
 fun ItemProductCart(
     product: Product,
     productActions: ProductActions? = null,
-    onRemoveProduct: (Product) -> Unit,
+    onRemoveProduct: (Product) -> Unit = {},
 ) {
     val cartItem = product.cartItem
     val count = cartItem?.quantity ?: 0

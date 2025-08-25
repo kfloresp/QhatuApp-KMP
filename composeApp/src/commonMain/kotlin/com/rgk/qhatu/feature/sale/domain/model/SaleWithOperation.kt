@@ -6,6 +6,6 @@ import com.rgk.qhatu.feature.operation.domain.model.OperationType
 
 data class SaleWithOperation(
     val operation: Operation = Operation(type = OperationType.SALE),
-    val sale: Sale,
+    val sale: Sale = Sale(),
     val details: List<OperationDetail> = emptyList(),
 )

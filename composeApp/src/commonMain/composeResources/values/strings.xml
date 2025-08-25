@@ -132,6 +132,10 @@
     <string name="tx_cart_confirm">Continuar</string>
 
     <!-- Sales -->
+    <string name="tx_checkout_title">Resumen de venta</string>
+    <string name="tx_checkout_product">Productos</string>
+
+    <!-- Sales -->
     <string name="tx_sales_title">Historial de ventas</string>
 
     <!-- Componentes generales -->

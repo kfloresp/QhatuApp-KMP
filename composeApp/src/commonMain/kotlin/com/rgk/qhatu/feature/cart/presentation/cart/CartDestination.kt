@@ -38,6 +38,7 @@ data object CartDestination
 
 internal fun NavGraphBuilder.cartDestination(
     setLoading: (Boolean) -> Unit,
+    navigateToCheckout: () -> Unit,
     onBackPopUp: () -> Unit,
 ) {
     composable<CartDestination> {
@@ -78,7 +79,7 @@ internal fun NavGraphBuilder.cartDestination(
                 CartSummarySection(
                     cartSummary?.totalSummary.orEmpty(),
                     onShoppingCartClick = {
-
+                        navigateToCheckout()
                     },
                 )
             }

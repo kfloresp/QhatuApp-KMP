@@ -3,6 +3,7 @@ package com.rgk.qhatu.di
 import com.rgk.qhatu.MainViewModel
 import com.rgk.qhatu.feature.auth.presentation.auth.AuthViewModel
 import com.rgk.qhatu.feature.cart.presentation.cart.CartViewModel
+import com.rgk.qhatu.feature.cart.presentation.checkout.CheckoutViewModel
 import com.rgk.qhatu.feature.customer.presentation.customer.CustomerViewModel
 import com.rgk.qhatu.feature.customer.presentation.customerform.CustomerFormViewModel
 import com.rgk.qhatu.feature.customer.presentation.customerprofile.CustomerProfileViewModel
@@ -42,4 +43,5 @@ val viewModelModule = module {
     viewModelOf(::ProductFormViewModel)
     viewModelOf(::SearchViewModel)
     viewModelOf(::CartViewModel)
+    viewModelOf(::CheckoutViewModel)
 }
