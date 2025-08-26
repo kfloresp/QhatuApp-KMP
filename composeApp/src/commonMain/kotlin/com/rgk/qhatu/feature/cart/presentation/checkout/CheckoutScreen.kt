@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -21,6 +22,7 @@ import com.rgk.qhatu.feature.cart.domain.model.CartSummary
 import com.rgk.qhatu.feature.cart.presentation.checkout.component.ItemProductCheckout
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.payment.presentation.paymentform.ID_CONFIG_TYPE_PAYMENT_DEFAULT
+import com.rgk.qhatu.feature.product.domain.model.toOperationDetail
 import com.rgk.qhatu.feature.sale.domain.model.SaleWithOperation
 import com.rgk.qhatu.feature.setting.domain.model.Configuration
 import org.jetbrains.compose.resources.stringResource
@@ -49,7 +51,7 @@ fun CheckoutScreen(
     val selectedName = selectedCustomer?.nameCustomer.orEmpty()
 
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
     ) {
         ClickableTextField(
             selectedText = selectedName,
@@ -59,7 +61,7 @@ fun CheckoutScreen(
             },
             onClear = {
                 onClearCustomer.invoke()
-            }
+            },
         )
 
         Text(
@@ -67,7 +69,7 @@ fun CheckoutScreen(
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp)
         )
 
         ChipGroup(
@@ -82,7 +84,6 @@ fun CheckoutScreen(
                     )
                 }
             },
-            modifier = Modifier.padding(horizontal = 8.dp),
             errorText = ""
         )
 
@@ -95,7 +96,6 @@ fun CheckoutScreen(
                         )
                     }
                 }, params = CustomTextFieldParams(
-                    modifier = Modifier.padding(horizontal = 8.dp),
                     label = stringResource(Res.string.tx_payment_operation_number_optional),
                     singleLine = true,
                     maxLength = 10,
@@ -111,12 +111,19 @@ fun CheckoutScreen(
 
         if (uiState is CheckoutUiState.Success) {
             val items = uiState.result
+            LaunchedEffect(items) {
+                onFieldChange {
+                    copy(
+                        details = items.map { it.toOperationDetail() }
+                    )
+                }
+            }
             Text(
                 text = "${stringResource(Res.string.tx_checkout_product)} ${cartSummary?.itemCountSummary.orEmpty()}",
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp)
+                modifier = Modifier.padding(vertical = 8.dp)
             )
             LazyColumn(
                 modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),

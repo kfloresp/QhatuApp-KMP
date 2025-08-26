@@ -9,7 +9,7 @@ data class OperationDetailEntity(
     val detailId: String,
     val operationId: String,
     val productId: String,
-    val quantity: Double,
+    val quantity: Int,
     val unitPrice: Double,
     val totalPrice: Double = quantity * unitPrice,
     val batch: String? = null,

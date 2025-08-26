@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.rgk.qhatu.common.theme.QhatuTheme
+import com.rgk.qhatu.common.util.orZero
 import com.rgk.qhatu.feature.cart.domain.model.CartItem
 import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
@@ -38,13 +39,12 @@ fun ItemProductCheckout(
     product: Product,
 ) {
     val cartItem = product.cartItem
-    val count = cartItem?.quantity ?: 0
+    val count = cartItem?.quantity.orZero()
     val unitPriceAmount = cartItem?.unitPriceAmount.orEmpty()
     val totalPriceAmount = cartItem?.totalPriceAmount.orEmpty()
 
     Column(
         modifier = Modifier.fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp)
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.outlineVariant,
@@ -53,7 +53,7 @@ fun ItemProductCheckout(
     ) {
         Row {
             AsyncImage(
-                model = product.imageProduct.firstOrNull()?.filename ?: "",
+                model = product.imageProduct.firstOrNull()?.filename.orEmpty(),
                 contentDescription = product.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.size(100.dp)

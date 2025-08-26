@@ -7,7 +7,6 @@ import com.rgk.qhatu.feature.cart.domain.model.CartSummary
 import com.rgk.qhatu.feature.cart.domain.usecase.GetRefreshCartSummaryUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartItemsUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartSummaryUseCase
-import com.rgk.qhatu.feature.cart.presentation.cart.CartUiState
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersWithDebtUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsMethodUseCase
