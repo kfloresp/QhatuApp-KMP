@@ -29,6 +29,7 @@ import qhatuapp.composeapp.generated.resources.ic_remove_shopping_cart_24
 import qhatuapp.composeapp.generated.resources.tx_cart_confirm_delete_all
 import qhatuapp.composeapp.generated.resources.tx_cart_confirm_resume_all
 import qhatuapp.composeapp.generated.resources.tx_cart_title
+import qhatuapp.composeapp.generated.resources.tx_cart_total_summary
 import qhatuapp.composeapp.generated.resources.tx_global_cancel
 import qhatuapp.composeapp.generated.resources.tx_global_confirm_continue
 import qhatuapp.composeapp.generated.resources.tx_global_confirmation
@@ -77,7 +78,7 @@ internal fun NavGraphBuilder.cartDestination(
         ProvideBottomBarApp {
             if (cartSummary?.hasItems ?: false) {
                 CartSummarySection(
-                    cartSummary?.totalSummary.orEmpty(),
+                    shoppingCartTotal = cartSummary?.totalSummary.orEmpty(),
                     onShoppingCartClick = {
                         navigateToCheckout()
                     },

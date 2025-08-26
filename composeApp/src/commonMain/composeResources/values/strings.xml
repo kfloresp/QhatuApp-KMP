@@ -134,6 +134,11 @@
     <!-- Sales -->
     <string name="tx_checkout_title">Resumen de venta</string>
     <string name="tx_checkout_product">Productos</string>
+    <string name="tx_checkout_subtotal">Subtotal</string>
+    <string name="tx_checkout_subtotal_igv">Sub total (Inc IGV)</string>
+    <string name="tx_checkout_subtotal_discount">Total descuentos</string>
+    <string name="tx_checkout_subtotal_total">Total</string>
+    <string name="tx_checkout_confirm">Pagar</string>
 
     <!-- Sales -->
     <string name="tx_sales_title">Historial de ventas</string>

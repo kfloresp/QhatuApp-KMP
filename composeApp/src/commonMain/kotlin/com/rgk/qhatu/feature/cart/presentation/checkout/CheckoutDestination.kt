@@ -13,7 +13,10 @@ import com.rgk.qhatu.common.components.search.SearchContent
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.navigation.ProvideBottomBarApp
 import kotlinx.serialization.Serializable
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_checkout_confirm
 
 @Serializable
 data object CheckoutDestination
@@ -37,10 +40,11 @@ internal fun NavGraphBuilder.checkoutDestination(
         ProvideBottomBarApp {
             if (cartSummary?.hasItems ?: false) {
                 CartSummarySection(
-                    cartSummary?.totalSummary.orEmpty(),
+                    shoppingCartTotal = cartSummary?.totalSummary.orEmpty(),
                     onShoppingCartClick = {
                         println("CHECKOUT: ${formState.fields}")
                     },
+                    textConfirmButton = stringResource(Res.string.tx_checkout_confirm)
                 )
             }
         }

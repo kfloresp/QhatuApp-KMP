@@ -46,6 +46,6 @@ class SaveSaleWithDetailsUseCase(
         operationRepository.updateOperation(
             operation.copy(status = operationStatus)
         )
-        cartRepository.deleteCart()
+        //cartRepository.deleteCart()
     }
 }

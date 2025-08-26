@@ -5,6 +5,9 @@ data class Sale(
     val customerId: String = "",
     val vaucherType: SaleVaucherType = SaleVaucherType.SALES_NOTE,
     val vaucherOperationNo: String = "",
+    val subtotalWithIGV: Double = 0.0,
+    val totalDiscounts: Double = 0.0,
+    val grandTotal: Double = 0.0,
     val paymentMethodId: String = "",
     val paymentOperationNo: String? = null,
     val amountPaid: Double? = null,
@@ -13,6 +16,6 @@ data class Sale(
 
 enum class SaleVaucherType(val value: String) {
     SALES_NOTE("Nota de venta"),
-    //RECEIPT("Boleta"),
-    //INVOICE("Factura"),
+    RECEIPT("Boleta"),
+    INVOICE("Factura"),
 }
