@@ -16,8 +16,8 @@ class SaleRepositoryImpl(private val saleDao: SaleDao) : SaleRepository {
         return saleDao.getSaleWithOperation(id)?.toDomain()
     }
 
-    override suspend fun getLastVoucherOperationNo(): String {
-        return saleDao.getLastVoucherOperationNo().orEmpty()
+    override suspend fun getLastVoucherOperationNo(): String? {
+        return saleDao.getLastVoucherOperationNo()
     }
 
     override suspend fun getAllSalesWithOperations(): List<SaleWithOperation> {

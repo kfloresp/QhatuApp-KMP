@@ -21,6 +21,7 @@ fun NavController.navigateToCartGraph(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.cartGraph(
     navController: NavController,
+    navigateToHome: () -> Unit,
     setLoading: (Boolean) -> Unit,
 ) {
     navigation<CartGraph>(
@@ -38,6 +39,7 @@ fun NavGraphBuilder.cartGraph(
         checkoutDestination(
             setLoading = setLoading,
             onBackPopUp = { navController.popBackStack() },
+            navigateToHome = navigateToHome
         )
     }
 }

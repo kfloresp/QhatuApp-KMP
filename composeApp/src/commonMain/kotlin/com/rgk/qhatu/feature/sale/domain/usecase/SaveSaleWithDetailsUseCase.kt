@@ -2,6 +2,7 @@ package com.rgk.qhatu.feature.sale.domain.usecase
 
 import com.rgk.qhatu.common.extension.safeCall
 import com.rgk.qhatu.common.model.SyncResult
+import com.rgk.qhatu.common.util.generateSaleCode
 import com.rgk.qhatu.common.util.generateUUID
 import com.rgk.qhatu.common.util.getCurrentTimestamp
 import com.rgk.qhatu.feature.cart.domain.repository.CartRepository
@@ -31,7 +32,7 @@ class SaveSaleWithDetailsUseCase(
         )
         val sale = saleWithOperation.sale.copy(
             operationId = operationId,
-            voucherOperationNo = lastVoucherOperationNo,
+            voucherOperationNo = generateSaleCode(lastVoucherOperationNo),
             subtotalWithIGV = subTotalWithIGV,
             totalDiscounts = totalDiscounts,
         )
@@ -42,10 +43,6 @@ class SaveSaleWithDetailsUseCase(
         operationRepository.insertOperation(operation)
         saleRepository.insertSale(sale)
         operationDetailRepository.insertDetails(details)
-
-        println("SALE: $sale")
-        println("DETAILS: $details")
-        println("OPERATION: $operation")
-        //cartRepository.deleteCart()
+        cartRepository.deleteCart()
     }
 }

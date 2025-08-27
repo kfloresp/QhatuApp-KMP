@@ -8,6 +8,7 @@ import com.rgk.qhatu.feature.cart.domain.usecase.GetRefreshCartSummaryUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartItemsUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartSummaryUseCase
 import com.rgk.qhatu.feature.customer.domain.model.Customer
+import com.rgk.qhatu.feature.customer.domain.model.GENERIC_CUSTOMER
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersWithDebtUseCase
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.usecase.GetProductByIdUseCase
@@ -66,11 +67,11 @@ class CheckoutViewModel(
             val result = getCustomerWithDebtsUseCase()
             when (result) {
                 is SyncResult.Error -> {
-                    _customerList.value = emptyList()
+                    _customerList.value = listOf(GENERIC_CUSTOMER)
                 }
 
                 is SyncResult.Success<List<Customer>> -> {
-                    _customerList.value = result.data
+                    _customerList.value = listOf(GENERIC_CUSTOMER) + result.data
                     allItemsCustomer = result.data
                 }
             }
@@ -144,14 +145,17 @@ class CheckoutViewModel(
     fun saveCheckout() {
         viewModelScope.launch {
             val result = saveSaleWithDetailsUseCase(_formState.value.fields)
-            when (result){
+            when (result) {
                 is SyncResult.Error -> {
                     _uiState.update {
                         CheckoutUiState.Error(result.exception.message.orEmpty())
                     }
                 }
-                is SyncResult.Success<*> -> {
 
+                is SyncResult.Success<*> -> {
+                    _uiState.update {
+                        CheckoutUiState.SuccessSave
+                    }
                 }
             }
         }

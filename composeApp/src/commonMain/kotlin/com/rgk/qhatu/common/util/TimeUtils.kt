@@ -16,6 +16,7 @@ fun formatTimestamp(timestamp: Long, pattern: String = "dd/MM/yyyy HH:mm:ss"): S
         "dd" to dateTime.date.dayOfMonth.toString().padStart(2, '0'),
         "MM" to dateTime.date.monthNumber.toString().padStart(2, '0'),
         "yyyy" to dateTime.date.year.toString(),
+        "yy" to dateTime.date.year.toString().takeLast(2),
         "HH" to dateTime.time.hour.toString().padStart(2, '0'),
         "mm" to dateTime.time.minute.toString().padStart(2, '0'),
         "ss" to dateTime.time.second.toString().padStart(2, '0')

@@ -11,6 +11,7 @@ import com.rgk.qhatu.common.components.bottombar.CartSummarySection
 import com.rgk.qhatu.common.components.bottomsheet.CustomBottomSheet
 import com.rgk.qhatu.common.components.search.SearchContent
 import com.rgk.qhatu.feature.customer.domain.model.Customer
+import com.rgk.qhatu.feature.customer.domain.model.GENERIC_CUSTOMER
 import com.rgk.qhatu.navigation.ProvideBottomBarApp
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
@@ -23,6 +24,7 @@ data object CheckoutDestination
 
 internal fun NavGraphBuilder.checkoutDestination(
     setLoading: (Boolean) -> Unit,
+    navigateToHome: () -> Unit,
     onBackPopUp: () -> Unit,
 ) {
     composable<CheckoutDestination> {
@@ -33,7 +35,7 @@ internal fun NavGraphBuilder.checkoutDestination(
         val cartSummary by viewModel.cartSummary.collectAsState()
 
         var selectedCustomerToClick by remember { mutableStateOf(false) }
-        var selectedCustomer by remember { mutableStateOf<Customer?>(null) }
+        var selectedCustomer by remember { mutableStateOf<Customer?>(GENERIC_CUSTOMER) }
         var queryCustomer by remember { mutableStateOf("") }
 
         ProvideBottomBarApp {
@@ -41,8 +43,7 @@ internal fun NavGraphBuilder.checkoutDestination(
                 CartSummarySection(
                     shoppingCartTotal = cartSummary?.totalSummary.orEmpty(),
                     onShoppingCartClick = {
-                        println("CHECKOUT ${formState.fields}")
-                        //viewModel.saveCheckout()
+                        viewModel.saveCheckout()
                     },
                     textConfirmButton = stringResource(Res.string.tx_checkout_confirm)
                 )
@@ -62,6 +63,7 @@ internal fun NavGraphBuilder.checkoutDestination(
             cartSummary = cartSummary,
             onBackPopUp = onBackPopUp,
             setLoading = setLoading,
+            navigateToHome = navigateToHome
         )
 
         if (selectedCustomerToClick) {

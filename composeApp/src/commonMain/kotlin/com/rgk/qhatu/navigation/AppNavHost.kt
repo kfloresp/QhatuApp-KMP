@@ -62,7 +62,9 @@ fun AppNavHost(
         searchGraph(navigateToCart = { navController.navigateToCartGraph() }, openScanQR = {})
         saleGraph()
         cartGraph(
-            navController = navController, setLoading = setLoading
+            navController = navController,
+            setLoading = setLoading,
+            navigateToHome = { navController.navigateToHomeGraph() }
         )
         settingGraph(
             navController = navController,

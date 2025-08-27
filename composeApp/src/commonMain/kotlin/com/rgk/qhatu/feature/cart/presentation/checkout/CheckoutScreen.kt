@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -33,7 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.rgk.qhatu.common.components.chip.ChipGroup
 import com.rgk.qhatu.common.components.textfield.ClickableTextField
 import com.rgk.qhatu.common.components.textfield.CustomTextField
@@ -68,12 +65,22 @@ fun CheckoutScreen(
     onCustomerClick: () -> Unit,
     cartSummary: CartSummary?,
     onBackPopUp: () -> Unit,
+    navigateToHome: () -> Unit,
     setLoading: (Boolean) -> Unit,
 ) {
     val fields = formState.fields
     val selectedName = selectedCustomer?.nameCustomer.orEmpty()
+    val selectedId = selectedCustomer?.id.orEmpty()
     val vouchers: List<SaleVoucherType> = SaleVoucherType.entries
     val methodPayments: List<SalePaymentMethod> = SalePaymentMethod.entries
+
+    if (selectedId.isNotEmpty()) {
+        onFieldChange {
+            copy(
+                sale = sale.copy(customerId = selectedId)
+            )
+        }
+    }
 
     Column(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)
@@ -121,7 +128,7 @@ fun CheckoutScreen(
                             )
                         }
                     }, params = CustomTextFieldParams(
-                        label = "Monto efectivo",
+                        label = "Monto efectivo (Opcional)",
                         singleLine = true,
                         maxLength = 10,
                     )
@@ -189,6 +196,10 @@ fun CheckoutScreen(
             cartSummary?.let {
                 SectionCartSummary(it)
             }
+        }
+
+        if (uiState is CheckoutUiState.SuccessSave) {
+            navigateToHome()
         }
     }
 }
