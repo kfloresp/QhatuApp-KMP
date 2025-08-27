@@ -6,11 +6,11 @@ import com.rgk.qhatu.feature.setting.data.remote.UnitMeasureRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.common.util.generateUUID
+import com.rgk.qhatu.common.util.getCurrentTimestamp
 import com.rgk.qhatu.feature.setting.domain.mapper.toDomain
 import com.rgk.qhatu.feature.setting.domain.mapper.toEntity
 import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
 import com.rgk.qhatu.feature.setting.domain.repository.UnitMeasureRepository
-import com.rgk.qhatu.common.util.TimeUtils
 
 class UnitMeasureRepositoryImpl(
     private val sourceRemote: UnitMeasureRemoteDataSource,
@@ -75,7 +75,7 @@ class UnitMeasureRepositoryImpl(
             sourceLocal.deleteUnsynced()
             val newClients = remoteClients.filterNot { it.id in localSyncedIds }
             sourceLocal.save(newClients.map {
-                it.toEntity().copy(lastUpdated = TimeUtils.getCurrentTimestamp())
+                it.toEntity().copy(lastUpdated = getCurrentTimestamp())
             })
         }
     }

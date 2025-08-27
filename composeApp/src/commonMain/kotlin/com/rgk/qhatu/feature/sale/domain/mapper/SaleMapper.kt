@@ -1,21 +1,23 @@
 package com.rgk.qhatu.feature.sale.domain.mapper
 
+import com.rgk.qhatu.common.util.orZero
 import com.rgk.qhatu.feature.sale.data.database.entity.SaleEntity
 import com.rgk.qhatu.feature.sale.domain.model.Sale
-import com.rgk.qhatu.feature.sale.domain.model.SaleVaucherType
+import com.rgk.qhatu.feature.sale.domain.model.SalePaymentMethod
+import com.rgk.qhatu.feature.sale.domain.model.SaleVoucherType
 
 fun SaleEntity.toDomain(): Sale {
     return Sale(
         operationId = operationId,
         customerId = customerId,
-        vaucherType = SaleVaucherType.entries.first { it.value == vaucherType },
-        vaucherOperationNo = vaucherOperationNo,
+        voucherType = SaleVoucherType.entries.first { it.value == voucherType },
+        voucherOperationNo = voucherOperationNo,
         subtotalWithIGV = subtotalWithIGV,
         totalDiscounts = totalDiscounts,
         grandTotal = grandTotal,
-        paymentMethodId = paymentMethodId,
+        paymentMethod = SalePaymentMethod.entries.first { it.value == paymentMethod },
         paymentOperationNo = paymentOperationNo,
-        amountPaid = amountPaid,
+        amountPaid = amountPaid.toString(),
         changeReturned = changeReturned
     )
 }
@@ -24,14 +26,14 @@ fun Sale.toEntity(): SaleEntity {
     return SaleEntity(
         operationId = operationId,
         customerId = customerId,
-        vaucherType = vaucherType.value,
-        vaucherOperationNo = vaucherOperationNo,
+        voucherType = voucherType.value,
+        voucherOperationNo = voucherOperationNo,
         subtotalWithIGV = subtotalWithIGV,
         totalDiscounts = totalDiscounts,
         grandTotal = grandTotal,
-        paymentMethodId = paymentMethodId,
+        paymentMethod = paymentMethod.value,
         paymentOperationNo = paymentOperationNo,
-        amountPaid = amountPaid,
+        amountPaid = amountPaid?.toDouble().orZero(),
         changeReturned = changeReturned
     )
 }

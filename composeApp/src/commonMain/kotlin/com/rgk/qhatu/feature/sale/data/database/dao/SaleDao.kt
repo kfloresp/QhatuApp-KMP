@@ -22,4 +22,6 @@ interface SaleDao {
     @Query("SELECT * FROM sale")
     suspend fun getAllSalesWithOperations(): List<SaleWithOperationRelation>
 
+    @Query("SELECT voucherOperationNo FROM sale order by operationId desc")
+    suspend fun getLastVoucherOperationNo(): String?
 }

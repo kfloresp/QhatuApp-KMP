@@ -6,6 +6,7 @@ import com.rgk.qhatu.feature.product.data.remote.ProductRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.common.util.generateUUID
+import com.rgk.qhatu.common.util.getCurrentTimestamp
 import com.rgk.qhatu.feature.product.data.database.dao.ImageProductDao
 import com.rgk.qhatu.feature.product.data.database.entity.ImageProductEntity
 import com.rgk.qhatu.feature.product.domain.mapper.toDomain
@@ -15,7 +16,6 @@ import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.repository.ProductRepository
 import com.rgk.qhatu.shared.SharedImage
 import com.rgk.qhatu.shared.SharedImageStorage
-import com.rgk.qhatu.common.util.TimeUtils
 
 class ProductRepositoryImpl(
     private val sourceRemote: ProductRemoteDataSource,
@@ -128,7 +128,7 @@ class ProductRepositoryImpl(
             sourceLocal.deleteUnsynced()
             val newClients = remoteClients.filterNot { it.id in localSyncedIds }
             sourceLocal.save(newClients.map {
-                it.toEntity().copy(syncedDate = TimeUtils.getCurrentTimestamp())
+                it.toEntity().copy(syncedDate = getCurrentTimestamp())
             })
         }
     }

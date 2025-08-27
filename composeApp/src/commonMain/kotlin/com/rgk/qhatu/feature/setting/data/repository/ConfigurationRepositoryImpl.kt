@@ -5,11 +5,11 @@ import com.rgk.qhatu.feature.setting.data.database.dao.ConfigurationDao
 import com.rgk.qhatu.feature.setting.data.remote.ConfigurationRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
+import com.rgk.qhatu.common.util.getCurrentTimestamp
 import com.rgk.qhatu.feature.setting.domain.mapper.toDomain
 import com.rgk.qhatu.feature.setting.domain.mapper.toEntity
 import com.rgk.qhatu.feature.setting.domain.model.Configuration
 import com.rgk.qhatu.feature.setting.domain.repository.ConfigurationRepository
-import com.rgk.qhatu.common.util.TimeUtils
 
 class ConfigurationRepositoryImpl(
     private val sourceRemote: ConfigurationRemoteDataSource,
@@ -70,7 +70,7 @@ class ConfigurationRepositoryImpl(
             sourceLocal.deleteUnsynced()
             val newClients = remoteClients.filterNot { it.id in localSyncedIds }
             sourceLocal.save(newClients.map {
-                it.toEntity().copy(lastUpdated = TimeUtils.getCurrentTimestamp())
+                it.toEntity().copy(lastUpdated = getCurrentTimestamp())
             })
         }
     }

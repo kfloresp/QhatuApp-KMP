@@ -1,7 +1,5 @@
 package com.rgk.qhatu.common.util
 
-import com.rgk.qhatu.common.util.TimeUtils.getCurrentTimestamp
-
 fun generateUUID(): String {
     val allowedChars = ('a'..'f') + ('0'..'9')
     return (1..32)

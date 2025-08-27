@@ -6,12 +6,12 @@ import com.rgk.qhatu.feature.customer.data.remote.ClientRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.common.util.generateUUID
+import com.rgk.qhatu.common.util.getCurrentTimestamp
 import com.rgk.qhatu.feature.customer.domain.mapper.toDomain
 import com.rgk.qhatu.feature.customer.domain.mapper.toEntity
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.customer.domain.model.CustomerSummary
 import com.rgk.qhatu.feature.customer.domain.repository.CustomerRepository
-import com.rgk.qhatu.common.util.TimeUtils
 import kotlinx.coroutines.delay
 
 class CustomerRepositoryImpl(
@@ -114,7 +114,7 @@ class CustomerRepositoryImpl(
             val newClients = remoteClients.filterNot { it.id in localSyncedIds }
             sourceLocal.save(newClients.map {
                 it.toEntity().copy(
-                    lastUpdated = TimeUtils.getCurrentTimestamp(),
+                    lastUpdated = getCurrentTimestamp(),
                     isSynced = true
                 )
             })

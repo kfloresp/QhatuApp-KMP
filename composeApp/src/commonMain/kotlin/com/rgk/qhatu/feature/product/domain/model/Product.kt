@@ -35,6 +35,7 @@ fun Product.toOperationDetail(): OperationDetail = OperationDetail(
     productId = this.id,
     quantity = this.cartItem?.quantity.orZero(),
     unitPrice = this.cartItem?.unitPrice.orZero(),
+    totalDiscount = this.cartItem?.totalDiscount.orZero(),
     batch = this.cartItem?.batch,
     expirationDate = this.cartItem?.expirationDate,
 )

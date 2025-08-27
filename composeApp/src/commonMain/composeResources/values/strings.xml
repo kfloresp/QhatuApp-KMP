@@ -139,6 +139,7 @@
     <string name="tx_checkout_subtotal_discount">Total descuentos</string>
     <string name="tx_checkout_subtotal_total">Total</string>
     <string name="tx_checkout_confirm">Pagar</string>
+    <string name="tx_checkout_voucher">Comprobante</string>
 
     <!-- Sales -->
     <string name="tx_sales_title">Historial de ventas</string>

@@ -41,21 +41,19 @@ import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
 import com.rgk.qhatu.feature.cart.domain.model.CartSummary
 import com.rgk.qhatu.feature.cart.presentation.checkout.component.ItemProductCheckout
 import com.rgk.qhatu.feature.customer.domain.model.Customer
-import com.rgk.qhatu.feature.payment.presentation.paymentform.ID_CONFIG_TYPE_PAYMENT_DEFAULT
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.model.toOperationDetail
-import com.rgk.qhatu.feature.sale.domain.model.SaleVaucherType
+import com.rgk.qhatu.feature.sale.domain.model.SalePaymentMethod
+import com.rgk.qhatu.feature.sale.domain.model.SaleVoucherType
 import com.rgk.qhatu.feature.sale.domain.model.SaleWithOperation
-import com.rgk.qhatu.feature.setting.domain.model.Configuration
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.tx_cart_title
 import qhatuapp.composeapp.generated.resources.tx_checkout_product
 import qhatuapp.composeapp.generated.resources.tx_checkout_subtotal
 import qhatuapp.composeapp.generated.resources.tx_checkout_subtotal_discount
 import qhatuapp.composeapp.generated.resources.tx_checkout_subtotal_igv
 import qhatuapp.composeapp.generated.resources.tx_checkout_subtotal_total
-import qhatuapp.composeapp.generated.resources.tx_checkout_title
+import qhatuapp.composeapp.generated.resources.tx_checkout_voucher
 import qhatuapp.composeapp.generated.resources.tx_payment_method
 import qhatuapp.composeapp.generated.resources.tx_payment_operation_number_optional
 import qhatuapp.composeapp.generated.resources.tx_payment_select_customer
@@ -68,14 +66,14 @@ fun CheckoutScreen(
     onClearCustomer: () -> Unit,
     selectedCustomer: Customer? = null,
     onCustomerClick: () -> Unit,
-    methodPayments: List<Configuration>,
     cartSummary: CartSummary?,
     onBackPopUp: () -> Unit,
     setLoading: (Boolean) -> Unit,
 ) {
     val fields = formState.fields
     val selectedName = selectedCustomer?.nameCustomer.orEmpty()
-    val vouchers: List<SaleVaucherType> = SaleVaucherType.entries
+    val vouchers: List<SaleVoucherType> = SaleVoucherType.entries
+    val methodPayments: List<SalePaymentMethod> = SalePaymentMethod.entries
 
     Column(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)
@@ -102,20 +100,56 @@ fun CheckoutScreen(
 
         ChipGroup(
             items = methodPayments,
-            keySelector = { it.id },
-            valueSelector = { it.name },
-            selectedKey = fields.sale.paymentMethodId,
+            keySelector = { it.name },
+            valueSelector = { it.value },
+            selectedKey = fields.sale.paymentMethod.name,
             onChipClick = { methodPayment ->
                 onFieldChange {
                     copy(
-                        sale = sale.copy(paymentMethodId = methodPayment.id)
+                        sale = sale.copy(paymentMethod = methodPayment)
                     )
                 }
             },
         )
+        when (fields.sale.paymentMethod) {
+            SalePaymentMethod.EFECTIVO -> {
+                CustomTextField(
+                    value = fields.sale.amountPaid.orEmpty(), onValueChange = {
+                        onFieldChange {
+                            copy(
+                                sale = sale.copy(paymentOperationNo = it)
+                            )
+                        }
+                    }, params = CustomTextFieldParams(
+                        label = "Monto efectivo",
+                        singleLine = true,
+                        maxLength = 10,
+                    )
+                )
+            }
+
+            SalePaymentMethod.YAPE,
+            SalePaymentMethod.PLIN,
+            SalePaymentMethod.DEPOSITO,
+                -> {
+                CustomTextField(
+                    value = fields.sale.paymentOperationNo.orEmpty(), onValueChange = {
+                        onFieldChange {
+                            copy(
+                                sale = sale.copy(paymentOperationNo = it)
+                            )
+                        }
+                    }, params = CustomTextFieldParams(
+                        label = stringResource(Res.string.tx_payment_operation_number_optional),
+                        singleLine = true,
+                        maxLength = 10,
+                    )
+                )
+            }
+        }
 
         Text(
-            text = "Comprobante",
+            text = stringResource(Res.string.tx_checkout_voucher),
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold,
@@ -126,31 +160,15 @@ fun CheckoutScreen(
             items = vouchers,
             keySelector = { it.name },
             valueSelector = { it.value },
-            selectedKey = fields.sale.vaucherType.name,
+            selectedKey = fields.sale.voucherType.name,
             onChipClick = { voucherType ->
                 onFieldChange {
                     copy(
-                        sale = sale.copy(vaucherType = voucherType)
+                        sale = sale.copy(voucherType = voucherType)
                     )
                 }
             },
         )
-
-        if (fields.sale.paymentMethodId != ID_CONFIG_TYPE_PAYMENT_DEFAULT && fields.sale.paymentMethodId.isNotEmpty()) {
-            CustomTextField(
-                value = fields.sale.paymentOperationNo.orEmpty(), onValueChange = {
-                    onFieldChange {
-                        copy(
-                            sale = sale.copy(paymentOperationNo = it)
-                        )
-                    }
-                }, params = CustomTextFieldParams(
-                    label = stringResource(Res.string.tx_payment_operation_number_optional),
-                    singleLine = true,
-                    maxLength = 10,
-                )
-            )
-        }
 
         setLoading(uiState is CheckoutUiState.Loading)
 
@@ -260,11 +278,11 @@ private fun SectionCartSummary(cartSummary: CartSummary) {
                     amount = cartSummary.subTotalWithIgvSummary
                 )
             }
-            if (cartSummary.totalDiscount > 0) {
+            if (cartSummary.subtotalDiscount > 0) {
                 SectionSummary(
                     name = stringResource(Res.string.tx_checkout_subtotal_discount),
-                    amount = "-${cartSummary.totalDiscountSummary}",
-                    color = Color.Green,
+                    amount = "-${cartSummary.subtotalDiscountSummary}",
+                    color = MaterialTheme.colorScheme.primary,
                 )
             }
             if (cartSummary.total > 0) {

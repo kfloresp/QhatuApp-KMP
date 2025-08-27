@@ -5,7 +5,6 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.rgk.qhatu.feature.operation.data.database.entity.OperationEntity
-import com.rgk.qhatu.feature.sale.domain.model.SaleVaucherType
 
 @Entity(
     tableName = "sale",
@@ -23,12 +22,12 @@ data class SaleEntity(
     @PrimaryKey
     val operationId: String,
     val customerId: String,
-    val vaucherType: String,
-    val vaucherOperationNo: String,
+    val voucherType: String,
+    val voucherOperationNo: String,
     val subtotalWithIGV: Double,
     val totalDiscounts: Double,
     val grandTotal: Double,
-    val paymentMethodId: String,
+    val paymentMethod: String,
     val paymentOperationNo: String? = null,
     val amountPaid: Double? = null,
     val changeReturned: Double? = null,

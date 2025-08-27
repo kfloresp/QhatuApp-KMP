@@ -4,13 +4,13 @@ import com.rgk.qhatu.common.extension.safeCall
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.common.util.generateUUID
+import com.rgk.qhatu.common.util.getCurrentTimestamp
 import com.rgk.qhatu.feature.setting.data.database.dao.StoreDao
 import com.rgk.qhatu.feature.setting.data.remote.StoreRemoteDataSource
 import com.rgk.qhatu.feature.setting.domain.mapper.toDomain
 import com.rgk.qhatu.feature.setting.domain.mapper.toEntity
 import com.rgk.qhatu.feature.setting.domain.model.Store
 import com.rgk.qhatu.feature.setting.domain.repository.StoreRepository
-import com.rgk.qhatu.common.util.TimeUtils
 
 class StoreRepositoryImpl(
     private val sourceRemote: StoreRemoteDataSource,
@@ -74,7 +74,7 @@ class StoreRepositoryImpl(
             sourceLocal.deleteUnsynced()
             val newClients = remoteClients.filterNot { it.id in localSyncedIds }
             sourceLocal.save(newClients.map {
-                it.toEntity().copy(lastUpdated = TimeUtils.getCurrentTimestamp())
+                it.toEntity().copy(lastUpdated = getCurrentTimestamp())
             })
         }
     }

@@ -6,11 +6,11 @@ import com.rgk.qhatu.feature.payment.data.remote.ClientPaymentRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.common.util.generateUUID
+import com.rgk.qhatu.common.util.getCurrentTimestamp
 import com.rgk.qhatu.feature.payment.domain.mapper.toDomain
 import com.rgk.qhatu.feature.payment.domain.mapper.toEntity
 import com.rgk.qhatu.feature.payment.domain.model.Payment
 import com.rgk.qhatu.feature.payment.domain.repository.PaymentRepository
-import com.rgk.qhatu.common.util.TimeUtils
 
 class PaymentRepositoryImpl(
     private val sourceRemote: ClientPaymentRemoteDataSource,
@@ -78,7 +78,7 @@ class PaymentRepositoryImpl(
             sourceLocal.deleteUnsynced()
             val newClients = remoteClients.filterNot { it.id in localSyncedIds }
             sourceLocal.save(newClients.map {
-                it.toEntity().copy(paymentDate = TimeUtils.getCurrentTimestamp())
+                it.toEntity().copy(paymentDate = getCurrentTimestamp())
             })
         }
     }

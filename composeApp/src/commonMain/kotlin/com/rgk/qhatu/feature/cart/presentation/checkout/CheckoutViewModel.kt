@@ -9,11 +9,10 @@ import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartItemsUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartSummaryUseCase
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersWithDebtUseCase
-import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsMethodUseCase
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.usecase.GetProductByIdUseCase
 import com.rgk.qhatu.feature.sale.domain.model.SaleWithOperation
-import com.rgk.qhatu.feature.setting.domain.model.Configuration
+import com.rgk.qhatu.feature.sale.domain.usecase.SaveSaleWithDetailsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,11 +23,11 @@ import kotlinx.coroutines.launch
 
 class CheckoutViewModel(
     private val getCustomerWithDebtsUseCase: GetCustomersWithDebtUseCase,
-    private val getPaymentsMethodUseCase: GetPaymentsMethodUseCase,
     private val observeCartItemsUseCase: ObserveCartItemsUseCase,
     private val getRefreshCartSummaryUseCase: GetRefreshCartSummaryUseCase,
     private val observeCartSummaryUseCase: ObserveCartSummaryUseCase,
     private val getProductByIdUseCase: GetProductByIdUseCase,
+    private val saveSaleWithDetailsUseCase: SaveSaleWithDetailsUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<CheckoutUiState>(CheckoutUiState.Loading)
     val uiState: StateFlow<CheckoutUiState> = _uiState.asStateFlow()
@@ -39,9 +38,6 @@ class CheckoutViewModel(
     private val _customerList = MutableStateFlow<List<Customer>>(emptyList())
     val customerList: StateFlow<List<Customer>> = _customerList.asStateFlow()
 
-    private val _methodPaymentList = MutableStateFlow<List<Configuration>>(emptyList())
-    val methodPaymentList: StateFlow<List<Configuration>> = _methodPaymentList.asStateFlow()
-
     private var allItemsCustomer: List<Customer> = emptyList()
 
     private val _cartSummary = MutableStateFlow<CartSummary?>(null)
@@ -51,7 +47,6 @@ class CheckoutViewModel(
     init {
         observeCartItems()
         refreshCartSummary()
-        loadPaymentMethods()
     }
 
     fun onFieldChange(update: SaleWithOperation.() -> SaleWithOperation) {
@@ -62,8 +57,7 @@ class CheckoutViewModel(
     }
 
     private fun validateFields(fields: SaleWithOperation): Boolean {
-        return fields.sale.paymentMethodId.isNotBlank() &&
-                fields.sale.customerId.isNotBlank() &&
+        return fields.sale.customerId.isNotBlank() &&
                 fields.details.isNotEmpty()
     }
 
@@ -147,18 +141,20 @@ class CheckoutViewModel(
         return product
     }
 
-    private fun loadPaymentMethods() {
+    fun saveCheckout() {
         viewModelScope.launch {
-            val result = getPaymentsMethodUseCase()
-            when (result) {
+            val result = saveSaleWithDetailsUseCase(_formState.value.fields)
+            when (result){
                 is SyncResult.Error -> {
-                    _methodPaymentList.value = emptyList()
+                    _uiState.update {
+                        CheckoutUiState.Error(result.exception.message.orEmpty())
+                    }
                 }
+                is SyncResult.Success<*> -> {
 
-                is SyncResult.Success<List<Configuration>> -> {
-                    _methodPaymentList.value = result.data
                 }
             }
         }
     }
+
 }

@@ -1,7 +1,7 @@
 package com.rgk.qhatu.feature.operation.domain.model
 
-import com.rgk.qhatu.common.util.TimeUtils.getCurrentTimestamp
 import com.rgk.qhatu.common.util.generateUUID
+import com.rgk.qhatu.common.util.getCurrentTimestamp
 
 data class OperationDetail(
     val detailId: String = generateUUID(),
@@ -9,6 +9,7 @@ data class OperationDetail(
     val productId: String,
     val quantity: Int,
     val unitPrice: Double,
+    val totalDiscount: Double,
     val totalPrice: Double = quantity * unitPrice,
     val batch: String? = null,
     val expirationDate: String? = null,

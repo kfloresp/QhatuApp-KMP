@@ -30,7 +30,6 @@ internal fun NavGraphBuilder.checkoutDestination(
         val uiState by viewModel.uiState.collectAsState()
         val formState by viewModel.formState.collectAsState()
         val customerList by viewModel.customerList.collectAsState()
-        val methodPaymentList by viewModel.methodPaymentList.collectAsState()
         val cartSummary by viewModel.cartSummary.collectAsState()
 
         var selectedCustomerToClick by remember { mutableStateOf(false) }
@@ -42,7 +41,8 @@ internal fun NavGraphBuilder.checkoutDestination(
                 CartSummarySection(
                     shoppingCartTotal = cartSummary?.totalSummary.orEmpty(),
                     onShoppingCartClick = {
-                        println("CHECKOUT: ${formState.fields}")
+                        println("CHECKOUT ${formState.fields}")
+                        //viewModel.saveCheckout()
                     },
                     textConfirmButton = stringResource(Res.string.tx_checkout_confirm)
                 )
@@ -59,7 +59,6 @@ internal fun NavGraphBuilder.checkoutDestination(
                 viewModel.searchCustomer()
                 selectedCustomerToClick = true
             },
-            methodPayments = methodPaymentList,
             cartSummary = cartSummary,
             onBackPopUp = onBackPopUp,
             setLoading = setLoading,
