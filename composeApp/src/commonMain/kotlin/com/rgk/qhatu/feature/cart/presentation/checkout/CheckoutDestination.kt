@@ -1,16 +1,28 @@
 package com.rgk.qhatu.feature.cart.presentation.checkout
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.bottombar.CartSummarySection
 import com.rgk.qhatu.common.components.bottomsheet.ConfirmBottomSheet
 import com.rgk.qhatu.common.components.bottomsheet.CustomBottomSheet
 import com.rgk.qhatu.common.components.search.SearchContent
+import com.rgk.qhatu.feature.cart.presentation.checkout.component.SectionSummaryCheckout
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.customer.domain.model.GENERIC_CUSTOMER
 import com.rgk.qhatu.navigation.ProvideBottomBarApp
@@ -19,10 +31,6 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_checkout_confirm
-import qhatuapp.composeapp.generated.resources.tx_checkout_confirm_question
-import qhatuapp.composeapp.generated.resources.tx_checkout_confirm_sale
-import qhatuapp.composeapp.generated.resources.tx_global_cancel
-import qhatuapp.composeapp.generated.resources.tx_global_confirmation
 
 @Serializable
 data object CheckoutDestination
@@ -51,6 +59,7 @@ internal fun NavGraphBuilder.checkoutDestination(
                     onShoppingCartClick = {
                         onClickSaveCheckout = true
                     },
+                    isEnabled = formState.isValid,
                     textConfirmButton = stringResource(Res.string.tx_checkout_confirm)
                 )
             }
@@ -73,7 +82,9 @@ internal fun NavGraphBuilder.checkoutDestination(
         )
 
         if (selectedCustomerToClick) {
-            CustomBottomSheet(isVisible = true, onDismiss = { selectedCustomerToClick = false }) {
+            CustomBottomSheet(
+                isVisible = true,
+                onDismiss = { selectedCustomerToClick = false }) {
                 SearchContent(
                     items = customerList,
                     keySelector = { it.id },
@@ -93,18 +104,18 @@ internal fun NavGraphBuilder.checkoutDestination(
         }
 
         if (onClickSaveCheckout) {
-            ConfirmBottomSheet(
+            CustomBottomSheet(
                 isVisible = true,
-                title = stringResource(Res.string.tx_global_confirmation),
-                description = stringResource(Res.string.tx_checkout_confirm_question),
-                primaryButtonText = stringResource(Res.string.tx_checkout_confirm_sale),
-                onPrimaryClick = {
-                    onClickSaveCheckout = false
-                    viewModel.saveCheckout()
-                },
-                secondaryButtonText = stringResource(Res.string.tx_global_cancel),
-                onSecondaryClick = { onClickSaveCheckout = false }
-            )
+                onDismiss = { onClickSaveCheckout = false }) {
+                SectionSummaryCheckout(
+                    formState.fields.sale, cartSummary,
+                    onPrimaryClick = {
+                        onClickSaveCheckout = false
+                        viewModel.saveCheckout()
+                    }, onSecondaryClick = {
+                        onClickSaveCheckout = false
+                    })
+            }
         }
     }
 }

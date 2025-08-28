@@ -22,4 +22,13 @@ data class CartSummary(
 
     val hasItems: Boolean
         get() = if (itemCount > 0) true else false
+
+    val hasSubtotalWithIgv: Boolean
+        get() = if (subtotalWithIgv > 0) true else false
+
+    val hasSubtotalDiscount: Boolean
+        get() = if (subtotalDiscount > 0) true else false
+
+    val hasTotal: Boolean
+        get() = if (total > 0) true else false
 }

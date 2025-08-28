@@ -1,5 +1,6 @@
 package com.rgk.qhatu.feature.cart.presentation.checkout
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.common.model.SyncResult
@@ -12,6 +13,7 @@ import com.rgk.qhatu.feature.customer.domain.model.GENERIC_CUSTOMER
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersWithDebtUseCase
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.usecase.GetProductByIdUseCase
+import com.rgk.qhatu.feature.sale.domain.model.SalePaymentMethod
 import com.rgk.qhatu.feature.sale.domain.model.SaleWithOperation
 import com.rgk.qhatu.feature.sale.domain.usecase.SaveSaleWithDetailsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,8 +60,21 @@ class CheckoutViewModel(
     }
 
     private fun validateFields(fields: SaleWithOperation): Boolean {
-        return fields.sale.customerId.isNotBlank() &&
-                fields.details.isNotEmpty()
+        val sale = fields.sale
+
+        if (sale.customerId.isBlank() || fields.details.isEmpty()) {
+            return false
+        }
+
+        return when (sale.paymentMethod) {
+            SalePaymentMethod.CASH -> {
+                !sale.amountPaid.isNullOrEmpty()
+            }
+
+            else -> {
+                !sale.paymentOperationNo.isNullOrEmpty()
+            }
+        }
     }
 
     fun searchCustomer() {
@@ -108,6 +123,15 @@ class CheckoutViewModel(
                 .distinctUntilChanged()
                 .collect { summary ->
                     _cartSummary.value = summary
+                    onFieldChange {
+                        copy(
+                            sale = sale.copy(
+                                subtotalWithIGV = summary.subtotalWithIgv,
+                                totalDiscounts = summary.subtotalDiscount,
+                                grandTotal = summary.total
+                            )
+                        )
+                    }
                 }
         }
     }

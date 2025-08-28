@@ -141,8 +141,12 @@
     <string name="tx_checkout_subtotal_total">Total</string>
     <string name="tx_checkout_confirm">Pagar</string>
     <string name="tx_checkout_confirm_sale">Completar venta</string>
-    <string name="tx_checkout_confirm_question">¿Está seguro de continuar con la venta?</string>
+    <string name="tx_checkout_confirm_question">¿Está seguro de completa la venta?</string>
     <string name="tx_checkout_voucher">Comprobante</string>
+    <string name="tx_checkout_amount_cash">Monto efectivo</string>
+    <string name="tx_checkout_cash_all">Seleccione billete recibido</string>
+    <string name="tx_checkout_cash_amount">Monto pagado</string>
+    <string name="tx_checkout_cash_return">Vuelto</string>
 
     <!-- Sales -->
     <string name="tx_sales_title">Historial de ventas</string>
