@@ -6,7 +6,7 @@ import com.rgk.qhatu.common.util.getCurrentTimestamp
 data class Operation(
     val operationId: String = generateUUID(),
     val type: OperationType,
-    val status: OperationStatus = OperationStatus.PENDING,
+    val status: OperationStatus = OperationStatus.COMPLETED,
     val operationDate: Long = getCurrentTimestamp(),
     val lastUpdated: Long = getCurrentTimestamp(),
     val isSynced: Boolean = false,
@@ -21,7 +21,6 @@ enum class OperationType(val value: String) {
 }
 
 enum class OperationStatus(val value: String) {
-    PENDING("Pending"),
     COMPLETED("Completed"),
     CANCELLED("Cancelled");
 }

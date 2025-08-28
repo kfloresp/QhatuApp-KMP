@@ -127,6 +127,7 @@
     <string name="tx_cart_empty">Tu carrito está vacío, agrega productos para comenzar</string>
     <string name="tx_cart_confirm_delete_all">¿Seguro que quieres vaciar tu carrito?</string>
     <string name="tx_cart_confirm_resume_all">¿Quieres guardar tu carrito para más tarde?</string>
+    <string name="tx_cart_confirm_delete_product">¿Estás seguro que deseas eliminar el producto?</string>
     <string name="tx_cart_total_summary">Total a pagar</string>
     <string name="tx_cart_total_text">Total:</string>
     <string name="tx_cart_confirm">Continuar</string>
@@ -139,6 +140,8 @@
     <string name="tx_checkout_subtotal_discount">Total descuentos</string>
     <string name="tx_checkout_subtotal_total">Total</string>
     <string name="tx_checkout_confirm">Pagar</string>
+    <string name="tx_checkout_confirm_sale">Completar venta</string>
+    <string name="tx_checkout_confirm_question">¿Está seguro de continuar con la venta?</string>
     <string name="tx_checkout_voucher">Comprobante</string>
 
     <!-- Sales -->
@@ -156,6 +159,7 @@
     <string name="tx_global_add_new">Agregar</string>
     <string name="tx_global_delete_changes">Eliminar</string>
     <string name="tx_global_save_changes">Guardar</string>
+    <string name="tx_global_selection_option">Seleccionar opción:</string>
     <string name="tx_global_confirmation">Confirmar</string>
     <string name="tx_global_confirm_save_subtitle">¿Deseas guardar cambios?</string>
     <string name="tx_global_confirm_save">Sí, guardar</string>

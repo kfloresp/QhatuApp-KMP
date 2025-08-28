@@ -11,10 +11,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -46,7 +47,7 @@ import qhatuapp.composeapp.generated.resources.tx_cart_total_text
 fun ItemProductCart(
     product: Product,
     productActions: ProductActions? = null,
-    onRemoveProduct: (Product) -> Unit = {},
+    onOptionsProduct: (Product) -> Unit = {},
 ) {
     val cartItem = product.cartItem
     val count = cartItem?.quantity ?: 0
@@ -74,47 +75,46 @@ fun ItemProductCart(
 
             Spacer(modifier = Modifier.width(12.dp))
             Column {
-                Text(
-                    text = product.name,
-                    style = MaterialTheme.typography.bodyLarge,
-                    maxLines = 2,
-                    minLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = product.unitMeasure,
-                            style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.padding(vertical = 2.dp)
-                        )
-
-                        Spacer(modifier = Modifier.height(4.dp))
-
-                        Text(
-                            text = unitPriceAmount, style = MaterialTheme.typography.bodyLarge.copy(
-                                color = MaterialTheme.colorScheme.onSurface,
-                                fontWeight = FontWeight.SemiBold
-                            )
+                    Text(
+                        text = product.name,
+                        style = MaterialTheme.typography.bodyLarge,
+                        maxLines = 2,
+                        minLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f),
+                    )
+                    IconButton(
+                        onClick = {
+                            onOptionsProduct(product)
+                        },
+                        modifier = Modifier.clip(RoundedCornerShape(8.dp))
+                            .wrapContentWidth()
+                    ) {
+                        Icon(
+                            Icons.Default.MoreVert,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     }
-                    if (count > 1) {
-                        IconButton(
-                            onClick = {
-                                onRemoveProduct(product)
-                            },
-                            modifier = Modifier.clip(RoundedCornerShape(8.dp))
-                        ) {
-                            Icon(
-                                Icons.Default.Delete,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                        }
-                    }
+                }
+                Column(modifier = Modifier) {
+                    Text(
+                        text = product.unitMeasure,
+                        style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(vertical = 2.dp)
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(
+                        text = unitPriceAmount, style = MaterialTheme.typography.bodyLarge.copy(
+                            color = MaterialTheme.colorScheme.onSurface,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(6.dp))
@@ -192,7 +192,7 @@ fun PreviewItemProductCart() {
 
         Column(Modifier.background(Color.White)) {
             ItemProductCart(
-                product = sampleProduct, productActions = fakeActions, onRemoveProduct = {})
+                product = sampleProduct, productActions = fakeActions, onOptionsProduct = {})
         }
     }
 }

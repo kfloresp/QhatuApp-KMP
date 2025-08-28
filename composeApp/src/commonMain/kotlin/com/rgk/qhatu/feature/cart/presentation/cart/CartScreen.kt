@@ -22,7 +22,7 @@ import qhatuapp.composeapp.generated.resources.tx_cart_empty
 fun CartScreen(
     uiState: CartUiState,
     productActions: ProductActions,
-    onRemoveProduct: (Product) -> Unit,
+    onOptionsProduct: (Product) -> Unit,
     setLoading: (Boolean) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
@@ -40,7 +40,7 @@ fun CartScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(items) { product ->
-                    ItemProductCart(product = product, productActions = productActions, onRemoveProduct = onRemoveProduct)
+                    ItemProductCart(product = product, productActions = productActions, onOptionsProduct = onOptionsProduct)
                 }
             }
         }

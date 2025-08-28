@@ -8,6 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.bottombar.CartSummarySection
+import com.rgk.qhatu.common.components.bottomsheet.ConfirmBottomSheet
 import com.rgk.qhatu.common.components.bottomsheet.CustomBottomSheet
 import com.rgk.qhatu.common.components.search.SearchContent
 import com.rgk.qhatu.feature.customer.domain.model.Customer
@@ -18,6 +19,10 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_checkout_confirm
+import qhatuapp.composeapp.generated.resources.tx_checkout_confirm_question
+import qhatuapp.composeapp.generated.resources.tx_checkout_confirm_sale
+import qhatuapp.composeapp.generated.resources.tx_global_cancel
+import qhatuapp.composeapp.generated.resources.tx_global_confirmation
 
 @Serializable
 data object CheckoutDestination
@@ -37,13 +42,14 @@ internal fun NavGraphBuilder.checkoutDestination(
         var selectedCustomerToClick by remember { mutableStateOf(false) }
         var selectedCustomer by remember { mutableStateOf<Customer?>(GENERIC_CUSTOMER) }
         var queryCustomer by remember { mutableStateOf("") }
+        var onClickSaveCheckout by remember { mutableStateOf(false) }
 
         ProvideBottomBarApp {
             if (cartSummary?.hasItems ?: false) {
                 CartSummarySection(
                     shoppingCartTotal = cartSummary?.totalSummary.orEmpty(),
                     onShoppingCartClick = {
-                        viewModel.saveCheckout()
+                        onClickSaveCheckout = true
                     },
                     textConfirmButton = stringResource(Res.string.tx_checkout_confirm)
                 )
@@ -84,6 +90,21 @@ internal fun NavGraphBuilder.checkoutDestination(
                     }
                 )
             }
+        }
+
+        if (onClickSaveCheckout) {
+            ConfirmBottomSheet(
+                isVisible = true,
+                title = stringResource(Res.string.tx_global_confirmation),
+                description = stringResource(Res.string.tx_checkout_confirm_question),
+                primaryButtonText = stringResource(Res.string.tx_checkout_confirm_sale),
+                onPrimaryClick = {
+                    onClickSaveCheckout = false
+                    viewModel.saveCheckout()
+                },
+                secondaryButtonText = stringResource(Res.string.tx_global_cancel),
+                onSecondaryClick = { onClickSaveCheckout = false }
+            )
         }
     }
 }
