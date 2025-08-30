@@ -261,17 +261,24 @@ private fun SectionAmountCash(
     ChipGroup(
         items = saleAmountCash,
         keySelector = { it.name },
-        valueSelector = { it.value },
+        valueSelector = {
+            when (it) {
+                SaleAmountCash.OTHER -> it.value
+                else -> {
+                    "S/.${it.value}"
+                }
+            }
+        },
         selectedKey = selectedKey?.name.orEmpty(),
         onChipClick = { amountCash ->
             selectedKey = amountCash
-            if (amountCash != SaleAmountCash.OTHER){
+            if (amountCash != SaleAmountCash.OTHER) {
                 onFieldChange {
                     copy(
                         sale = sale.copy(amountPaid = amountCash.value)
                     )
                 }
-            }else{
+            } else {
                 onFieldChange {
                     copy(
                         sale = sale.copy(amountPaid = null)
@@ -281,25 +288,38 @@ private fun SectionAmountCash(
         },
     )
     selectedKey?.let {
-        if (selectedKey == SaleAmountCash.OTHER){
+        if (selectedKey == SaleAmountCash.OTHER) {
             CustomTextField(
                 value = fields.sale.amountPaid.orEmpty(), onValueChange = { newValue ->
+                    val regex = Regex(PATTERNS)
+
                     if (newValue.isEmpty()) {
                         onFieldChange {
-                            copy(
-                                sale = sale.copy(amountPaid = newValue)
-                            )
+                            copy(sale = sale.copy(amountPaid = "", changeReturned = 0.0))
                         }
                         return@CustomTextField
                     }
-                    val regex = Regex(PATTERNS)
-                    if (newValue.matches(regex)) {
-                        onFieldChange {
-                            copy(
-                                sale = sale.copy(amountPaid = newValue)
-                            )
-                        }
+
+                    if (!newValue.matches(regex)) {
+                        return@CustomTextField
                     }
+
+                    val paid = newValue.toDoubleOrNull()
+                    val change = if (paid != null && paid > fields.sale.grandTotal) {
+                        paid - fields.sale.grandTotal
+                    } else {
+                        0.0
+                    }
+
+                    onFieldChange {
+                        copy(
+                            sale = sale.copy(
+                                amountPaid = newValue,
+                                changeReturned = change
+                            )
+                        )
+                    }
+
                 }, params = CustomTextFieldParams(
                     label = stringResource(Res.string.tx_checkout_amount_cash),
                     singleLine = true,

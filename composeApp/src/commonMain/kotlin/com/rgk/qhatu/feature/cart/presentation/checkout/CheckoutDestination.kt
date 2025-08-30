@@ -1,25 +1,13 @@
 package com.rgk.qhatu.feature.cart.presentation.checkout
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.bottombar.CartSummarySection
-import com.rgk.qhatu.common.components.bottomsheet.ConfirmBottomSheet
 import com.rgk.qhatu.common.components.bottomsheet.CustomBottomSheet
 import com.rgk.qhatu.common.components.search.SearchContent
 import com.rgk.qhatu.feature.cart.presentation.checkout.component.SectionSummaryCheckout
