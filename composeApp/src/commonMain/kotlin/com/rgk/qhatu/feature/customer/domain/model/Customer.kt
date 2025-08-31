@@ -66,5 +66,13 @@ data class Customer(
             "$firstInitial$lastInitial"
         }
 }
-
+val GENERIC_CUSTOMER = Customer(
+    id = "00000000",
+    firstName = "Consumidor",
+    lastName = "General",
+    documentType = "DNI",
+    documentNumber = "00000000",
+    isActive = true,
+    isSynced = true,
+)
 private val NO_DEBT = "Sin deuda"

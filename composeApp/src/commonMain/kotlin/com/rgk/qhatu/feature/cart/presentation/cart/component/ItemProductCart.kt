@@ -2,22 +2,20 @@ package com.rgk.qhatu.feature.cart.presentation.cart.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.DeleteSweep
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,7 +31,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.rgk.qhatu.common.theme.QhatuTheme
-import com.rgk.qhatu.common.util.orZero
 import com.rgk.qhatu.feature.cart.domain.model.CartItem
 import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
@@ -43,16 +40,14 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.ic_remove_shopping_cart_24
 import qhatuapp.composeapp.generated.resources.image_place_holder
-import qhatuapp.composeapp.generated.resources.tx_cart_title
 import qhatuapp.composeapp.generated.resources.tx_cart_total_text
 
 @Composable
 fun ItemProductCart(
     product: Product,
     productActions: ProductActions? = null,
-    onRemoveProduct: (Product) -> Unit,
+    onOptionsProduct: (Product) -> Unit = {},
 ) {
     val cartItem = product.cartItem
     val count = cartItem?.quantity ?: 0
@@ -80,47 +75,46 @@ fun ItemProductCart(
 
             Spacer(modifier = Modifier.width(12.dp))
             Column {
-                Text(
-                    text = product.name,
-                    style = MaterialTheme.typography.bodyLarge,
-                    maxLines = 2,
-                    minLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = product.unitMeasure,
-                            style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.padding(vertical = 2.dp)
-                        )
-
-                        Spacer(modifier = Modifier.height(4.dp))
-
-                        Text(
-                            text = unitPriceAmount, style = MaterialTheme.typography.bodyLarge.copy(
-                                color = MaterialTheme.colorScheme.onSurface,
-                                fontWeight = FontWeight.SemiBold
-                            )
+                    Text(
+                        text = product.name,
+                        style = MaterialTheme.typography.bodyLarge,
+                        maxLines = 2,
+                        minLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f),
+                    )
+                    IconButton(
+                        onClick = {
+                            onOptionsProduct(product)
+                        },
+                        modifier = Modifier.clip(RoundedCornerShape(8.dp))
+                            .wrapContentWidth()
+                    ) {
+                        Icon(
+                            Icons.Default.MoreVert,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     }
-                    if (count > 1) {
-                        IconButton(
-                            onClick = {
-                                onRemoveProduct(product)
-                            },
-                            modifier = Modifier.clip(RoundedCornerShape(8.dp))
-                        ) {
-                            Icon(
-                                Icons.Default.Delete,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                        }
-                    }
+                }
+                Column(modifier = Modifier) {
+                    Text(
+                        text = product.unitMeasure,
+                        style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(vertical = 2.dp)
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(
+                        text = unitPriceAmount, style = MaterialTheme.typography.bodyLarge.copy(
+                            color = MaterialTheme.colorScheme.onSurface,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(6.dp))
@@ -198,7 +192,7 @@ fun PreviewItemProductCart() {
 
         Column(Modifier.background(Color.White)) {
             ItemProductCart(
-                product = sampleProduct, productActions = fakeActions, onRemoveProduct = {})
+                product = sampleProduct, productActions = fakeActions, onOptionsProduct = {})
         }
     }
 }

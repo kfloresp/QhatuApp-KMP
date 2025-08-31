@@ -6,11 +6,11 @@ import com.rgk.qhatu.feature.setting.data.remote.BrandRemoteDataSource
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.common.model.SyncStats
 import com.rgk.qhatu.common.util.generateUUID
+import com.rgk.qhatu.common.util.getCurrentTimestamp
 import com.rgk.qhatu.feature.setting.domain.mapper.toDomain
 import com.rgk.qhatu.feature.setting.domain.mapper.toEntity
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 import com.rgk.qhatu.feature.setting.domain.repository.BrandRepository
-import com.rgk.qhatu.utils.TimeUtils
 
 class BrandRepositoryImpl(
     private val sourceRemote: BrandRemoteDataSource,
@@ -75,7 +75,7 @@ class BrandRepositoryImpl(
             sourceLocal.deleteUnsynced()
             val newClients = remoteClients.filterNot { it.id in localSyncedIds }
             sourceLocal.save(newClients.map {
-                it.toEntity().copy(lastUpdated = TimeUtils.getCurrentTimestamp())
+                it.toEntity().copy(lastUpdated = getCurrentTimestamp())
             })
         }
     }

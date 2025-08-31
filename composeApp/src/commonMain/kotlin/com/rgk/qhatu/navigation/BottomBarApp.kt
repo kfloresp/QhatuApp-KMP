@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.referentialEqualityPolicy
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -16,13 +15,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.rgk.qhatu.common.components.bottombar.QhatuBottombar
-import com.rgk.qhatu.feature.auth.presentation.auth.AuthDestination
 import com.rgk.qhatu.feature.cart.presentation.cart.CartDestination
-import com.rgk.qhatu.feature.splash.presentation.splash.SplashDestination
-import kotlinx.serialization.Serializable
+import com.rgk.qhatu.feature.cart.presentation.checkout.CheckoutDestination
 
 val routesWithTopBar = listOf(
     CartDestination::class,
+    CheckoutDestination::class,
 )
 
 @Composable

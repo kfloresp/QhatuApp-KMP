@@ -22,6 +22,8 @@ import qhatuapp.composeapp.generated.resources.tx_cart_total_summary
 
 @Composable
 fun CartSummarySection(
+    textTitle: String = stringResource(Res.string.tx_cart_total_summary),
+    textConfirmButton: String = stringResource(Res.string.tx_cart_confirm),
     shoppingCartTotal: String,
     onShoppingCartClick: () -> Unit,
     isEnabled: Boolean = true,
@@ -34,7 +36,7 @@ fun CartSummarySection(
     ) {
         Column(Modifier.weight(1f).padding(horizontal = 15.dp)) {
             Text(
-                text = stringResource(Res.string.tx_cart_total_summary),
+                text = textTitle,
                 style = MaterialTheme.typography.titleSmall,
                 textAlign = TextAlign.Start
             )
@@ -46,7 +48,7 @@ fun CartSummarySection(
             )
         }
         Button(onClick = onShoppingCartClick, enabled = isEnabled) {
-            Text(stringResource(Res.string.tx_cart_confirm))
+            Text(textConfirmButton)
         }
     }
 }

@@ -25,8 +25,9 @@ import com.rgk.qhatu.feature.product.domain.usecase.GetProductByIdUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetStorageTypeUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SaveImageProductUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
-import com.rgk.qhatu.feature.sale.domain.usecase.SyncSaleDetailUseCase
-import com.rgk.qhatu.feature.sale.domain.usecase.SyncSaleUseCase
+import com.rgk.qhatu.feature.sale.domain.usecase.GetSaleWithDetailsById
+import com.rgk.qhatu.feature.sale.domain.usecase.GetSalesUseCase
+import com.rgk.qhatu.feature.sale.domain.usecase.SaveSaleWithDetailsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetBrandsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoriesUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetStoreUseCase
@@ -48,8 +49,6 @@ val useCaseModule = module {
     factoryOf(::SyncPaymentUseCase)
     factoryOf(::SyncConfigurationUseCase)
     factoryOf(::SyncProductUseCase)
-    factoryOf(::SyncSaleUseCase)
-    factoryOf(::SyncSaleDetailUseCase)
     factoryOf(::SyncUnitMeasureUseCase)
     factoryOf(::SyncStoreUseCase)
     factoryOf(::GetCategoriesUseCase)
@@ -76,4 +75,7 @@ val useCaseModule = module {
     factoryOf(::ObserveCartItemsUseCase)
     factoryOf(::DeleteCartUseCase)
     factoryOf(::ResumeCartUseCase)
+    factoryOf(::SaveSaleWithDetailsUseCase)
+    factoryOf(::GetSaleWithDetailsById)
+    factoryOf(::GetSalesUseCase)
 }

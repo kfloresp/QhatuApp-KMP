@@ -126,7 +126,7 @@ class CartRepositoryImpl(
             itemCount = cartItemDao.getItemsByCart(cartId).size
         }
         refreshCartItems(cartId)
-        _observeCartSummary.value = CartSummary(total = totalCart, itemCount = itemCount)
+        _observeCartSummary.value = CartSummary(subtotalWithIgv = totalCart, itemCount = itemCount)
     }
 
     private suspend fun refreshCartItems(cartId: String?) {

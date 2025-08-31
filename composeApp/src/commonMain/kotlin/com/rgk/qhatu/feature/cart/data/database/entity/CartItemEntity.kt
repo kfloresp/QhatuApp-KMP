@@ -5,7 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.rgk.qhatu.common.util.generateUUID
-import com.rgk.qhatu.utils.TimeUtils
+import com.rgk.qhatu.common.util.getCurrentTimestamp
 
 @Entity(
     tableName = "cart_item",
@@ -26,5 +26,5 @@ data class CartItemEntity(
     val quantity: Int = 0,
     val unitPrice: Double = 0.0,
     val totalPrice: Double = 0.0,
-    val lastUpdated: Long = TimeUtils.getCurrentTimestamp(),
+    val lastUpdated: Long = getCurrentTimestamp(),
 )

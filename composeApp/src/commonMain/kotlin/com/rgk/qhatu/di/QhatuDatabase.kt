@@ -18,10 +18,6 @@ import com.rgk.qhatu.feature.product.data.database.dao.ImageProductDao
 import com.rgk.qhatu.feature.product.data.database.dao.ProductDao
 import com.rgk.qhatu.feature.product.data.database.entity.ImageProductEntity
 import com.rgk.qhatu.feature.product.data.database.entity.ProductEntity
-import com.rgk.qhatu.feature.sale.data.database.dao.TransactionDao
-import com.rgk.qhatu.feature.sale.data.database.dao.TransactionDetailDao
-import com.rgk.qhatu.feature.sale.data.database.entity.TransactionDetailEntity
-import com.rgk.qhatu.feature.sale.data.database.entity.TransactionEntity
 import com.rgk.qhatu.feature.setting.data.database.dao.BrandDao
 import com.rgk.qhatu.feature.setting.data.database.dao.CategoryDao
 import com.rgk.qhatu.feature.setting.data.database.dao.ConfigurationDao
@@ -32,6 +28,14 @@ import com.rgk.qhatu.feature.setting.data.database.entity.CategoryEntity
 import com.rgk.qhatu.feature.setting.data.database.entity.ConfigurationEntity
 import com.rgk.qhatu.feature.setting.data.database.entity.StoreEntity
 import com.rgk.qhatu.feature.setting.data.database.entity.UnitMeasureEntity
+import com.rgk.qhatu.feature.operation.data.database.dao.OperationDao
+import com.rgk.qhatu.feature.operation.data.database.dao.OperationDetailDao
+import com.rgk.qhatu.feature.purchase.data.database.dao.PurchaseDao
+import com.rgk.qhatu.feature.sale.data.database.dao.SaleDao
+import com.rgk.qhatu.feature.operation.data.database.entity.OperationDetailEntity
+import com.rgk.qhatu.feature.operation.data.database.entity.OperationEntity
+import com.rgk.qhatu.feature.purchase.data.database.entity.PurchaseEntity
+import com.rgk.qhatu.feature.sale.data.database.entity.SaleEntity
 
 const val DATABASE_NAME = "qhatu_database.db"
 
@@ -44,8 +48,10 @@ const val DATABASE_NAME = "qhatu_database.db"
         CustomerEntity::class,
         PaymentEntity::class,
         ProductEntity::class,
-        TransactionDetailEntity::class,
-        TransactionEntity::class,
+        OperationEntity::class,
+        OperationDetailEntity::class,
+        SaleEntity::class,
+        PurchaseEntity::class,
         UnitMeasureEntity::class,
         StoreEntity::class,
         ImageProductEntity::class,
@@ -62,13 +68,15 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun clientDao(): CustomerDao
     abstract fun clientPaymentDao(): PaymentDao
     abstract fun productDao(): ProductDao
-    abstract fun transactionDetailDao(): TransactionDetailDao
-    abstract fun transactionDao(): TransactionDao
     abstract fun unitMeasureDao(): UnitMeasureDao
     abstract fun storeDao(): StoreDao
     abstract fun imageProductDao(): ImageProductDao
     abstract fun cartDao(): CartDao
     abstract fun cartItemDao(): CartItemDao
+    abstract fun operationDao() : OperationDao
+    abstract fun operationDetailDao() : OperationDetailDao
+    abstract fun saleDao() : SaleDao
+    abstract fun purchaseDao() : PurchaseDao
 }
 
 @Suppress("NO_ACTUAL_FOR_EXPECT")

@@ -1,7 +1,9 @@
 package com.rgk.qhatu.feature.product.domain.model
 
 import com.rgk.qhatu.common.util.formatAmount
+import com.rgk.qhatu.common.util.orZero
 import com.rgk.qhatu.feature.cart.domain.model.CartItem
+import com.rgk.qhatu.feature.operation.domain.model.OperationDetail
 
 data class Product(
     val id: String = "",
@@ -24,7 +26,16 @@ data class Product(
     val lastUpdated: Long = 0,
     val imageProduct: List<ImageProduct> = emptyList(),
     val cartItem: CartItem? = null,
-    ) {
+) {
     val unitPriceValue: String
         get() = unitPrice.toDouble().formatAmount()
 }
+
+fun Product.toOperationDetail(): OperationDetail = OperationDetail(
+    productId = this.id,
+    quantity = this.cartItem?.quantity.orZero(),
+    unitPrice = this.cartItem?.unitPrice.orZero(),
+    totalDiscount = this.cartItem?.totalDiscount.orZero(),
+    batch = this.cartItem?.batch,
+    expirationDate = this.cartItem?.expirationDate,
+)

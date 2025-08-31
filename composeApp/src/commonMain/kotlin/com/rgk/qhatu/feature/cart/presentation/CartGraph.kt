@@ -6,6 +6,8 @@ import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import com.rgk.qhatu.feature.cart.presentation.cart.CartDestination
 import com.rgk.qhatu.feature.cart.presentation.cart.cartDestination
+import com.rgk.qhatu.feature.cart.presentation.checkout.CheckoutDestination
+import com.rgk.qhatu.feature.cart.presentation.checkout.checkoutDestination
 import com.rgk.qhatu.feature.search.presentation.search.SearchDestination
 import com.rgk.qhatu.feature.search.presentation.search.searchDestination
 import kotlinx.serialization.Serializable
@@ -19,6 +21,7 @@ fun NavController.navigateToCartGraph(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.cartGraph(
     navController: NavController,
+    navigateToHome: () -> Unit,
     setLoading: (Boolean) -> Unit,
 ) {
     navigation<CartGraph>(
@@ -28,7 +31,15 @@ fun NavGraphBuilder.cartGraph(
             setLoading = setLoading,
             onBackPopUp = {
                 navController.popBackStack()
+            },
+            navigateToCheckout = {
+                navController.navigate(CheckoutDestination)
             }
+        )
+        checkoutDestination(
+            setLoading = setLoading,
+            onBackPopUp = { navController.popBackStack() },
+            navigateToHome = navigateToHome
         )
     }
 }
