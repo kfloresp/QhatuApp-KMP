@@ -3,7 +3,6 @@ package com.rgk.qhatu.feature.cart.presentation.checkout
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.common.model.SyncResult
-import com.rgk.qhatu.common.util.orZero
 import com.rgk.qhatu.feature.cart.domain.model.CartSummary
 import com.rgk.qhatu.feature.cart.domain.usecase.GetRefreshCartSummaryUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartItemsUseCase
@@ -75,8 +74,11 @@ class CheckoutViewModel(
                 !sale.amountPaid.isNullOrEmpty()
             }
 
-            else -> {
+            SalePaymentMethod.PLIN, SalePaymentMethod.YAPE -> {
                 !sale.paymentOperationNo.isNullOrEmpty()
+            }
+            SalePaymentMethod.CREDIT ->{
+                true
             }
         }
     }

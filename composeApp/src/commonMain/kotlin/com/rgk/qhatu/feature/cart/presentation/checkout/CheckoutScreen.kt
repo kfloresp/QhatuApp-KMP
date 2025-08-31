@@ -128,6 +128,13 @@ fun CheckoutScreen(
         )
         when (fields.sale.paymentMethod) {
             SalePaymentMethod.CASH -> {
+                onFieldChange {
+                    copy(
+                        sale = sale.copy(
+                            paymentOperationNo = "",
+                        )
+                    )
+                }
                 SectionAmountCash(saleAmountCash, onFieldChange, fields)
             }
 
@@ -136,7 +143,11 @@ fun CheckoutScreen(
                     value = fields.sale.paymentOperationNo.orEmpty(), onValueChange = {
                         onFieldChange {
                             copy(
-                                sale = sale.copy(paymentOperationNo = it)
+                                sale = sale.copy(
+                                    paymentOperationNo = it,
+                                    amountPaid = cartSummary?.total.toString(),
+                                    changeReturned = 0.0
+                                )
                             )
                         }
                     }, params = CustomTextFieldParams(
@@ -148,7 +159,17 @@ fun CheckoutScreen(
                 )
             }
 
-            SalePaymentMethod.CREDIT -> Unit
+            SalePaymentMethod.CREDIT -> {
+                onFieldChange {
+                    copy(
+                        sale = sale.copy(
+                            paymentOperationNo = "",
+                            amountPaid = cartSummary?.total.toString(),
+                            changeReturned = 0.0
+                        )
+                    )
+                }
+            }
         }
 
         Text(
