@@ -13,14 +13,37 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.rgk.qhatu.common.components.bar.QhatuBottomNavigationBar
+import com.rgk.qhatu.common.components.bar.UnderlinedNavigationBarItem
+import com.rgk.qhatu.common.components.bar.bottomBarItems
 import com.rgk.qhatu.common.components.bottombar.QhatuBottombar
 import com.rgk.qhatu.feature.cart.presentation.cart.CartDestination
 import com.rgk.qhatu.feature.cart.presentation.checkout.CheckoutDestination
+import com.rgk.qhatu.feature.customer.presentation.customer.CustomerDestination
+import com.rgk.qhatu.feature.home.presentation.home.HomeDestination
+import com.rgk.qhatu.feature.sale.presentation.sale.SaleDestination
+import com.rgk.qhatu.feature.search.presentation.search.SearchDestination
+import com.rgk.qhatu.feature.setting.presentation.setting.SettingDestination
+import kotlinx.serialization.Serializable
+import org.jetbrains.compose.resources.stringResource
+import org.koin.core.component.getScopeId
 
-val routesWithTopBar = listOf(
+@Serializable
+object NoneGraph
+
+val routesWithBottomBar = listOf(
     CartDestination::class,
     CheckoutDestination::class,
+)
+
+val routesWithMainBottomBar = listOf(
+    HomeDestination::class,
+    SaleDestination::class,
+    SearchDestination::class,
+    CustomerDestination::class,
+    SettingDestination::class,
 )
 
 @Composable
@@ -36,9 +59,38 @@ fun BottomBarApp(
             viewModelStoreOwner = entry,
             initializer = { BottomBarAppViewModel() },
         )
-        val shouldShowTopBar = routesWithTopBar.any { currentRoute.hasRoute(it) }
-        if (shouldShowTopBar) {
-            QhatuBottombar(content = viewModel.actions)
+        when {
+            routesWithMainBottomBar.any { currentRoute.hasRoute(it) } -> {
+                QhatuBottomNavigationBar {
+                    bottomBarItems.forEachIndexed { _, bottomBarItem ->
+                        val isSelected = currentRoute.hierarchy.any {
+                            it.hasRoute(route = bottomBarItem.graph::class)
+                        }
+
+                        this@QhatuBottomNavigationBar.UnderlinedNavigationBarItem(
+                            title = stringResource(bottomBarItem.titleRes),
+                            selected = isSelected,
+                            onClick = {
+                                val isInCurrentGraph = currentRoute.hierarchy.any {
+                                    it.hasRoute(route = bottomBarItem.graph::class)
+                                }
+                                if (bottomBarItem.graph != NoneGraph && !isInCurrentGraph) {
+                                    navController.navigate(route = bottomBarItem.graph) {
+                                        popUpTo(0) { inclusive = true }
+                                        launchSingleTop = true
+                                    }
+                                }
+                            },
+                            iconRes = if (isSelected) bottomBarItem.selectedIconRes else bottomBarItem.unselectedIconRes,
+                            contentDescription = stringResource(bottomBarItem.titleRes),
+                        )
+                    }
+                }
+            }
+
+            routesWithBottomBar.any { currentRoute.hasRoute(it) } -> {
+                QhatuBottombar(content = viewModel.actions)
+            }
         }
     }
 }

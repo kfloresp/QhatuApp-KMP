@@ -28,6 +28,13 @@
     <string name="title_products">Productos</string>
     <string name="title_setting">Ajustes</string>
 
+    <!-- Títulos de pantallas -->
+    <string name="tx_menu_main">Inicio</string>
+    <string name="tx_menu_sales">Ventas</string>
+    <string name="tx_menu_search">Búsqueda</string>
+    <string name="tx_menu_customer">Clientes</string>
+    <string name="tx_menu_setting">Más</string>
+
     <!-- Pantalla de Inicio -->
     <string name="tx_greeting">Hola, %1$s</string>
     <string name="tx_question">¿Qué haremos hoy?</string>
