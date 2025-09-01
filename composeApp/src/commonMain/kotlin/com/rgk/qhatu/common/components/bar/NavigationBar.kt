@@ -77,7 +77,7 @@ fun RowScope.UnderlinedNavigationBarItem(
 
         if (selected) {
             HorizontalDivider(
-                thickness = 2.dp
+                thickness = 1.dp
             )
         }
     }

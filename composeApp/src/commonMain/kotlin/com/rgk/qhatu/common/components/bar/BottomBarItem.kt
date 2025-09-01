@@ -1,19 +1,14 @@
 package com.rgk.qhatu.common.components.bar
 
 import com.rgk.qhatu.feature.customer.presentation.CustomerGraph
-import com.rgk.qhatu.feature.customer.presentation.customer.CustomerDestination
 import com.rgk.qhatu.feature.home.presentation.HomeGraph
-import com.rgk.qhatu.feature.home.presentation.home.HomeDestination
 import com.rgk.qhatu.feature.sale.presentation.SaleGraph
-import com.rgk.qhatu.feature.sale.presentation.sale.SaleDestination
 import com.rgk.qhatu.feature.search.presentation.SearchGraph
-import com.rgk.qhatu.feature.search.presentation.search.SearchDestination
 import com.rgk.qhatu.feature.setting.presentation.SettingGraph
-import com.rgk.qhatu.feature.setting.presentation.setting.SettingDestination
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import qhatuapp.composeapp.generated.resources.Res
-import qhatuapp.composeapp.generated.resources.ic_outline_more_vert_24
+import qhatuapp.composeapp.generated.resources.ic_outline_more_horiz_24
 import qhatuapp.composeapp.generated.resources.ic_round_home_24
 import qhatuapp.composeapp.generated.resources.ic_round_person_24
 import qhatuapp.composeapp.generated.resources.ic_rounded_home_24
@@ -60,8 +55,8 @@ val bottomBarItems = listOf(
     ),
     BottomBarItem(
         titleRes = Res.string.tx_menu_setting,
-        selectedIconRes = Res.drawable.ic_outline_more_vert_24,
-        unselectedIconRes = Res.drawable.ic_outline_more_vert_24,
+        selectedIconRes = Res.drawable.ic_outline_more_horiz_24,
+        unselectedIconRes = Res.drawable.ic_outline_more_horiz_24,
         graph = SettingGraph,
     ),
 )

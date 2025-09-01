@@ -20,9 +20,7 @@ fun NavGraphBuilder.homeGraph(
     navigateToSearch: () -> Unit,
     navigateToSale: () -> Unit,
     navigateToPayment: () -> Unit,
-    navigateToCustomer: () -> Unit,
     navigateToProduct: () -> Unit,
-    navigateToSetting: () -> Unit,
     navigateToCart: () -> Unit,
 ) {
     navigation<HomeGraph>(
@@ -33,9 +31,7 @@ fun NavGraphBuilder.homeGraph(
             navigateToSearch = navigateToSearch,
             navigateToSale = navigateToSale,
             navigateToPayment = navigateToPayment,
-            navigateToCustomer = navigateToCustomer,
             navigateToProduct = navigateToProduct,
-            navigateToSetting = navigateToSetting,
             navigateToCart = navigateToCart
         )
     }

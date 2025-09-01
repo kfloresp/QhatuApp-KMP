@@ -28,7 +28,6 @@ import com.rgk.qhatu.feature.search.presentation.search.SearchDestination
 import com.rgk.qhatu.feature.setting.presentation.setting.SettingDestination
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
-import org.koin.core.component.getScopeId
 
 @Serializable
 object NoneGraph

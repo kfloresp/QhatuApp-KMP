@@ -17,9 +17,7 @@ internal fun NavGraphBuilder.homeDestination(
     navigateToSearch: () -> Unit,
     navigateToSale: () -> Unit,
     navigateToPayment: () -> Unit,
-    navigateToCustomer: () -> Unit,
     navigateToProduct: () -> Unit,
-    navigateToSetting: () -> Unit,
     navigateToCart: () -> Unit,
 ) {
     composable<HomeDestination> {
@@ -27,7 +25,6 @@ internal fun NavGraphBuilder.homeDestination(
         val uiState by viewModel.uiState.collectAsState()
         val cartSummary by viewModel.cartSummary.collectAsState()
         ProvideAppBar(
-            showAppIcon = true,
             showBackNavigation = false,
             actions = {
                 CartRightSection(
@@ -42,9 +39,7 @@ internal fun NavGraphBuilder.homeDestination(
             navigateToSearch = navigateToSearch,
             navigateToSale = navigateToSale,
             navigateToPayment = navigateToPayment,
-            navigateToCustomer = navigateToCustomer,
             navigateToProduct = navigateToProduct,
-            navigateToSetting = navigateToSetting,
             setLoading = setLoading,
         )
     }

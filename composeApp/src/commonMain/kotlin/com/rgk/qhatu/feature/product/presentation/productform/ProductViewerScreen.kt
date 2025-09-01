@@ -146,10 +146,6 @@ fun SectionHeader(text: String) {
             .fillMaxWidth()
             .padding(top = 4.dp, bottom = 2.dp)
     )
-    HorizontalDivider(
-        thickness = 1.dp,
-        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
-    )
 }
 
 @Composable

@@ -145,6 +145,6 @@ private class TopBarAppViewModel : ViewModel() {
     var actions by mutableStateOf<@Composable RowScope.() -> Unit>({ }, referentialEqualityPolicy())
     var title by mutableStateOf<String?>(null, referentialEqualityPolicy())
     var showAppIcon by mutableStateOf(false, referentialEqualityPolicy())
-    var showBackNavigation by mutableStateOf(true, referentialEqualityPolicy())
+    var showBackNavigation by mutableStateOf(false, referentialEqualityPolicy())
     var onBackStack by mutableStateOf<(() -> Unit)?>(null, referentialEqualityPolicy())
 }

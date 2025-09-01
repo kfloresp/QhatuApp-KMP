@@ -15,7 +15,9 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.theme.QhatuTheme
 import org.jetbrains.compose.resources.stringResource
@@ -27,14 +29,20 @@ import qhatuapp.composeapp.generated.resources.tx_global_search_bar
 fun SearchBar(
     modifier: Modifier = Modifier,
     query: String,
-    onQueryChange: (String) -> Unit
+    onClick: () -> Unit = {},
+    onQueryChange: (String) -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
     OutlinedTextField(
         value = query,
         onValueChange = onQueryChange,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .onFocusChanged {
+                if (it.isFocused) {
+                    onClick()
+                    focusManager.clearFocus()
+                }},
         placeholder = { Text(stringResource(Res.string.tx_global_search_bar)) },
         leadingIcon = {
             Icon(
