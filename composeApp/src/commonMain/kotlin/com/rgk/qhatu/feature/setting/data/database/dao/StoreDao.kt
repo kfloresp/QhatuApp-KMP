@@ -19,21 +19,21 @@ interface StoreDao {
     @Update
     suspend fun update(entity: StoreEntity)
 
-    @Query("SELECT * FROM stores")
+    @Query("SELECT * FROM store")
     suspend fun fetchAll(): List<StoreEntity>
 
-    @Query("SELECT * FROM stores WHERE id = :storeId")
+    @Query("SELECT * FROM store WHERE id = :storeId")
     suspend fun findById(storeId: String): StoreEntity?
 
-    @Query("SELECT COUNT(*) as count, MAX(fecha_actualizacion) as lastUpdated FROM stores")
+    @Query("SELECT COUNT(*) as count, MAX(lastUpdated) as lastUpdated FROM store")
     suspend fun getStats(): SyncStats
 
-    @Query("SELECT id FROM stores WHERE flag_sincronizado = 1")
+    @Query("SELECT id FROM store WHERE isSynced = 1")
     suspend fun getSyncedIds(): List<String>
 
-    @Query("DELETE FROM stores WHERE flag_sincronizado != 1")
+    @Query("DELETE FROM store WHERE isSynced != 1")
     suspend fun deleteUnsynced()
 
-    @Query("DELETE FROM stores")
+    @Query("DELETE FROM store")
     suspend fun deleteAll()
 }

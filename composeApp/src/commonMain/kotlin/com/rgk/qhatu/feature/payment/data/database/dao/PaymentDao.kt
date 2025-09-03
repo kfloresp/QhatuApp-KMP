@@ -40,8 +40,8 @@ interface PaymentDao {
             cu.nombre || ' ' || cu.apellidoPaterno || ' ' || cu.apellidoMaterno AS customer,
             p.paymentDate,
             p.amountPaid,
-            co.id AS paymentMethodId,
-            co.nombre AS paymentMethod,
+            "YAPE" AS paymentMethodId,
+            "YAPE" AS paymentMethod,
             p.comments,
             p.numberOperation,
             p.isSynced,
@@ -49,7 +49,6 @@ interface PaymentDao {
             p.lastUpdated
         FROM payments p
         INNER JOIN clients cu ON p.clientId = cu.id
-        INNER JOIN configurations co ON p.paymentMethodId = co.id
         WHERE p.id = :id and p.isDeleted = false
     """)
     suspend fun fetchById(id: String): List<Payment>
@@ -61,8 +60,8 @@ interface PaymentDao {
             cu.nombre || ' ' || cu.apellidoPaterno || ' ' || cu.apellidoMaterno AS customer,
             p.paymentDate,
             p.amountPaid,
-            co.id AS paymentMethodId,
-            co.nombre AS paymentMethod,
+            "YAPE" AS paymentMethodId,
+            "YAPE" AS paymentMethod,
             p.comments,
             p.numberOperation,
             p.isSynced,
@@ -70,7 +69,6 @@ interface PaymentDao {
             p.lastUpdated
         FROM payments p
         INNER JOIN clients cu ON p.clientId = cu.id
-        INNER JOIN configurations co ON p.paymentMethodId = co.id
         WHERE p.isDeleted = false
     """)
     suspend fun getPaymentsWithDetails(): List<Payment>

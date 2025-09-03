@@ -30,7 +30,6 @@ class HomeViewModel(
 
     init {
         refreshCartSummary()
-        getCartInactiveList()
     }
 
     private fun refreshCartSummary() {
@@ -52,6 +51,7 @@ class HomeViewModel(
                         )
                     }
                     observeCartSummary()
+                    getCartInactiveList()
                 }
             }
         }

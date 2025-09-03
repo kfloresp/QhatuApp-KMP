@@ -18,15 +18,15 @@ interface BrandDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(entity: List<BrandEntity>)
 
-    @Query("SELECT * FROM brands where flag_eliminado = false")
+    @Query("SELECT * FROM product_brand where isDeleted = false")
     suspend fun fetchAll(): List<BrandEntity>
 
-    @Query("SELECT COUNT(*) as count, MAX(fecha_actualizacion) as lastUpdated FROM brands")
+    @Query("SELECT COUNT(*) as count, MAX(lastUpdated) as lastUpdated FROM product_brand")
     suspend fun getStats(): SyncStats
 
-    @Query("SELECT id FROM brands WHERE flag_sincronizado = 1")
+    @Query("SELECT id FROM product_brand WHERE isSynced = 1")
     suspend fun getSyncedIds(): List<String>
 
-    @Query("DELETE FROM brands WHERE flag_sincronizado != 1")
+    @Query("DELETE FROM product_brand WHERE isSynced != 1")
     suspend fun deleteUnsynced()
 }

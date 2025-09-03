@@ -18,15 +18,15 @@ interface CategoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(entity: List<CategoryEntity>)
 
-    @Query("SELECT * FROM categories where flag_eliminado = false")
+    @Query("SELECT * FROM product_category where isDeleted = false")
     suspend fun fetchAll(): List<CategoryEntity>
 
-    @Query("SELECT COUNT(*) as count, MAX(fecha_actualizacion) as lastUpdated FROM categories")
+    @Query("SELECT COUNT(*) as count, MAX(lastUpdated) as lastUpdated FROM product_category")
     suspend fun getStats(): SyncStats
 
-    @Query("SELECT id FROM categories WHERE flag_sincronizado = 1")
+    @Query("SELECT id FROM product_category WHERE isSynced = 1")
     suspend fun getSyncedIds(): List<String>
 
-    @Query("DELETE FROM categories WHERE flag_sincronizado != 1")
+    @Query("DELETE FROM product_category WHERE isSynced != 1")
     suspend fun deleteUnsynced()
 }

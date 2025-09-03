@@ -37,14 +37,14 @@ interface ProductDao {
             p.ean,
             p.name,
             p.categoryId,
-            c.nombre AS category,
+            c.name AS category,
             p.storageTypeId,
-            ta.nombre AS storageType,
+            "FIFO" AS storageType,
             p.brandId,
-            m.nombre AS brand,
+            m.name AS brand,
             p.unitPrice,
             p.unitMeasureId,
-            um.nombre AS unitMeasure,
+            um.name AS unitMeasure,
             p.isBatch,
             p.isActive,
             p.syncedDate,
@@ -53,7 +53,6 @@ interface ProductDao {
             p.isSynced
         FROM products p
         LEFT JOIN categories c ON p.categoryId = c.id
-        LEFT JOIN configurations ta ON p.storageTypeId = ta.id
         LEFT JOIN brands m ON p.brandId = m.id
         LEFT JOIN unit_measures um ON p.unitMeasureId = um.id
          WHERE p.isDeleted = false
@@ -68,14 +67,14 @@ interface ProductDao {
             p.ean,
             p.name,
             p.categoryId,
-            c.nombre AS category,
+            c.name AS category,
             p.storageTypeId,
-            ta.nombre || ' (' || ta.descripcion|| ')'  AS storageType,
+            "FIFO" || ' (' || "FIRST IN FIRST OUT"|| ')'  AS storageType,
             p.brandId,
-            m.nombre AS brand,
+            m.name AS brand,
             p.unitPrice,
             p.unitMeasureId,
-            um.nombre AS unitMeasure,
+            um.name AS unitMeasure,
             p.isBatch,
             p.isActive,
             p.syncedDate,
@@ -84,7 +83,6 @@ interface ProductDao {
             p.isSynced
         FROM products p
         LEFT JOIN categories c ON p.categoryId = c.id
-        LEFT JOIN configurations ta ON p.storageTypeId = ta.id
         LEFT JOIN brands m ON p.brandId = m.id
         LEFT JOIN unit_measures um ON p.unitMeasureId = um.id
         WHERE p.id = :productId and p.isDeleted = false 

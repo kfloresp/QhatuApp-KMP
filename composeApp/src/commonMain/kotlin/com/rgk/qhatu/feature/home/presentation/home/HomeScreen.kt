@@ -47,9 +47,8 @@ fun HomeScreen(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        SearchBar {
-            navigateToSearch()
-        }
+        SearchBar(query = "", onClick = navigateToSearch, onQueryChange = {})
+
         if (uiState.cartUiState is CartUiState.Success) {
             val cartCount = uiState.cartUiState.carts.size
             ActionItemCard(

@@ -7,7 +7,6 @@ import com.rgk.qhatu.feature.setting.domain.model.Brand
 fun BrandModel.toDomain(): Brand = Brand(
     id = id,
     name = name,
-    description = description,
     isSynced = isSynced,
     lastUpdated = lastUpdated,
 )
@@ -15,7 +14,6 @@ fun BrandModel.toDomain(): Brand = Brand(
 fun Brand.toEntity(): BrandEntity = BrandEntity(
     id = id,
     name = name,
-    description = description,
     isSynced = isSynced,
     isDeleted = isDeleted,
     lastUpdated = lastUpdated
@@ -24,7 +22,6 @@ fun Brand.toEntity(): BrandEntity = BrandEntity(
 fun BrandEntity.toDomain(): Brand = Brand(
     id = id,
     name = name,
-    description = description,
     isSynced = isSynced,
     lastUpdated = lastUpdated
 )
@@ -32,7 +29,6 @@ fun BrandEntity.toDomain(): Brand = Brand(
 fun BrandEntity.toModel(): BrandModel = BrandModel(
     id = id,
     name = name,
-    description = description,
     isSynced = isSynced,
     lastUpdated = lastUpdated
 )
@@ -40,7 +36,6 @@ fun BrandEntity.toModel(): BrandModel = BrandModel(
 fun BrandModel.toEntity(): BrandEntity = BrandEntity(
     id = id,
     name = name,
-    description = description,
     isSynced = isSynced,
     isDeleted = isDeleted,
     lastUpdated = lastUpdated

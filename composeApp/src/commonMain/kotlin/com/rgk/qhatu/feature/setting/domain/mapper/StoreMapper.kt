@@ -6,7 +6,9 @@ import com.rgk.qhatu.feature.setting.domain.model.Store
 
 fun StoreModel.toDomain(): Store = Store(
     id = id,
-    name = name,
+    companyName = companyName,
+    commercialName = commercialName,
+    ruc = ruc,
     address = address,
     phone = phone,
     logoUrl = logoUrl,
@@ -16,7 +18,9 @@ fun StoreModel.toDomain(): Store = Store(
 
 fun Store.toEntity(): StoreEntity = StoreEntity(
     id = id,
-    name = name,
+    companyName = companyName,
+    commercialName = commercialName,
+    ruc = ruc,
     address = address.orEmpty(),
     phone = phone.orEmpty(),
     logoUrl = logoUrl.orEmpty(),
@@ -26,7 +30,9 @@ fun Store.toEntity(): StoreEntity = StoreEntity(
 
 fun StoreEntity.toDomain(): Store = Store(
     id = id,
-    name = name,
+    companyName = companyName,
+    commercialName = commercialName,
+    ruc = ruc,
     address = address,
     phone = phone,
     logoUrl = logoUrl,
@@ -36,7 +42,9 @@ fun StoreEntity.toDomain(): Store = Store(
 
 fun StoreEntity.toModel(): StoreModel = StoreModel(
     id = id,
-    name = name,
+    companyName = companyName,
+    commercialName = commercialName,
+    ruc = ruc,
     address = address,
     phone = phone,
     logoUrl = logoUrl,
@@ -46,7 +54,9 @@ fun StoreEntity.toModel(): StoreModel = StoreModel(
 
 fun StoreModel.toEntity(): StoreEntity = StoreEntity(
     id = id,
-    name = name,
+    companyName = companyName,
+    commercialName = commercialName,
+    ruc = ruc,
     address = address.orEmpty(),
     phone = phone.orEmpty(),
     logoUrl = logoUrl.orEmpty(),

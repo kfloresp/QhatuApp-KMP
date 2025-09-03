@@ -10,7 +10,6 @@ import com.rgk.qhatu.feature.product.data.database.dao.ImageProductDao
 import com.rgk.qhatu.feature.product.data.database.dao.ProductDao
 import com.rgk.qhatu.feature.setting.data.database.dao.BrandDao
 import com.rgk.qhatu.feature.setting.data.database.dao.CategoryDao
-import com.rgk.qhatu.feature.setting.data.database.dao.ConfigurationDao
 import com.rgk.qhatu.feature.setting.data.database.dao.StoreDao
 import com.rgk.qhatu.feature.setting.data.database.dao.UnitMeasureDao
 import com.rgk.qhatu.feature.operation.data.database.dao.OperationDao
@@ -28,7 +27,6 @@ val databaseModule = module {
     single<CategoryDao> { get<AppDataBase>().categoryDao() }
     single<CustomerDao> { get<AppDataBase>().clientDao() }
     single<PaymentDao> { get<AppDataBase>().clientPaymentDao() }
-    single<ConfigurationDao> { get<AppDataBase>().configurationDao() }
     single<ProductDao> { get<AppDataBase>().productDao() }
     single<UnitMeasureDao> { get<AppDataBase>().unitMeasureDao() }
     single<StoreDao> { get<AppDataBase>().storeDao() }

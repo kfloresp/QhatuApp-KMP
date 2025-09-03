@@ -3,7 +3,6 @@ package com.rgk.qhatu.common.components.search
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -28,9 +27,9 @@ import qhatuapp.composeapp.generated.resources.tx_global_search_bar
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
-    query: String = "",
+    query: String,
     onClick: () -> Unit = {},
-    onQueryChange: (String) -> Unit = {},
+    onQueryChange: (String) -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
     OutlinedTextField(

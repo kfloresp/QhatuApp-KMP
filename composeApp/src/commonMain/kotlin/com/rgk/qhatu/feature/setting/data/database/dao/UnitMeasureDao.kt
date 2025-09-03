@@ -19,16 +19,16 @@ interface UnitMeasureDao {
     @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun save(entity: List<UnitMeasureEntity>)
 
-    @Query("SELECT * FROM unit_measures where flag_eliminado = false")
+    @Query("SELECT * FROM product_unit_of_measure where isDeleted = false")
     suspend fun fetchAll(): List<UnitMeasureEntity>
 
-    @Query("SELECT COUNT(*) as count, MAX(fecha_actualizacion) as lastUpdated FROM unit_measures")
+    @Query("SELECT COUNT(*) as count, MAX(lastUpdated) as lastUpdated FROM product_unit_of_measure")
     suspend fun getStats(): SyncStats
 
-    @Query("SELECT id FROM unit_measures WHERE flag_sincronizado = 1")
+    @Query("SELECT id FROM product_unit_of_measure WHERE isSynced = 1")
     suspend fun getSyncedIds(): List<String>
 
-    @Query("DELETE FROM unit_measures WHERE flag_sincronizado != 1")
+    @Query("DELETE FROM product_unit_of_measure WHERE isSynced != 1")
     suspend fun deleteUnsynced()
 
 }

@@ -8,7 +8,6 @@ import com.rgk.qhatu.feature.setting.data.repository.BrandRepositoryImpl
 import com.rgk.qhatu.feature.setting.data.repository.CategoryRepositoryImpl
 import com.rgk.qhatu.feature.payment.data.repository.PaymentRepositoryImpl
 import com.rgk.qhatu.feature.setting.data.repository.UnitMeasureRepositoryImpl
-import com.rgk.qhatu.feature.setting.data.repository.ConfigurationRepositoryImpl
 import com.rgk.qhatu.feature.audit.domain.repository.AuditLogRepository
 import com.rgk.qhatu.feature.auth.domain.repository.AuthRepository
 import com.rgk.qhatu.feature.cart.data.repository.CartRepositoryImpl
@@ -42,7 +41,6 @@ val repositoryModule = module {
     factoryOf(::CategoryRepositoryImpl) bind CategoryRepository::class
     factoryOf(::PaymentRepositoryImpl) bind PaymentRepository::class
     factoryOf(::CustomerRepositoryImpl) bind CustomerRepository::class
-    factoryOf(::ConfigurationRepositoryImpl) bind ConfigurationRepository::class
     factoryOf(::ProductRepositoryImpl) bind ProductRepository::class
     factoryOf(::UnitMeasureRepositoryImpl) bind UnitMeasureRepository::class
     factoryOf(::StoreRepositoryImpl) bind StoreRepository::class

@@ -13,6 +13,7 @@ import com.rgk.qhatu.common.components.search.SearchContent
 import com.rgk.qhatu.feature.cart.presentation.checkout.component.SectionSummaryCheckout
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.customer.domain.model.GENERIC_CUSTOMER
+import com.rgk.qhatu.navigation.ProvideAppBar
 import com.rgk.qhatu.navigation.ProvideBottomBarApp
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
@@ -52,7 +53,9 @@ internal fun NavGraphBuilder.checkoutDestination(
                 )
             }
         }
-
+        ProvideAppBar(
+            showBackNavigation = true,
+        )
         CheckoutScreen(
             uiState = uiState,
             formState = formState,
