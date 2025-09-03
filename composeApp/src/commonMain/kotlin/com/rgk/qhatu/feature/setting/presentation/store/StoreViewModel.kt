@@ -73,4 +73,8 @@ class StoreViewModel(
             }
         }
     }
+
+    fun onFieldChange(change: (Store) -> Store) {
+
+    }
 }

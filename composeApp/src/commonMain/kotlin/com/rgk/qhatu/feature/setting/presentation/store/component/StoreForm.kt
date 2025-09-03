@@ -23,7 +23,11 @@ import qhatuapp.composeapp.generated.resources.tx_setting_store_name
 import qhatuapp.composeapp.generated.resources.tx_setting_store_phone
 
 @Composable
-fun StoreForm(store: Store, onSaveClick: (Store) -> Unit) {
+fun StoreForm(
+    store: Store,
+    onSaveClick: (Store) -> Unit,
+    onFieldChange: (Store.() -> Store) -> Unit,
+) {
     var name by remember { mutableStateOf(store.companyName) }
     var address by remember { mutableStateOf(store.address.orEmpty()) }
     var phone by remember { mutableStateOf(store.phone.orEmpty()) }
@@ -74,6 +78,14 @@ fun StoreForm(store: Store, onSaveClick: (Store) -> Unit) {
         PrimaryButton(
             stringResource(Res.string.tx_global_save_changes),
             modifier = Modifier.padding(12.dp),
-            onClick = { onSaveClick(store.copy(commercialName = name, address = address, phone = phone)) })
+            onClick = {
+                onSaveClick(
+                    store.copy(
+                        commercialName = name,
+                        address = address,
+                        phone = phone
+                    )
+                )
+            })
     }
 }

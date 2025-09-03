@@ -30,11 +30,18 @@ internal fun NavGraphBuilder.storeDestination() {
 
         StoreScreen(
             uiState = uiState,
-            onStoreChange = { storeValue = it },
+            onSaveClick = {
+                storeValue = it
+            },
+            onFieldChange = { change ->
+                viewModel.onFieldChange(change)
+            }
         )
+
         ProvideAppBar(
             showBackNavigation = true,
         )
+
         storeValue?.let {
             ConfirmDialog(
                 title = stringResource(Res.string.tx_global_confirmation),

@@ -73,7 +73,9 @@
     <string name="tx_logout_prompt">¿Desea cerrar sesión?</string>
     <string name="tx_logout_confirm">Sí, cerrar sesión</string>
     <string name="tx_setting_unit_measure_abreviature">Abreviatura</string>
-    <string name="tx_setting_store_name">Nombre de la tienda</string>
+    <string name="tx_setting_store_name">Nombre comercial de tienda</string>
+    <string name="tx_setting_store_company">Razón social</string>
+    <string name="tx_setting_store_ruc">RUC</string>
     <string name="tx_setting_store_address">Dirección</string>
     <string name="tx_setting_store_phone">Celular</string>
     <string name="tx_setting_name">Nombre</string>
