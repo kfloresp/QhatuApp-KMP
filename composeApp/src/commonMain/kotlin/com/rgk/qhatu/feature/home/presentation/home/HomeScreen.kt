@@ -22,14 +22,17 @@ import com.rgk.qhatu.feature.home.presentation.component.ActionItemCard
 import com.rgk.qhatu.feature.home.presentation.component.provideMenu
 import com.rgk.qhatu.feature.product.presentation.productform.SectionHeader
 import org.jetbrains.compose.resources.stringResource
+import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_cart_pending
 
 @Composable
 fun HomeScreen(
-    uiState: HomeUiState,
+    uiState: HomeScreenUiState,
     navigateToSearch: () -> Unit,
     navigateToSale: () -> Unit,
     navigateToPayment: () -> Unit,
     navigateToProduct: () -> Unit,
+    navigateToCartsInactive: () -> Unit,
     setLoading: (Boolean) -> Unit,
 ) {
     val menuSections = provideMenu(
@@ -44,20 +47,19 @@ fun HomeScreen(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        SearchBar(
-            query = "",
-            onQueryChange = {},
-            onClick = {
-                navigateToSearch()
-            }
-        )
-        ActionItemCard(
-            "Tienes 5 carritos pendientes",
-            icon = Icons.Default.ShoppingCart,
-            onClick = {
-
-            }
-        )
+        SearchBar {
+            navigateToSearch()
+        }
+        if (uiState.cartUiState is CartUiState.Success) {
+            val cartCount = uiState.cartUiState.carts.size
+            ActionItemCard(
+                stringResource(Res.string.tx_cart_pending, cartCount),
+                icon = Icons.Default.ShoppingCart,
+                onClick = {
+                    navigateToCartsInactive()
+                }
+            )
+        }
         BannerSection(
             path = "/data/user/0/com.rgk.ingenieros/files/IMG_1756692810261.png",
             modifier = Modifier
@@ -85,5 +87,5 @@ fun HomeScreen(
             }
         }
     }
-    setLoading(uiState is HomeUiState.Loading)
+    setLoading(uiState.homeUiState is HomeUiState.Loading)
 }

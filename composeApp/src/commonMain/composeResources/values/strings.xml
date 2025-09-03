@@ -34,6 +34,7 @@
     <string name="tx_menu_search">Búsqueda</string>
     <string name="tx_menu_customer">Clientes</string>
     <string name="tx_menu_setting">Más</string>
+    <string name="tx_cart_pending">Tienes %d carritos pendientes</string>
 
     <!-- Pantalla de Inicio -->
     <string name="tx_greeting">Hola, %1$s</string>

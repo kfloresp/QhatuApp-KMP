@@ -117,6 +117,10 @@ class CartRepositoryImpl(
         return cartItemDao.getItemsByCart(cartId).map { it.toDomain() }
     }
 
+    override suspend fun getCartsInactive(): SyncResult<List<Cart>> = safeCall {
+        cartDao.getAllCartsInactive().map { it.toDomain() }
+    }
+
     override suspend fun refreshCartSummary(): SyncResult<Unit> = safeCall {
         val activeCart = cartDao.getActiveCart()
         var totalCart = 0.0

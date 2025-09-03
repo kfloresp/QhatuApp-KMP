@@ -17,6 +17,7 @@ interface CartRepository {
     suspend fun updateCartItem(item: CartItem)
     suspend fun deleteCartItem(productId: String)
     suspend fun getCartItems(cartId: String): List<CartItem>
+    suspend fun getCartsInactive(): SyncResult<List<Cart>>
     suspend fun refreshCartSummary(): SyncResult<Unit>
     val observeCartSummary: StateFlow<CartSummary?>
     val observeCartItems: StateFlow<List<CartItem>?>

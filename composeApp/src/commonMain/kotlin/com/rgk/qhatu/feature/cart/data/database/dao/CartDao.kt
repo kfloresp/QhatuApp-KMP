@@ -25,6 +25,9 @@ interface CartDao {
     @Query("SELECT * FROM cart")
     suspend fun getAllCarts(): List<CartEntity>
 
+    @Query("SELECT * FROM cart where isActive = 0")
+    suspend fun getAllCartsInactive(): List<CartEntity>
+
     @Query("UPDATE cart SET isActive = 0")
     suspend fun deactivateAllCarts()
 

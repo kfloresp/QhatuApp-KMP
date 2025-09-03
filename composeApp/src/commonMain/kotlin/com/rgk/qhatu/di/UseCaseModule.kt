@@ -7,6 +7,7 @@ import com.rgk.qhatu.feature.auth.domain.usecase.ObserveCurrentUser
 import com.rgk.qhatu.feature.auth.domain.usecase.RegisterUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.AddItemToCartUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.DeleteCartUseCase
+import com.rgk.qhatu.feature.cart.domain.usecase.GetCartsInactive
 import com.rgk.qhatu.feature.cart.domain.usecase.GetRefreshCartSummaryUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartItemsUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartSummaryUseCase
@@ -78,4 +79,5 @@ val useCaseModule = module {
     factoryOf(::SaveSaleWithDetailsUseCase)
     factoryOf(::GetSaleWithDetailsById)
     factoryOf(::GetSalesUseCase)
+    factoryOf(::GetCartsInactive)
 }

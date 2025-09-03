@@ -28,9 +28,9 @@ import qhatuapp.composeapp.generated.resources.tx_global_search_bar
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
-    query: String,
+    query: String = "",
     onClick: () -> Unit = {},
-    onQueryChange: (String) -> Unit,
+    onQueryChange: (String) -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
     OutlinedTextField(
