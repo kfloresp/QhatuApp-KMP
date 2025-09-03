@@ -12,6 +12,7 @@ import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.dialog.ContentDialog
 import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
 import com.rgk.qhatu.feature.setting.presentation.unitmeasure.component.UnitMeasureForm
+import com.rgk.qhatu.navigation.ProvideAppBar
 import com.rgk.qhatu.navigation.ProvideFabAction
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
@@ -51,6 +52,10 @@ internal fun NavGraphBuilder.unitMeasureDestination() {
                 }
             }
         }
+
+        ProvideAppBar(
+            showBackNavigation = true,
+        )
 
         UnitMeasureScreen(
             uiState = uiState,

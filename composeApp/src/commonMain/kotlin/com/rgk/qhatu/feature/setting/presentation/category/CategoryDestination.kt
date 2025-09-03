@@ -12,6 +12,7 @@ import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.dialog.ContentDialog
 import com.rgk.qhatu.feature.setting.domain.model.Category
 import com.rgk.qhatu.feature.setting.presentation.category.component.CategoryForm
+import com.rgk.qhatu.navigation.ProvideAppBar
 import com.rgk.qhatu.navigation.ProvideFabAction
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
@@ -48,6 +49,10 @@ internal fun NavGraphBuilder.categoryDestination() {
                 }
             }
         }
+
+        ProvideAppBar(
+            showBackNavigation = true,
+        )
 
         CategoryScreen(
             uiState = uiState,

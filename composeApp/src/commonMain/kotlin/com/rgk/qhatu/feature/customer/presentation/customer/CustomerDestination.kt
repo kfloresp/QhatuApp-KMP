@@ -32,9 +32,7 @@ internal fun NavGraphBuilder.customerDestination(
         BackHandler {
             onBackPopUp.invoke()
         }
-        ProvideAppBar(
-            onBackStack = { onBackPopUp.invoke() }
-        )
+
         ProvideFabAction {
             if (!isRefreshing && uiState is CustomerUiState.Success || uiState is CustomerUiState.Empty) {
                 ButtonFlotableAction(

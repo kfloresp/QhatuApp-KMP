@@ -41,6 +41,9 @@ internal fun NavGraphBuilder.homeDestination(
             navigateToPayment = navigateToPayment,
             navigateToProduct = navigateToProduct,
             setLoading = setLoading,
+            navigateToCartsInactive = {
+
+            }
         )
     }
 }

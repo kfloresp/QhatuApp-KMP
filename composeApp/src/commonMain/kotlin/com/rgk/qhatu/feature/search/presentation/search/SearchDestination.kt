@@ -24,6 +24,7 @@ internal fun NavGraphBuilder.searchDestination(
         val uiState by viewModel.uiState.collectAsState()
         val cartSummary by viewModel.cartSummary.collectAsState()
         ProvideAppBar(
+            showBackNavigation = false,
             actions = {
                 CartRightSection(
                     shoppingCartPrice = cartSummary?.totalSummary.orEmpty(),
