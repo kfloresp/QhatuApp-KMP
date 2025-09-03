@@ -10,7 +10,6 @@ import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncBrandUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncCategoryUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncConfigurationUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncStoreUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncUnitMeasureUseCase
 import com.rgk.qhatu.feature.setting.presentation.sync.component.SyncType
@@ -29,7 +28,6 @@ class SyncViewModel(
     private val syncCustomer: SyncCustomerUseCase,
     private val syncPayment: SyncPaymentUseCase,
     private val syncProduct: SyncProductUseCase,
-    private val syncConfiguration: SyncConfigurationUseCase,
 ) : ViewModel() {
     private val DELAY_TIME = 500L
     private val _uiState = MutableStateFlow(
@@ -98,7 +96,6 @@ class SyncViewModel(
                 }
 
                 SyncType.CONFIGURATION -> {
-                    syncConfiguration(SyncOperation.RemoteToLocal())
                 }
             }
             when (result) {

@@ -31,6 +31,13 @@ data class Product(
         get() = unitPrice.toDouble().formatAmount()
 }
 
+enum class StorageType(val value: String) {
+    FIFO("First in, first out"),
+    FEFO("First expired, first out"),
+    LIFO("Last in, first out"),
+    LEFO("Last expired, first out"),
+}
+
 fun Product.toOperationDetail(): OperationDetail = OperationDetail(
     productId = this.id,
     quantity = this.cartItem?.quantity.orZero(),

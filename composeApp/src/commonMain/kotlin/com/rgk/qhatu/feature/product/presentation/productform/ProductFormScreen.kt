@@ -33,9 +33,9 @@ import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
 import com.rgk.qhatu.feature.payment.presentation.paymentform.PATTERNS
 import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
+import com.rgk.qhatu.feature.product.domain.model.StorageType
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 import com.rgk.qhatu.feature.setting.domain.model.Category
-import com.rgk.qhatu.feature.setting.domain.model.Configuration
 import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
@@ -76,7 +76,7 @@ fun ProductFormScreen(
     selectedUnitMeasure: UnitMeasure? = null,
     selectedCategory: Category? = null,
     selectedBrand: Brand? = null,
-    selectedStorage: Configuration? = null,
+    selectedStorage: StorageType? = null,
     onBackPopUp: () -> Unit,
     onImagePickerClick: () -> Unit,
 ) {
@@ -122,8 +122,8 @@ fun ProductFormScreen(
                     )
                 }
             }
-            val selectedStorageName = selectedStorage?.nameFull.orEmpty()
-            val selectedStorageId = selectedStorage?.id.orEmpty()
+            val selectedStorageName = selectedStorage?.name.orEmpty()
+            val selectedStorageId = selectedStorage?.value.orEmpty()
             if (selectedStorageId.isNotEmpty()) {
                 onFieldChange {
                     copy(

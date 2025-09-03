@@ -33,7 +33,7 @@ import com.rgk.qhatu.common.components.textfield.CustomTextField
 import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.payment.domain.model.Payment
-import com.rgk.qhatu.feature.setting.domain.model.Configuration
+import com.rgk.qhatu.feature.sale.domain.model.SalePaymentMethod
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_global_delete_changes
@@ -60,7 +60,7 @@ fun PaymentFormScreen(
     onDatePickerClick: () -> Unit,
     onClearCustomer: () -> Unit,
     selectedCustomer: Customer? = null,
-    methodPayments: List<Configuration>,
+    methodPayments: List<SalePaymentMethod>,
     onBackPopUp: () -> Unit,
     onDeletePopUp: () -> Unit,
 ) {
@@ -179,12 +179,12 @@ fun PaymentFormScreen(
                     )
                     ChipGroup(
                         items = methodPayments,
-                        keySelector = { it.id },
+                        keySelector = { it.value },
                         valueSelector = { it.name },
                         selectedKey = fields.paymentMethodId,
                         onChipClick = { methodPayment ->
                             onFieldChange {
-                                copy(paymentMethodId = methodPayment.id)
+                                copy(paymentMethodId = methodPayment.value)
                             }
                         },
                         errorText = ""

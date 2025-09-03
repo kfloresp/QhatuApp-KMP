@@ -52,9 +52,9 @@ interface ProductDao {
             p.lastUpdated,
             p.isSynced
         FROM products p
-        LEFT JOIN categories c ON p.categoryId = c.id
-        LEFT JOIN brands m ON p.brandId = m.id
-        LEFT JOIN unit_measures um ON p.unitMeasureId = um.id
+        LEFT JOIN product_category c ON p.categoryId = c.id
+        LEFT JOIN product_brand m ON p.brandId = m.id
+        LEFT JOIN product_unit_of_measure um ON p.unitMeasureId = um.id
          WHERE p.isDeleted = false
         """
     )
@@ -82,9 +82,9 @@ interface ProductDao {
             p.lastUpdated,
             p.isSynced
         FROM products p
-        LEFT JOIN categories c ON p.categoryId = c.id
-        LEFT JOIN brands m ON p.brandId = m.id
-        LEFT JOIN unit_measures um ON p.unitMeasureId = um.id
+        LEFT JOIN product_category c ON p.categoryId = c.id
+        LEFT JOIN product_brand m ON p.brandId = m.id
+        LEFT JOIN product_unit_of_measure um ON p.unitMeasureId = um.id
         WHERE p.id = :productId and p.isDeleted = false 
         LIMIT 1
         """

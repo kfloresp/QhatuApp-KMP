@@ -15,6 +15,7 @@ import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.search.SearchContent
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.payment.domain.model.Payment
+import com.rgk.qhatu.feature.sale.domain.model.SalePaymentMethod
 import com.rgk.qhatu.navigation.ProvideAppBar
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
@@ -45,7 +46,7 @@ internal fun NavGraphBuilder.paymentFormDestination(
         val isNewCustomer by viewModel.isNewPayment.collectAsState()
         val formState by viewModel.formState.collectAsState()
         val customerList by viewModel.customerList.collectAsState()
-        val methodPaymentList by viewModel.methodPaymentList.collectAsState()
+        val methodPaymentList = SalePaymentMethod.entries
 
         var selectedPaymentToDelete by remember { mutableStateOf<Payment?>(null) }
         var selectedPaymentToSave by remember { mutableStateOf<Payment?>(null) }

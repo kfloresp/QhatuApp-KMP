@@ -18,12 +18,10 @@ import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerSummaryUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersWithDebtUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
-import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsMethodUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetAllProductsUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetProductByIdUseCase
-import com.rgk.qhatu.feature.product.domain.usecase.GetStorageTypeUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SaveImageProductUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
 import com.rgk.qhatu.feature.sale.domain.usecase.GetSaleWithDetailsById
@@ -35,7 +33,6 @@ import com.rgk.qhatu.feature.setting.domain.usecase.GetStoreUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetUnitsMeasureUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncBrandUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncCategoryUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncConfigurationUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncStoreUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.SyncUnitMeasureUseCase
 import org.koin.core.module.dsl.factoryOf
@@ -48,7 +45,6 @@ val useCaseModule = module {
     factoryOf(::SyncCategoryUseCase)
     factoryOf(::SyncCustomerUseCase)
     factoryOf(::SyncPaymentUseCase)
-    factoryOf(::SyncConfigurationUseCase)
     factoryOf(::SyncProductUseCase)
     factoryOf(::SyncUnitMeasureUseCase)
     factoryOf(::SyncStoreUseCase)
@@ -62,10 +58,8 @@ val useCaseModule = module {
     factoryOf(::LogoutUseCase)
     factoryOf(::GetCustomerSummaryUseCase)
     factoryOf(::GetPaymentsUseCase)
-    factoryOf(::GetPaymentsMethodUseCase)
     factoryOf(::GetCustomersWithDebtUseCase)
     factoryOf(::GetAllProductsUseCase)
-    factoryOf(::GetStorageTypeUseCase)
     factoryOf(::SaveImageProductUseCase)
     factoryOf(::ObserveCartSummaryUseCase)
     factoryOf(::AddItemToCartUseCase)

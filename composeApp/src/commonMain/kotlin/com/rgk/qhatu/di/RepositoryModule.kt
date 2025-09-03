@@ -26,7 +26,6 @@ import com.rgk.qhatu.feature.sale.domain.repository.SaleRepository
 import com.rgk.qhatu.feature.setting.data.repository.StoreRepositoryImpl
 import com.rgk.qhatu.feature.setting.domain.repository.BrandRepository
 import com.rgk.qhatu.feature.setting.domain.repository.CategoryRepository
-import com.rgk.qhatu.feature.setting.domain.repository.ConfigurationRepository
 import com.rgk.qhatu.feature.setting.domain.repository.StoreRepository
 import com.rgk.qhatu.feature.setting.domain.repository.UnitMeasureRepository
 import org.koin.core.module.dsl.factoryOf
