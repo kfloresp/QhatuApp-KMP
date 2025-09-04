@@ -31,6 +31,10 @@ import qhatuapp.composeapp.generated.resources.image_place_holder
 fun ImagePicker(
     images: List<ImageProduct>,
     modifier: Modifier = Modifier,
+    title: String,
+    description: String,
+    buttonText: String,
+    limitImages: Int = 5,
     onDeleteClick: (ImageProduct) -> Unit,
     onUploadClick: () -> Unit,
 ) {
@@ -41,7 +45,11 @@ fun ImagePicker(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (images.isEmpty()) {
-            DottedBox {
+            DottedBox(
+                title = title,
+                description = description,
+                buttonText = buttonText,
+            ) {
                 onUploadClick()
             }
         } else {
@@ -65,7 +73,7 @@ fun ImagePicker(
                                     .size(150.dp)
                                     .clip(RoundedCornerShape(8.dp))
                             ) {
-                                if (image.isLoading){
+                                if (image.isLoading) {
                                     Box(
                                         modifier = Modifier
                                             .fillMaxSize()
@@ -74,7 +82,7 @@ fun ImagePicker(
                                     ) {
                                         CircularProgressIndicator()
                                     }
-                                }else{
+                                } else {
                                     AsyncImage(
                                         model = image.filename,
                                         contentDescription = image.productId,
@@ -98,7 +106,7 @@ fun ImagePicker(
                                     ) {
                                         Icon(
                                             imageVector = Icons.Default.Close,
-                                            contentDescription = "Eliminar",
+                                            contentDescription = null,
                                             tint = Color.White,
                                             modifier = Modifier.size(18.dp)
                                         )
@@ -109,8 +117,8 @@ fun ImagePicker(
                     }
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    Button(onClick = onUploadClick) {
-                        Text(text = "Añadir fotos")
+                    Button(onClick = onUploadClick, enabled = images.size < limitImages) {
+                        Text(text = buttonText)
                     }
                 }
             }
@@ -119,7 +127,13 @@ fun ImagePicker(
 }
 
 @Composable
-internal fun DottedBox(onUploadClick: () -> Unit) {
+internal fun DottedBox(
+    title: String,
+    description: String,
+    buttonText: String,
+    buttonEnabled: Boolean = true,
+    onUploadClick: () -> Unit,
+) {
     val borderColor = MaterialTheme.colorScheme.onSurface
     val borderWidth = 2.dp
     val cornerRadius = 12.dp
@@ -149,14 +163,14 @@ internal fun DottedBox(onUploadClick: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Agregar fotos", style = MaterialTheme.typography.titleMedium)
+            Text(text = title, style = MaterialTheme.typography.titleMedium)
             Text(
-                text = "Muestra tu producto desde diferentes ángulos.",
+                text = description,
                 style = MaterialTheme.typography.bodySmall
             )
             Spacer(modifier = Modifier.height(12.dp))
-            Button(onClick = onUploadClick) {
-                Text(text = "Añadir fotos")
+            Button(onClick = onUploadClick, enabled = buttonEnabled) {
+                Text(text = buttonText)
             }
         }
     }
@@ -168,8 +182,11 @@ fun ImagePickerCardPreviewEmpty() {
     QhatuTheme {
         ImagePicker(
             images = emptyList(),
+            title = "Agregar fotos del producto",
+            description = "Puedes agregar hasta 5 fotos",
+            buttonText = "Añadir fotos",
             onUploadClick = {},
-            onDeleteClick = {}
+            onDeleteClick = {},
         )
     }
 }
@@ -189,6 +206,9 @@ fun ImagePickerCardPreviewWithImages() {
                     filename = "/data/user/0/com.rgk.ingenieros/files/P0002_0.png"
                 ),
             ),
+            title = "Agregar fotos del producto",
+            description = "Puedes agregar hasta 5 fotos",
+            buttonText = "Añadir fotos",
             onUploadClick = {},
             onDeleteClick = {}
         )

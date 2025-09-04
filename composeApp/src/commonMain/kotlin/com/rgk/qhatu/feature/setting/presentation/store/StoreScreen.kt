@@ -15,7 +15,6 @@ import com.rgk.qhatu.common.components.imagepicker.ImagePicker
 import com.rgk.qhatu.common.components.loading.LoadingSection
 import com.rgk.qhatu.common.components.textfield.CustomTextField
 import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
-import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.setting.domain.model.Store
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
@@ -121,7 +120,11 @@ fun StoreScreen(
                             //selectedImageProduct = imageToDelete
                         }, onUploadClick = {
                             //onImagePickerClick()
-                        }
+                        },
+                        title = "Agregar foto",
+                        description = "Puedes agregar una foto de tu tienda",
+                        buttonText = "Añadir foto",
+                        limitImages = 1
                     )
 
                 }

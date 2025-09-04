@@ -275,7 +275,10 @@ fun ProductFormScreen(
                             selectedImageProduct = imageToDelete
                         }, onUploadClick = {
                             onImagePickerClick()
-                        }
+                        },
+                        title = "Agregar fotos",
+                        description = "Muestra tu producto desde diferentes ángulos",
+                        buttonText = "Añadir fotos"
                     )
                 }
 

@@ -14,6 +14,8 @@ import com.rgk.qhatu.feature.cart.data.repository.CartRepositoryImpl
 import com.rgk.qhatu.feature.cart.domain.repository.CartRepository
 import com.rgk.qhatu.feature.payment.domain.repository.PaymentRepository
 import com.rgk.qhatu.feature.customer.domain.repository.CustomerRepository
+import com.rgk.qhatu.feature.image_store.data.repository.ImageStoreRepositoryImpl
+import com.rgk.qhatu.feature.image_store.domain.repository.ImageStoreRepository
 import com.rgk.qhatu.feature.operation.data.repository.OperationDetailRepositoryImpl
 import com.rgk.qhatu.feature.operation.data.repository.OperationRepositoryImpl
 import com.rgk.qhatu.feature.operation.domain.repository.OperationDetailRepository
@@ -48,4 +50,5 @@ val repositoryModule = module {
     factoryOf(::OperationRepositoryImpl) bind OperationRepository::class
     factoryOf(::SaleRepositoryImpl) bind SaleRepository::class
     factoryOf(::PurchaseRepositoryImpl) bind PurchaseRepository::class
+    factoryOf(::ImageStoreRepositoryImpl) bind ImageStoreRepository::class
 }

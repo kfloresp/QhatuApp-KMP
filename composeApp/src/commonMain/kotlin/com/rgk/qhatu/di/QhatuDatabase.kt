@@ -12,6 +12,8 @@ import com.rgk.qhatu.feature.cart.data.database.entity.CartEntity
 import com.rgk.qhatu.feature.cart.data.database.entity.CartItemEntity
 import com.rgk.qhatu.feature.customer.data.database.dao.CustomerDao
 import com.rgk.qhatu.feature.customer.data.database.entity.CustomerEntity
+import com.rgk.qhatu.feature.image_store.data.database.dao.ImageStoreDao
+import com.rgk.qhatu.feature.image_store.data.database.entity.ImageStoreEntity
 import com.rgk.qhatu.feature.payment.data.database.dao.PaymentDao
 import com.rgk.qhatu.feature.payment.data.database.entity.PaymentEntity
 import com.rgk.qhatu.feature.product.data.database.dao.ImageProductDao
@@ -54,6 +56,7 @@ const val DATABASE_NAME = "qhatu_database.db"
         ImageProductEntity::class,
         CartEntity::class,
         CartItemEntity::class,
+        ImageStoreEntity::class,
     ], version = 1, exportSchema = false
 )
 @ConstructedBy(AppDatabaseConstructor::class)
@@ -73,6 +76,7 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun operationDetailDao() : OperationDetailDao
     abstract fun saleDao() : SaleDao
     abstract fun purchaseDao() : PurchaseDao
+    abstract fun imageStoreDao() : ImageStoreDao
 }
 
 @Suppress("NO_ACTUAL_FOR_EXPECT")
