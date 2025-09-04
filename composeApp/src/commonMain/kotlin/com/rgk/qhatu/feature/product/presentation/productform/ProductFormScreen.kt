@@ -269,17 +269,17 @@ fun ProductFormScreen(
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
-                    ImagePicker(
-                        images = fields.imageProduct,
-                        onDeleteClick = { imageToDelete ->
-                            selectedImageProduct = imageToDelete
-                        }, onUploadClick = {
-                            onImagePickerClick()
-                        },
-                        title = "Agregar fotos",
-                        description = "Muestra tu producto desde diferentes ángulos",
-                        buttonText = "Añadir fotos"
-                    )
+//                    ImagePicker(
+//                        images = fields.imageProduct,
+//                        onDeleteClick = { imageToDelete ->
+//                            selectedImageProduct = imageToDelete
+//                        }, onUploadClick = {
+//                            onImagePickerClick()
+//                        },
+//                        title = "Agregar fotos",
+//                        description = "Muestra tu producto desde diferentes ángulos",
+//                        buttonText = "Añadir fotos"
+//                    )
                 }
 
                 if (isNew) {

@@ -35,6 +35,9 @@ internal fun NavGraphBuilder.storeDestination() {
             },
             onFieldChange = { change ->
                 viewModel.onFieldChange(change)
+            },
+            onImageCaptured = {
+                viewModel.onImageCaptured(it)
             }
         )
 

@@ -11,7 +11,6 @@ fun StoreModel.toDomain(): Store = Store(
     ruc = ruc,
     address = address,
     phone = phone,
-    logoUrl = logoUrl,
     isSynced = isSynced,
     lastUpdated = lastUpdated,
 )
@@ -23,7 +22,6 @@ fun Store.toEntity(): StoreEntity = StoreEntity(
     ruc = ruc,
     address = address.orEmpty(),
     phone = phone.orEmpty(),
-    logoUrl = logoUrl.orEmpty(),
     isSynced = isSynced,
     lastUpdated = lastUpdated,
 )
@@ -35,7 +33,6 @@ fun StoreEntity.toDomain(): Store = Store(
     ruc = ruc,
     address = address,
     phone = phone,
-    logoUrl = logoUrl,
     isSynced = isSynced,
     lastUpdated = lastUpdated,
 )
@@ -47,7 +44,6 @@ fun StoreEntity.toModel(): StoreModel = StoreModel(
     ruc = ruc,
     address = address,
     phone = phone,
-    logoUrl = logoUrl,
     isSynced = isSynced,
     lastUpdated = lastUpdated,
 )
@@ -59,7 +55,6 @@ fun StoreModel.toEntity(): StoreEntity = StoreEntity(
     ruc = ruc,
     address = address.orEmpty(),
     phone = phone.orEmpty(),
-    logoUrl = logoUrl.orEmpty(),
     isSynced = isSynced,
     lastUpdated = lastUpdated,
 )

@@ -12,5 +12,5 @@ interface ImageStoreRepository {
     suspend fun getImagesById(
         entityId: String,
         tableStore: TableStore,
-    ): SyncResult<List<ImageStore>>
+    ): List<ImageStore>
 }

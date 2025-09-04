@@ -38,8 +38,8 @@ class ImageStoreRepositoryImpl(private val sourceLocal: ImageStoreDao) : ImageSt
     override suspend fun getImagesById(
         entityId: String,
         tableStore: TableStore,
-    ): SyncResult<List<ImageStore>> = safeCall {
+    ): List<ImageStore> {
         val entries = sourceLocal.getImagesById(entityId, tableStore.name)
-        entries.map { it.toDomain() }
+        return entries.map { it.toDomain() }
     }
 }

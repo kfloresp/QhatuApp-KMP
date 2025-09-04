@@ -12,7 +12,6 @@ data class StoreEntity(
     val ruc: String?,
     val address: String?,
     val phone: String?,
-    val logoUrl: String?,
     val isSynced: Boolean,
     val lastUpdated: Long,
 )

@@ -10,7 +10,6 @@ data class StoreModel(
     val ruc: String? = null,
     val address: String? = null,
     val phone: String? = null,
-    val logoUrl: String? = null,
     val isSynced: Boolean = false,
     val lastUpdated: Long = 0,
 )

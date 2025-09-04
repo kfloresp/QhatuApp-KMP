@@ -161,6 +161,19 @@
     <!-- Sales -->
     <string name="tx_sales_title">Historial de ventas</string>
 
+    <!-- Image Picker -->
+    <string name="tx_image_picker_add_photos">Añadir fotos</string>
+    <string name="tx_image_picker_choose_option">Elige una opción</string>
+    <string name="tx_image_picker_gallery">Galería</string>
+    <string name="tx_image_picker_camera">Cámara</string>
+    <string name="tx_image_picker_permission_required">Permiso requerido</string>
+    <string name="tx_image_picker_permission_description">
+        Para configurar su foto de perfil, otorgue este permiso.
+        Puede administrar los permisos en la configuración de su dispositivo.
+    </string>
+    <string name="tx_image_picker_settings">Ajustes</string>
+    <string name="tx_image_picker_cancel">Cancelar</string>
+
     <!-- Componentes generales -->
     <string name="tx_global_empty_result">Ups... no encontramos nada</string>
     <string name="tx_global_search_result">¿Qué buscaremos hoy?</string>

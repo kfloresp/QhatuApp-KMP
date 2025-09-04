@@ -19,8 +19,8 @@ interface StoreDao {
     @Update
     suspend fun update(entity: StoreEntity)
 
-    @Query("SELECT * FROM store")
-    suspend fun fetchAll(): List<StoreEntity>
+    @Query("SELECT * FROM store limit 1")
+    suspend fun fetchLocal(): StoreEntity?
 
     @Query("SELECT * FROM store WHERE id = :storeId")
     suspend fun findById(storeId: String): StoreEntity?

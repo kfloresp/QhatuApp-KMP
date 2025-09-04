@@ -17,20 +17,8 @@ class StoreRepositoryImpl(
     private val sourceLocal: StoreDao,
 ) : StoreRepository {
 
-    override suspend fun fetchLocal(): SyncResult<Store> {
-        return try {
-            val data = sourceLocal.fetchAll()
-            if (data.isEmpty()) {
-                SyncResult.Success(Store())
-            } else {
-                val firstData = data.map {
-                    it.toDomain()
-                }.first()
-                SyncResult.Success(firstData)
-            }
-        } catch (e: Exception) {
-            SyncResult.Error(e)
-        }
+    override suspend fun fetchLocal(): Store? {
+        return sourceLocal.fetchLocal()?.toDomain()
     }
 
     override suspend fun getStats(): SyncResult<SyncStats> {

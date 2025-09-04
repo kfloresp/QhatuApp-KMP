@@ -21,7 +21,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.rgk.qhatu.common.theme.QhatuTheme
-import com.rgk.qhatu.feature.product.domain.model.ImageProduct
+import com.rgk.qhatu.feature.image_store.domain.model.ImageStore
+import com.rgk.qhatu.feature.image_store.domain.model.TableStore
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import qhatuapp.composeapp.generated.resources.Res
@@ -29,13 +30,13 @@ import qhatuapp.composeapp.generated.resources.image_place_holder
 
 @Composable
 fun ImagePicker(
-    images: List<ImageProduct>,
+    images: List<ImageStore>,
     modifier: Modifier = Modifier,
     title: String,
     description: String,
     buttonText: String,
     limitImages: Int = 5,
-    onDeleteClick: (ImageProduct) -> Unit,
+    onDeleteClick: (ImageStore) -> Unit,
     onUploadClick: () -> Unit,
 ) {
     Column(
@@ -85,7 +86,7 @@ fun ImagePicker(
                                 } else {
                                     AsyncImage(
                                         model = image.filename,
-                                        contentDescription = image.productId,
+                                        contentDescription = image.entityId,
                                         contentScale = ContentScale.Crop,
                                         modifier = Modifier
                                             .fillMaxSize(),
@@ -197,12 +198,14 @@ fun ImagePickerCardPreviewWithImages() {
     QhatuTheme {
         ImagePicker(
             images = listOf(
-                ImageProduct(
-                    productId = "P0001",
+                ImageStore(
+                    entityId = "P0001",
+                    tableStore = TableStore.PRODUCT,
                     filename = "/data/user/0/com.rgk.ingenieros/files/P0001_0.png"
                 ),
-                ImageProduct(
-                    productId = "P0002",
+                ImageStore(
+                    entityId = "P0002",
+                    tableStore = TableStore.PRODUCT,
                     filename = "/data/user/0/com.rgk.ingenieros/files/P0002_0.png"
                 ),
             ),

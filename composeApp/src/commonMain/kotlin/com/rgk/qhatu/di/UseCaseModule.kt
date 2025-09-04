@@ -18,6 +18,9 @@ import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerSummaryUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersWithDebtUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
+import com.rgk.qhatu.feature.image_store.domain.usecase.DeleteImageStoreUseCase
+import com.rgk.qhatu.feature.image_store.domain.usecase.GetImageStoreByIdUseCase
+import com.rgk.qhatu.feature.image_store.domain.usecase.SaveImageStoreUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetAllProductsUseCase
@@ -74,4 +77,7 @@ val useCaseModule = module {
     factoryOf(::GetSaleWithDetailsById)
     factoryOf(::GetSalesUseCase)
     factoryOf(::GetCartsInactive)
+    factoryOf(::DeleteImageStoreUseCase)
+    factoryOf(::SaveImageStoreUseCase)
+    factoryOf(::GetImageStoreByIdUseCase)
 }
