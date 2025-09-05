@@ -38,6 +38,9 @@ internal fun NavGraphBuilder.storeDestination() {
             },
             onImageCaptured = {
                 viewModel.onImageCaptured(it)
+            },
+            onDeleteImageClick = {
+                viewModel.onDeleteImageStore(it)
             }
         )
 
@@ -53,7 +56,7 @@ internal fun NavGraphBuilder.storeDestination() {
                 ),
                 primaryButtonText = stringResource(Res.string.tx_global_confirm_save),
                 onPrimaryClick = {
-                    viewModel.onItemClick(
+                    viewModel.onSaveStore(
                         it
                     )
                     storeValue = null

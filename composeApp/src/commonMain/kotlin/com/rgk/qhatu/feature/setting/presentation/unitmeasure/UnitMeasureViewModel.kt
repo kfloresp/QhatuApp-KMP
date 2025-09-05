@@ -6,7 +6,7 @@ import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
 import com.rgk.qhatu.feature.setting.domain.usecase.GetUnitsMeasureUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncUnitMeasureUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.UpsertUnitsMeasureUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class UnitMeasureViewModel(
-    private val syncUnitMeasureUseCase: SyncUnitMeasureUseCase,
+    private val upsertUnitsMeasureUseCase: UpsertUnitsMeasureUseCase,
     private val getUnitsMeasureUseCase: GetUnitsMeasureUseCase,
 ) : ViewModel() {
     private var allItems: List<UnitMeasure> = emptyList()
@@ -85,31 +85,7 @@ class UnitMeasureViewModel(
         _uiState.value = UnitMeasureUiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val result = syncUnitMeasureUseCase(SyncOperation.UpsertLocal(item))
-                when (result) {
-                    is SyncResult.Error -> {
-                        _uiState.value =
-                            UnitMeasureUiState.Error(result.exception.message.orEmpty())
-                    }
-
-                    is SyncResult.Success<*> -> {
-                        fetchLocal()
-                    }
-                }
-            } catch (e: Exception) {
-                _uiState.value = UnitMeasureUiState.Error(e.message.orEmpty())
-            }
-        }
-    }
-
-    fun fetchRemote() {
-        if (_uiState.value is UnitMeasureUiState.Loading) {
-            return
-        }
-        _uiState.value = UnitMeasureUiState.Loading
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val result = syncUnitMeasureUseCase(SyncOperation.RemoteToLocal())
+                val result = upsertUnitsMeasureUseCase(item)
                 when (result) {
                     is SyncResult.Error -> {
                         _uiState.value =

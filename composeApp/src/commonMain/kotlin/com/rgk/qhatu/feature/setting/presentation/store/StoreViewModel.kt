@@ -2,18 +2,15 @@ package com.rgk.qhatu.feature.setting.presentation.store
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.image_store.domain.model.ImageStore
 import com.rgk.qhatu.feature.image_store.domain.model.TableStore
 import com.rgk.qhatu.feature.image_store.domain.usecase.DeleteImageStoreUseCase
-import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.usecase.SaveImageProductUseCase
 import com.rgk.qhatu.feature.product.presentation.productform.ProductFormUiState
-import com.rgk.qhatu.feature.product.presentation.productform.ProductFormValidationState
 import com.rgk.qhatu.feature.setting.domain.model.Store
 import com.rgk.qhatu.feature.setting.domain.usecase.GetStoreUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncStoreUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.UpsertStoreUseCase
 import com.rgk.qhatu.shared.SharedImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -25,7 +22,7 @@ import kotlinx.coroutines.launch
 
 class StoreViewModel(
     private val getStoreUseCase: GetStoreUseCase,
-    private val syncStoreUseCase: SyncStoreUseCase,
+    private val upsertStoreUseCase: UpsertStoreUseCase,
     private val saveImageProductUseCase: SaveImageProductUseCase,
     private val deleteImageStoreUseCase: DeleteImageStoreUseCase,
 ) : ViewModel() {
@@ -60,14 +57,14 @@ class StoreViewModel(
         }
     }
 
-    fun onItemClick(item: Store) {
+    fun onSaveStore(data: Store) {
         if (_uiState.value is StoreUiState.Loading) {
             return
         }
         _uiState.value = StoreUiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val result = syncStoreUseCase(SyncOperation.UpsertLocal(item))
+                val result = upsertStoreUseCase(data)
                 when (result) {
                     is SyncResult.Error -> {
                         _uiState.value =
@@ -94,7 +91,6 @@ class StoreViewModel(
     private fun validateFields(updatedStore: Store): Boolean {
         return true
     }
-
 
     fun onImageCaptured(image: SharedImage) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -127,6 +123,30 @@ class StoreViewModel(
                         }
                     }
                 }
+            }
+        }
+    }
+
+    fun onDeleteImageStore(path: String) {
+        if (_uiState.value is StoreUiState.Loading) {
+            return
+        }
+        _uiState.value = StoreUiState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val result = deleteImageStoreUseCase(path)
+                when (result) {
+                    is SyncResult.Error -> {
+                        _uiState.value =
+                            StoreUiState.Error(result.exception.message.orEmpty())
+                    }
+
+                    is SyncResult.Success<*> -> {
+                        fetchLocal()
+                    }
+                }
+            } catch (e: Exception) {
+                _uiState.value = StoreUiState.Error(e.message.orEmpty())
             }
         }
     }

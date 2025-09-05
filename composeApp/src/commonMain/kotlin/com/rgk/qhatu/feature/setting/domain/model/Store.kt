@@ -1,10 +1,9 @@
 package com.rgk.qhatu.feature.setting.domain.model
 
-import com.rgk.qhatu.common.util.generateUUID
 import com.rgk.qhatu.feature.image_store.domain.model.ImageStore
 
 data class Store(
-    val id: String = generateUUID(),
+    val id: String = "",
     val commercialName: String? = null,
     val companyName: String? = null,
     val ruc: String? = null,

@@ -34,23 +34,19 @@ import com.rgk.qhatu.feature.setting.domain.usecase.GetBrandsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoriesUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetStoreUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetUnitsMeasureUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncBrandUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncCategoryUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncStoreUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncUnitMeasureUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.UpsertBrandUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.UpsertCategoryUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.UpsertStoreUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.UpsertUnitsMeasureUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val useCaseModule = module {
     factory<AuthUseCase> { AuthUseCase(get()) }
     factoryOf(::SyncAuditLogUseCase)
-    factoryOf(::SyncBrandUseCase)
-    factoryOf(::SyncCategoryUseCase)
     factoryOf(::SyncCustomerUseCase)
     factoryOf(::SyncPaymentUseCase)
     factoryOf(::SyncProductUseCase)
-    factoryOf(::SyncUnitMeasureUseCase)
-    factoryOf(::SyncStoreUseCase)
     factoryOf(::GetCategoriesUseCase)
     factoryOf(::GetUnitsMeasureUseCase)
     factoryOf(::GetBrandsUseCase)
@@ -80,4 +76,8 @@ val useCaseModule = module {
     factoryOf(::DeleteImageStoreUseCase)
     factoryOf(::SaveImageStoreUseCase)
     factoryOf(::GetImageStoreByIdUseCase)
+    factoryOf(::UpsertBrandUseCase)
+    factoryOf(::UpsertCategoryUseCase)
+    factoryOf(::UpsertStoreUseCase)
+    factoryOf(::UpsertUnitsMeasureUseCase)
 }

@@ -6,7 +6,7 @@ import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.setting.domain.model.Category
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoriesUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncCategoryUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.UpsertCategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CategoryViewModel(
-    private val syncCategoryUseCase: SyncCategoryUseCase,
+    private val upsertCategoryUseCase: UpsertCategoryUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
 ) : ViewModel() {
     private var allItems: List<Category> = emptyList()
@@ -86,30 +86,7 @@ class CategoryViewModel(
         _uiState.value = CategoryUiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val result = syncCategoryUseCase(SyncOperation.UpsertLocal(item))
-                when (result) {
-                    is SyncResult.Error -> {
-                        _uiState.value = CategoryUiState.Error(result.exception.message.orEmpty())
-                    }
-
-                    is SyncResult.Success<*> -> {
-                        fetchLocal()
-                    }
-                }
-            } catch (e: Exception) {
-                _uiState.value = CategoryUiState.Error(e.message.orEmpty())
-            }
-        }
-    }
-
-    fun fetchRemote() {
-        if (_uiState.value is CategoryUiState.Loading) {
-            return
-        }
-        _uiState.value = CategoryUiState.Loading
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val result = syncCategoryUseCase(SyncOperation.RemoteToLocal())
+                val result = upsertCategoryUseCase(item)
                 when (result) {
                     is SyncResult.Error -> {
                         _uiState.value = CategoryUiState.Error(result.exception.message.orEmpty())

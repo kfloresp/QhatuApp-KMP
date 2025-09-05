@@ -17,23 +17,22 @@ class ImageStoreRepositoryImpl(private val sourceLocal: ImageStoreDao) : ImageSt
         SharedImageStorage.saveSharedImage(image)
     }
 
-    override suspend fun deleteFileImageLocal(path: String): SyncResult<Unit> = safeCall{
+    override suspend fun deleteFileImageLocal(path: String): SyncResult<Unit> = safeCall {
         SharedImageStorage.deleteImage(path)
     }
 
-    override suspend fun upsertImageLocal(register: List<ImageStore>): SyncResult<Unit> =
-        safeCall {
-            val entities = register.map { it.toEntity() }
-            entities.forEach {
-                val isNew = it.id.isEmpty()
-                if (isNew) {
-                    val entity = it.copy(id = generateUUID())
-                    sourceLocal.save(entity)
-                } else {
-                    sourceLocal.update(it)
-                }
+    override suspend fun upsertImageLocal(register: List<ImageStore>) {
+        val entities = register.map { it.toEntity() }
+        entities.forEach {
+            val isNew = it.id.isEmpty()
+            if (isNew) {
+                val entity = it.copy(id = generateUUID())
+                sourceLocal.save(entity)
+            } else {
+                sourceLocal.update(it)
             }
         }
+    }
 
     override suspend fun getImagesById(
         entityId: String,

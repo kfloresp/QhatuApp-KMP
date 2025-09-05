@@ -6,10 +6,9 @@ import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 import com.rgk.qhatu.feature.setting.domain.usecase.GetBrandsUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncBrandUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.UpsertBrandUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class BrandViewModel(
-    private val syncBrandUseCase: SyncBrandUseCase,
+    private val upsertBrandUseCase: UpsertBrandUseCase,
     private val getBrandsUseCase: GetBrandsUseCase
 ) : ViewModel() {
     private var allItems: List<Brand> = emptyList()
@@ -79,37 +78,14 @@ class BrandViewModel(
         )
     }
 
-    fun onItemClick(item: Brand) {
+    fun onItemClick(data: Brand) {
         if (_uiState.value is BrandUiState.Loading) {
             return
         }
         _uiState.value = BrandUiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val result = syncBrandUseCase(SyncOperation.UpsertLocal(item))
-                when (result) {
-                    is SyncResult.Error -> {
-                        _uiState.value = BrandUiState.Error(result.exception.message.orEmpty())
-                    }
-
-                    is SyncResult.Success<*> -> {
-                        fetchLocal()
-                    }
-                }
-            } catch (e: Exception) {
-                _uiState.value = BrandUiState.Error(e.message.orEmpty())
-            }
-        }
-    }
-
-    fun fetchRemote() {
-        if (_uiState.value is BrandUiState.Loading) {
-            return
-        }
-        _uiState.value = BrandUiState.Loading
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val result = syncBrandUseCase(SyncOperation.RemoteToLocal())
+                val result = upsertBrandUseCase(data)
                 when (result) {
                     is SyncResult.Error -> {
                         _uiState.value = BrandUiState.Error(result.exception.message.orEmpty())

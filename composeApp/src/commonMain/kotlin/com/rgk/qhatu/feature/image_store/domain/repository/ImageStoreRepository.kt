@@ -8,7 +8,7 @@ import com.rgk.qhatu.shared.SharedImage
 interface ImageStoreRepository {
     suspend fun saveFileImageLocal(image: SharedImage): SyncResult<String>
     suspend fun deleteFileImageLocal(path: String): SyncResult<Unit>
-    suspend fun upsertImageLocal(register: List<ImageStore>): SyncResult<Unit>
+    suspend fun upsertImageLocal(register: List<ImageStore>)
     suspend fun getImagesById(
         entityId: String,
         tableStore: TableStore,

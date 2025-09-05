@@ -161,8 +161,12 @@
     <!-- Sales -->
     <string name="tx_sales_title">Historial de ventas</string>
 
+    <!-- Sales -->
+
     <!-- Image Picker -->
     <string name="tx_image_picker_add_photos">Añadir fotos</string>
+    <string name="tx_image_picker_add">Agregar fotos</string>
+    <string name="tx_image_picker_add_face_store">Muestra la facha de tu negocio</string>
     <string name="tx_image_picker_choose_option">Elige una opción</string>
     <string name="tx_image_picker_gallery">Galería</string>
     <string name="tx_image_picker_camera">Cámara</string>

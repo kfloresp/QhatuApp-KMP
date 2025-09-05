@@ -27,6 +27,9 @@ import com.rgk.qhatu.shared.SharedImage
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_global_save_changes
+import qhatuapp.composeapp.generated.resources.tx_image_picker_add
+import qhatuapp.composeapp.generated.resources.tx_image_picker_add_face_store
+import qhatuapp.composeapp.generated.resources.tx_image_picker_add_photos
 import qhatuapp.composeapp.generated.resources.tx_setting_store_address
 import qhatuapp.composeapp.generated.resources.tx_setting_store_company
 import qhatuapp.composeapp.generated.resources.tx_setting_store_name
@@ -39,6 +42,7 @@ fun StoreScreen(
     onFieldChange: (Store.() -> Store) -> Unit,
     onImageCaptured: (result: SharedImage) -> Unit,
     onSaveClick: (Store) -> Unit,
+    onDeleteImageClick: (String) -> Unit,
 ) {
     var showImagePicker by remember { mutableStateOf(false) }
     when (uiState) {
@@ -128,13 +132,13 @@ fun StoreScreen(
                 ImagePicker(
                     images = field.images,
                     onDeleteClick = { imageToDelete ->
-
+                        onDeleteImageClick(imageToDelete.filename)
                     }, onUploadClick = {
                         showImagePicker = true
                     },
-                    title = "Agregar fotos",
-                    description = "Muestra la facha de tu negocio",
-                    buttonText = "Añadir fotos",
+                    title = stringResource(Res.string.tx_image_picker_add),
+                    description = stringResource(Res.string.tx_image_picker_add_face_store),
+                    buttonText = stringResource(Res.string.tx_image_picker_add_photos),
                     limitImages = 2
                 )
                 PrimaryButton(

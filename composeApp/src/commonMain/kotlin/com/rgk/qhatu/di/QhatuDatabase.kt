@@ -72,11 +72,16 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun imageProductDao(): ImageProductDao
     abstract fun cartDao(): CartDao
     abstract fun cartItemDao(): CartItemDao
-    abstract fun operationDao() : OperationDao
-    abstract fun operationDetailDao() : OperationDetailDao
-    abstract fun saleDao() : SaleDao
-    abstract fun purchaseDao() : PurchaseDao
-    abstract fun imageStoreDao() : ImageStoreDao
+    abstract fun operationDao(): OperationDao
+    abstract fun operationDetailDao(): OperationDetailDao
+    abstract fun saleDao(): SaleDao
+    abstract fun purchaseDao(): PurchaseDao
+    abstract fun imageStoreDao(): ImageStoreDao
+}
+
+enum class TypeUpsert {
+    NEW,
+    UPDATE,
 }
 
 @Suppress("NO_ACTUAL_FOR_EXPECT")
