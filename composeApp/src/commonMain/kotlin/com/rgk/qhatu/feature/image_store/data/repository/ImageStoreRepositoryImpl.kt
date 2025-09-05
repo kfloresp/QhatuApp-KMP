@@ -1,8 +1,6 @@
 package com.rgk.qhatu.feature.image_store.data.repository
 
-import com.rgk.qhatu.common.extension.safeCall
-import com.rgk.qhatu.common.model.SyncResult
-import com.rgk.qhatu.common.util.generateUUID
+import com.rgk.qhatu.di.TypeUpsert
 import com.rgk.qhatu.feature.image_store.data.database.dao.ImageStoreDao
 import com.rgk.qhatu.feature.image_store.domain.mapper.toDomain
 import com.rgk.qhatu.feature.image_store.domain.mapper.toEntity
@@ -13,25 +11,29 @@ import com.rgk.qhatu.shared.SharedImage
 import com.rgk.qhatu.shared.SharedImageStorage
 
 class ImageStoreRepositoryImpl(private val sourceLocal: ImageStoreDao) : ImageStoreRepository {
-    override suspend fun saveFileImageLocal(image: SharedImage): SyncResult<String> = safeCall {
-        SharedImageStorage.saveSharedImage(image)
+    override suspend fun saveFileImageLocal(image: SharedImage): String {
+        return SharedImageStorage.saveSharedImage(image)
     }
 
-    override suspend fun deleteFileImageLocal(path: String): SyncResult<Unit> = safeCall {
+    override suspend fun deleteFileImageLocal(path: String) {
         SharedImageStorage.deleteImage(path)
     }
 
-    override suspend fun upsertImageLocal(register: List<ImageStore>) {
-        val entities = register.map { it.toEntity() }
-        entities.forEach {
-            val isNew = it.id.isEmpty()
-            if (isNew) {
-                val entity = it.copy(id = generateUUID())
-                sourceLocal.save(entity)
-            } else {
-                sourceLocal.update(it)
+    override suspend fun upsertImageAllLocal(register: List<ImageStore>, type: TypeUpsert) {
+        when (type) {
+            TypeUpsert.NEW -> {
+                sourceLocal.saveAll(register.map { it.toEntity() })
             }
+
+            TypeUpsert.UPDATE -> {
+                sourceLocal.updateAll(register.map { it.toEntity() })
+            }
+
         }
+    }
+
+    override suspend fun deleteImageAllLocal(register: List<ImageStore>) {
+        sourceLocal.deleteAll(register.map { it.toEntity() })
     }
 
     override suspend fun getImagesById(

@@ -15,6 +15,8 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_global_cancel
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete_photo_message
 import qhatuapp.composeapp.generated.resources.tx_global_confirm_save
 import qhatuapp.composeapp.generated.resources.tx_global_confirm_save_subtitle
 import qhatuapp.composeapp.generated.resources.tx_global_confirmation
@@ -27,20 +29,21 @@ internal fun NavGraphBuilder.storeDestination() {
         val viewModel: StoreViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
         var storeValue by remember { mutableStateOf<Store?>(null) }
+        var imagePathDeleted by remember { mutableStateOf<String?>(null) }
 
         StoreScreen(
             uiState = uiState,
-            onSaveClick = {
-                storeValue = it
+            onSaveClick = { store ->
+                storeValue = store
             },
             onFieldChange = { change ->
                 viewModel.onFieldChange(change)
             },
-            onImageCaptured = {
-                viewModel.onImageCaptured(it)
+            onImageCaptured = { image ->
+                viewModel.onImageCaptured(image)
             },
-            onDeleteImageClick = {
-                viewModel.onDeleteImageStore(it)
+            onDeleteImageClick = { image ->
+                imagePathDeleted = image
             }
         )
 
@@ -67,6 +70,26 @@ internal fun NavGraphBuilder.storeDestination() {
                 },
                 onDismiss = {
                     storeValue = null
+                }
+            )
+        }
+        imagePathDeleted?.let { imageDelete ->
+            ConfirmDialog(
+                title = stringResource(Res.string.tx_global_confirmation),
+                description = stringResource(
+                    Res.string.tx_global_confirm_delete_photo_message
+                ),
+                primaryButtonText = stringResource(Res.string.tx_global_confirm_delete),
+                onPrimaryClick = {
+                    viewModel.onFieldChange {
+                        copy(images = images.filter { it.filename != imageDelete })
+                    }
+                    imagePathDeleted = null
+                },
+                secondaryButtonText = stringResource(Res.string.tx_global_cancel),
+                onSecondaryClick = { imagePathDeleted = null },
+                onDismiss = {
+                    imagePathDeleted = null
                 }
             )
         }

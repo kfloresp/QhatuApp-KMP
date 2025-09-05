@@ -23,6 +23,36 @@ class UpsertStoreUseCase(
         val updatedImages = store.images.map { it.copy(entityId = storeId) }
 
         repository.upsertLocal(updatedStore, type)
-        repositoryImageStore.upsertImageLocal(updatedImages)
+        repositoryImageStore.upsertImageAllLocal(updatedImages,type)
     }
 }
+
+/* val productId = register.id.ifEmpty { generateUUID() }
+        val entity = register.toEntity().copy(id = productId)
+
+        val oldImageProduct: List<ImageProductEntity> = imageSourceLocal
+            .getImagesForProduct(productId)
+            .filter { old ->
+                register.imageProduct.none { current -> current.filename == old.filename }
+            }
+
+        oldImageProduct.forEach {
+            SharedImageStorage.deleteImage(it.toDomain().filename)
+            imageSourceLocal.delete(it)
+        }
+
+        val newImages = register.imageProduct.filter { it.isTemp }
+        val imageEntities: List<ImageProduct> = newImages.map { item ->
+            val newPath = SharedImageStorage.saveImageFromTemp(item.filename)
+            item.copy(filename = newPath, productId = productId, isTemp = false)
+        }
+
+        if (imageEntities.isNotEmpty()) {
+            upsertImageProduct(imageEntities)
+        }
+
+        if (register.id.isEmpty()) {
+            sourceLocal.save(entity)
+        } else {
+            sourceLocal.update(entity)
+        }*/
