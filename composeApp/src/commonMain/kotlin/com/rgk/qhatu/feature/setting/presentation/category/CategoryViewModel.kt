@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.setting.domain.model.Category
+import com.rgk.qhatu.feature.setting.domain.model.Store
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoriesUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.UpsertCategoryUseCase
+import com.rgk.qhatu.feature.setting.presentation.store.StoreUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
@@ -20,85 +22,90 @@ class CategoryViewModel(
     private val upsertCategoryUseCase: UpsertCategoryUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
 ) : ViewModel() {
+
+    private val _listUiState = MutableStateFlow<CategoryUiState>(CategoryUiState.Loading)
+    val listUiState: StateFlow<CategoryUiState> = _listUiState.asStateFlow()
+
+    private val _formUiState = MutableStateFlow<CategoryFormUiState>(CategoryFormUiState.Idle)
+    val formUiState: StateFlow<CategoryFormUiState> = _formUiState.asStateFlow()
     private var allItems: List<Category> = emptyList()
+
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
-    private val _uiState = MutableStateFlow<CategoryUiState>(CategoryUiState.Loading)
-    val uiState: StateFlow<CategoryUiState> = _uiState.asStateFlow()
 
     init {
         onPullRefresh()
     }
 
     fun onPullRefresh() {
-        _isRefreshing.update { true }
+        _isRefreshing.value = true
         viewModelScope.launch {
             fetchLocal()
-            _isRefreshing.update { false }
+            _isRefreshing.value = false
         }
     }
 
     private suspend fun fetchLocal() {
-        _uiState.update {
-            CategoryUiState.Loading
-        }
-        val result = getCategoriesUseCase()
-        when (result) {
+        _listUiState.value = CategoryUiState.Loading
+        delay(2000L)
+        when (val result = getCategoriesUseCase()) {
             is SyncResult.Error -> {
-                _uiState.update {
-                    CategoryUiState.Error(result.exception.message.orEmpty())
-                }
+                _listUiState.value = CategoryUiState.Error(result.exception.message.orEmpty())
             }
 
             is SyncResult.Success<*> -> {
                 allItems = result.data as List<Category>
-                if (allItems.isNotEmpty()) {
-                    _uiState.update {
-                        CategoryUiState.Success(
-                            result = allItems
-                        )
-                    }
+                _listUiState.value = if (allItems.isNotEmpty()) {
+                    CategoryUiState.Success(allItems)
                 } else {
-                    _uiState.update {
-                        CategoryUiState.Empty
-                    }
+                    CategoryUiState.Empty
                 }
             }
         }
     }
 
     fun onQueryChanged(query: String) {
-        if (_uiState.value !is CategoryUiState.Success) return
-
+        val current = _listUiState.value as? CategoryUiState.Success ?: return
         val filtered = if (query.isBlank()) allItems
         else allItems.filter { it.name.contains(query, ignoreCase = true) }
-
-        _uiState.value = CategoryUiState.Success(
-            result = filtered,
-            query = query
-        )
+        _listUiState.value = current.copy(result = filtered, query = query)
     }
 
-    fun onItemClick(item: Category) {
-        if (_uiState.value is CategoryUiState.Loading) {
-            return
-        }
-        _uiState.value = CategoryUiState.Loading
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val result = upsertCategoryUseCase(item)
-                when (result) {
-                    is SyncResult.Error -> {
-                        _uiState.value = CategoryUiState.Error(result.exception.message.orEmpty())
-                    }
+    fun startUpsert(category: Category? = null) {
+        val base = category ?: Category()
+        _formUiState.value = CategoryFormUiState.Upsert(base, validateFields(base))
+    }
 
-                    is SyncResult.Success<*> -> {
-                        fetchLocal()
-                    }
+    fun onFieldChange(update: Category.() -> Category) {
+        val current = _formUiState.value as? CategoryFormUiState.Upsert ?: return
+        val updated = current.category.update()
+        _formUiState.value = CategoryFormUiState.Upsert(updated, validateFields(updated))
+    }
+
+    fun onUpsertCategory(category: Category) {
+        _formUiState.value = CategoryFormUiState.Loading
+        viewModelScope.launch {
+        delay(2000L)
+            when (val result = upsertCategoryUseCase(category)) {
+                is SyncResult.Error -> {
+                    _formUiState.value =
+                        CategoryFormUiState.Error(result.exception.message.orEmpty())
                 }
-            } catch (e: Exception) {
-                _uiState.value = CategoryUiState.Error(e.message.orEmpty())
+
+                is SyncResult.Success<*> -> {
+                    fetchLocal()
+                    _formUiState.value = CategoryFormUiState.Idle
+                }
             }
         }
     }
+
+    fun cancelForm() {
+        _formUiState.value = CategoryFormUiState.Idle
+    }
+
+    private fun validateFields(category: Category): Boolean {
+        return category.name.isNotBlank()
+    }
 }
+

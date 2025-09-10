@@ -8,3 +8,10 @@ sealed class CategoryUiState {
     object Empty : CategoryUiState()
     data class Error(val message: String) : CategoryUiState()
 }
+
+sealed class CategoryFormUiState {
+    object Idle : CategoryFormUiState()
+    data class Upsert(val category: Category, val isValidForm: Boolean = false) : CategoryFormUiState()
+    object Loading : CategoryFormUiState()
+    data class Error(val message: String) : CategoryFormUiState()
+}

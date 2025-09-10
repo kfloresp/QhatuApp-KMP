@@ -9,9 +9,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.button.ButtonFlotableAction
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
-import com.rgk.qhatu.common.components.dialog.ContentDialog
 import com.rgk.qhatu.feature.setting.domain.model.Category
-import com.rgk.qhatu.feature.setting.presentation.category.component.CategoryForm
+import com.rgk.qhatu.feature.setting.presentation.category.component.CategoryFormDialog
 import com.rgk.qhatu.navigation.ProvideAppBar
 import com.rgk.qhatu.navigation.ProvideFabAction
 import kotlinx.serialization.Serializable
@@ -20,12 +19,8 @@ import org.koin.compose.viewmodel.koinViewModel
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_global_add_new
 import qhatuapp.composeapp.generated.resources.tx_global_cancel
-import qhatuapp.composeapp.generated.resources.tx_global_category_edit
-import qhatuapp.composeapp.generated.resources.tx_global_category_new
 import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete
 import qhatuapp.composeapp.generated.resources.tx_global_confirm_delete_message
-import qhatuapp.composeapp.generated.resources.tx_global_confirm_edit
-import qhatuapp.composeapp.generated.resources.tx_global_confirm_new
 import qhatuapp.composeapp.generated.resources.tx_global_confirmation
 
 @Serializable
@@ -34,18 +29,17 @@ data object CategoryDestination
 internal fun NavGraphBuilder.categoryDestination() {
     composable<CategoryDestination> {
         val viewModel: CategoryViewModel = koinViewModel()
-        val uiState by viewModel.uiState.collectAsState()
+        val uiState by viewModel.listUiState.collectAsState()
+        val formState by viewModel.formUiState.collectAsState()
         val isRefreshing by viewModel.isRefreshing.collectAsState()
-        var selectedCategoryToEdit by remember { mutableStateOf<Category?>(null) }
         var selectedCategoryToDelete by remember { mutableStateOf<Category?>(null) }
-        var selectedCategoryToNew by remember { mutableStateOf(false) }
 
         ProvideFabAction {
             if (!isRefreshing && uiState is CategoryUiState.Success || uiState is CategoryUiState.Empty) {
                 ButtonFlotableAction(
                     label = stringResource(Res.string.tx_global_add_new)
                 ) {
-                    selectedCategoryToNew = true
+                    viewModel.startUpsert()
                 }
             }
         }
@@ -58,7 +52,7 @@ internal fun NavGraphBuilder.categoryDestination() {
             uiState = uiState,
             onQueryChange = viewModel::onQueryChanged,
             onItemClick = {
-                selectedCategoryToEdit = it
+                viewModel.startUpsert(it)
             },
             onActionClick = {
                 selectedCategoryToDelete = it
@@ -67,61 +61,12 @@ internal fun NavGraphBuilder.categoryDestination() {
             isRefreshing = isRefreshing,
         )
 
-        selectedCategoryToEdit?.let { category ->
-            ContentDialog(
-                title = stringResource(Res.string.tx_global_category_edit),
-                content = {
-                    CategoryForm(
-                        initialName = category.name,
-                        initialDescription = category.description.orEmpty(),
-                        onPrimaryButtonRes = Res.string.tx_global_confirm_edit,
-                        onConfirm = { name, description ->
-                            viewModel.onItemClick(
-                                category.copy(
-                                    name = name,
-                                    description = description
-                                )
-                            )
-                            selectedCategoryToEdit = null
-                        },
-                        onCancel = {
-                            selectedCategoryToEdit = null
-                        }
-                    )
-                },
-                onDismiss = {
-                    selectedCategoryToEdit = null
-                }
-            )
-        }
-
-        if (selectedCategoryToNew) {
-            ContentDialog(
-                title = stringResource(Res.string.tx_global_category_new),
-                content = {
-                    CategoryForm(
-                        initialName = "",
-                        initialDescription = "",
-                        onPrimaryButtonRes = Res.string.tx_global_confirm_new,
-                        onConfirm = { name, description ->
-                            viewModel.onItemClick(
-                                Category(
-                                    name = name,
-                                    description = description,
-                                )
-                            )
-                            selectedCategoryToNew = false
-                        },
-                        onCancel = {
-                            selectedCategoryToNew = false
-                        }
-                    )
-                },
-                onDismiss = {
-                    selectedCategoryToNew = false
-                }
-            )
-        }
+        CategoryFormDialog(
+            uiState = formState,
+            onFieldChange = viewModel::onFieldChange,
+            onConfirm = { viewModel.onUpsertCategory(it) },
+            onCancel = { viewModel.cancelForm() }
+        )
 
         selectedCategoryToDelete?.let { category ->
             ConfirmDialog(
@@ -132,7 +77,7 @@ internal fun NavGraphBuilder.categoryDestination() {
                 ),
                 primaryButtonText = stringResource(Res.string.tx_global_confirm_delete),
                 onPrimaryClick = {
-                    viewModel.onItemClick(category.copy(isDeleted = true))
+                    viewModel.onUpsertCategory(category.copy(isDeleted = true))
                     selectedCategoryToDelete = null
                 },
                 secondaryButtonText = stringResource(Res.string.tx_global_cancel),

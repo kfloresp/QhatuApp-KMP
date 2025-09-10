@@ -5,64 +5,81 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.components.button.ButtonActions
+import com.rgk.qhatu.common.components.dialog.ConfirmDialog
+import com.rgk.qhatu.common.components.dialog.ContentDialog
+import com.rgk.qhatu.common.components.loading.LoadingOverlay
 import com.rgk.qhatu.common.components.textfield.CustomTextField
 import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
-import org.jetbrains.compose.resources.StringResource
+import com.rgk.qhatu.feature.setting.domain.model.Category
+import com.rgk.qhatu.feature.setting.presentation.category.CategoryFormUiState
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_acept
+import qhatuapp.composeapp.generated.resources.tx_error
 import qhatuapp.composeapp.generated.resources.tx_global_cancel
-import qhatuapp.composeapp.generated.resources.tx_setting_description
+import qhatuapp.composeapp.generated.resources.tx_global_category_edit
+import qhatuapp.composeapp.generated.resources.tx_global_category_new
+import qhatuapp.composeapp.generated.resources.tx_global_confirm_new
 import qhatuapp.composeapp.generated.resources.tx_setting_name
 
 @Composable
-fun CategoryForm(
-    initialName: String,
-    initialDescription: String,
-    onPrimaryButtonRes : StringResource,
-    onConfirm: (String, String) -> Unit,
-    onCancel: () -> Unit
+fun CategoryFormDialog(
+    uiState: CategoryFormUiState,
+    onFieldChange: (Category.() -> Category) -> Unit,
+    onConfirm: (Category) -> Unit,
+    onCancel: () -> Unit,
 ) {
-    var name by remember { mutableStateOf(initialName) }
-    var description by remember { mutableStateOf(initialDescription) }
+    when (uiState) {
+        is CategoryFormUiState.Upsert -> {
+            val category = uiState.category
+            ContentDialog(
+                title = if (uiState.category.id.isEmpty()) {
+                    stringResource(Res.string.tx_global_category_new)
+                } else {
+                    stringResource(Res.string.tx_global_category_edit)
+                }, content = {
+                    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                        CustomTextField(
+                            value = category.name, onValueChange = { newValue ->
+                                onFieldChange { copy(name = newValue) }
+                            }, params = CustomTextFieldParams(
+                                label = stringResource(Res.string.tx_setting_name),
+                                singleLine = false,
+                                maxLength = 50
+                            )
+                        )
 
-    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        CustomTextField(
-            value = name,
-            onValueChange = { name = it },
-            params = CustomTextFieldParams(
-                label = stringResource(Res.string.tx_setting_name),
-                singleLine = false,
-                maxLength = 50
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        ButtonActions(
+                            isEnabled = uiState.isValidForm,
+                            primaryButtonText = stringResource(Res.string.tx_global_confirm_new),
+                            onPrimaryClick = { onConfirm(category) },
+                            secondaryButtonText = stringResource(Res.string.tx_global_cancel),
+                            onSecondaryClick = onCancel
+                        )
+                    }
+                }, onDismiss = onCancel
             )
-        )
-        CustomTextField(
-            value = description,
-            onValueChange = { description = it },
-            params = CustomTextFieldParams(
-                label = stringResource(Res.string.tx_setting_description),
-                singleLine = false,
-                maxLength = 50
+        }
+
+        is CategoryFormUiState.Error -> {
+            ConfirmDialog(
+                title = stringResource(Res.string.tx_error),
+                description = uiState.message,
+                primaryButtonText = stringResource(Res.string.tx_acept),
+                onPrimaryClick = onCancel,
+                onDismiss = onCancel
             )
-        )
+        }
 
-        Spacer(modifier = Modifier.height(12.dp))
+        CategoryFormUiState.Loading -> {
+            LoadingOverlay()
+        }
 
-        ButtonActions(
-            primaryButtonText = stringResource(onPrimaryButtonRes),
-            onPrimaryClick = {
-                onConfirm(name, description)
-            },
-            secondaryButtonText = stringResource(Res.string.tx_global_cancel),
-            onSecondaryClick = {
-                onCancel()
-            }
-        )
+        CategoryFormUiState.Idle -> Unit
     }
 }

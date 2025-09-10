@@ -24,7 +24,6 @@ class StoreViewModel(
     private val getStoreUseCase: GetStoreUseCase,
     private val upsertStoreUseCase: UpsertStoreUseCase,
     private val saveImageProductUseCase: SaveImageProductUseCase,
-    private val deleteImageStoreUseCase: DeleteImageStoreUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<StoreUiState>(StoreUiState.Loading)
     val uiState: StateFlow<StoreUiState> = _uiState.asStateFlow()
@@ -126,29 +125,4 @@ class StoreViewModel(
             }
         }
     }
-
-    fun onDeleteImageStore(path: String) {
-        if (_uiState.value is StoreUiState.Loading) {
-            return
-        }
-        _uiState.value = StoreUiState.Loading
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val result = deleteImageStoreUseCase(path)
-                when (result) {
-                    is SyncResult.Error -> {
-                        _uiState.value =
-                            StoreUiState.Error(result.exception.message.orEmpty())
-                    }
-
-                    is SyncResult.Success<*> -> {
-                        fetchLocal()
-                    }
-                }
-            } catch (e: Exception) {
-                _uiState.value = StoreUiState.Error(e.message.orEmpty())
-            }
-        }
-    }
-
 }
