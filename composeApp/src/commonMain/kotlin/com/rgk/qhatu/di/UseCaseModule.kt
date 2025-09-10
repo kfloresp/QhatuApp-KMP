@@ -21,6 +21,7 @@ import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
 import com.rgk.qhatu.feature.image_store.domain.usecase.DeleteImageStoreUseCase
 import com.rgk.qhatu.feature.image_store.domain.usecase.GetImageStoreByIdUseCase
 import com.rgk.qhatu.feature.image_store.domain.usecase.SaveImageStoreUseCase
+import com.rgk.qhatu.feature.image_store.domain.usecase.SyncImageStoreUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetAllProductsUseCase
@@ -80,4 +81,5 @@ val useCaseModule = module {
     factoryOf(::UpsertCategoryUseCase)
     factoryOf(::UpsertStoreUseCase)
     factoryOf(::UpsertUnitsMeasureUseCase)
+    factoryOf(::SyncImageStoreUseCase)
 }

@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.components.button.ButtonActions
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.error.ErrorSection
-import com.rgk.qhatu.common.components.imagepicker.ImagePicker
 import com.rgk.qhatu.common.components.loading.LoadingSection
 import com.rgk.qhatu.common.components.textfield.ClickableTextField
 import com.rgk.qhatu.common.components.textfield.CustomTextField

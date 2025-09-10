@@ -15,8 +15,16 @@ class ImageStoreRepositoryImpl(private val sourceLocal: ImageStoreDao) : ImageSt
         return SharedImageStorage.saveSharedImage(image)
     }
 
+    override suspend fun saveFileImageFromTemp(path: String): String {
+        return SharedImageStorage.saveImageFromTemp(path)
+    }
+
     override suspend fun deleteFileImageLocal(path: String) {
         SharedImageStorage.deleteImage(path)
+    }
+
+    override suspend fun deleteImageByPath(path: String) {
+        sourceLocal.deleteImageByPath(path)
     }
 
     override suspend fun upsertImageAllLocal(register: List<ImageStore>, type: TypeUpsert) {
@@ -30,10 +38,6 @@ class ImageStoreRepositoryImpl(private val sourceLocal: ImageStoreDao) : ImageSt
             }
 
         }
-    }
-
-    override suspend fun deleteImageAllLocal(register: List<ImageStore>) {
-        sourceLocal.deleteAll(register.map { it.toEntity() })
     }
 
     override suspend fun getImagesById(

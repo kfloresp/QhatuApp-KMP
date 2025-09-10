@@ -16,11 +16,13 @@ interface ImageStoreDao {
     @Update(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun updateAll(entity: List<ImageStoreEntity>)
 
-    @Delete
-    suspend fun deleteAll(entity: List<ImageStoreEntity>)
-
     @Query(
         "SELECT * FROM image_store where entityId = :entityId and tableStore = :tableStore"
     )
     suspend fun getImagesById(entityId: String, tableStore: String): List<ImageStoreEntity>
+
+    @Query(
+        "delete from image_store where filename=:path"
+    )
+    suspend fun deleteImageByPath(path: String)
 }
