@@ -12,7 +12,7 @@ import com.rgk.qhatu.common.components.empty.EmptySection
 import com.rgk.qhatu.common.components.error.ErrorSection
 import com.rgk.qhatu.common.components.search.SearchBar
 import com.rgk.qhatu.common.components.search.SearchMode
-import com.rgk.qhatu.common.components.shimmer.ShimmerListVertical
+import com.rgk.qhatu.common.components.skeleton.ShimmerChipsSkeleton
 import com.rgk.qhatu.feature.setting.domain.model.Category
 
 @Composable
@@ -24,13 +24,13 @@ fun CategoryScreen(
     val query = if (uiState is CategoryUiState.Success) uiState.query else ""
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(vertical = 16.dp),
+        modifier = Modifier.fillMaxSize().padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
 
         when (uiState) {
             is CategoryUiState.Loading -> {
-                ShimmerListVertical()
+                ShimmerChipsSkeleton()
             }
 
             is CategoryUiState.Error -> {
@@ -39,14 +39,12 @@ fun CategoryScreen(
 
             is CategoryUiState.Success -> {
                 SearchBar(
-                    modifier = Modifier.padding(horizontal = 16.dp),
                     query = query,
                     searchMode = SearchMode.Input,
                     onQueryChange = onQueryChange
                 )
                 ChipGroup(
                     items = uiState.result,
-                    modifier = Modifier.padding(horizontal = 16.dp),
                     keySelector = { it.id },
                     valueSelector = { it.name },
                     selectedKey = "",
