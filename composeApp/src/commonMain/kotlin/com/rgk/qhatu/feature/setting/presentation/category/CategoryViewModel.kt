@@ -30,35 +30,25 @@ class CategoryViewModel(
     val formUiState: StateFlow<CategoryFormUiState> = _formUiState.asStateFlow()
     private var allItems: List<Category> = emptyList()
 
-    private val _isRefreshing = MutableStateFlow(false)
-    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
-
     init {
-        onPullRefresh()
+        fetchLocal()
     }
 
-    fun onPullRefresh() {
-        _isRefreshing.value = true
+    private fun fetchLocal() {
         viewModelScope.launch {
-            fetchLocal()
-            _isRefreshing.value = false
-        }
-    }
-
-    private suspend fun fetchLocal() {
-        _listUiState.value = CategoryUiState.Loading
-        delay(2000L)
-        when (val result = getCategoriesUseCase()) {
-            is SyncResult.Error -> {
-                _listUiState.value = CategoryUiState.Error(result.exception.message.orEmpty())
-            }
-
-            is SyncResult.Success<*> -> {
-                allItems = result.data as List<Category>
-                _listUiState.value = if (allItems.isNotEmpty()) {
-                    CategoryUiState.Success(allItems)
-                } else {
-                    CategoryUiState.Empty
+            _listUiState.value = CategoryUiState.Loading
+            delay(2000L)
+            when (val result = getCategoriesUseCase()) {
+                is SyncResult.Error -> {
+                    _listUiState.value = CategoryUiState.Error(result.exception.message.orEmpty())
+                }
+                is SyncResult.Success<*> -> {
+                    allItems = result.data as List<Category>
+                    _listUiState.value = if (allItems.isNotEmpty()) {
+                        CategoryUiState.Success(allItems)
+                    } else {
+                        CategoryUiState.Empty
+                    }
                 }
             }
         }
@@ -83,7 +73,8 @@ class CategoryViewModel(
     }
 
     fun onUpsertCategory(category: Category) {
-        _formUiState.value = CategoryFormUiState.Loading
+        val current = _formUiState.value as? CategoryFormUiState.Upsert ?: return
+        _formUiState.value = current.copy(isLoading = true)
         viewModelScope.launch {
         delay(2000L)
             when (val result = upsertCategoryUseCase(category)) {
@@ -93,8 +84,8 @@ class CategoryViewModel(
                 }
 
                 is SyncResult.Success<*> -> {
-                    fetchLocal()
                     _formUiState.value = CategoryFormUiState.Idle
+                    fetchLocal()
                 }
             }
         }

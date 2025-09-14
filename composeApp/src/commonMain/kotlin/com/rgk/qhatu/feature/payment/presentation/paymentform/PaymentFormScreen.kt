@@ -187,7 +187,6 @@ fun PaymentFormScreen(
                                 copy(paymentMethodId = methodPayment.value)
                             }
                         },
-                        errorText = ""
                     )
                     if (fields.paymentMethodId != ID_CONFIG_TYPE_PAYMENT_DEFAULT && fields.paymentMethodId.isNotEmpty()) {
                         CustomTextField(

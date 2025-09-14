@@ -5,6 +5,7 @@
     <string name="bt_start_login">Comenzar</string>
     <string name="tx_error">Error</string>
     <string name="tx_acept">Aceptar</string>
+    <string name="tx_accept">Aceptar</string>
     <string name="tx_loading">Cargando...</string>
     <string name="tx_email">Correo electrónico</string>
     <string name="tx_password">Contraseña</string>

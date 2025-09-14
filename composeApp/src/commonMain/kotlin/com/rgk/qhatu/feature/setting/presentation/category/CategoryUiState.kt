@@ -11,7 +11,11 @@ sealed class CategoryUiState {
 
 sealed class CategoryFormUiState {
     object Idle : CategoryFormUiState()
-    data class Upsert(val category: Category, val isValidForm: Boolean = false) : CategoryFormUiState()
-    object Loading : CategoryFormUiState()
+    data class Upsert(
+        val category: Category,
+        val isValidForm: Boolean = false,
+        val isLoading: Boolean = false,
+    ) : CategoryFormUiState()
+
     data class Error(val message: String) : CategoryFormUiState()
 }

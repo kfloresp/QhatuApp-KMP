@@ -1,8 +1,10 @@
 package com.rgk.qhatu.common.components.search
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -14,7 +16,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
@@ -24,38 +25,44 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_global_search_bar
 
+enum class SearchMode { Button, Input }
+
 @Composable
 fun SearchBar(
-    modifier: Modifier = Modifier,
     query: String,
-    onClick: () -> Unit = {},
     onQueryChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    searchMode: SearchMode = SearchMode.Input,
+    onClick: () -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
+
     OutlinedTextField(
         value = query,
-        onValueChange = onQueryChange,
+        onValueChange = {
+            if (searchMode == SearchMode.Input) {
+                onQueryChange(it)
+            }
+        },
         modifier = modifier
             .fillMaxWidth()
-            .onFocusChanged {
-                if (it.isFocused) {
-                    onClick()
-                    focusManager.clearFocus()
-                }},
+            .then(
+                if (searchMode == SearchMode.Button) {
+                    Modifier.clickable {
+                        onClick()
+                        focusManager.clearFocus()
+                    }
+                } else Modifier
+            ),
+        readOnly = searchMode == SearchMode.Button,
         placeholder = { Text(stringResource(Res.string.tx_global_search_bar)) },
         leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = null
-            )
+            Icon(imageVector = Icons.Default.Search, contentDescription = null)
         },
         trailingIcon = {
-            if (query.isNotEmpty()) {
+            if (query.isNotEmpty() && searchMode == SearchMode.Input) {
                 IconButton(onClick = { onQueryChange("") }) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = null
-                    )
+                    Icon(imageVector = Icons.Default.Close, contentDescription = null)
                 }
             }
         },
@@ -70,14 +77,18 @@ fun SearchBar(
     )
 }
 
+
 @Preview
 @Composable
 private fun SearchBarPreview() {
     QhatuTheme {
         Column(modifier = Modifier.background(Color.White)) {
-            SearchBar(query = "Celular") {
-
-            }
+            SearchBar(
+                query = "",
+                onQueryChange = {},
+                searchMode = SearchMode.Button,
+                onClick = { }
+            )
         }
     }
 }
