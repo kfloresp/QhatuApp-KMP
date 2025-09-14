@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 private const val DELAY_TIME = 500L
+
 class CategoryViewModel(
     private val upsertCategoryUseCase: UpsertCategoryUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
@@ -36,18 +37,29 @@ class CategoryViewModel(
 
     private fun fetchLocal() {
         viewModelScope.launch {
-            _listUiState.value = CategoryUiState.Loading
+            _listUiState.update {
+                CategoryUiState.Loading
+            }
             delay(DELAY_TIME)
             when (val result = getCategoriesUseCase()) {
                 is SyncResult.Error -> {
-                    _listUiState.value = CategoryUiState.Error(result.exception.message.orEmpty())
+                    _listUiState.update {
+                        CategoryUiState.Error(result.exception.message.orEmpty())
+                    }
                 }
+
                 is SyncResult.Success<*> -> {
                     allItems = result.data as List<Category>
-                    _listUiState.value = if (allItems.isNotEmpty()) {
-                        CategoryUiState.Success(allItems)
+                    if (allItems.isNotEmpty()) {
+                        _listUiState.update {
+                            CategoryUiState.Success(
+                                result = allItems
+                            )
+                        }
                     } else {
-                        CategoryUiState.Empty
+                        _listUiState.update {
+                            CategoryUiState.Empty
+                        }
                     }
                 }
             }
@@ -76,7 +88,7 @@ class CategoryViewModel(
         val current = _formUiState.value as? CategoryFormUiState.Upsert ?: return
         _formUiState.value = current.copy(isLoading = true)
         viewModelScope.launch {
-        delay(DELAY_TIME)
+            delay(DELAY_TIME)
             when (val result = upsertCategoryUseCase(category)) {
                 is SyncResult.Error -> {
                     _formUiState.value =

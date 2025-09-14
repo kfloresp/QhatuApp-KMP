@@ -7,7 +7,7 @@ import com.rgk.qhatu.di.TypeUpsert
 import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
 import com.rgk.qhatu.feature.setting.domain.repository.UnitMeasureRepository
 
-class UpsertUnitsMeasureUseCase(private val repository: UnitMeasureRepository) {
+class UpsertUnitMeasureUseCase(private val repository: UnitMeasureRepository) {
     suspend operator fun invoke(data: UnitMeasure): SyncResult<Unit> = safeCall {
         val storeId = data.id.ifEmpty { generateUUID() }
         val type = if (data.id.isEmpty()) {

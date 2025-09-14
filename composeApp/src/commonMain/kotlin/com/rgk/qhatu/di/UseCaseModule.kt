@@ -38,7 +38,7 @@ import com.rgk.qhatu.feature.setting.domain.usecase.GetUnitsMeasureUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.UpsertBrandUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.UpsertCategoryUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.UpsertStoreUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.UpsertUnitsMeasureUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.UpsertUnitMeasureUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -80,6 +80,6 @@ val useCaseModule = module {
     factoryOf(::UpsertBrandUseCase)
     factoryOf(::UpsertCategoryUseCase)
     factoryOf(::UpsertStoreUseCase)
-    factoryOf(::UpsertUnitsMeasureUseCase)
+    factoryOf(::UpsertUnitMeasureUseCase)
     factoryOf(::SyncImageStoreUseCase)
 }
