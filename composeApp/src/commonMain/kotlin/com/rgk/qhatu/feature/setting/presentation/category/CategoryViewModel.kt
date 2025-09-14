@@ -18,11 +18,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+private const val DELAY_TIME = 500L
 class CategoryViewModel(
     private val upsertCategoryUseCase: UpsertCategoryUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
 ) : ViewModel() {
-
     private val _listUiState = MutableStateFlow<CategoryUiState>(CategoryUiState.Loading)
     val listUiState: StateFlow<CategoryUiState> = _listUiState.asStateFlow()
 
@@ -37,7 +37,7 @@ class CategoryViewModel(
     private fun fetchLocal() {
         viewModelScope.launch {
             _listUiState.value = CategoryUiState.Loading
-            delay(2000L)
+            delay(DELAY_TIME)
             when (val result = getCategoriesUseCase()) {
                 is SyncResult.Error -> {
                     _listUiState.value = CategoryUiState.Error(result.exception.message.orEmpty())
@@ -76,7 +76,7 @@ class CategoryViewModel(
         val current = _formUiState.value as? CategoryFormUiState.Upsert ?: return
         _formUiState.value = current.copy(isLoading = true)
         viewModelScope.launch {
-        delay(2000L)
+        delay(DELAY_TIME)
             when (val result = upsertCategoryUseCase(category)) {
                 is SyncResult.Error -> {
                     _formUiState.value =

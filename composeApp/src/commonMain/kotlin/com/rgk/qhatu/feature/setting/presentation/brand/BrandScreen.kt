@@ -1,17 +1,19 @@
 package com.rgk.qhatu.feature.setting.presentation.brand
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.rgk.qhatu.common.components.chip.ChipGroup
 import com.rgk.qhatu.common.components.empty.EmptySection
 import com.rgk.qhatu.common.components.error.ErrorSection
-import com.rgk.qhatu.common.components.list.ActionableListContent
-import com.rgk.qhatu.common.components.list.ItemAction
-import com.rgk.qhatu.common.components.refresh.RefreshBox
 import com.rgk.qhatu.common.components.search.SearchBar
-import com.rgk.qhatu.common.components.shimmer.ShimmerListVertical
+import com.rgk.qhatu.common.components.search.SearchMode
+import com.rgk.qhatu.common.components.skeleton.ShimmerChipsSkeleton
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -19,51 +21,43 @@ import com.rgk.qhatu.feature.setting.domain.model.Brand
 fun BrandScreen(
     uiState: BrandUiState,
     onQueryChange: (String) -> Unit,
-    onItemClick: (Brand) -> Unit,
     onActionClick: (Brand) -> Unit,
-    isRefreshing: Boolean,
-    onPullRefresh: () -> Unit,
 ) {
     val query = if (uiState is BrandUiState.Success) uiState.query else ""
 
-    RefreshBox(
-        isRefreshing = isRefreshing,
-        onRefresh = { onPullRefresh() }
+    Column(
+        modifier = Modifier.fillMaxSize().padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Column(Modifier.fillMaxSize()) {
-            when (uiState) {
-                is BrandUiState.Loading -> {
-                    ShimmerListVertical()
-                }
+        when (uiState) {
+            is BrandUiState.Loading -> {
+                ShimmerChipsSkeleton()
+            }
 
-                is BrandUiState.Error -> {
-                    ErrorSection(uiState.message)
-                }
+            is BrandUiState.Error -> {
+                ErrorSection(uiState.message)
+            }
 
-                is BrandUiState.Success -> {
-                    SearchBar(
-                        query = query,
-                        onQueryChange = onQueryChange
-                    )
-                    ActionableListContent(
-                        modifier = Modifier,
-                        items = uiState.result,
-                        itemKey = { it.id },
-                        onItemClick = onItemClick,
-                        onActionClick = onActionClick,
-                        itemContent = { item, onClick, onAction ->
-                            ItemAction(
-                                label = item.name,
-                                onItemClick = onClick,
-                                onActionClick = onAction
-                            )
-                        }
-                    )
-                }
+            is BrandUiState.Success -> {
+                SearchBar(
+                    query = query,
+                    searchMode = SearchMode.Input,
+                    onQueryChange = onQueryChange
+                )
+                ChipGroup(
+                    items = uiState.result,
+                    keySelector = { it.id },
+                    valueSelector = { it.name },
+                    selectedKey = "",
+                    showIcon = true,
+                    onChipClick = { item ->
+                        onActionClick(item)
+                    },
+                )
+            }
 
-                BrandUiState.Empty -> {
-                    EmptySection()
-                }
+            BrandUiState.Empty -> {
+                EmptySection()
             }
         }
     }
