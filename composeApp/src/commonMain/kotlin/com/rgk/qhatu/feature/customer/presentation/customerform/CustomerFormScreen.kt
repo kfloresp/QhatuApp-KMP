@@ -16,6 +16,9 @@ import com.rgk.qhatu.common.components.loading.LoadingSection
 import com.rgk.qhatu.common.components.textfield.CustomTextField
 import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
 import com.rgk.qhatu.feature.customer.domain.model.Customer
+import com.rgk.qhatu.feature.customer.domain.model.CustomerWithDetails
+import com.rgk.qhatu.feature.customer.presentation.customerform.component.CompanyFormContent
+import com.rgk.qhatu.feature.customer.presentation.customerform.component.PersonFormContent
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_global_delete_changes
@@ -31,178 +34,57 @@ import qhatuapp.composeapp.generated.resources.tx_profile_customer_phone
 
 @Composable
 fun CustomerFormScreen(
-    isNew: Boolean = false,
+    isNew: Boolean,
     uiState: CustomerFormUiState,
-    formState: CustomerFormValidationState,
-    onFieldChange: (Customer.() -> Customer) -> Unit,
-    onSaveClick: (Customer) -> Unit,
-    onDeleteClick: (Customer) -> Unit,
-    onBackPopUp: () -> Unit,
-    onDeletePopUp: () -> Unit,
+    onFieldChange: (CustomerWithDetails.() -> CustomerWithDetails) -> Unit,
+    onSaveClick: (CustomerWithDetails) -> Unit,
+    onDeleteClick: (CustomerWithDetails) -> Unit,
 ) {
-    val fields = formState.fields
-
-
     when (uiState) {
+        is CustomerFormUiState.Idle -> {
+            LoadingSection()
+        }
+
         is CustomerFormUiState.Error -> {
             ErrorSection(uiState.message)
         }
 
-        CustomerFormUiState.Loading -> {
-            LoadingSection()
-        }
+        is CustomerFormUiState.Upsert -> {
+            val details = uiState.customerWithDetails
+            val isValidForm = uiState.isValidForm
 
-        is CustomerFormUiState.Success -> {
             Column(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.fillMaxWidth().padding(12.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp)
                     .verticalScroll(rememberScrollState())
                     .imePadding(),
             ) {
-                CustomTextField(
-                    value = fields.email.orEmpty(),
-                    onValueChange = {
-                        onFieldChange {
-                            copy(email = it)
-                        }
-                    },
-                    params = CustomTextFieldParams(
-                        label = stringResource(Res.string.tx_profile_customer_name),
-                        singleLine = true,
-                        maxLength = 50
-                    )
-                )
-                CustomTextField(
-                    value = fields.email.orEmpty(),
-                    onValueChange = {
-                        onFieldChange {
-                            copy(email = it)
-                        }
-                    },
-                    params = CustomTextFieldParams(
-                        label = stringResource(Res.string.tx_profile_customer_last_name_father),
-                        singleLine = true,
-                        maxLength = 50
-                    )
-                )
+                when (details) {
+                    is CustomerWithDetails.PersonWithCustomer -> {
+                        PersonFormContent(
+                            details = details,
+                            isNew = isNew,
+                            isValidForm = isValidForm,
+                            onFieldChange = onFieldChange,
+                            onSaveClick = onSaveClick,
+                            onDeleteClick = onDeleteClick,
+                        )
+                    }
 
-                CustomTextField(
-                    value = fields.email.orEmpty(),
-                    onValueChange = {
-                        onFieldChange {
-                            copy(email = it)
-                        }
-                    },
-                    params = CustomTextFieldParams(
-                        label = stringResource(Res.string.tx_profile_customer_last_name_mother),
-                        singleLine = true,
-                        maxLength = 50
-                    )
-                )
-
-                CustomTextField(
-                    value = fields.email.orEmpty(),
-                    onValueChange = {
-                        onFieldChange {
-                            copy(email = it)
-                        }
-                    },
-                    params = CustomTextFieldParams(
-                        label = stringResource(Res.string.tx_profile_customer_document_type),
-                        singleLine = true,
-                        maxLength = 10
-                    )
-                )
-
-                CustomTextField(
-                    value = fields.documentNumber,
-                    onValueChange = {
-                        onFieldChange {
-                            copy(documentNumber = it)
-                        }
-                    },
-                    params = CustomTextFieldParams(
-                        label = stringResource(Res.string.tx_profile_customer_document_number),
-                        singleLine = true,
-                        maxLength = 10
-                    )
-                )
-
-                CustomTextField(
-                    value = fields.phoneNumber.orEmpty(),
-                    onValueChange = {
-                        onFieldChange {
-                            copy(phoneNumber = it)
-                        }
-                    },
-                    params = CustomTextFieldParams(
-                        label = stringResource(Res.string.tx_profile_customer_phone),
-                        singleLine = true,
-                        maxLength = 12
-                    )
-                )
-
-                CustomTextField(
-                    value = fields.address.orEmpty(),
-                    onValueChange = {
-                        onFieldChange {
-                            copy(address = it)
-                        }
-                    },
-                    params = CustomTextFieldParams(
-                        label = stringResource(Res.string.tx_profile_customer_address),
-                        singleLine = true,
-                        maxLength = 50
-                    )
-                )
-
-                CustomTextField(
-                    value = fields.email.orEmpty(),
-                    onValueChange = {
-                        onFieldChange {
-                            copy(email = it)
-                        }
-                    },
-                    params = CustomTextFieldParams(
-                        label = stringResource(Res.string.tx_profile_customer_email),
-                        singleLine = true,
-                        maxLength = 50
-                    )
-                )
-
-                if (isNew) {
-                    ButtonActions(
-                        modifier = Modifier.padding(12.dp),
-                        primaryButtonText = stringResource(Res.string.tx_global_save_changes),
-                        isEnabled = formState.isValid,
-                        onPrimaryClick = {
-                            onSaveClick(fields)
-                        },
-                    )
-                } else {
-                    ButtonActions(
-                        modifier = Modifier.padding(12.dp),
-                        primaryButtonText = stringResource(Res.string.tx_global_save_changes),
-                        isEnabled = formState.isValid,
-                        onPrimaryClick = {
-                            onSaveClick(fields)
-                        },
-                        secondaryButtonText = stringResource(Res.string.tx_global_delete_changes),
-                        onSecondaryClick = { onDeleteClick(fields.copy(isDeleted = true)) }
-                    )
+                    is CustomerWithDetails.CompanyWithCustomer -> {
+                        CompanyFormContent(
+                            details = details,
+                            isNew = isNew,
+                            isValidForm = isValidForm,
+                            onFieldChange = onFieldChange,
+                            onSaveClick = onSaveClick,
+                            onDeleteClick = onDeleteClick,
+                        )
+                    }
                 }
             }
         }
-
-        is CustomerFormUiState.SuccessUpsert -> {
-            val isDeleted = uiState.isDeleted
-            if (isDeleted) {
-                onDeletePopUp()
-            } else {
-                onBackPopUp()
-            }
-        }
-
-        CustomerFormUiState.Idle -> Unit
     }
 }

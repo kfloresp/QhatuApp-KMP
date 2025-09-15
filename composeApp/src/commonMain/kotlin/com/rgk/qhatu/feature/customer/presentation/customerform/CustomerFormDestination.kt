@@ -11,6 +11,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.feature.customer.domain.model.Customer
+import com.rgk.qhatu.feature.customer.domain.model.CustomerWithDetails
 import com.rgk.qhatu.navigation.ProvideAppBar
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
@@ -26,7 +27,7 @@ import qhatuapp.composeapp.generated.resources.tx_global_confirmation
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_edit
 
 @Serializable
-data class CustomerFormDestination(val idCustomer: String)
+data class CustomerFormDestination(val customerId: String, val documentType: String)
 
 @OptIn(ExperimentalComposeUiApi::class)
 internal fun NavGraphBuilder.customerFormDestination(
@@ -35,26 +36,25 @@ internal fun NavGraphBuilder.customerFormDestination(
 ) {
     composable<CustomerFormDestination> { destination ->
         val viewModel: CustomerFormViewModel = koinViewModel()
-        val uiState by viewModel.uiState.collectAsState()
         val isNewCustomer by viewModel.isNewCustomer.collectAsState()
-        val formState by viewModel.formState.collectAsState()
+        val formUiState by viewModel.formUiState.collectAsState()
 
-        var selectedCustomerToDelete by remember { mutableStateOf<Customer?>(null) }
-        var selectedCustomerToSave by remember { mutableStateOf<Customer?>(null) }
+        var selectedCustomerToDelete by remember { mutableStateOf<CustomerWithDetails?>(null) }
+        var selectedCustomerToSave by remember { mutableStateOf<CustomerWithDetails?>(null) }
 
         ProvideAppBar(
             title = if (isNewCustomer) stringResource(Res.string.tx_customer_new_title)
             else stringResource(Res.string.tx_profile_customer_edit),
-            onBackStack = { onBackPopUp.invoke(viewModel.idCustomer) }
+            onBackStack = { onBackPopUp.invoke(viewModel.customerId) }
         )
+
         BackHandler {
-            onBackPopUp.invoke(viewModel.idCustomer)
+            onBackPopUp.invoke(viewModel.customerId)
         }
 
         CustomerFormScreen(
             isNew = isNewCustomer,
-            uiState = uiState,
-            formState = formState,
+            uiState = formUiState,
             onFieldChange = { viewModel.onFieldChange(it) },
             onSaveClick = {
                 selectedCustomerToSave = it
@@ -62,8 +62,6 @@ internal fun NavGraphBuilder.customerFormDestination(
             onDeleteClick = {
                 selectedCustomerToDelete = it
             },
-            onBackPopUp = { onBackPopUp.invoke(viewModel.idCustomer) },
-            onDeletePopUp = { onDeletePopUp.invoke() }
         )
 
         selectedCustomerToSave?.let {
@@ -91,7 +89,7 @@ internal fun NavGraphBuilder.customerFormDestination(
                 ),
                 primaryButtonText = stringResource(Res.string.tx_global_confirm_delete),
                 onPrimaryClick = {
-                    viewModel.onUpsertLocal(it.copy(isDeleted = true))
+                    //viewModel.onUpsertLocal(it.copy(isDeleted = true))
                     selectedCustomerToDelete = null
                 },
                 secondaryButtonText = stringResource(Res.string.tx_global_cancel),

@@ -8,7 +8,7 @@ import com.rgk.qhatu.feature.customer.domain.model.DocumentType
 fun CustomerEntity.toDomain(): Customer {
     return Customer(
         customerId = customerId,
-        documentType = DocumentType.entries.first{ it.name == documentType},
+        documentType = DocumentType.entries.first{ it.value == documentType},
         documentNumber = documentNumber,
         phoneNumber = phoneNumber,
         address = address,
@@ -26,7 +26,7 @@ fun CustomerEntity.toDomain(): Customer {
 fun Customer.toEntity(): CustomerEntity {
     return CustomerEntity(
         customerId = customerId,
-        documentType = documentType.name,
+        documentType = documentType.value,
         documentNumber = documentNumber,
         phoneNumber = phoneNumber,
         address = address,

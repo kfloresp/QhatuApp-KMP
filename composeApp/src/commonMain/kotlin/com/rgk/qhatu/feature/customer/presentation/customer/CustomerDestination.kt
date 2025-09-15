@@ -20,21 +20,20 @@ data object CustomerDestination
 
 @OptIn(ExperimentalComposeUiApi::class)
 internal fun NavGraphBuilder.customerDestination(
-    onCustomerClick: (String) -> Unit,
+    onCustomerClick: (String, String) -> Unit,
     onNewCustomerClick: () -> Unit,
-    onBackPopUp:() -> Unit,
+    onBackPopUp: () -> Unit,
 ) {
     composable<CustomerDestination> {
         val viewModel: CustomerViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
-        val isRefreshing by viewModel.isRefreshing.collectAsState()
 
         BackHandler {
             onBackPopUp.invoke()
         }
 
         ProvideFabAction {
-            if (!isRefreshing && uiState is CustomerUiState.Success || uiState is CustomerUiState.Empty) {
+            if (uiState is CustomerUiState.Success || uiState is CustomerUiState.Empty) {
                 ButtonFlotableAction(
                     label = stringResource(Res.string.tx_global_add_new)
                 ) {
@@ -47,14 +46,12 @@ internal fun NavGraphBuilder.customerDestination(
             uiState = uiState,
             onQueryChange = viewModel::onQueryChanged,
             onItemClick = {
-                onCustomerClick("asd")
+                onCustomerClick(it.customerId, it.documentType.value)
             },
             onActionClick = {
                 //Validar que tenga número de celular
                 //Crear funcion expect/actual
             },
-            onPullRefresh = viewModel::onPullRefresh,
-            isRefreshing = isRefreshing,
         )
     }
 }

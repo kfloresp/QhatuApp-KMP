@@ -45,23 +45,23 @@ class CustomerSummaryViewModel(
             _customerProfileUiState.update {
                 CustomerProfileUiState.Loading
             }
-            val result = getCustomersUseCase(idCustomer)
-            when (result) {
-                is SyncResult.Error -> {
-                    _customerProfileUiState.update {
-                        CustomerProfileUiState.Error(result.exception.message.orEmpty())
-                    }
-                }
-
-                is SyncResult.Success<List<Customer>> -> {
-                    val customer = result.data.first()
-                    _customerProfileUiState.update {
-                        CustomerProfileUiState.Success(
-                            result = customer
-                        )
-                    }
-                }
-            }
+//            val result = getCustomersUseCase(idCustomer)
+//            when (result) {
+//                is SyncResult.Error -> {
+//                    _customerProfileUiState.update {
+//                        CustomerProfileUiState.Error(result.exception.message.orEmpty())
+//                    }
+//                }
+//
+//                is SyncResult.Success<List<Customer>> -> {
+//                    val customer = result.data.first()
+//                    _customerProfileUiState.update {
+//                        CustomerProfileUiState.Success(
+//                            result = customer
+//                        )
+//                    }
+//                }
+//            }
         }
     }
 

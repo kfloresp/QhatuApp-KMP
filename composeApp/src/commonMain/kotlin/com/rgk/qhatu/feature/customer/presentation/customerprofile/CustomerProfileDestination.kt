@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 
 @Serializable
-data class CustomerProfileDestination(val idCustomer: String?)
+data class CustomerProfileDestination(val customerId: String, val documentType: String)
 
 @OptIn(ExperimentalComposeUiApi::class)
 internal fun NavGraphBuilder.customerProfileDestination(

@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import com.rgk.qhatu.common.extension.navigateToHomeWithPopUp
+import com.rgk.qhatu.feature.customer.domain.model.DocumentType
 import com.rgk.qhatu.feature.customer.presentation.customer.CustomerDestination
 import com.rgk.qhatu.feature.customer.presentation.customer.customerDestination
 import com.rgk.qhatu.feature.customer.presentation.customerform.CustomerFormDestination
@@ -29,10 +30,10 @@ fun NavGraphBuilder.customerGraph(
         startDestination = CustomerDestination
     ) {
         customerDestination(
-            onCustomerClick = {
-                navController.navigate(CustomerProfileDestination(it))
+            onCustomerClick = { customerId, documentType ->
+                navController.navigate(CustomerProfileDestination(customerId, documentType))
             }, onNewCustomerClick = {
-                navController.navigate(CustomerFormDestination(""))
+                navController.navigate(CustomerFormDestination("", DocumentType.DNI.value))
             },
             onBackPopUp = {
                 navController.navigateToHomeWithPopUp()
@@ -42,7 +43,7 @@ fun NavGraphBuilder.customerGraph(
             onResumeClick = {
                 navController.navigate(CustomerSummaryDestination(it))
             }, onEditClick = {
-                navController.navigate(CustomerFormDestination(it))
+                navController.navigate(CustomerFormDestination(it, DocumentType.DNI.value))
             },
             onBackPopUp = {
                 navController.navigate(CustomerDestination)
@@ -53,7 +54,7 @@ fun NavGraphBuilder.customerGraph(
                 if (idCustomer.isEmpty()) {
                     navController.navigate(CustomerDestination)
                 } else {
-                    navController.navigate(CustomerProfileDestination(idCustomer))
+                    //navController.navigate(CustomerProfileDestination(idCustomer))
                 }
             },
             onDeletePopUp = {

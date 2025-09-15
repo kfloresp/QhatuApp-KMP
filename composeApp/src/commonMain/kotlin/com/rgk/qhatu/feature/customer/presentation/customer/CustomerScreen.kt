@@ -12,6 +12,7 @@ import com.rgk.qhatu.common.components.refresh.RefreshBox
 import com.rgk.qhatu.common.components.search.SearchBar
 import com.rgk.qhatu.common.components.shimmer.ShimmerListVertical
 import com.rgk.qhatu.feature.customer.domain.model.Customer
+import com.rgk.qhatu.feature.customer.domain.model.CustomerWithDetails
 import com.rgk.qhatu.feature.customer.presentation.customer.component.ItemCustomerAction
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -21,52 +22,89 @@ fun CustomerScreen(
     onQueryChange: (String) -> Unit,
     onItemClick: (Customer) -> Unit,
     onActionClick: (Customer) -> Unit,
-    isRefreshing: Boolean,
-    onPullRefresh: () -> Unit,
 ) {
     val query = if (uiState is CustomerUiState.Success) uiState.query else ""
 
-    RefreshBox(
-        isRefreshing = isRefreshing,
-        onRefresh = { onPullRefresh() }
-    ) {
-        Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize()) {
 
-            when (uiState) {
-                is CustomerUiState.Loading -> {
-                    ShimmerListVertical()
-                }
+        when (uiState) {
+            is CustomerUiState.Loading -> {
+                ShimmerListVertical()
+            }
 
-                is CustomerUiState.Error -> {
-                    ErrorSection(uiState.message)
-                }
+            is CustomerUiState.Error -> {
+                ErrorSection(uiState.message)
+            }
 
-                is CustomerUiState.Success -> {
-                    SearchBar(
-                        query = query,
-                        onQueryChange = onQueryChange
-                    )
-                    ActionableListContent(
-                        modifier = Modifier,
-                        items = uiState.result,
-                        itemKey = { it.customerId },
-                        onItemClick = onItemClick,
-                        onActionClick = onActionClick,
-                        itemContent = { item, onClick, onAction ->
-//                            ItemCustomerAction(
-//                                title = item.nameCustomer,
-//                                subTitle = item.pendingCustomer,
-//                                firstLetter = item.firstLetterCustomer,
-//                                onItemClick = onClick,
-//                                onActionClick = onAction
-//                            )
+            is CustomerUiState.Success -> {
+                SearchBar(
+                    query = query,
+                    onQueryChange = onQueryChange
+                )
+                ActionableListContent(
+                    modifier = Modifier,
+                    items = uiState.result,
+                    itemKey = { customerWithDetails ->
+                        when (customerWithDetails) {
+                            is CustomerWithDetails.CompanyWithCustomer -> {
+                                customerWithDetails.customer.customerId
+                            }
+
+                            is CustomerWithDetails.PersonWithCustomer -> {
+                                customerWithDetails.customer.customerId
+                            }
                         }
-                    )
-                }
+                    },
+                    onItemClick = { customerWithDetails ->
+                        when (customerWithDetails) {
+                            is CustomerWithDetails.PersonWithCustomer -> {
+                                onItemClick(customerWithDetails.customer)
+                            }
 
-                CustomerUiState.Empty -> {
-                    EmptySection()
-                }
+                            is CustomerWithDetails.CompanyWithCustomer -> {
+                                onItemClick(customerWithDetails.customer)
+                            }
+                        }
+                    },
+                    onActionClick = { customerWithDetails ->
+                        when (customerWithDetails) {
+                            is CustomerWithDetails.PersonWithCustomer -> {
+                                onActionClick(customerWithDetails.customer)
+                            }
+
+                            is CustomerWithDetails.CompanyWithCustomer -> {
+                                onActionClick(customerWithDetails.customer)
+                            }
+                        }
+                    },
+                    itemContent = { customerWithDetails, onClick, onAction ->
+                        when (customerWithDetails) {
+                            is CustomerWithDetails.CompanyWithCustomer -> {
+                                ItemCustomerAction(
+                                    title = customerWithDetails.company.fullName,
+                                    subTitle = customerWithDetails.customer.pendingAmountCustomer,
+                                    firstLetter = customerWithDetails.company.firstLetter,
+                                    onItemClick = onClick,
+                                    onActionClick = onAction
+                                )
+                            }
+
+                            is CustomerWithDetails.PersonWithCustomer -> {
+                                ItemCustomerAction(
+                                    title = customerWithDetails.person.fullName,
+                                    subTitle = customerWithDetails.customer.pendingAmountCustomer,
+                                    firstLetter = customerWithDetails.person.firstLetter,
+                                    onItemClick = onClick,
+                                    onActionClick = onAction
+                                )
+                            }
+                        }
+                    }
+                )
+            }
+
+            CustomerUiState.Empty -> {
+                EmptySection()
             }
         }
     }

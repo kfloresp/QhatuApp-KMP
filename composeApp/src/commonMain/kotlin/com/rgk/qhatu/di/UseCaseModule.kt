@@ -14,6 +14,7 @@ import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartSummaryUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.RemoveItemToCartUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ResumeCartUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.UpdateItemToCartUseCase
+import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerWithDetailsByIdUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
 import com.rgk.qhatu.feature.image_store.domain.usecase.DeleteImageStoreUseCase
 import com.rgk.qhatu.feature.image_store.domain.usecase.GetImageStoreByIdUseCase
@@ -49,6 +50,7 @@ val useCaseModule = module {
     factoryOf(::GetBrandsUseCase)
     factoryOf(::GetStoreUseCase)
     factoryOf(::GetCustomersUseCase)
+    factoryOf(::GetCustomerWithDetailsByIdUseCase)
     factoryOf(::RegisterUseCase)
     factoryOf(::ObserveCurrentUser)
     factoryOf(::LogoutUseCase)

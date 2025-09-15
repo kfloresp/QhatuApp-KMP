@@ -23,40 +23,37 @@ class CustomerProfileViewModel(
     val uiState: StateFlow<CustomerProfileUiState> = _uiState.asStateFlow()
 
     private val destinationArgs = savedStateHandle.toRoute<CustomerProfileDestination>()
-    val idCustomer get():String? = destinationArgs.idCustomer
+    val customerId get(): String = destinationArgs.customerId
+    val documentType get(): String = destinationArgs.documentType
 
     init {
-        loadInit()
-    }
-
-    fun loadInit() {
-        idCustomer?.let {
-            loadCustomer(it)
+        if (customerId.isNotEmpty()) {
+            loadCustomer(customerId)
         }
     }
 
-    private fun loadCustomer(idCustomer: String) {
+    private fun loadCustomer(customerId: String) {
         viewModelScope.launch {
             _uiState.update {
                 CustomerProfileUiState.Loading
             }
-            val result = getCustomersUseCase(idCustomer)
-            when (result) {
-                is SyncResult.Error -> {
-                    _uiState.update {
-                        CustomerProfileUiState.Error(result.exception.message.orEmpty())
-                    }
-                }
-
-                is SyncResult.Success<List<Customer>> -> {
-                    val customer = result.data.first()
-                    _uiState.update {
-                        CustomerProfileUiState.Success(
-                            result = customer
-                        )
-                    }
-                }
-            }
+//            val result = getCustomersUseCase(idCustomer)
+//            when (result) {
+//                is SyncResult.Error -> {
+//                    _uiState.update {
+//                        CustomerProfileUiState.Error(result.exception.message.orEmpty())
+//                    }
+//                }
+//
+//                is SyncResult.Success<List<Customer>> -> {
+//                    val customer = result.data.first()
+//                    _uiState.update {
+//                        CustomerProfileUiState.Success(
+//                            result = customer
+//                        )
+//                    }
+//                }
+//            }
         }
     }
 }
