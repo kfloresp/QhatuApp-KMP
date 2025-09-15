@@ -49,17 +49,17 @@ fun CustomerScreen(
                     ActionableListContent(
                         modifier = Modifier,
                         items = uiState.result,
-                        itemKey = { it.id },
+                        itemKey = { it.customerId },
                         onItemClick = onItemClick,
                         onActionClick = onActionClick,
                         itemContent = { item, onClick, onAction ->
-                            ItemCustomerAction(
-                                title = item.nameCustomer,
-                                subTitle = item.pendingCustomer,
-                                firstLetter = item.firstLetterCustomer,
-                                onItemClick = onClick,
-                                onActionClick = onAction
-                            )
+//                            ItemCustomerAction(
+//                                title = item.nameCustomer,
+//                                subTitle = item.pendingCustomer,
+//                                firstLetter = item.firstLetterCustomer,
+//                                onItemClick = onClick,
+//                                onActionClick = onAction
+//                            )
                         }
                     )
                 }

@@ -109,20 +109,20 @@ internal fun NavGraphBuilder.paymentFormDestination(
         )
         if (selectedCustomerToClick) {
             CustomBottomSheet(isVisible = true, onDismiss = { selectedCustomerToClick = false }) {
-                SearchContent(
-                    items = customerList,
-                    keySelector = { it.id },
-                    valueSelector = { it.nameCustomer },
-                    query = queryCustomer,
-                    onQueryChange = {
-                        queryCustomer = it
-                        viewModel.onSearchCustomer(it)
-                    },
-                    onSelectItem = {
-                        queryCustomer = ""
-                        selectedCustomer = it
-                        selectedCustomerToClick = false
-                    })
+//                SearchContent(
+//                    items = customerList,
+//                    keySelector = { it.id },
+//                    valueSelector = { it.nameCustomer },
+//                    query = queryCustomer,
+//                    onQueryChange = {
+//                        queryCustomer = it
+//                        viewModel.onSearchCustomer(it)
+//                    },
+//                    onSelectItem = {
+//                        queryCustomer = ""
+//                        selectedCustomer = it
+//                        selectedCustomerToClick = false
+//                    })
             }
         }
 

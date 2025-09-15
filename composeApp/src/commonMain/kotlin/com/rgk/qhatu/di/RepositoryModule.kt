@@ -12,8 +12,14 @@ import com.rgk.qhatu.feature.audit.domain.repository.AuditLogRepository
 import com.rgk.qhatu.feature.auth.domain.repository.AuthRepository
 import com.rgk.qhatu.feature.cart.data.repository.CartRepositoryImpl
 import com.rgk.qhatu.feature.cart.domain.repository.CartRepository
+import com.rgk.qhatu.feature.customer.data.repository.CompanyRepositoryImpl
+import com.rgk.qhatu.feature.customer.data.repository.CustomerFlowRepositoryImpl
+import com.rgk.qhatu.feature.customer.data.repository.PersonRepositoryImpl
+import com.rgk.qhatu.feature.customer.domain.repository.CompanyRepository
+import com.rgk.qhatu.feature.customer.domain.repository.CustomerFlowRepository
 import com.rgk.qhatu.feature.payment.domain.repository.PaymentRepository
 import com.rgk.qhatu.feature.customer.domain.repository.CustomerRepository
+import com.rgk.qhatu.feature.customer.domain.repository.PersonRepository
 import com.rgk.qhatu.feature.image_store.data.repository.ImageStoreRepositoryImpl
 import com.rgk.qhatu.feature.image_store.domain.repository.ImageStoreRepository
 import com.rgk.qhatu.feature.operation.data.repository.OperationDetailRepositoryImpl
@@ -42,6 +48,9 @@ val repositoryModule = module {
     factoryOf(::CategoryRepositoryImpl) bind CategoryRepository::class
     factoryOf(::PaymentRepositoryImpl) bind PaymentRepository::class
     factoryOf(::CustomerRepositoryImpl) bind CustomerRepository::class
+    factoryOf(::CustomerFlowRepositoryImpl) bind CustomerFlowRepository::class
+    factoryOf(::PersonRepositoryImpl) bind PersonRepository::class
+    factoryOf(::CompanyRepositoryImpl) bind CompanyRepository::class
     factoryOf(::ProductRepositoryImpl) bind ProductRepository::class
     factoryOf(::UnitMeasureRepositoryImpl) bind UnitMeasureRepository::class
     factoryOf(::StoreRepositoryImpl) bind StoreRepository::class

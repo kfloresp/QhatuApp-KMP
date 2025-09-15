@@ -42,7 +42,7 @@ fun ProfileCustomer(customer: Customer, onEditClick: () -> Unit, onResumeClick: 
             CircularIcon(icon = Icons.Default.Person, size = 150.dp, iconSize = 48.dp)
             Spacer(Modifier.height(10.dp))
             Text(
-                customer.nameCustomer,
+                customer.email.orEmpty(),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
             )
@@ -66,15 +66,15 @@ fun ProfileCustomer(customer: Customer, onEditClick: () -> Unit, onResumeClick: 
                     subtitle = customer.phoneNumber,
                 )
             }
-            if (customer.havePendingCustomer) {
+            if (false) {
                 SettingItem(
                     icon = Icons.Outlined.Payments,
                     title = stringResource(Res.string.tx_profile_customer_pending_balance),
-                    subtitle = customer.pendingCustomer,
+                    subtitle = "oK",
                 )
             }
         }
-        if (customer.havePendingCustomer) {
+        if (false) {
             ButtonActions(
                 modifier = Modifier.padding(12.dp),
                 primaryButtonText = stringResource(Res.string.tx_profile_customer_edit),

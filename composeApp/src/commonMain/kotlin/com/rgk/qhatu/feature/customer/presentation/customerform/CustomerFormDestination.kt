@@ -87,8 +87,7 @@ internal fun NavGraphBuilder.customerFormDestination(
             ConfirmDialog(
                 title = stringResource(Res.string.tx_global_confirmation),
                 description = stringResource(
-                    Res.string.tx_global_confirm_delete_message,
-                    it.nameCustomer
+                    Res.string.tx_global_confirm_delete_message
                 ),
                 primaryButtonText = stringResource(Res.string.tx_global_confirm_delete),
                 onPrimaryClick = {

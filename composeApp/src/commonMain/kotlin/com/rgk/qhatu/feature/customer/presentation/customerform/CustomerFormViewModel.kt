@@ -8,7 +8,6 @@ import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
-import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +16,6 @@ import kotlinx.coroutines.launch
 
 class CustomerFormViewModel(
     private val getCustomersUseCase: GetCustomersUseCase,
-    private val syncCustomerUseCase: SyncCustomerUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val _uiState =
@@ -36,10 +34,10 @@ class CustomerFormViewModel(
     init {
         if (idCustomer.isEmpty()) {
             _isNewCustomer.value = true
-            _uiState.value = CustomerFormUiState.Success(Customer())
-            _formState.update {
-                CustomerFormValidationState(Customer(),false)
-            }
+            //_uiState.value = CustomerFormUiState.Success(Customer())
+//            _formState.update {
+//                CustomerFormValidationState(Customer(),false)
+//            }
         } else {
             loadCustomer(idCustomer)
         }
@@ -78,20 +76,20 @@ class CustomerFormViewModel(
             _uiState.update {
                 CustomerFormUiState.Loading
             }
-            val result = syncCustomerUseCase(SyncOperation.UpsertLocal(customer))
-            when (result) {
-                is SyncResult.Error -> {
-                    _uiState.update {
-                        CustomerFormUiState.Error(result.exception.message.orEmpty())
-                    }
-                }
-
-                is SyncResult.Success<*> -> {
-                    _uiState.update {
-                        CustomerFormUiState.SuccessUpsert(customer.isDeleted)
-                    }
-                }
-            }
+//            val result = syncCustomerUseCase(SyncOperation.UpsertLocal(customer))
+//            when (result) {
+//                is SyncResult.Error -> {
+//                    _uiState.update {
+//                        CustomerFormUiState.Error(result.exception.message.orEmpty())
+//                    }
+//                }
+//
+//                is SyncResult.Success<*> -> {
+//                    _uiState.update {
+//                        CustomerFormUiState.SuccessUpsert(customer.isDeleted)
+//                    }
+//                }
+//            }
         }
     }
 
@@ -103,10 +101,7 @@ class CustomerFormViewModel(
     }
 
     private fun validateFields(fields: Customer): Boolean {
-        return fields.firstName.orEmpty().isNotBlank() &&
-                fields.lastName.orEmpty().isNotBlank() &&
-                fields.documentType.isNotBlank() &&
-                fields.documentNumber.isNotBlank()
+        return  fields.documentNumber.isNotBlank()
     }
 
 }

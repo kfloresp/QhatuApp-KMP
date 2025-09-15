@@ -11,8 +11,11 @@ val databaseModule = module {
     dao { auditLogDao() }
     dao { brandDao() }
     dao { categoryDao() }
-    dao { clientDao() }
-    dao { clientPaymentDao() }
+    dao { customerDao() }
+    dao { customerFlowDao() }
+    dao { personDao() }
+    dao { companyDao() }
+    dao { paymentDao() }
     dao { productDao() }
     dao { unitMeasureDao() }
     dao { storeDao() }

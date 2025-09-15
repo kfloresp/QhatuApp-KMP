@@ -47,7 +47,7 @@ internal fun NavGraphBuilder.customerDestination(
             uiState = uiState,
             onQueryChange = viewModel::onQueryChanged,
             onItemClick = {
-                onCustomerClick(it.id)
+                onCustomerClick("asd")
             },
             onActionClick = {
                 //Validar que tenga número de celular

@@ -76,8 +76,8 @@ fun CheckoutScreen(
     setLoading: (Boolean) -> Unit,
 ) {
     val fields = formState.fields
-    val selectedName = selectedCustomer?.nameCustomer.orEmpty()
-    val selectedId = selectedCustomer?.id.orEmpty()
+    val selectedName = selectedCustomer?.email.orEmpty()
+    val selectedId = selectedCustomer?.customerId.orEmpty()
     val vouchers: List<SaleVoucherType> = SaleVoucherType.entries
     val methodPayments: List<SalePaymentMethod> = SalePaymentMethod.entries
     val saleAmountCash: List<SaleAmountCash> = SaleAmountCash.entries

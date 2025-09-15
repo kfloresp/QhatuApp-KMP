@@ -10,8 +10,14 @@ import com.rgk.qhatu.feature.cart.data.database.dao.CartDao
 import com.rgk.qhatu.feature.cart.data.database.dao.CartItemDao
 import com.rgk.qhatu.feature.cart.data.database.entity.CartEntity
 import com.rgk.qhatu.feature.cart.data.database.entity.CartItemEntity
+import com.rgk.qhatu.feature.customer.data.database.dao.CompanyDao
 import com.rgk.qhatu.feature.customer.data.database.dao.CustomerDao
+import com.rgk.qhatu.feature.customer.data.database.dao.CustomerFlowDao
+import com.rgk.qhatu.feature.customer.data.database.dao.PersonDao
+import com.rgk.qhatu.feature.customer.data.database.entity.CompanyEntity
 import com.rgk.qhatu.feature.customer.data.database.entity.CustomerEntity
+import com.rgk.qhatu.feature.customer.data.database.entity.CustomerFlowEntity
+import com.rgk.qhatu.feature.customer.data.database.entity.PersonEntity
 import com.rgk.qhatu.feature.image_store.data.database.dao.ImageStoreDao
 import com.rgk.qhatu.feature.image_store.data.database.entity.ImageStoreEntity
 import com.rgk.qhatu.feature.payment.data.database.dao.PaymentDao
@@ -45,6 +51,9 @@ const val DATABASE_NAME = "qhatu_database.db"
         BrandEntity::class,
         CategoryEntity::class,
         CustomerEntity::class,
+        CustomerFlowEntity::class,
+        PersonEntity::class,
+        CompanyEntity::class,
         PaymentEntity::class,
         ProductEntity::class,
         OperationEntity::class,
@@ -64,8 +73,11 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun auditLogDao(): AuditLogDao
     abstract fun brandDao(): BrandDao
     abstract fun categoryDao(): CategoryDao
-    abstract fun clientDao(): CustomerDao
-    abstract fun clientPaymentDao(): PaymentDao
+    abstract fun customerDao(): CustomerDao
+    abstract fun customerFlowDao(): CustomerFlowDao
+    abstract fun personDao(): PersonDao
+    abstract fun companyDao(): CompanyDao
+    abstract fun paymentDao(): PaymentDao
     abstract fun productDao(): ProductDao
     abstract fun unitMeasureDao(): UnitMeasureDao
     abstract fun storeDao(): StoreDao

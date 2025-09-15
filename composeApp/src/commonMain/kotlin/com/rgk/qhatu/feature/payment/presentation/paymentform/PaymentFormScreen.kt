@@ -78,10 +78,14 @@ fun PaymentFormScreen(
         }
 
         is PaymentFormUiState.Success -> {
-            val selectedName = selectedCustomer?.nameCustomer.orEmpty()
-            val pendingCustomer = selectedCustomer?.pendingCustomer
-            val hasPendingAmount = selectedCustomer?.havePendingAmount == true
-            val selectedId = selectedCustomer?.id.orEmpty()
+//            val selectedName = selectedCustomer?.nameCustomer.orEmpty()
+//            val pendingCustomer = selectedCustomer?.pendingCustomer
+//            val hasPendingAmount = selectedCustomer?.havePendingAmount == true
+//            val selectedId = selectedCustomer?.id.orEmpty()
+            val selectedName = ""
+            val pendingCustomer = ""
+            val hasPendingAmount = true
+            val selectedId = ""
 
             LaunchedEffect(selectedId) {
                 amountError = null

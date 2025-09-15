@@ -35,10 +35,10 @@ internal fun NavGraphBuilder.customerProfileDestination(
         CustomerProfileScreen(
             uiState,
             onResumeClick = {
-                onResumeClick(it.id)
+                onResumeClick(it.customerId)
             },
             onEditClick = {
-                onEditClick(it.id)
+                onEditClick(it.customerId)
             })
     }
 }

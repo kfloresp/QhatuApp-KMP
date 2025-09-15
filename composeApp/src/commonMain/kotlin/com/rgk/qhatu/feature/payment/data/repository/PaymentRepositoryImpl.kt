@@ -19,11 +19,6 @@ class PaymentRepositoryImpl(
     override suspend fun fetchLocal(idPayment: String?): SyncResult<List<Payment>> {
         return try {
             var data: List<Payment> = emptyList()
-            idPayment?.let {
-                data = sourceLocal.fetchById(idPayment)
-            } ?: run {
-                data = sourceLocal.getPaymentsWithDetails()
-            }
             SyncResult.Success(data)
         } catch (e: Exception) {
             SyncResult.Error(e)

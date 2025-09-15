@@ -67,7 +67,6 @@ internal fun NavGraphBuilder.settingDestination(
         if (showCloseSession) {
             ConfirmDialog(
                 title = stringResource(Res.string.tx_logout_prompt),
-                imagePainter = painterResource(Res.drawable.ic_question),
                 primaryButtonText = stringResource(Res.string.tx_logout_confirm),
                 onPrimaryClick = {
                     onLogoutClick()

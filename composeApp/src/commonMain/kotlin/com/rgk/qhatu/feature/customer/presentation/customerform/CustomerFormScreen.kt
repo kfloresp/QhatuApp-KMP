@@ -60,10 +60,10 @@ fun CustomerFormScreen(
                     .imePadding(),
             ) {
                 CustomTextField(
-                    value = fields.firstName.orEmpty(),
+                    value = fields.email.orEmpty(),
                     onValueChange = {
                         onFieldChange {
-                            copy(firstName = it)
+                            copy(email = it)
                         }
                     },
                     params = CustomTextFieldParams(
@@ -73,10 +73,10 @@ fun CustomerFormScreen(
                     )
                 )
                 CustomTextField(
-                    value = fields.lastName.orEmpty(),
+                    value = fields.email.orEmpty(),
                     onValueChange = {
                         onFieldChange {
-                            copy(lastName = it)
+                            copy(email = it)
                         }
                     },
                     params = CustomTextFieldParams(
@@ -87,10 +87,10 @@ fun CustomerFormScreen(
                 )
 
                 CustomTextField(
-                    value = fields.motherLastName.orEmpty(),
+                    value = fields.email.orEmpty(),
                     onValueChange = {
                         onFieldChange {
-                            copy(motherLastName = it)
+                            copy(email = it)
                         }
                     },
                     params = CustomTextFieldParams(
@@ -101,10 +101,10 @@ fun CustomerFormScreen(
                 )
 
                 CustomTextField(
-                    value = fields.documentType,
+                    value = fields.email.orEmpty(),
                     onValueChange = {
                         onFieldChange {
-                            copy(documentType = it)
+                            copy(email = it)
                         }
                     },
                     params = CustomTextFieldParams(

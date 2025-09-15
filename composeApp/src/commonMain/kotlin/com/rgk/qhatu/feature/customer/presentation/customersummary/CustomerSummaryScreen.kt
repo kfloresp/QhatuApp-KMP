@@ -47,13 +47,13 @@ fun CustomerSummaryScreen(
             is CustomerProfileUiState.Success -> {
                 val customer = customerProfileUiState.result
                 ItemCustomerAction(
-                    title = customer.nameCustomer,
+                    title = customer.customerId,
                     subTitle = customer.address.orEmpty(),
-                    firstLetter = customer.firstLetterCustomer,
+                    firstLetter = "AS",
                     onActionClick = {}
                 )
 
-                SummarySection(customer.pendingCustomer)
+                SummarySection("ASDA")
             }
         }
 
@@ -80,12 +80,12 @@ fun CustomerSummaryScreen(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                ListContent(
-                    items = uiState.result,
-                    itemKey = { it.idCustomerSummary }
-                ) {
-                    ItemSummary(title = it.type, date = it.date, amount = it.amount)
-                }
+//                ListContent(
+//                    items = uiState.result,
+//                    itemKey = { "" }
+//                ) {
+//                    ItemSummary(title = it.type, date = it.date, amount = it.amount)
+//                }
                 }
             }
 

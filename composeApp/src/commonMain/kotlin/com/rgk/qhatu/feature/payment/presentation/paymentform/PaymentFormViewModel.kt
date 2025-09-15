@@ -7,7 +7,6 @@ import androidx.navigation.toRoute
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.customer.domain.model.Customer
-import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersWithDebtUseCase
 import com.rgk.qhatu.feature.payment.domain.model.Payment
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
@@ -20,7 +19,6 @@ import kotlinx.coroutines.launch
 class PaymentFormViewModel(
     private val syncPaymentUseCase: SyncPaymentUseCase,
     private val getPaymentsUseCase: GetPaymentsUseCase,
-    private val getCustomerWithDebtsUseCase: GetCustomersWithDebtUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val _uiState =
@@ -119,23 +117,23 @@ class PaymentFormViewModel(
 
     fun searchCustomer() {
         viewModelScope.launch {
-            val result = getCustomerWithDebtsUseCase()
-            when (result) {
-                is SyncResult.Error -> {
-                    _customerList.value = emptyList()
-                }
-
-                is SyncResult.Success<List<Customer>> -> {
-                    _customerList.value = result.data
-                    allItemsCustomer = result.data
-                }
-            }
+//            val result = getCustomerWithDebtsUseCase()
+//            when (result) {
+//                is SyncResult.Error -> {
+//                    _customerList.value = emptyList()
+//                }
+//
+//                is SyncResult.Success<List<Customer>> -> {
+//                    _customerList.value = result.data
+//                    allItemsCustomer = result.data
+//                }
+//            }
         }
     }
 
     fun onSearchCustomer(query: String) {
         val filtered = if (query.isBlank()) allItemsCustomer
-        else allItemsCustomer.filter { it.nameCustomer.contains(query, ignoreCase = true) }
+        else allItemsCustomer.filter { it.customerId.contains(query, ignoreCase = true) }
         _customerList.value = filtered
     }
 }
