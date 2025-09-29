@@ -42,8 +42,8 @@ fun NavGraphBuilder.customerGraph(
         customerProfileDestination(
             onResumeClick = {
                 navController.navigate(CustomerSummaryDestination(it))
-            }, onEditClick = {
-                navController.navigate(CustomerFormDestination(it, DocumentType.RUC.value))
+            }, onEditClick = { customerId, documentType ->
+                navController.navigate(CustomerFormDestination(customerId, documentType.value))
             },
             onBackPopUp = {
                 navController.navigate(CustomerDestination)
@@ -54,7 +54,7 @@ fun NavGraphBuilder.customerGraph(
                 if (idCustomer.isEmpty()) {
                     navController.navigate(CustomerDestination)
                 } else {
-                    //navController.navigate(CustomerProfileDestination(idCustomer))
+                    navController.popBackStack() //revisar o proponer alternativa para recargar perfil
                 }
             },
             onDeletePopUp = {

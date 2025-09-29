@@ -20,7 +20,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.components.button.ButtonActions
 import com.rgk.qhatu.common.components.image.CircularIcon
-import com.rgk.qhatu.feature.customer.domain.model.Customer
+import com.rgk.qhatu.feature.customer.domain.model.CustomerWithDetails
+import com.rgk.qhatu.feature.customer.domain.model.DocumentType
 import com.rgk.qhatu.feature.setting.presentation.setting.component.SettingItem
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
@@ -31,7 +32,11 @@ import qhatuapp.composeapp.generated.resources.tx_profile_customer_phone
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_view_debt_summary
 
 @Composable
-fun ProfileCustomer(customer: Customer, onEditClick: () -> Unit, onResumeClick: () -> Unit) {
+fun ProfileCustomer(
+    customerWithDetails: CustomerWithDetails,
+    onEditClick: (String, DocumentType) -> Unit,
+    onResumeClick: (String) -> Unit,
+) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -41,61 +46,134 @@ fun ProfileCustomer(customer: Customer, onEditClick: () -> Unit, onResumeClick: 
         ) {
             CircularIcon(icon = Icons.Default.Person, size = 150.dp, iconSize = 48.dp)
             Spacer(Modifier.height(10.dp))
-            Text(
-                customer.email.orEmpty(),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
-            )
-            Text(
-                customer.documentNumber, style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Normal,
-                color = MaterialTheme.colorScheme.outline,
-            )
-            Spacer(Modifier.height(10.dp))
-            if (!customer.address.isNullOrEmpty()) {
-                SettingItem(
-                    icon = Icons.Outlined.LocationOn,
-                    title = stringResource(Res.string.tx_profile_customer_address),
-                    subtitle = customer.address,
-                )
+            when (customerWithDetails) {
+                is CustomerWithDetails.CompanyWithCustomer -> {
+                    val company = customerWithDetails.company
+                    val customer = customerWithDetails.customer
+
+                    Text(
+                        company.fullName,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                    Text(
+                        customer.documentNumber, style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Normal,
+                        color = MaterialTheme.colorScheme.outline,
+                    )
+
+                    Spacer(Modifier.height(10.dp))
+
+                    if (!customer.address.isNullOrEmpty()) {
+                        SettingItem(
+                            icon = Icons.Outlined.LocationOn,
+                            title = stringResource(Res.string.tx_profile_customer_address),
+                            subtitle = customer.address,
+                        )
+                    }
+                    if (!customer.phoneNumber.isNullOrEmpty()) {
+                        SettingItem(
+                            icon = Icons.Outlined.Call,
+                            title = stringResource(Res.string.tx_profile_customer_phone),
+                            subtitle = customer.phoneNumber,
+                        )
+                    }
+                    if (customer.havePendingAmount) {
+                        SettingItem(
+                            icon = Icons.Outlined.Payments,
+                            title = stringResource(Res.string.tx_profile_customer_pending_balance),
+                            subtitle = customer.pendingAmountCustomer,
+                        )
+                    }
+                    if (customer.havePendingAmount) {
+                        ButtonActions(
+                            modifier = Modifier.padding(12.dp),
+                            primaryButtonText = stringResource(Res.string.tx_profile_customer_edit),
+                            isEnabled = true,
+                            isColumn = true,
+                            onPrimaryClick = {
+                                onEditClick(customer.customerId, customer.documentType)
+                            },
+                            secondaryButtonText = stringResource(Res.string.tx_profile_customer_view_debt_summary),
+                            onSecondaryClick = { onResumeClick(customer.customerId) }
+                        )
+                    } else {
+                        ButtonActions(
+                            modifier = Modifier.padding(12.dp),
+                            primaryButtonText = stringResource(Res.string.tx_profile_customer_edit),
+                            isEnabled = true,
+                            isColumn = true,
+                            onPrimaryClick = {
+                                onEditClick(customer.customerId, customer.documentType)
+                            },
+                        )
+                    }
+                }
+
+                is CustomerWithDetails.PersonWithCustomer -> {
+                    val person = customerWithDetails.person
+                    val customer = customerWithDetails.customer
+
+                    Text(
+                        person.fullName,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                    Text(
+                        customer.documentNumber, style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Normal,
+                        color = MaterialTheme.colorScheme.outline,
+                    )
+
+                    Spacer(Modifier.height(10.dp))
+
+                    if (!customer.address.isNullOrEmpty()) {
+                        SettingItem(
+                            icon = Icons.Outlined.LocationOn,
+                            title = stringResource(Res.string.tx_profile_customer_address),
+                            subtitle = customer.address,
+                        )
+                    }
+                    if (!customer.phoneNumber.isNullOrEmpty()) {
+                        SettingItem(
+                            icon = Icons.Outlined.Call,
+                            title = stringResource(Res.string.tx_profile_customer_phone),
+                            subtitle = customer.phoneNumber,
+                        )
+                    }
+                    if (customer.havePendingAmount) {
+                        SettingItem(
+                            icon = Icons.Outlined.Payments,
+                            title = stringResource(Res.string.tx_profile_customer_pending_balance),
+                            subtitle = customer.pendingAmountCustomer,
+                        )
+                    }
+
+                    if (customer.havePendingAmount) {
+                        ButtonActions(
+                            modifier = Modifier.padding(12.dp),
+                            primaryButtonText = stringResource(Res.string.tx_profile_customer_edit),
+                            isEnabled = true,
+                            isColumn = true,
+                            onPrimaryClick = {
+                                onEditClick(customer.customerId, customer.documentType)
+                            },
+                            secondaryButtonText = stringResource(Res.string.tx_profile_customer_view_debt_summary),
+                            onSecondaryClick = { onResumeClick(customer.customerId) }
+                        )
+                    } else {
+                        ButtonActions(
+                            modifier = Modifier.padding(12.dp),
+                            primaryButtonText = stringResource(Res.string.tx_profile_customer_edit),
+                            isEnabled = true,
+                            isColumn = true,
+                            onPrimaryClick = {
+                                onEditClick(customer.customerId, customer.documentType)
+                            },
+                        )
+                    }
+                }
             }
-            if (!customer.phoneNumber.isNullOrEmpty()) {
-                SettingItem(
-                    icon = Icons.Outlined.Call,
-                    title = stringResource(Res.string.tx_profile_customer_phone),
-                    subtitle = customer.phoneNumber,
-                )
-            }
-            if (false) {
-                SettingItem(
-                    icon = Icons.Outlined.Payments,
-                    title = stringResource(Res.string.tx_profile_customer_pending_balance),
-                    subtitle = "oK",
-                )
-            }
-        }
-        if (false) {
-            ButtonActions(
-                modifier = Modifier.padding(12.dp),
-                primaryButtonText = stringResource(Res.string.tx_profile_customer_edit),
-                isEnabled = true,
-                isColumn = true,
-                onPrimaryClick = {
-                    onEditClick()
-                },
-                secondaryButtonText = stringResource(Res.string.tx_profile_customer_view_debt_summary),
-                onSecondaryClick = { onResumeClick() }
-            )
-        }else{
-            ButtonActions(
-                modifier = Modifier.padding(12.dp),
-                primaryButtonText = stringResource(Res.string.tx_profile_customer_edit),
-                isEnabled = true,
-                isColumn = true,
-                onPrimaryClick = {
-                    onEditClick()
-                },
-            )
         }
     }
 }

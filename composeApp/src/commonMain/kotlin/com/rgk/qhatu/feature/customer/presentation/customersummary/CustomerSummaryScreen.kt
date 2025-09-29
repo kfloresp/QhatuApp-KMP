@@ -46,12 +46,12 @@ fun CustomerSummaryScreen(
 
             is CustomerProfileUiState.Success -> {
                 val customer = customerProfileUiState.result
-                ItemCustomerAction(
-                    title = customer.customerId,
-                    subTitle = customer.address.orEmpty(),
-                    firstLetter = "AS",
-                    onActionClick = {}
-                )
+//                ItemCustomerAction(
+//                    title = customer.customerId,
+//                    subTitle = customer.address.orEmpty(),
+//                    firstLetter = "AS",
+//                    onActionClick = {}
+//                )
 
                 SummarySection("ASDA")
             }

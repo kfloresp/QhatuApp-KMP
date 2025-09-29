@@ -6,6 +6,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.backhandler.BackHandler
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.rgk.qhatu.feature.customer.domain.model.DocumentType
 import com.rgk.qhatu.navigation.ProvideAppBar
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
@@ -17,7 +18,7 @@ data class CustomerProfileDestination(val customerId: String, val documentType: 
 internal fun NavGraphBuilder.customerProfileDestination(
     onBackPopUp: () -> Unit,
     onResumeClick: (String) -> Unit,
-    onEditClick: (String) -> Unit,
+    onEditClick: (String, DocumentType) -> Unit,
 ) {
 
     composable<CustomerProfileDestination> { destination ->
@@ -35,10 +36,10 @@ internal fun NavGraphBuilder.customerProfileDestination(
         CustomerProfileScreen(
             uiState,
             onResumeClick = {
-                onResumeClick(it.customerId)
+                onResumeClick(it)
             },
-            onEditClick = {
-                onEditClick(it.customerId)
+            onEditClick = { customerId, documentType ->
+                onEditClick(customerId, documentType)
             })
     }
 }
