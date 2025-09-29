@@ -1,7 +1,7 @@
 package com.rgk.qhatu.feature.customer.domain.mapper
 
+import com.rgk.qhatu.common.util.orZero
 import com.rgk.qhatu.feature.customer.data.database.entity.CustomerEntity
-import com.rgk.qhatu.feature.customer.data.remote.model.CustomerModel
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.customer.domain.model.DocumentType
 
@@ -14,7 +14,7 @@ fun CustomerEntity.toDomain(): Customer {
         address = address,
         email = email,
         pendingAmount = pendingAmount,
-        pendingAmountMax = pendingAmountMax,
+        pendingAmountMax = pendingAmountMax.toString(),
         isSupplier = isSupplier,
         isActive = isActive,
         isSynced = isSynced,
@@ -32,7 +32,7 @@ fun Customer.toEntity(): CustomerEntity {
         address = address,
         email = email,
         pendingAmount = pendingAmount,
-        pendingAmountMax = pendingAmountMax,
+        pendingAmountMax = pendingAmountMax?.toDouble().orZero(),
         isSupplier = isSupplier,
         isActive = isActive,
         isSynced = isSynced,

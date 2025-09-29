@@ -90,12 +90,18 @@
     <string name="tx_profile_customer_edit">Editar cliente</string>
     <string name="tx_profile_customer_view_debt_summary">Ver resumen deuda</string>
     <string name="tx_profile_customer_name">Nombre</string>
+    <string name="tx_profile_customer_store_company">Razón social</string>
     <string name="tx_profile_customer_last_name_father">Apellido Paterno</string>
     <string name="tx_profile_customer_last_name_mother">Apellido Materno</string>
     <string name="tx_profile_customer_document_type">Tipo Documento</string>
     <string name="tx_profile_customer_document_number">Nro Documento</string>
     <string name="tx_profile_customer_email">Email</string>
+    <string name="tx_profile_customer_amount_max">Monto máximo de crédito</string>
     <string name="tx_profile_customer_delete">Eliminar</string>
+    <string name="tx_profile_customer_section_personal">Información Personal</string>
+    <string name="tx_profile_customer_section_information">Datos de Contacto</string>
+    <string name="tx_profile_customer_section_aditional">Datos Adicionales</string>
+    <string name="tx_profile_customer_is_active">Esta activo</string>
 
     <!-- Payment -->
 

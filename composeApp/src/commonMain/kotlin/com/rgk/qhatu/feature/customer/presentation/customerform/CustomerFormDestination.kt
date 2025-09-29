@@ -62,6 +62,9 @@ internal fun NavGraphBuilder.customerFormDestination(
             onDeleteClick = {
                 selectedCustomerToDelete = it
             },
+            onBackPopUp = {
+                onBackPopUp(viewModel.customerId)
+            }
         )
 
         selectedCustomerToSave?.let {

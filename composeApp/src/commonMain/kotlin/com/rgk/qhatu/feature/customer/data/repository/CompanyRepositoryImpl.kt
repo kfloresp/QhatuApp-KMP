@@ -1,5 +1,6 @@
 package com.rgk.qhatu.feature.customer.data.repository
 
+import com.rgk.qhatu.di.TypeUpsert
 import com.rgk.qhatu.feature.customer.data.database.dao.CompanyDao
 import com.rgk.qhatu.feature.customer.domain.mapper.toDomain
 import com.rgk.qhatu.feature.customer.domain.mapper.toEntity
@@ -10,9 +11,6 @@ import com.rgk.qhatu.feature.customer.domain.repository.CompanyRepository
 class CompanyRepositoryImpl(
     private val sourceLocal: CompanyDao,
 ) : CompanyRepository {
-    override suspend fun insertCompany(company: Company) {
-        sourceLocal.insertCompany(company.toEntity())
-    }
 
     override suspend fun getCompanyWithCustomer(customerId: String): CompanyWithCustomer? {
         return sourceLocal.getCompanyWithCustomerById(customerId)?.toDomain()
@@ -20,5 +18,19 @@ class CompanyRepositoryImpl(
 
     override suspend fun getAllCompaniesWithCustomer(): List<CompanyWithCustomer> {
         return sourceLocal.getAllCompaniesWithCustomer().map { it.toDomain() }
+    }
+
+    override suspend fun upsertCompany(
+        company: Company,
+        type: TypeUpsert,
+    ) {
+        when (type) {
+            TypeUpsert.NEW -> {
+                sourceLocal.insertCompany(company.toEntity())
+            }
+            TypeUpsert.UPDATE -> {
+                sourceLocal.updateCompany(company.toEntity())
+            }
+        }
     }
 }

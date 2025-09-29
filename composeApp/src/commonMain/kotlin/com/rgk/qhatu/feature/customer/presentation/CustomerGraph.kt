@@ -43,7 +43,7 @@ fun NavGraphBuilder.customerGraph(
             onResumeClick = {
                 navController.navigate(CustomerSummaryDestination(it))
             }, onEditClick = {
-                navController.navigate(CustomerFormDestination(it, DocumentType.DNI.value))
+                navController.navigate(CustomerFormDestination(it, DocumentType.RUC.value))
             },
             onBackPopUp = {
                 navController.navigate(CustomerDestination)

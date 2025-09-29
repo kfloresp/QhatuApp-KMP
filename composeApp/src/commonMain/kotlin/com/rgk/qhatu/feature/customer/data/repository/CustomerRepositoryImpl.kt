@@ -1,5 +1,6 @@
 package com.rgk.qhatu.feature.customer.data.repository
 
+import com.rgk.qhatu.di.TypeUpsert
 import com.rgk.qhatu.feature.customer.data.database.dao.CustomerDao
 import com.rgk.qhatu.feature.customer.domain.mapper.toDomain
 import com.rgk.qhatu.feature.customer.domain.mapper.toEntity
@@ -9,12 +10,20 @@ import com.rgk.qhatu.feature.customer.domain.repository.CustomerRepository
 class CustomerRepositoryImpl(
     private val sourceLocal: CustomerDao,
 ) : CustomerRepository {
-    override suspend fun insertCustomer(customer: Customer) {
-        sourceLocal.insertCustomer(customer.toEntity())
-    }
 
-    override suspend fun updateCustomer(customer: Customer) {
-        sourceLocal.updateCustomer(customer.toEntity())
+    override suspend fun upsertCustomer(
+        customer: Customer,
+        type: TypeUpsert,
+    ) {
+        when (type) {
+            TypeUpsert.NEW -> {
+                sourceLocal.insertCustomer(customer.toEntity())
+            }
+
+            TypeUpsert.UPDATE -> {
+                sourceLocal.updateCustomer(customer.toEntity())
+            }
+        }
     }
 
     override suspend fun deleteCustomer(customer: Customer) {

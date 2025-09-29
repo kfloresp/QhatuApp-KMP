@@ -5,13 +5,13 @@ import com.rgk.qhatu.common.util.orZero
 
 data class Customer(
     val customerId: String = "",
-    val documentType: DocumentType = DocumentType.DNI,
+    val documentType: DocumentType,
     val documentNumber: String = "",
     val phoneNumber: String? = null,
     val address: String? = null,
     val email: String? = null,
     val pendingAmount: Double? = 0.0,
-    val pendingAmountMax: Double? = 0.0,
+    val pendingAmountMax: String? = "",
     val isSupplier: Boolean = false,
     val isActive: Boolean = false,
     val isSynced: Boolean = false,
@@ -23,6 +23,9 @@ data class Customer(
 
     val havePendingAmount: Boolean
         get() = pendingAmount.orZero() > 0.0
+
+    val isCompany: Boolean
+        get() = documentType == DocumentType.RUC
 }
 
 private val NO_DEBT = "Sin deuda"
@@ -30,5 +33,10 @@ private val NO_DEBT = "Sin deuda"
 enum class DocumentType(val value: String) {
     DNI("DNI"),
     RUC("RUC"),
-    PASSAPORT("PASAPORTE"),
+    PASSAPORT("PASAPORTE");
+
+    companion object {
+        fun fromValue(value: String?): DocumentType =
+            entries.find { it.value.equals(value, ignoreCase = true) } ?: DNI
+    }
 }
