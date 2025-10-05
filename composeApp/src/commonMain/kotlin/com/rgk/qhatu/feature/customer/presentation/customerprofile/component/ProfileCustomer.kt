@@ -1,5 +1,6 @@
 package com.rgk.qhatu.feature.customer.presentation.customerprofile.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Call
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.Payments
@@ -16,20 +16,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.rgk.qhatu.common.components.button.ButtonActions
-import com.rgk.qhatu.common.components.image.CircularIcon
+import com.rgk.qhatu.common.theme.QhatuTheme
+import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.customer.domain.model.CustomerWithDetails
 import com.rgk.qhatu.feature.customer.domain.model.DocumentType
+import com.rgk.qhatu.feature.customer.domain.model.Person
 import com.rgk.qhatu.feature.setting.presentation.setting.component.SettingItem
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import qhatuapp.composeapp.generated.resources.Res
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_address
-import qhatuapp.composeapp.generated.resources.tx_profile_customer_edit
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_pending_balance
 import qhatuapp.composeapp.generated.resources.tx_profile_customer_phone
-import qhatuapp.composeapp.generated.resources.tx_profile_customer_view_debt_summary
 
 @Composable
 fun ProfileCustomer(
@@ -44,12 +45,16 @@ fun ProfileCustomer(
             modifier = Modifier.weight(1f).padding(top = 40.dp).fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CircularIcon(icon = Icons.Default.Person, size = 150.dp, iconSize = 48.dp)
-            Spacer(Modifier.height(10.dp))
             when (customerWithDetails) {
                 is CustomerWithDetails.CompanyWithCustomer -> {
                     val company = customerWithDetails.company
                     val customer = customerWithDetails.customer
+
+                    ProfileEditCustomer(onClick = {
+                        onEditClick(customer.customerId, customer.documentType)
+                    })
+
+                    Spacer(Modifier.height(10.dp))
 
                     Text(
                         company.fullName,
@@ -83,29 +88,7 @@ fun ProfileCustomer(
                             icon = Icons.Outlined.Payments,
                             title = stringResource(Res.string.tx_profile_customer_pending_balance),
                             subtitle = customer.pendingAmountCustomer,
-                        )
-                    }
-                    if (customer.havePendingAmount) {
-                        ButtonActions(
-                            modifier = Modifier.padding(12.dp),
-                            primaryButtonText = stringResource(Res.string.tx_profile_customer_edit),
-                            isEnabled = true,
-                            isColumn = true,
-                            onPrimaryClick = {
-                                onEditClick(customer.customerId, customer.documentType)
-                            },
-                            secondaryButtonText = stringResource(Res.string.tx_profile_customer_view_debt_summary),
-                            onSecondaryClick = { onResumeClick(customer.customerId) }
-                        )
-                    } else {
-                        ButtonActions(
-                            modifier = Modifier.padding(12.dp),
-                            primaryButtonText = stringResource(Res.string.tx_profile_customer_edit),
-                            isEnabled = true,
-                            isColumn = true,
-                            onPrimaryClick = {
-                                onEditClick(customer.customerId, customer.documentType)
-                            },
+                            onClick = { onResumeClick(customer.customerId) }
                         )
                     }
                 }
@@ -113,6 +96,10 @@ fun ProfileCustomer(
                 is CustomerWithDetails.PersonWithCustomer -> {
                     val person = customerWithDetails.person
                     val customer = customerWithDetails.customer
+
+                    ProfileEditCustomer(onClick = {
+                        onEditClick(customer.customerId, customer.documentType)
+                    })
 
                     Text(
                         person.fullName,
@@ -146,34 +133,40 @@ fun ProfileCustomer(
                             icon = Icons.Outlined.Payments,
                             title = stringResource(Res.string.tx_profile_customer_pending_balance),
                             subtitle = customer.pendingAmountCustomer,
-                        )
-                    }
-
-                    if (customer.havePendingAmount) {
-                        ButtonActions(
-                            modifier = Modifier.padding(12.dp),
-                            primaryButtonText = stringResource(Res.string.tx_profile_customer_edit),
-                            isEnabled = true,
-                            isColumn = true,
-                            onPrimaryClick = {
-                                onEditClick(customer.customerId, customer.documentType)
-                            },
-                            secondaryButtonText = stringResource(Res.string.tx_profile_customer_view_debt_summary),
-                            onSecondaryClick = { onResumeClick(customer.customerId) }
-                        )
-                    } else {
-                        ButtonActions(
-                            modifier = Modifier.padding(12.dp),
-                            primaryButtonText = stringResource(Res.string.tx_profile_customer_edit),
-                            isEnabled = true,
-                            isColumn = true,
-                            onPrimaryClick = {
-                                onEditClick(customer.customerId, customer.documentType)
-                            },
+                            onClick = { onResumeClick(customer.customerId) }
                         )
                     }
                 }
             }
+        }
+    }
+}
+
+
+@Preview
+@Composable
+fun ProfileCustomerPreview() {
+    QhatuTheme {
+        Column(Modifier.background(Color.White)) {
+            ProfileCustomer(
+                customerWithDetails = CustomerWithDetails.PersonWithCustomer(
+                    person = Person(
+                        firstName = "Kevin",
+                        lastName = "Flores",
+                        motherLastName = "Palomino"
+                    ),
+                    customer = Customer(
+                        documentType = DocumentType.DNI,
+                        documentNumber = "12345678",
+                        phoneNumber = "987654321",
+                        address = "Av. Siempre Viva 123",
+                        pendingAmount = 150.0,
+                        email = "kflores@gmail.com"
+                    )
+                ),
+                onEditClick = { _, _ -> },
+                onResumeClick = {},
+            )
         }
     }
 }

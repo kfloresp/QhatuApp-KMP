@@ -12,6 +12,8 @@ import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.customer.domain.model.CustomerWithDetails
+import com.rgk.qhatu.feature.customer.domain.model.DocumentType
+import com.rgk.qhatu.feature.customer.domain.model.updateCustomer
 import com.rgk.qhatu.navigation.ProvideAppBar
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
@@ -31,8 +33,7 @@ data class CustomerFormDestination(val customerId: String, val documentType: Str
 
 @OptIn(ExperimentalComposeUiApi::class)
 internal fun NavGraphBuilder.customerFormDestination(
-    onBackPopUp: (String) -> Unit,
-    onDeletePopUp: () -> Unit,
+    onBackPopUp: (String, DocumentType) -> Unit,
 ) {
     composable<CustomerFormDestination> { destination ->
         val viewModel: CustomerFormViewModel = koinViewModel()
@@ -45,11 +46,11 @@ internal fun NavGraphBuilder.customerFormDestination(
         ProvideAppBar(
             title = if (isNewCustomer) stringResource(Res.string.tx_customer_new_title)
             else stringResource(Res.string.tx_profile_customer_edit),
-            onBackStack = { onBackPopUp.invoke(viewModel.customerId) }
+            onBackStack = { onBackPopUp.invoke(viewModel.customerId, viewModel.documentType) }
         )
 
         BackHandler {
-            onBackPopUp.invoke(viewModel.customerId)
+            onBackPopUp.invoke(viewModel.customerId, viewModel.documentType)
         }
 
         CustomerFormScreen(
@@ -63,7 +64,7 @@ internal fun NavGraphBuilder.customerFormDestination(
                 selectedCustomerToDelete = it
             },
             onBackPopUp = {
-                onBackPopUp(viewModel.customerId)
+                onBackPopUp(viewModel.customerId, viewModel.documentType)
             }
         )
 
@@ -92,7 +93,16 @@ internal fun NavGraphBuilder.customerFormDestination(
                 ),
                 primaryButtonText = stringResource(Res.string.tx_global_confirm_delete),
                 onPrimaryClick = {
-                    //viewModel.onUpsertLocal(it.copy(isDeleted = true))
+                    val customer = when (it) {
+                        is CustomerWithDetails.CompanyWithCustomer -> {
+                            it.updateCustomer { it.copy(isDeleted = true) }
+                        }
+
+                        is CustomerWithDetails.PersonWithCustomer -> {
+                            it.updateCustomer { it.copy(isDeleted = true) }
+                        }
+                    }
+                    viewModel.onUpsertLocal(customer)
                     selectedCustomerToDelete = null
                 },
                 secondaryButtonText = stringResource(Res.string.tx_global_cancel),

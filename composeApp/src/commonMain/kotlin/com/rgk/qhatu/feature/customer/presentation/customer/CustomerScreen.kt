@@ -1,14 +1,16 @@
 package com.rgk.qhatu.feature.customer.presentation.customer
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.components.empty.EmptySection
 import com.rgk.qhatu.common.components.error.ErrorSection
 import com.rgk.qhatu.common.components.list.ActionableListContent
-import com.rgk.qhatu.common.components.refresh.RefreshBox
 import com.rgk.qhatu.common.components.search.SearchBar
 import com.rgk.qhatu.common.components.shimmer.ShimmerListVertical
 import com.rgk.qhatu.feature.customer.domain.model.Customer
@@ -25,7 +27,10 @@ fun CustomerScreen(
 ) {
     val query = if (uiState is CustomerUiState.Success) uiState.query else ""
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier.fillMaxSize().padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
 
         when (uiState) {
             is CustomerUiState.Loading -> {
@@ -39,7 +44,7 @@ fun CustomerScreen(
             is CustomerUiState.Success -> {
                 SearchBar(
                     query = query,
-                    onQueryChange = onQueryChange
+                    onQueryChange = onQueryChange,
                 )
                 ActionableListContent(
                     modifier = Modifier,

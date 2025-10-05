@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import com.rgk.qhatu.common.extension.navigateToHomeWithPopUp
+import com.rgk.qhatu.common.extension.navigateWithPopUp
 import com.rgk.qhatu.feature.customer.domain.model.DocumentType
 import com.rgk.qhatu.feature.customer.presentation.customer.CustomerDestination
 import com.rgk.qhatu.feature.customer.presentation.customer.customerDestination
@@ -14,6 +15,7 @@ import com.rgk.qhatu.feature.customer.presentation.customerprofile.CustomerProfi
 import com.rgk.qhatu.feature.customer.presentation.customerprofile.customerProfileDestination
 import com.rgk.qhatu.feature.customer.presentation.customersummary.CustomerSummaryDestination
 import com.rgk.qhatu.feature.customer.presentation.customersummary.customerSummaryDestination
+import com.rgk.qhatu.feature.home.presentation.HomeGraph
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -36,29 +38,32 @@ fun NavGraphBuilder.customerGraph(
                 navController.navigate(CustomerFormDestination("", DocumentType.DNI.value))
             },
             onBackPopUp = {
-                navController.navigateToHomeWithPopUp()
+                navController.navigateWithPopUp(HomeGraph)
             }
         )
         customerProfileDestination(
             onResumeClick = {
                 navController.navigate(CustomerSummaryDestination(it))
-            }, onEditClick = { customerId, documentType ->
+            },
+            onEditClick = { customerId, documentType ->
                 navController.navigate(CustomerFormDestination(customerId, documentType.value))
             },
             onBackPopUp = {
-                navController.navigate(CustomerDestination)
+                navController.navigateWithPopUp(CustomerDestination)
             }
         )
         customerFormDestination(
-            onBackPopUp = { idCustomer ->
-                if (idCustomer.isEmpty()) {
-                    navController.navigate(CustomerDestination)
+            onBackPopUp = { customerId, documentType ->
+                if (customerId.isEmpty()) {
+                    navController.navigateWithPopUp(CustomerDestination)
                 } else {
-                    navController.popBackStack() //revisar o proponer alternativa para recargar perfil
+                    navController.navigateWithPopUp(
+                        CustomerProfileDestination(
+                            customerId,
+                            documentType.value
+                        )
+                    )
                 }
-            },
-            onDeletePopUp = {
-                navController.navigate(CustomerDestination)
             }
         )
         customerSummaryDestination()

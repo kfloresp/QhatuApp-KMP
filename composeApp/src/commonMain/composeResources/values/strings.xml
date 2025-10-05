@@ -88,6 +88,7 @@
     <string name="tx_profile_customer_phone">Celular</string>
     <string name="tx_profile_customer_address">Dirección</string>
     <string name="tx_profile_customer_edit">Editar cliente</string>
+    <string name="tx_profile_customer_profile">Perfil de cliente</string>
     <string name="tx_profile_customer_view_debt_summary">Ver resumen deuda</string>
     <string name="tx_profile_customer_name">Nombre</string>
     <string name="tx_profile_customer_store_company">Razón social</string>
