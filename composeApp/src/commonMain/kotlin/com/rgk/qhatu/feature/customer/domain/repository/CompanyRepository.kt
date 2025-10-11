@@ -8,4 +8,5 @@ interface CompanyRepository {
     suspend fun getCompanyWithCustomer(customerId: String): CompanyWithCustomer?
     suspend fun getAllCompaniesWithCustomer(): List<CompanyWithCustomer>
     suspend fun upsertCompany(company: Company, type: TypeUpsert)
+    suspend fun searchCompaniesWithCustomerByName(query: String): List<CompanyWithCustomer>
 }

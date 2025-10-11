@@ -8,4 +8,5 @@ interface PersonRepository {
     suspend fun getPersonWithCustomer(customerId: String): PersonWithCustomer?
     suspend fun getAllPersonsWithCustomer(): List<PersonWithCustomer>
     suspend fun upsertPerson(person: Person, type: TypeUpsert)
+    suspend fun searchPersonsWithCustomerByName(query: String): List<PersonWithCustomer>
 }

@@ -8,6 +8,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.rgk.qhatu.feature.customer.data.database.entity.CompanyEntity
 import com.rgk.qhatu.feature.customer.data.database.entity.CompanyWithCustomerRelation
+import com.rgk.qhatu.feature.customer.domain.model.CompanyWithCustomer
 
 @Dao
 interface CompanyDao {
@@ -24,4 +25,9 @@ interface CompanyDao {
     @Transaction
     @Query("SELECT * FROM customer_company")
     suspend fun getAllCompaniesWithCustomer(): List<CompanyWithCustomerRelation>
+
+    @Transaction
+    @Query("SELECT * FROM customer_company WHERE LOWER(companyName) LIKE '%' || :query || '%'")
+    suspend fun searchCompaniesWithCustomerByName(query: String): List<CompanyWithCustomerRelation>
+
 }

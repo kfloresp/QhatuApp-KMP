@@ -33,4 +33,8 @@ class CompanyRepositoryImpl(
             }
         }
     }
+
+    override suspend fun searchCompaniesWithCustomerByName(query: String): List<CompanyWithCustomer> {
+        return sourceLocal.searchCompaniesWithCustomerByName(query).map { it.toDomain() }
+    }
 }

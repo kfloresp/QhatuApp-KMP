@@ -33,4 +33,8 @@ class PersonRepositoryImpl(
             }
         }
     }
+
+    override suspend fun searchPersonsWithCustomerByName(query: String): List<PersonWithCustomer> {
+        return sourceLocal.searchPersonsWithCustomerByName(query).map { it.toDomain() }
+    }
 }

@@ -12,6 +12,7 @@ import com.rgk.qhatu.common.components.bottomsheet.CustomBottomSheet
 import com.rgk.qhatu.common.components.search.SearchContent
 import com.rgk.qhatu.feature.cart.presentation.checkout.component.SectionSummaryCheckout
 import com.rgk.qhatu.feature.customer.domain.model.Customer
+import com.rgk.qhatu.feature.customer.domain.model.CustomerWithDetails
 import com.rgk.qhatu.navigation.ProvideAppBar
 import com.rgk.qhatu.navigation.ProvideBottomBarApp
 import kotlinx.serialization.Serializable
@@ -36,7 +37,7 @@ internal fun NavGraphBuilder.checkoutDestination(
         val cartSummary by viewModel.cartSummary.collectAsState()
 
         var selectedCustomerToClick by remember { mutableStateOf(false) }
-        var selectedCustomer by remember { mutableStateOf<Customer?>(null) }
+        var selectedCustomer by remember { mutableStateOf<CustomerWithDetails?>(null) }
         var queryCustomer by remember { mutableStateOf("") }
         var onClickSaveCheckout by remember { mutableStateOf(false) }
 
@@ -62,7 +63,7 @@ internal fun NavGraphBuilder.checkoutDestination(
             onClearCustomer = { selectedCustomer = null },
             selectedCustomer = selectedCustomer,
             onCustomerClick = {
-                viewModel.searchCustomer()
+                viewModel.searchCustomer("")
                 selectedCustomerToClick = true
             },
             cartSummary = cartSummary,
@@ -77,8 +78,16 @@ internal fun NavGraphBuilder.checkoutDestination(
                 onDismiss = { selectedCustomerToClick = false }) {
                 SearchContent(
                     items = customerList,
-                    keySelector = { it.customerId },
-                    valueSelector = { it.email.orEmpty()},
+                    keySelector = {
+                        when (it) {
+                            is CustomerWithDetails.CompanyWithCustomer -> it.customer.customerId
+                            is CustomerWithDetails.PersonWithCustomer -> it.customer.customerId
+                        }
+                    },
+                    valueSelector = { when (it) {
+                        is CustomerWithDetails.CompanyWithCustomer -> it.company.fullName
+                        is CustomerWithDetails.PersonWithCustomer -> it.person.fullName
+                    } },
                     query = queryCustomer,
                     onQueryChange = {
                         queryCustomer = it

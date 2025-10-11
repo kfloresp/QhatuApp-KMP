@@ -8,6 +8,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.rgk.qhatu.feature.customer.data.database.entity.PersonEntity
 import com.rgk.qhatu.feature.customer.data.database.entity.PersonWithCustomerRelation
+import com.rgk.qhatu.feature.customer.domain.model.PersonWithCustomer
 
 @Dao
 interface PersonDao {
@@ -24,4 +25,18 @@ interface PersonDao {
     @Transaction
     @Query("SELECT * FROM customer_person")
     suspend fun getAllPersonsWithCustomer(): List<PersonWithCustomerRelation>
+
+    @Transaction
+    @Query(
+        """
+    SELECT * FROM customer_person
+    WHERE LOWER(
+        COALESCE(firstName, '') || ' ' ||
+        COALESCE(lastName, '') || ' ' ||
+        COALESCE(motherLastName, '')
+    ) LIKE '%' || LOWER(:query) || '%'
+    """
+    )
+    suspend fun searchPersonsWithCustomerByName(query: String): List<PersonWithCustomerRelation>
+
 }
