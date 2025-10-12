@@ -15,10 +15,11 @@ data class Sale(
     val amountPaid: String? = null,
     val changeReturned: Double? = null,
 ) {
+    val operationIdFormatted: String = "#${operationId.take(4)}"
     val hasValidPayment: Boolean
-        get(){
+        get() {
             val paid = amountPaid?.toDoubleOrNull() ?: 0.0
-            return when(paymentMethod){
+            return when (paymentMethod) {
                 SalePaymentMethod.CASH -> paid >= grandTotal
                 SalePaymentMethod.YAPE, SalePaymentMethod.PLIN -> paid >= grandTotal
                 SalePaymentMethod.CREDIT -> true
@@ -30,7 +31,7 @@ data class Sale(
             return paid.formatAmount()
         }
 
-      val changeReturnedFormatted: String
+    val changeReturnedFormatted: String
         get() {
             val paid = amountPaid?.toDoubleOrNull() ?: 0.0
             val change = changeReturned ?: (paid - grandTotal).takeIf { it >= 0 } ?: 0.0

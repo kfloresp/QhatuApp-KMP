@@ -4,7 +4,6 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.toolbar.CartRightSection
-import com.rgk.qhatu.feature.search.presentation.search.SearchViewModel
 import com.rgk.qhatu.navigation.ProvideAppBar
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
@@ -29,6 +28,11 @@ internal fun NavGraphBuilder.saleDestination(
                 )
             }
         )
-        SaleScreen()
+        SaleScreen(
+            uiState,
+            onQueryChange = {},
+            onItemClick = {},
+            onActionClick = {}
+        )
     }
 }
