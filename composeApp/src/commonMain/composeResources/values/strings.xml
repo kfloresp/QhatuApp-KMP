@@ -22,12 +22,12 @@
     <string name="tx_provider_only">Proveedor</string>
 
     <!-- Títulos de pantallas -->
-    <string name="title_search">Buscar</string>
+    <string name="title_search">Búsqueda</string>
     <string name="title_sales">Ventas</string>
     <string name="title_payments">Pagos</string>
     <string name="title_customers">Clientes</string>
     <string name="title_products">Productos</string>
-    <string name="title_setting">Ajustes</string>
+    <string name="title_setting">Más</string>
 
     <!-- Títulos de pantallas -->
     <string name="tx_menu_main">Inicio</string>

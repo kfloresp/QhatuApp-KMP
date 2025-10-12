@@ -16,10 +16,11 @@ fun NavController.navigateToSaleGraph(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.saleGraph(
+    navigateToCart: () -> Unit,
 ) {
     navigation<SaleGraph>(
         startDestination = SaleDestination
     ) {
-        saleDestination()
+        saleDestination(navigateToCart)
     }
 }

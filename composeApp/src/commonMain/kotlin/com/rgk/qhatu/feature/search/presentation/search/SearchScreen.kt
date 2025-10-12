@@ -2,7 +2,10 @@ package com.rgk.qhatu.feature.search.presentation.search
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -28,7 +31,7 @@ fun SearchScreen(
 ) {
     val query = if (uiState is SearchUiState.Success) uiState.query else ""
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
 
         when (uiState) {
             is SearchUiState.Loading -> {
@@ -44,7 +47,7 @@ fun SearchScreen(
                     query = query,
                     onQueryChange = onQueryChange
                 )
-
+                Spacer(Modifier.height(8.dp))
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier.fillMaxSize(),

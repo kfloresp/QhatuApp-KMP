@@ -4,28 +4,69 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
+import com.rgk.qhatu.feature.cart.domain.model.CartSummary
+import com.rgk.qhatu.feature.cart.domain.usecase.GetRefreshCartSummaryUseCase
+import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartSummaryUseCase
 import com.rgk.qhatu.feature.customer.domain.model.Customer
 import com.rgk.qhatu.feature.customer.domain.model.CustomerWithDetails
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
+import com.rgk.qhatu.feature.sale.presentation.sale.SaleUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CustomerViewModel(
     private val getCustomersUseCase: GetCustomersUseCase,
+    private val observeCartSummaryUseCase: ObserveCartSummaryUseCase,
+    private val getRefreshCartSummaryUseCase: GetRefreshCartSummaryUseCase,
 ) : ViewModel() {
     private var allItems: List<CustomerWithDetails> = emptyList()
     private val _uiState = MutableStateFlow<CustomerUiState>(CustomerUiState.Loading)
     val uiState: StateFlow<CustomerUiState> = _uiState.asStateFlow()
 
+    private val _cartSummary = MutableStateFlow<CartSummary?>(null)
+    val cartSummary: StateFlow<CartSummary?> = _cartSummary.asStateFlow()
+
+
     init {
         fetchLocal()
+        refreshCartSummary()
+
     }
 
+    private fun refreshCartSummary() {
+        viewModelScope.launch {
+            val result = getRefreshCartSummaryUseCase()
+            when (result) {
+                is SyncResult.Error -> {
+                    _uiState.update {
+                        CustomerUiState.Error(result.exception.message.orEmpty())
+                    }
+                }
+
+                is SyncResult.Success<*> -> {
+                    observeCartSummary()
+                }
+            }
+        }
+    }
+
+    private fun observeCartSummary() {
+        viewModelScope.launch {
+            observeCartSummaryUseCase()
+                .filterNotNull()
+                .distinctUntilChanged()
+                .collect { summary ->
+                    _cartSummary.value = summary
+                }
+        }
+    }
     private fun fetchLocal() {
         viewModelScope.launch {
             _uiState.update {

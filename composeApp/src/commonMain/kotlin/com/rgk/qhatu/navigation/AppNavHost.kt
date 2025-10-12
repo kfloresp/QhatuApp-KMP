@@ -56,7 +56,9 @@ fun AppNavHost(
             navigateToProduct = { navController.navigateToProductGraph() },
             navigateToCart = { navController.navigateToCartGraph() })
         searchGraph(navigateToCart = { navController.navigateToCartGraph() }, openScanQR = {})
-        saleGraph()
+        saleGraph(
+            navigateToCart = { navController.navigateToCartGraph() }
+        )
         cartGraph(
             navController = navController,
             setLoading = setLoading,
@@ -68,7 +70,9 @@ fun AppNavHost(
         )
         paymentGraph(navController = navController)
         productGraph(navController = navController)
-        customerGraph(navController = navController)
+        customerGraph(
+            navController = navController,
+            navigateToCart = { navController.navigateToCartGraph() })
     }
 }
 

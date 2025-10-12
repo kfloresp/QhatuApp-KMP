@@ -13,6 +13,7 @@ import com.rgk.qhatu.feature.payment.presentation.payment.PaymentViewModel
 import com.rgk.qhatu.feature.payment.presentation.paymentform.PaymentFormViewModel
 import com.rgk.qhatu.feature.product.presentation.product.ProductViewModel
 import com.rgk.qhatu.feature.product.presentation.productform.ProductFormViewModel
+import com.rgk.qhatu.feature.sale.presentation.sale.SaleViewModel
 import com.rgk.qhatu.feature.search.presentation.search.SearchViewModel
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandViewModel
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryViewModel
@@ -44,4 +45,5 @@ val viewModelModule = module {
     viewModelOf(::SearchViewModel)
     viewModelOf(::CartViewModel)
     viewModelOf(::CheckoutViewModel)
+    viewModelOf(::SaleViewModel)
 }

@@ -56,12 +56,12 @@ fun getSettingsOptions(): List<SettingsOption> {
             title = Res.string.tx_units_title,
             subtitle = Res.string.tx_units_subtitle,
         ),
-        SettingsOption(
-            type = SettingType.SYNC_DATA,
-            icon = Icons.Outlined.Sync,
-            title = Res.string.tx_sync_title,
-            subtitle = Res.string.tx_sync_subtitle,
-        ),
+//        SettingsOption(
+//            type = SettingType.SYNC_DATA,
+//            icon = Icons.Outlined.Sync,
+//            title = Res.string.tx_sync_title,
+//            subtitle = Res.string.tx_sync_subtitle,
+//        ),
 //        SettingsOption(
 //            type = SettingType.EXPORT_DATA,
 //            icon = Icons.Outlined.Download,

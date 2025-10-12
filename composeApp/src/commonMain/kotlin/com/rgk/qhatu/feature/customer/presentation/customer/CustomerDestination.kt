@@ -7,6 +7,7 @@ import androidx.compose.ui.backhandler.BackHandler
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.rgk.qhatu.common.components.button.ButtonFlotableAction
+import com.rgk.qhatu.common.components.toolbar.CartRightSection
 import com.rgk.qhatu.navigation.ProvideAppBar
 import com.rgk.qhatu.navigation.ProvideFabAction
 import kotlinx.serialization.Serializable
@@ -22,12 +23,24 @@ data object CustomerDestination
 internal fun NavGraphBuilder.customerDestination(
     onCustomerClick: (String, String) -> Unit,
     onNewCustomerClick: () -> Unit,
+    navigateToCart: () -> Unit,
     onBackPopUp: () -> Unit,
 ) {
     composable<CustomerDestination> {
         val viewModel: CustomerViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
+        val cartSummary by viewModel.cartSummary.collectAsState()
 
+        ProvideAppBar(
+            showBackNavigation = false,
+            actions = {
+                CartRightSection(
+                    shoppingCartPrice = cartSummary?.totalSummary.orEmpty(),
+                    shoppingCartQuantity = cartSummary?.itemCount ?: 0,
+                    onShoppingCartClick = navigateToCart
+                )
+            }
+        )
         BackHandler {
             onBackPopUp.invoke()
         }

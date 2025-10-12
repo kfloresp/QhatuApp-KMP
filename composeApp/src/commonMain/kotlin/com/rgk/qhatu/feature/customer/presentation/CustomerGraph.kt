@@ -27,6 +27,7 @@ fun NavController.navigateToCustomerGraph(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.customerGraph(
     navController: NavController,
+    navigateToCart: () -> Unit,
 ) {
     navigation<CustomerGraph>(
         startDestination = CustomerDestination
@@ -37,6 +38,7 @@ fun NavGraphBuilder.customerGraph(
             }, onNewCustomerClick = {
                 navController.navigate(CustomerFormDestination("", DocumentType.DNI.value))
             },
+            navigateToCart = navigateToCart,
             onBackPopUp = {
                 navController.navigateWithPopUp(HomeGraph)
             }
