@@ -7,22 +7,25 @@ import com.rgk.qhatu.feature.auth.domain.usecase.ObserveCurrentUser
 import com.rgk.qhatu.feature.auth.domain.usecase.RegisterUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.AddItemToCartUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.DeleteCartUseCase
+import com.rgk.qhatu.feature.cart.domain.usecase.GetCartsInactive
 import com.rgk.qhatu.feature.cart.domain.usecase.GetRefreshCartSummaryUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartItemsUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartSummaryUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.RemoveItemToCartUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ResumeCartUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.UpdateItemToCartUseCase
-import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerSummaryUseCase
+import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerWithDetailsByIdUseCase
+import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerWithDetailsByNameUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
-import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersWithDebtUseCase
-import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
-import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsMethodUseCase
+import com.rgk.qhatu.feature.customer.domain.usecase.UpsertCustomerUseCase
+import com.rgk.qhatu.feature.image_store.domain.usecase.DeleteImageStoreUseCase
+import com.rgk.qhatu.feature.image_store.domain.usecase.GetImageStoreByIdUseCase
+import com.rgk.qhatu.feature.image_store.domain.usecase.SaveImageStoreUseCase
+import com.rgk.qhatu.feature.image_store.domain.usecase.SyncImageStoreUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.GetPaymentsUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetAllProductsUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.GetProductByIdUseCase
-import com.rgk.qhatu.feature.product.domain.usecase.GetStorageTypeUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SaveImageProductUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
 import com.rgk.qhatu.feature.sale.domain.usecase.GetSaleWithDetailsById
@@ -32,39 +35,29 @@ import com.rgk.qhatu.feature.setting.domain.usecase.GetBrandsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoriesUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetStoreUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetUnitsMeasureUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncBrandUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncCategoryUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncConfigurationUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncStoreUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncUnitMeasureUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.UpsertBrandUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.UpsertCategoryUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.UpsertStoreUseCase
+import com.rgk.qhatu.feature.setting.domain.usecase.UpsertUnitMeasureUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val useCaseModule = module {
     factory<AuthUseCase> { AuthUseCase(get()) }
     factoryOf(::SyncAuditLogUseCase)
-    factoryOf(::SyncBrandUseCase)
-    factoryOf(::SyncCategoryUseCase)
-    factoryOf(::SyncCustomerUseCase)
     factoryOf(::SyncPaymentUseCase)
-    factoryOf(::SyncConfigurationUseCase)
     factoryOf(::SyncProductUseCase)
-    factoryOf(::SyncUnitMeasureUseCase)
-    factoryOf(::SyncStoreUseCase)
     factoryOf(::GetCategoriesUseCase)
     factoryOf(::GetUnitsMeasureUseCase)
     factoryOf(::GetBrandsUseCase)
     factoryOf(::GetStoreUseCase)
     factoryOf(::GetCustomersUseCase)
+    factoryOf(::GetCustomerWithDetailsByIdUseCase)
     factoryOf(::RegisterUseCase)
     factoryOf(::ObserveCurrentUser)
     factoryOf(::LogoutUseCase)
-    factoryOf(::GetCustomerSummaryUseCase)
     factoryOf(::GetPaymentsUseCase)
-    factoryOf(::GetPaymentsMethodUseCase)
-    factoryOf(::GetCustomersWithDebtUseCase)
     factoryOf(::GetAllProductsUseCase)
-    factoryOf(::GetStorageTypeUseCase)
     factoryOf(::SaveImageProductUseCase)
     factoryOf(::ObserveCartSummaryUseCase)
     factoryOf(::AddItemToCartUseCase)
@@ -78,4 +71,15 @@ val useCaseModule = module {
     factoryOf(::SaveSaleWithDetailsUseCase)
     factoryOf(::GetSaleWithDetailsById)
     factoryOf(::GetSalesUseCase)
+    factoryOf(::GetCartsInactive)
+    factoryOf(::DeleteImageStoreUseCase)
+    factoryOf(::SaveImageStoreUseCase)
+    factoryOf(::GetImageStoreByIdUseCase)
+    factoryOf(::UpsertBrandUseCase)
+    factoryOf(::UpsertCategoryUseCase)
+    factoryOf(::UpsertStoreUseCase)
+    factoryOf(::UpsertUnitMeasureUseCase)
+    factoryOf(::SyncImageStoreUseCase)
+    factoryOf(::UpsertCustomerUseCase)
+    factoryOf(::GetCustomerWithDetailsByNameUseCase)
 }

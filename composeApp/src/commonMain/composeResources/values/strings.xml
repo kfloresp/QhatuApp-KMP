@@ -5,6 +5,7 @@
     <string name="bt_start_login">Comenzar</string>
     <string name="tx_error">Error</string>
     <string name="tx_acept">Aceptar</string>
+    <string name="tx_accept">Aceptar</string>
     <string name="tx_loading">Cargando...</string>
     <string name="tx_email">Correo electrónico</string>
     <string name="tx_password">Contraseña</string>
@@ -27,6 +28,14 @@
     <string name="title_customers">Clientes</string>
     <string name="title_products">Productos</string>
     <string name="title_setting">Ajustes</string>
+
+    <!-- Títulos de pantallas -->
+    <string name="tx_menu_main">Inicio</string>
+    <string name="tx_menu_sales">Ventas</string>
+    <string name="tx_menu_search">Búsqueda</string>
+    <string name="tx_menu_customer">Clientes</string>
+    <string name="tx_menu_setting">Más</string>
+    <string name="tx_cart_pending">Tienes %1$s carritos pendientes</string>
 
     <!-- Pantalla de Inicio -->
     <string name="tx_greeting">Hola, %1$s</string>
@@ -65,7 +74,9 @@
     <string name="tx_logout_prompt">¿Desea cerrar sesión?</string>
     <string name="tx_logout_confirm">Sí, cerrar sesión</string>
     <string name="tx_setting_unit_measure_abreviature">Abreviatura</string>
-    <string name="tx_setting_store_name">Nombre de la tienda</string>
+    <string name="tx_setting_store_name">Nombre comercial de tienda</string>
+    <string name="tx_setting_store_company">Razón social</string>
+    <string name="tx_setting_store_ruc">RUC</string>
     <string name="tx_setting_store_address">Dirección</string>
     <string name="tx_setting_store_phone">Celular</string>
     <string name="tx_setting_name">Nombre</string>
@@ -77,14 +88,21 @@
     <string name="tx_profile_customer_phone">Celular</string>
     <string name="tx_profile_customer_address">Dirección</string>
     <string name="tx_profile_customer_edit">Editar cliente</string>
+    <string name="tx_profile_customer_profile">Perfil de cliente</string>
     <string name="tx_profile_customer_view_debt_summary">Ver resumen deuda</string>
     <string name="tx_profile_customer_name">Nombre</string>
+    <string name="tx_profile_customer_store_company">Razón social</string>
     <string name="tx_profile_customer_last_name_father">Apellido Paterno</string>
     <string name="tx_profile_customer_last_name_mother">Apellido Materno</string>
     <string name="tx_profile_customer_document_type">Tipo Documento</string>
     <string name="tx_profile_customer_document_number">Nro Documento</string>
     <string name="tx_profile_customer_email">Email</string>
+    <string name="tx_profile_customer_amount_max">Monto máximo de crédito</string>
     <string name="tx_profile_customer_delete">Eliminar</string>
+    <string name="tx_profile_customer_section_personal">Información Personal</string>
+    <string name="tx_profile_customer_section_information">Datos de Contacto</string>
+    <string name="tx_profile_customer_section_aditional">Datos Adicionales</string>
+    <string name="tx_profile_customer_is_active">Esta activo</string>
 
     <!-- Payment -->
 
@@ -150,6 +168,23 @@
 
     <!-- Sales -->
     <string name="tx_sales_title">Historial de ventas</string>
+
+    <!-- Sales -->
+
+    <!-- Image Picker -->
+    <string name="tx_image_picker_add_photos">Añadir fotos</string>
+    <string name="tx_image_picker_add">Agregar fotos</string>
+    <string name="tx_image_picker_add_face_store">Muestra la facha de tu negocio</string>
+    <string name="tx_image_picker_choose_option">Elige una opción</string>
+    <string name="tx_image_picker_gallery">Galería</string>
+    <string name="tx_image_picker_camera">Cámara</string>
+    <string name="tx_image_picker_permission_required">Permiso requerido</string>
+    <string name="tx_image_picker_permission_description">
+        Para configurar su foto de perfil, otorgue este permiso.
+        Puede administrar los permisos en la configuración de su dispositivo.
+    </string>
+    <string name="tx_image_picker_settings">Ajustes</string>
+    <string name="tx_image_picker_cancel">Cancelar</string>
 
     <!-- Componentes generales -->
     <string name="tx_global_empty_result">Ups... no encontramos nada</string>

@@ -10,8 +10,16 @@ import com.rgk.qhatu.feature.cart.data.database.dao.CartDao
 import com.rgk.qhatu.feature.cart.data.database.dao.CartItemDao
 import com.rgk.qhatu.feature.cart.data.database.entity.CartEntity
 import com.rgk.qhatu.feature.cart.data.database.entity.CartItemEntity
+import com.rgk.qhatu.feature.customer.data.database.dao.CompanyDao
 import com.rgk.qhatu.feature.customer.data.database.dao.CustomerDao
+import com.rgk.qhatu.feature.customer.data.database.dao.CustomerFlowDao
+import com.rgk.qhatu.feature.customer.data.database.dao.PersonDao
+import com.rgk.qhatu.feature.customer.data.database.entity.CompanyEntity
 import com.rgk.qhatu.feature.customer.data.database.entity.CustomerEntity
+import com.rgk.qhatu.feature.customer.data.database.entity.CustomerFlowEntity
+import com.rgk.qhatu.feature.customer.data.database.entity.PersonEntity
+import com.rgk.qhatu.feature.image_store.data.database.dao.ImageStoreDao
+import com.rgk.qhatu.feature.image_store.data.database.entity.ImageStoreEntity
 import com.rgk.qhatu.feature.payment.data.database.dao.PaymentDao
 import com.rgk.qhatu.feature.payment.data.database.entity.PaymentEntity
 import com.rgk.qhatu.feature.product.data.database.dao.ImageProductDao
@@ -20,12 +28,10 @@ import com.rgk.qhatu.feature.product.data.database.entity.ImageProductEntity
 import com.rgk.qhatu.feature.product.data.database.entity.ProductEntity
 import com.rgk.qhatu.feature.setting.data.database.dao.BrandDao
 import com.rgk.qhatu.feature.setting.data.database.dao.CategoryDao
-import com.rgk.qhatu.feature.setting.data.database.dao.ConfigurationDao
 import com.rgk.qhatu.feature.setting.data.database.dao.StoreDao
 import com.rgk.qhatu.feature.setting.data.database.dao.UnitMeasureDao
 import com.rgk.qhatu.feature.setting.data.database.entity.BrandEntity
 import com.rgk.qhatu.feature.setting.data.database.entity.CategoryEntity
-import com.rgk.qhatu.feature.setting.data.database.entity.ConfigurationEntity
 import com.rgk.qhatu.feature.setting.data.database.entity.StoreEntity
 import com.rgk.qhatu.feature.setting.data.database.entity.UnitMeasureEntity
 import com.rgk.qhatu.feature.operation.data.database.dao.OperationDao
@@ -41,11 +47,13 @@ const val DATABASE_NAME = "qhatu_database.db"
 
 @Database(
     entities = [
-        ConfigurationEntity::class,
         AuditLogEntity::class,
         BrandEntity::class,
         CategoryEntity::class,
         CustomerEntity::class,
+        CustomerFlowEntity::class,
+        PersonEntity::class,
+        CompanyEntity::class,
         PaymentEntity::class,
         ProductEntity::class,
         OperationEntity::class,
@@ -57,26 +65,35 @@ const val DATABASE_NAME = "qhatu_database.db"
         ImageProductEntity::class,
         CartEntity::class,
         CartItemEntity::class,
+        ImageStoreEntity::class,
     ], version = 1, exportSchema = false
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDataBase : RoomDatabase() {
-    abstract fun configurationDao(): ConfigurationDao
     abstract fun auditLogDao(): AuditLogDao
     abstract fun brandDao(): BrandDao
     abstract fun categoryDao(): CategoryDao
-    abstract fun clientDao(): CustomerDao
-    abstract fun clientPaymentDao(): PaymentDao
+    abstract fun customerDao(): CustomerDao
+    abstract fun customerFlowDao(): CustomerFlowDao
+    abstract fun personDao(): PersonDao
+    abstract fun companyDao(): CompanyDao
+    abstract fun paymentDao(): PaymentDao
     abstract fun productDao(): ProductDao
     abstract fun unitMeasureDao(): UnitMeasureDao
     abstract fun storeDao(): StoreDao
     abstract fun imageProductDao(): ImageProductDao
     abstract fun cartDao(): CartDao
     abstract fun cartItemDao(): CartItemDao
-    abstract fun operationDao() : OperationDao
-    abstract fun operationDetailDao() : OperationDetailDao
-    abstract fun saleDao() : SaleDao
-    abstract fun purchaseDao() : PurchaseDao
+    abstract fun operationDao(): OperationDao
+    abstract fun operationDetailDao(): OperationDetailDao
+    abstract fun saleDao(): SaleDao
+    abstract fun purchaseDao(): PurchaseDao
+    abstract fun imageStoreDao(): ImageStoreDao
+}
+
+enum class TypeUpsert {
+    NEW,
+    UPDATE,
 }
 
 @Suppress("NO_ACTUAL_FOR_EXPECT")

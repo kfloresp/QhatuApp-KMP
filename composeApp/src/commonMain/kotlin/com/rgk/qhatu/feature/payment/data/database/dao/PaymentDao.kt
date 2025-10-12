@@ -32,46 +32,4 @@ interface PaymentDao {
 
     @Query("DELETE FROM payments WHERE isSynced != 1")
     suspend fun deleteUnsynced()
-
-    @Query("""
-        SELECT 
-            p.id,
-            cu.id AS customerId,
-            cu.nombre || ' ' || cu.apellidoPaterno || ' ' || cu.apellidoMaterno AS customer,
-            p.paymentDate,
-            p.amountPaid,
-            co.id AS paymentMethodId,
-            co.nombre AS paymentMethod,
-            p.comments,
-            p.numberOperation,
-            p.isSynced,
-            p.isDeleted,
-            p.lastUpdated
-        FROM payments p
-        INNER JOIN clients cu ON p.clientId = cu.id
-        INNER JOIN configurations co ON p.paymentMethodId = co.id
-        WHERE p.id = :id and p.isDeleted = false
-    """)
-    suspend fun fetchById(id: String): List<Payment>
-
-    @Query("""
-        SELECT 
-            p.id, 
-            cu.id AS customerId,
-            cu.nombre || ' ' || cu.apellidoPaterno || ' ' || cu.apellidoMaterno AS customer,
-            p.paymentDate,
-            p.amountPaid,
-            co.id AS paymentMethodId,
-            co.nombre AS paymentMethod,
-            p.comments,
-            p.numberOperation,
-            p.isSynced,
-            p.isDeleted,
-            p.lastUpdated
-        FROM payments p
-        INNER JOIN clients cu ON p.clientId = cu.id
-        INNER JOIN configurations co ON p.paymentMethodId = co.id
-        WHERE p.isDeleted = false
-    """)
-    suspend fun getPaymentsWithDetails(): List<Payment>
 }

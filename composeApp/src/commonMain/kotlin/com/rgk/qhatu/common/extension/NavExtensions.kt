@@ -24,3 +24,13 @@ fun NavController.navigateToAuthGraphWithPopUp() {
         }
     )
 }
+
+fun NavController.navigateWithPopUp(route: Any) {
+    navigate(
+        route,
+        navOptions = navOptions {
+            popUpTo(HomeGraph) { inclusive = true }
+            launchSingleTop = true
+        }
+    )
+}

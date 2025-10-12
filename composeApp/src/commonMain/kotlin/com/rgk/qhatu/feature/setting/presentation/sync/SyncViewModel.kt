@@ -5,14 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.audit.domain.usecase.SyncAuditLogUseCase
-import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
 import com.rgk.qhatu.feature.payment.domain.usecase.SyncPaymentUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncBrandUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncCategoryUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncConfigurationUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncStoreUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncUnitMeasureUseCase
 import com.rgk.qhatu.feature.setting.presentation.sync.component.SyncType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,15 +15,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SyncViewModel(
-    private val syncStore: SyncStoreUseCase,
-    private val syncCategory: SyncCategoryUseCase,
-    private val syncBrand: SyncBrandUseCase,
-    private val syncUnitMeasure: SyncUnitMeasureUseCase,
     private val syncAuditLog: SyncAuditLogUseCase,
-    private val syncCustomer: SyncCustomerUseCase,
     private val syncPayment: SyncPaymentUseCase,
     private val syncProduct: SyncProductUseCase,
-    private val syncConfiguration: SyncConfigurationUseCase,
 ) : ViewModel() {
     private val DELAY_TIME = 500L
     private val _uiState = MutableStateFlow(
@@ -60,19 +48,15 @@ class SyncViewModel(
             delay(DELAY_TIME)
             val result = when (type) {
                 SyncType.STORE -> {
-                    syncStore(SyncOperation.RemoteToLocal())
                 }
 
                 SyncType.CATEGORY -> {
-                    syncCategory(SyncOperation.RemoteToLocal())
                 }
 
                 SyncType.BRAND -> {
-                    syncBrand(SyncOperation.RemoteToLocal())
                 }
 
                 SyncType.UNIT_MEASURE -> {
-                    syncUnitMeasure(SyncOperation.RemoteToLocal())
                 }
 
                 SyncType.AUDIT -> {
@@ -80,7 +64,6 @@ class SyncViewModel(
                 }
 
                 SyncType.CUSTOMER -> {
-                    syncCustomer(SyncOperation.RemoteToLocal())
                 }
 
                 SyncType.PAYMENT_CUSTOMER -> {
@@ -98,7 +81,6 @@ class SyncViewModel(
                 }
 
                 SyncType.CONFIGURATION -> {
-                    syncConfiguration(SyncOperation.RemoteToLocal())
                 }
             }
             when (result) {

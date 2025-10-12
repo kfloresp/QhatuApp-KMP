@@ -6,50 +6,55 @@ import com.rgk.qhatu.feature.setting.domain.model.Store
 
 fun StoreModel.toDomain(): Store = Store(
     id = id,
-    name = name,
+    companyName = companyName,
+    commercialName = commercialName,
+    ruc = ruc,
     address = address,
     phone = phone,
-    logoUrl = logoUrl,
     isSynced = isSynced,
     lastUpdated = lastUpdated,
 )
 
 fun Store.toEntity(): StoreEntity = StoreEntity(
     id = id,
-    name = name,
+    companyName = companyName,
+    commercialName = commercialName,
+    ruc = ruc,
     address = address.orEmpty(),
     phone = phone.orEmpty(),
-    logoUrl = logoUrl.orEmpty(),
     isSynced = isSynced,
     lastUpdated = lastUpdated,
 )
 
 fun StoreEntity.toDomain(): Store = Store(
     id = id,
-    name = name,
+    companyName = companyName,
+    commercialName = commercialName,
+    ruc = ruc,
     address = address,
     phone = phone,
-    logoUrl = logoUrl,
     isSynced = isSynced,
     lastUpdated = lastUpdated,
 )
 
 fun StoreEntity.toModel(): StoreModel = StoreModel(
     id = id,
-    name = name,
+    companyName = companyName,
+    commercialName = commercialName,
+    ruc = ruc,
     address = address,
     phone = phone,
-    logoUrl = logoUrl,
     isSynced = isSynced,
     lastUpdated = lastUpdated,
 )
 
 fun StoreModel.toEntity(): StoreEntity = StoreEntity(
     id = id,
-    name = name,
+    companyName = companyName,
+    commercialName = commercialName,
+    ruc = ruc,
     address = address.orEmpty(),
     phone = phone.orEmpty(),
-    logoUrl = logoUrl.orEmpty(),
     isSynced = isSynced,
     lastUpdated = lastUpdated,
 )

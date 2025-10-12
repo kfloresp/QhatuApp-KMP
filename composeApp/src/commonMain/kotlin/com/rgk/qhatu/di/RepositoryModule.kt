@@ -8,13 +8,20 @@ import com.rgk.qhatu.feature.setting.data.repository.BrandRepositoryImpl
 import com.rgk.qhatu.feature.setting.data.repository.CategoryRepositoryImpl
 import com.rgk.qhatu.feature.payment.data.repository.PaymentRepositoryImpl
 import com.rgk.qhatu.feature.setting.data.repository.UnitMeasureRepositoryImpl
-import com.rgk.qhatu.feature.setting.data.repository.ConfigurationRepositoryImpl
 import com.rgk.qhatu.feature.audit.domain.repository.AuditLogRepository
 import com.rgk.qhatu.feature.auth.domain.repository.AuthRepository
 import com.rgk.qhatu.feature.cart.data.repository.CartRepositoryImpl
 import com.rgk.qhatu.feature.cart.domain.repository.CartRepository
+import com.rgk.qhatu.feature.customer.data.repository.CompanyRepositoryImpl
+import com.rgk.qhatu.feature.customer.data.repository.CustomerFlowRepositoryImpl
+import com.rgk.qhatu.feature.customer.data.repository.PersonRepositoryImpl
+import com.rgk.qhatu.feature.customer.domain.repository.CompanyRepository
+import com.rgk.qhatu.feature.customer.domain.repository.CustomerFlowRepository
 import com.rgk.qhatu.feature.payment.domain.repository.PaymentRepository
 import com.rgk.qhatu.feature.customer.domain.repository.CustomerRepository
+import com.rgk.qhatu.feature.customer.domain.repository.PersonRepository
+import com.rgk.qhatu.feature.image_store.data.repository.ImageStoreRepositoryImpl
+import com.rgk.qhatu.feature.image_store.domain.repository.ImageStoreRepository
 import com.rgk.qhatu.feature.operation.data.repository.OperationDetailRepositoryImpl
 import com.rgk.qhatu.feature.operation.data.repository.OperationRepositoryImpl
 import com.rgk.qhatu.feature.operation.domain.repository.OperationDetailRepository
@@ -27,7 +34,6 @@ import com.rgk.qhatu.feature.sale.domain.repository.SaleRepository
 import com.rgk.qhatu.feature.setting.data.repository.StoreRepositoryImpl
 import com.rgk.qhatu.feature.setting.domain.repository.BrandRepository
 import com.rgk.qhatu.feature.setting.domain.repository.CategoryRepository
-import com.rgk.qhatu.feature.setting.domain.repository.ConfigurationRepository
 import com.rgk.qhatu.feature.setting.domain.repository.StoreRepository
 import com.rgk.qhatu.feature.setting.domain.repository.UnitMeasureRepository
 import org.koin.core.module.dsl.factoryOf
@@ -42,7 +48,9 @@ val repositoryModule = module {
     factoryOf(::CategoryRepositoryImpl) bind CategoryRepository::class
     factoryOf(::PaymentRepositoryImpl) bind PaymentRepository::class
     factoryOf(::CustomerRepositoryImpl) bind CustomerRepository::class
-    factoryOf(::ConfigurationRepositoryImpl) bind ConfigurationRepository::class
+    factoryOf(::CustomerFlowRepositoryImpl) bind CustomerFlowRepository::class
+    factoryOf(::PersonRepositoryImpl) bind PersonRepository::class
+    factoryOf(::CompanyRepositoryImpl) bind CompanyRepository::class
     factoryOf(::ProductRepositoryImpl) bind ProductRepository::class
     factoryOf(::UnitMeasureRepositoryImpl) bind UnitMeasureRepository::class
     factoryOf(::StoreRepositoryImpl) bind StoreRepository::class
@@ -51,4 +59,5 @@ val repositoryModule = module {
     factoryOf(::OperationRepositoryImpl) bind OperationRepository::class
     factoryOf(::SaleRepositoryImpl) bind SaleRepository::class
     factoryOf(::PurchaseRepositoryImpl) bind PurchaseRepository::class
+    factoryOf(::ImageStoreRepositoryImpl) bind ImageStoreRepository::class
 }

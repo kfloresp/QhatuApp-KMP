@@ -15,10 +15,10 @@ class SyncPaymentUseCase(
             is SyncOperation.SaveLocal -> repository.saveLocal(operation.registers)
             is SyncOperation.UpsertLocal -> {
                 repository.upsertLocal(operation.register)
-                customerRepository.updatePendingAmountLocal(
-                    operation.register.customerId,
-                    operation.register.amountPaid
-                )
+//                customerRepository.updatePendingAmountLocal(
+//                    operation.register.customerId,
+//                    operation.register.amountPaid
+//                )
             }
 
             is SyncOperation.LocalToRemote -> repository.syncLocalToRemote()

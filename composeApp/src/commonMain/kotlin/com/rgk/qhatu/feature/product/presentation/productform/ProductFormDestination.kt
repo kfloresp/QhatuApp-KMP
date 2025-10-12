@@ -24,9 +24,9 @@ import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.dialog.ContentDialog
 import com.rgk.qhatu.common.components.search.SearchContent
 import com.rgk.qhatu.feature.product.domain.model.Product
+import com.rgk.qhatu.feature.product.domain.model.StorageType
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 import com.rgk.qhatu.feature.setting.domain.model.Category
-import com.rgk.qhatu.feature.setting.domain.model.Configuration
 import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
 import com.rgk.qhatu.navigation.ProvideAppBar
 import com.rgk.qhatu.shared.PermissionCallback
@@ -62,7 +62,7 @@ internal fun NavGraphBuilder.productFormDestination(
         val formState by viewModel.formState.collectAsState()
         val categoryList by viewModel.categoryList.collectAsState()
         val brandList by viewModel.brandList.collectAsState()
-        val storageList by viewModel.storageList.collectAsState()
+        val storageList = StorageType.entries
         val unitMeasureList by viewModel.unitMeasureList.collectAsState()
 
         var selectedProductToDelete by remember { mutableStateOf<Product?>(null) }
@@ -73,7 +73,7 @@ internal fun NavGraphBuilder.productFormDestination(
         var selectedUnitMeasureToClick by remember { mutableStateOf(false) }
         var selectedCategory by remember { mutableStateOf<Category?>(null) }
         var selectedBrand by remember { mutableStateOf<Brand?>(null) }
-        var selectedStorage by remember { mutableStateOf<Configuration?>(null) }
+        var selectedStorage by remember { mutableStateOf<StorageType?>(null) }
         var selectedUnitMeasure by remember { mutableStateOf<UnitMeasure?>(null) }
 
         var queryCategory by remember { mutableStateOf("") }
@@ -274,8 +274,8 @@ internal fun NavGraphBuilder.productFormDestination(
                 onDismiss = { selectedStorageToClick = false }) {
                 SearchContent(
                     items = storageList,
-                    keySelector = { it.id },
-                    valueSelector = { it.nameFull },
+                    keySelector = { it.value },
+                    valueSelector = { it.name },
                     query = queryStorage,
                     onQueryChange = {
                         queryStorage = it

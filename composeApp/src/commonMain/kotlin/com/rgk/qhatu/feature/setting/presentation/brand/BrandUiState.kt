@@ -8,3 +8,14 @@ sealed class BrandUiState {
     object Empty : BrandUiState()
     data class Error(val message: String) : BrandUiState()
 }
+
+sealed class BrandFormUiState {
+    object Idle : BrandFormUiState()
+    data class Upsert(
+        val brand: Brand,
+        val isValidForm: Boolean = false,
+        val isLoading: Boolean = false,
+    ) : BrandFormUiState()
+
+    data class Error(val message: String) : BrandFormUiState()
+}

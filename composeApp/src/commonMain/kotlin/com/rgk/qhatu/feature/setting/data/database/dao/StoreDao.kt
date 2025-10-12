@@ -6,34 +6,15 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.rgk.qhatu.feature.setting.data.database.entity.StoreEntity
-import com.rgk.qhatu.common.model.SyncStats
 
 @Dao
 interface StoreDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(entity: StoreEntity)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun save(entities: List<StoreEntity>)
-
     @Update
     suspend fun update(entity: StoreEntity)
 
-    @Query("SELECT * FROM stores")
-    suspend fun fetchAll(): List<StoreEntity>
-
-    @Query("SELECT * FROM stores WHERE id = :storeId")
-    suspend fun findById(storeId: String): StoreEntity?
-
-    @Query("SELECT COUNT(*) as count, MAX(fecha_actualizacion) as lastUpdated FROM stores")
-    suspend fun getStats(): SyncStats
-
-    @Query("SELECT id FROM stores WHERE flag_sincronizado = 1")
-    suspend fun getSyncedIds(): List<String>
-
-    @Query("DELETE FROM stores WHERE flag_sincronizado != 1")
-    suspend fun deleteUnsynced()
-
-    @Query("DELETE FROM stores")
-    suspend fun deleteAll()
+    @Query("SELECT * FROM store limit 1")
+    suspend fun fetchLocal(): StoreEntity?
 }

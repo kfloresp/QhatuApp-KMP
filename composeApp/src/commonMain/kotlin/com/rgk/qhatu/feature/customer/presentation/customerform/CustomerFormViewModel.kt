@@ -4,109 +4,111 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
+import com.rgk.qhatu.feature.customer.domain.model.Company
 import com.rgk.qhatu.feature.customer.domain.model.Customer
-import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
-import com.rgk.qhatu.feature.customer.domain.usecase.SyncCustomerUseCase
+import com.rgk.qhatu.feature.customer.domain.model.CustomerWithDetails
+import com.rgk.qhatu.feature.customer.domain.model.DocumentType
+import com.rgk.qhatu.feature.customer.domain.model.Person
+import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerWithDetailsByIdUseCase
+import com.rgk.qhatu.feature.customer.domain.usecase.UpsertCustomerUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+private const val DELAY_TIME = 500L
+
 class CustomerFormViewModel(
-    private val getCustomersUseCase: GetCustomersUseCase,
-    private val syncCustomerUseCase: SyncCustomerUseCase,
+    private val getCustomerWithDetailsByIdUseCase: GetCustomerWithDetailsByIdUseCase,
+    private val upsertCustomerUseCase: UpsertCustomerUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private val _uiState =
-        MutableStateFlow<CustomerFormUiState>(CustomerFormUiState.Loading)
-    val uiState: StateFlow<CustomerFormUiState> = _uiState.asStateFlow()
+    private val _formUiState = MutableStateFlow<CustomerFormUiState>(CustomerFormUiState.Loading)
+    val formUiState: StateFlow<CustomerFormUiState> = _formUiState.asStateFlow()
 
-    private val _formState = MutableStateFlow(CustomerFormValidationState())
-    val formState: StateFlow<CustomerFormValidationState> = _formState.asStateFlow()
-    private val _isNewCustomer =
-        MutableStateFlow(false)
+    private val _isNewCustomer = MutableStateFlow(false)
     val isNewCustomer: StateFlow<Boolean> = _isNewCustomer.asStateFlow()
 
     private val destinationArgs = savedStateHandle.toRoute<CustomerFormDestination>()
-    val idCustomer get():String = destinationArgs.idCustomer
+    val customerId get(): String = destinationArgs.customerId
+    val documentType: DocumentType get() = DocumentType.fromValue(destinationArgs.documentType)
 
     init {
-        if (idCustomer.isEmpty()) {
-            _isNewCustomer.value = true
-            _uiState.value = CustomerFormUiState.Success(Customer())
-            _formState.update {
-                CustomerFormValidationState(Customer(),false)
+        if (customerId.isEmpty()) {
+            val newCustomer = Customer(documentType = documentType)
+            val details = when (documentType) {
+                DocumentType.RUC -> {
+                    CustomerWithDetails.CompanyWithCustomer(
+                        Company(), newCustomer
+                    )
+                }
+
+                DocumentType.DNI -> {
+                    CustomerWithDetails.PersonWithCustomer(Person(), newCustomer)
+                }
+
+                DocumentType.PASSAPORT -> {
+                    CustomerWithDetails.PersonWithCustomer(
+                        Person(), newCustomer
+                    )
+                }
             }
+            _formUiState.value = CustomerFormUiState.Upsert(details)
         } else {
-            loadCustomer(idCustomer)
+            getCustomerWithDetails(customerId, documentType.value)
         }
     }
 
-    private fun loadCustomer(idCustomer: String) {
+    private fun getCustomerWithDetails(customerId: String, documentType: String) {
         viewModelScope.launch {
-            _uiState.update {
-                CustomerFormUiState.Loading
-            }
-            val result = getCustomersUseCase(idCustomer)
-            when (result) {
+            delay(DELAY_TIME)
+            when (val result = getCustomerWithDetailsByIdUseCase(customerId, documentType)) {
                 is SyncResult.Error -> {
-                    _uiState.update {
+                    _formUiState.value =
                         CustomerFormUiState.Error(result.exception.message.orEmpty())
-                    }
                 }
 
-                is SyncResult.Success<List<Customer>> -> {
-                    val customer = result.data.first()
-                    _uiState.update {
-                        CustomerFormUiState.Success(
-                            result = customer
-                        )
-                    }
-                    _formState.update {
-                        CustomerFormValidationState(customer,false)
-                    }
+                is SyncResult.Success -> {
+                    _formUiState.value = CustomerFormUiState.Upsert(result.data)
                 }
             }
         }
     }
 
-    fun onUpsertLocal(customer: Customer) {
+    fun onFieldChange(update: CustomerWithDetails.() -> CustomerWithDetails) {
+        val current = _formUiState.value as? CustomerFormUiState.Upsert ?: return
+        val updated = current.customerWithDetails.update()
+        _formUiState.value = current.copy(
+            customerWithDetails = updated, isValidForm = validate(updated)
+        )
+    }
+
+    private fun validate(details: CustomerWithDetails): Boolean {
+        return when (details) {
+            is CustomerWithDetails.PersonWithCustomer -> details.person.firstName.isNotBlank() && details.person.lastName.isNotBlank() && details.customer.documentNumber.isNotBlank()
+
+            is CustomerWithDetails.CompanyWithCustomer -> details.company.companyName.isNotBlank() && details.customer.documentNumber.isNotBlank()
+        }
+    }
+
+    fun onUpsertLocal(customerWithDetails: CustomerWithDetails) {
+        val current = _formUiState.value as? CustomerFormUiState.Upsert ?: return
+        _formUiState.value = current.copy(isLoading = true)
         viewModelScope.launch {
-            _uiState.update {
-                CustomerFormUiState.Loading
-            }
-            val result = syncCustomerUseCase(SyncOperation.UpsertLocal(customer))
-            when (result) {
+            delay(DELAY_TIME)
+            when (val result = upsertCustomerUseCase(customerWithDetails)) {
                 is SyncResult.Error -> {
-                    _uiState.update {
+                    _formUiState.value =
                         CustomerFormUiState.Error(result.exception.message.orEmpty())
-                    }
                 }
 
                 is SyncResult.Success<*> -> {
-                    _uiState.update {
-                        CustomerFormUiState.SuccessUpsert(customer.isDeleted)
-                    }
+                    _formUiState.value = CustomerFormUiState.Success
                 }
             }
         }
-    }
-
-    fun onFieldChange(update: Customer.() -> Customer) {
-        val currentFields = _formState.value.fields
-        val updatedFields = currentFields.update()
-        val isValid = validateFields(updatedFields)
-        _formState.value = CustomerFormValidationState(updatedFields, isValid)
-    }
-
-    private fun validateFields(fields: Customer): Boolean {
-        return fields.firstName.orEmpty().isNotBlank() &&
-                fields.lastName.orEmpty().isNotBlank() &&
-                fields.documentType.isNotBlank() &&
-                fields.documentNumber.isNotBlank()
     }
 
 }

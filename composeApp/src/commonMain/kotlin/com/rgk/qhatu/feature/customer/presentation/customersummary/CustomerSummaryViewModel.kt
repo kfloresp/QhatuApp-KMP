@@ -6,8 +6,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.customer.domain.model.Customer
-import com.rgk.qhatu.feature.customer.domain.model.CustomerSummary
-import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerSummaryUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
 import com.rgk.qhatu.feature.customer.presentation.customerprofile.CustomerProfileDestination
 import com.rgk.qhatu.feature.customer.presentation.customerprofile.CustomerProfileUiState
@@ -19,7 +17,6 @@ import kotlinx.coroutines.launch
 
 class CustomerSummaryViewModel(
     private val getCustomersUseCase: GetCustomersUseCase,
-    private val getCustomerSummaryUseCase: GetCustomerSummaryUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<CustomerSummaryUiState>(CustomerSummaryUiState.Loading)
@@ -48,23 +45,23 @@ class CustomerSummaryViewModel(
             _customerProfileUiState.update {
                 CustomerProfileUiState.Loading
             }
-            val result = getCustomersUseCase(idCustomer)
-            when (result) {
-                is SyncResult.Error -> {
-                    _customerProfileUiState.update {
-                        CustomerProfileUiState.Error(result.exception.message.orEmpty())
-                    }
-                }
-
-                is SyncResult.Success<List<Customer>> -> {
-                    val customer = result.data.first()
-                    _customerProfileUiState.update {
-                        CustomerProfileUiState.Success(
-                            result = customer
-                        )
-                    }
-                }
-            }
+//            val result = getCustomersUseCase(idCustomer)
+//            when (result) {
+//                is SyncResult.Error -> {
+//                    _customerProfileUiState.update {
+//                        CustomerProfileUiState.Error(result.exception.message.orEmpty())
+//                    }
+//                }
+//
+//                is SyncResult.Success<List<Customer>> -> {
+//                    val customer = result.data.first()
+//                    _customerProfileUiState.update {
+//                        CustomerProfileUiState.Success(
+//                            result = customer
+//                        )
+//                    }
+//                }
+//            }
         }
     }
 
@@ -73,23 +70,23 @@ class CustomerSummaryViewModel(
             _uiState.update {
                 CustomerSummaryUiState.Loading
             }
-            val result = getCustomerSummaryUseCase(idCustomer)
-            when (result) {
-                is SyncResult.Error -> {
-                    _uiState.update {
-                        CustomerSummaryUiState.Error(result.exception.message.orEmpty())
-                    }
-                }
-
-                is SyncResult.Success<List<CustomerSummary>> -> {
-                    val result = result.data
-                    _uiState.update {
-                        CustomerSummaryUiState.Success(
-                            result = result
-                        )
-                    }
-                }
-            }
+//            val result = getCustomerSummaryUseCase(idCustomer)
+//            when (result) {
+//                is SyncResult.Error -> {
+//                    _uiState.update {
+//                        CustomerSummaryUiState.Error(result.exception.message.orEmpty())
+//                    }
+//                }
+//
+//                is SyncResult.Success<List<String>> -> {
+//                    val result = result.data
+//                    _uiState.update {
+//                        CustomerSummaryUiState.Success(
+//                            result = result
+//                        )
+//                    }
+//                }
+//            }
         }
     }
 

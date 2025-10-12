@@ -76,6 +76,7 @@ fun PrimaryButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     icon: ImageVector? = null,
     iconDescription: String? = null
 ) {
@@ -85,6 +86,7 @@ fun PrimaryButton(
         modifier = modifier,
         backgroundColor = Color(0xFF4CAF50),
         contentColor = Color.White,
+        enabled = enabled,
         icon = icon,
         iconDescription = iconDescription
     )
@@ -94,6 +96,7 @@ fun PrimaryButton(
 fun SecondaryButton(
     text: String,
     onClick: () -> Unit,
+    enabled: Boolean = true,
     modifier: Modifier = Modifier,
     icon: ImageVector? = null,
     iconDescription: String? = null
@@ -104,6 +107,7 @@ fun SecondaryButton(
         modifier = modifier,
         backgroundColor = Color.LightGray,
         contentColor = Color.Black,
+        enabled = enabled,
         icon = icon,
         iconDescription = iconDescription
     )
@@ -114,6 +118,7 @@ fun OutlinedButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     borderColor: Color = MaterialTheme.colorScheme.primary,
     textColor: Color = MaterialTheme.colorScheme.primary
 ) {
@@ -123,6 +128,7 @@ fun OutlinedButton(
             .fillMaxWidth()
             .height(50.dp),
         shape = RoundedCornerShape(8.dp),
+        enabled = enabled,
         border = BorderStroke(1.dp, borderColor),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = textColor)
     ) {

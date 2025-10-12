@@ -4,11 +4,16 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -35,10 +40,11 @@ fun RoundedChip(
     cornerRadius: Dp = 12.dp,
     horizontalPadding: Dp = 12.dp,
     verticalPadding: Dp = 8.dp,
+    showIcon: Boolean = false,
     borderColor: Color = Color.LightGray,
     backgroundColor: Color = Color.Transparent,
     textColor: Color = MaterialTheme.colorScheme.onSurface,
-    textSizeSp: Int = 14
+    textSizeSp: Int = 14,
 ) {
     val shape = RoundedCornerShape(cornerRadius)
     val clickableModifier = if (onClick != null) {
@@ -61,11 +67,19 @@ fun RoundedChip(
         border = BorderStroke(width = 1.dp, color = borderColor),
         shadowElevation = 0.dp
     ) {
-        Box(
+        Row(
             modifier = Modifier
                 .padding(horizontal = horizontalPadding, vertical = verticalPadding),
-            contentAlignment = Alignment.Center
+            verticalAlignment = Alignment.CenterVertically
         ) {
+            if (showIcon) {
+                Icon(
+                    imageVector = Icons.Rounded.Edit,
+                    contentDescription = null,
+                    tint = textColor.copy(alpha = 0.5f),
+                )
+                Spacer(Modifier.width(8.dp))
+            }
             Text(
                 text = text,
                 color = textColor,

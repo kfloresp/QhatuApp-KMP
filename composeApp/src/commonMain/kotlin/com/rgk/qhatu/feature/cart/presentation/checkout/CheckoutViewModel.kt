@@ -7,9 +7,8 @@ import com.rgk.qhatu.feature.cart.domain.model.CartSummary
 import com.rgk.qhatu.feature.cart.domain.usecase.GetRefreshCartSummaryUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartItemsUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartSummaryUseCase
-import com.rgk.qhatu.feature.customer.domain.model.Customer
-import com.rgk.qhatu.feature.customer.domain.model.GENERIC_CUSTOMER
-import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersWithDebtUseCase
+import com.rgk.qhatu.feature.customer.domain.model.CustomerWithDetails
+import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerWithDetailsByNameUseCase
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.usecase.GetProductByIdUseCase
 import com.rgk.qhatu.feature.sale.domain.model.SalePaymentMethod
@@ -24,12 +23,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CheckoutViewModel(
-    private val getCustomerWithDebtsUseCase: GetCustomersWithDebtUseCase,
     private val observeCartItemsUseCase: ObserveCartItemsUseCase,
     private val getRefreshCartSummaryUseCase: GetRefreshCartSummaryUseCase,
     private val observeCartSummaryUseCase: ObserveCartSummaryUseCase,
     private val getProductByIdUseCase: GetProductByIdUseCase,
     private val saveSaleWithDetailsUseCase: SaveSaleWithDetailsUseCase,
+    private val getCustomerWithDetailsByNameUseCase: GetCustomerWithDetailsByNameUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<CheckoutUiState>(CheckoutUiState.Loading)
     val uiState: StateFlow<CheckoutUiState> = _uiState.asStateFlow()
@@ -37,10 +36,10 @@ class CheckoutViewModel(
     private val _formState = MutableStateFlow(CheckoutFormValidationState())
     val formState: StateFlow<CheckoutFormValidationState> = _formState.asStateFlow()
 
-    private val _customerList = MutableStateFlow<List<Customer>>(emptyList())
-    val customerList: StateFlow<List<Customer>> = _customerList.asStateFlow()
+    private val _customerList = MutableStateFlow<List<CustomerWithDetails>>(emptyList())
+    val customerList: StateFlow<List<CustomerWithDetails>> = _customerList.asStateFlow()
 
-    private var allItemsCustomer: List<Customer> = emptyList()
+    private var allItemsCustomer: List<CustomerWithDetails> = emptyList()
 
     private val _cartSummary = MutableStateFlow<CartSummary?>(null)
     val cartSummary: StateFlow<CartSummary?> = _cartSummary.asStateFlow()
@@ -83,16 +82,16 @@ class CheckoutViewModel(
         }
     }
 
-    fun searchCustomer() {
+    fun searchCustomer(query: String) {
         viewModelScope.launch {
-            val result = getCustomerWithDebtsUseCase()
+            val result = getCustomerWithDetailsByNameUseCase(query)
             when (result) {
                 is SyncResult.Error -> {
-                    _customerList.value = listOf(GENERIC_CUSTOMER)
+                    _customerList.value = emptyList()
                 }
 
-                is SyncResult.Success<List<Customer>> -> {
-                    _customerList.value = listOf(GENERIC_CUSTOMER) + result.data
+                is SyncResult.Success<List<CustomerWithDetails>> -> {
+                    _customerList.value = result.data
                     allItemsCustomer = result.data
                 }
             }
@@ -101,7 +100,17 @@ class CheckoutViewModel(
 
     fun onSearchCustomer(query: String) {
         val filtered = if (query.isBlank()) allItemsCustomer
-        else allItemsCustomer.filter { it.nameCustomer.contains(query, ignoreCase = true) }
+        else allItemsCustomer.filter {
+            when (it) {
+                is CustomerWithDetails.CompanyWithCustomer -> {
+                    it.company.fullName.contains(query, ignoreCase = true)
+                }
+
+                is CustomerWithDetails.PersonWithCustomer -> {
+                    it.person.fullName.contains(query, ignoreCase = true)
+                }
+            }
+        }
         _customerList.value = filtered
     }
 

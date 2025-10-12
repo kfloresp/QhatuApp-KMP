@@ -2,13 +2,10 @@ package com.rgk.qhatu.feature.setting.presentation.brand
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rgk.qhatu.common.model.SyncOperation
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 import com.rgk.qhatu.feature.setting.domain.usecase.GetBrandsUseCase
-import com.rgk.qhatu.feature.setting.domain.usecase.SyncBrandUseCase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
+import com.rgk.qhatu.feature.setting.domain.usecase.UpsertBrandUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,51 +13,48 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+private const val DELAY_TIME = 500L
 class BrandViewModel(
-    private val syncBrandUseCase: SyncBrandUseCase,
+    private val upsertBrandUseCase: UpsertBrandUseCase,
     private val getBrandsUseCase: GetBrandsUseCase
 ) : ViewModel() {
     private var allItems: List<Brand> = emptyList()
-    private val _isRefreshing = MutableStateFlow(false)
-    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
-    private val _uiState = MutableStateFlow<BrandUiState>(BrandUiState.Loading)
-    val uiState: StateFlow<BrandUiState> = _uiState.asStateFlow()
+
+    private val _listUiState = MutableStateFlow<BrandUiState>(BrandUiState.Loading)
+    val listUiState: StateFlow<BrandUiState> = _listUiState.asStateFlow()
+
+    private val _formUiState = MutableStateFlow<BrandFormUiState>(BrandFormUiState.Idle)
+    val formUiState: StateFlow<BrandFormUiState> = _formUiState.asStateFlow()
 
     init {
-        onPullRefresh()
+        fetchLocal()
     }
 
-    fun onPullRefresh() {
-        _isRefreshing.update { true }
+    private fun fetchLocal() {
         viewModelScope.launch {
-            fetchLocal()
-            _isRefreshing.update { false }
-        }
-    }
-
-    private suspend fun fetchLocal() {
-        _uiState.update {
-            BrandUiState.Loading
-        }
-        val result = getBrandsUseCase()
-        when (result) {
-            is SyncResult.Error -> {
-                _uiState.update {
-                    BrandUiState.Error(result.exception.message.orEmpty())
-                }
+            _listUiState.update {
+                BrandUiState.Loading
             }
-
-            is SyncResult.Success<*> -> {
-                allItems = result.data as List<Brand>
-                if (allItems.isNotEmpty()) {
-                    _uiState.update {
-                        BrandUiState.Success(
-                            result = allItems
-                        )
+            delay(DELAY_TIME)
+            when (val result = getBrandsUseCase()) {
+                is SyncResult.Error -> {
+                    _listUiState.update {
+                        BrandUiState.Error(result.exception.message.orEmpty())
                     }
-                } else {
-                    _uiState.update {
-                        BrandUiState.Empty
+                }
+
+                is SyncResult.Success<*> -> {
+                    allItems = result.data as List<Brand>
+                    if (allItems.isNotEmpty()) {
+                        _listUiState.update {
+                            BrandUiState.Success(
+                                result = allItems
+                            )
+                        }
+                    } else {
+                        _listUiState.update {
+                            BrandUiState.Empty
+                        }
                     }
                 }
             }
@@ -68,60 +62,48 @@ class BrandViewModel(
     }
 
     fun onQueryChanged(query: String) {
-        if (_uiState.value !is BrandUiState.Success) return
-
+        val current = _listUiState.value as? BrandUiState.Success ?: return
         val filtered = if (query.isBlank()) allItems
         else allItems.filter { it.name.contains(query, ignoreCase = true) }
-
-        _uiState.value = BrandUiState.Success(
-            result = filtered,
-            query = query
-        )
+        _listUiState.value = current.copy(result = filtered, query = query)
     }
 
-    fun onItemClick(item: Brand) {
-        if (_uiState.value is BrandUiState.Loading) {
-            return
-        }
-        _uiState.value = BrandUiState.Loading
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val result = syncBrandUseCase(SyncOperation.UpsertLocal(item))
-                when (result) {
-                    is SyncResult.Error -> {
-                        _uiState.value = BrandUiState.Error(result.exception.message.orEmpty())
-                    }
+    fun startUpsert(brand: Brand? = null) {
+        val base = brand ?: Brand()
+        _formUiState.value = BrandFormUiState.Upsert(base, validateFields(base))
+    }
 
-                    is SyncResult.Success<*> -> {
-                        fetchLocal()
-                    }
+    fun onFieldChange(update: Brand.() -> Brand) {
+        val current = _formUiState.value as? BrandFormUiState.Upsert ?: return
+        val updated = current.brand.update()
+        _formUiState.value = BrandFormUiState.Upsert(updated, validateFields(updated))
+    }
+
+    fun onUpsertBrand(brand: Brand) {
+        val current = _formUiState.value as? BrandFormUiState.Upsert ?: return
+        _formUiState.value = current.copy(isLoading = true)
+        viewModelScope.launch {
+            delay(DELAY_TIME)
+            when (val result = upsertBrandUseCase(brand)) {
+                is SyncResult.Error -> {
+                    _formUiState.value =
+                        BrandFormUiState.Error(result.exception.message.orEmpty())
                 }
-            } catch (e: Exception) {
-                _uiState.value = BrandUiState.Error(e.message.orEmpty())
+
+                is SyncResult.Success<*> -> {
+                    _formUiState.value = BrandFormUiState.Idle
+                    fetchLocal()
+                }
             }
         }
     }
 
-    fun fetchRemote() {
-        if (_uiState.value is BrandUiState.Loading) {
-            return
-        }
-        _uiState.value = BrandUiState.Loading
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val result = syncBrandUseCase(SyncOperation.RemoteToLocal())
-                when (result) {
-                    is SyncResult.Error -> {
-                        _uiState.value = BrandUiState.Error(result.exception.message.orEmpty())
-                    }
-
-                    is SyncResult.Success<*> -> {
-                        fetchLocal()
-                    }
-                }
-            } catch (e: Exception) {
-                _uiState.value = BrandUiState.Error(e.message.orEmpty())
-            }
-        }
+    fun cancelForm() {
+        _formUiState.value = BrandFormUiState.Idle
     }
+
+    private fun validateFields(brand: Brand): Boolean {
+        return brand.name.isNotBlank()
+    }
+
 }

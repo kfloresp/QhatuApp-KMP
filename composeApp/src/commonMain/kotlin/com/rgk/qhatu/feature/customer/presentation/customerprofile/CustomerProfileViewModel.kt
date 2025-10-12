@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.customer.domain.model.Customer
+import com.rgk.qhatu.feature.customer.domain.model.CustomerWithDetails
+import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomerWithDetailsByIdUseCase
 import com.rgk.qhatu.feature.customer.domain.usecase.GetCustomersUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CustomerProfileViewModel(
-    private val getCustomersUseCase: GetCustomersUseCase,
+    private val getCustomerWithDetailsByIdUseCase: GetCustomerWithDetailsByIdUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -23,24 +25,21 @@ class CustomerProfileViewModel(
     val uiState: StateFlow<CustomerProfileUiState> = _uiState.asStateFlow()
 
     private val destinationArgs = savedStateHandle.toRoute<CustomerProfileDestination>()
-    val idCustomer get():String? = destinationArgs.idCustomer
+    val customerId get(): String = destinationArgs.customerId
+    val documentType get(): String = destinationArgs.documentType
 
     init {
-        loadInit()
-    }
-
-    fun loadInit() {
-        idCustomer?.let {
-            loadCustomer(it)
+        if (customerId.isNotEmpty()) {
+            loadCustomer(customerId)
         }
     }
 
-    private fun loadCustomer(idCustomer: String) {
+    private fun loadCustomer(customerId: String) {
         viewModelScope.launch {
             _uiState.update {
                 CustomerProfileUiState.Loading
             }
-            val result = getCustomersUseCase(idCustomer)
+            val result = getCustomerWithDetailsByIdUseCase(customerId, documentType)
             when (result) {
                 is SyncResult.Error -> {
                     _uiState.update {
@@ -48,12 +47,9 @@ class CustomerProfileViewModel(
                     }
                 }
 
-                is SyncResult.Success<List<Customer>> -> {
-                    val customer = result.data.first()
+                is SyncResult.Success -> {
                     _uiState.update {
-                        CustomerProfileUiState.Success(
-                            result = customer
-                        )
+                        CustomerProfileUiState.Success(result.data)
                     }
                 }
             }

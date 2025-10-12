@@ -41,8 +41,6 @@ data class Sale(
 
 enum class SaleVoucherType(val value: String) {
     SALES_NOTE("Nota de venta"),
-    //RECEIPT("Boleta"),
-    //INVOICE("Factura"),
 }
 
 enum class SalePaymentMethod(val value: String) {
@@ -50,7 +48,6 @@ enum class SalePaymentMethod(val value: String) {
     YAPE("Yape"),
     PLIN("Plin"),
     CREDIT("Crédito"),
-    //DEPOSIT("Depósito Bancario"),
 }
 
 enum class SaleAmountCash(val value: String) {

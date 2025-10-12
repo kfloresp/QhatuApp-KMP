@@ -4,75 +4,39 @@ import com.rgk.qhatu.common.util.formatAmount
 import com.rgk.qhatu.common.util.orZero
 
 data class Customer(
-    val id: String = "",
-
-    val businessName: String? = null,
-
-    val firstName: String? = null,
-
-    val lastName: String? = null,
-
-    val motherLastName: String? = null,
-
-    val documentType: String = "",
-
+    val customerId: String = "",
+    val documentType: DocumentType,
     val documentNumber: String = "",
-
     val phoneNumber: String? = null,
-
     val address: String? = null,
-
     val email: String? = null,
-
     val pendingAmount: Double? = 0.0,
-
+    val pendingAmountMax: String? = "",
     val isSupplier: Boolean = false,
-
     val isActive: Boolean = false,
-
     val isSynced: Boolean = false,
-
     val isDeleted: Boolean = false,
-
     val lastUpdated: Long = 0L,
 ) {
-    private val fullName: String
-        get() = listOfNotNull(firstName, lastName, motherLastName)
-            .joinToString(" ")
-
-    val nameCustomer: String
-        get() = if (isSupplier) businessName.orEmpty() else fullName
-
-    val pendingCustomer: String
-        get() = if (pendingAmount.orZero() > 0.0) pendingAmount.orZero()
-            .formatAmount() else NO_DEBT
+    val pendingAmountCustomer: String
+        get() = if (pendingAmount.orZero() > 0.0) pendingAmount.orZero().formatAmount() else NO_DEBT
 
     val havePendingAmount: Boolean
         get() = pendingAmount.orZero() > 0.0
-    val havePendingCustomer: Boolean
-        get() = if (pendingAmount.orZero() > 0.0) true else false
 
-    val firstLetterCustomer: String
-        get() = if (isSupplier) {
-            businessName
-                ?.split(" ")
-                ?.filter { it.isNotBlank() }
-                ?.take(2)
-                ?.mapNotNull { it.firstOrNull()?.uppercaseChar() }
-                ?.joinToString("") ?: ""
-        } else {
-            val firstInitial = firstName?.firstOrNull()?.uppercaseChar() ?: ""
-            val lastInitial = lastName?.firstOrNull()?.uppercaseChar() ?: ""
-            "$firstInitial$lastInitial"
-        }
+    val isCompany: Boolean
+        get() = documentType == DocumentType.RUC
 }
-val GENERIC_CUSTOMER = Customer(
-    id = "00000000",
-    firstName = "Consumidor",
-    lastName = "General",
-    documentType = "DNI",
-    documentNumber = "00000000",
-    isActive = true,
-    isSynced = true,
-)
+
 private val NO_DEBT = "Sin deuda"
+
+enum class DocumentType(val value: String) {
+    DNI("DNI"),
+    RUC("RUC"),
+    PASSAPORT("PASAPORTE");
+
+    companion object {
+        fun fromValue(value: String?): DocumentType =
+            entries.find { it.value.equals(value, ignoreCase = true) } ?: DNI
+    }
+}

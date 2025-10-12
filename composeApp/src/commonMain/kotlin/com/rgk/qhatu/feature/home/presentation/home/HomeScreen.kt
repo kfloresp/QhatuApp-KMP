@@ -1,63 +1,90 @@
 package com.rgk.qhatu.feature.home.presentation.home
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.rgk.qhatu.common.components.banner.BannerSection
+import com.rgk.qhatu.common.components.search.SearchBar
 import com.rgk.qhatu.feature.home.presentation.component.ActionItemCard
-import com.rgk.qhatu.feature.home.presentation.component.HomeHeader
 import com.rgk.qhatu.feature.home.presentation.component.provideMenu
 import com.rgk.qhatu.feature.product.presentation.productform.SectionHeader
 import org.jetbrains.compose.resources.stringResource
+import qhatuapp.composeapp.generated.resources.Res
+import qhatuapp.composeapp.generated.resources.tx_cart_pending
 
 @Composable
 fun HomeScreen(
-    uiState: HomeUiState,
+    uiState: HomeScreenUiState,
     navigateToSearch: () -> Unit,
     navigateToSale: () -> Unit,
     navigateToPayment: () -> Unit,
-    navigateToCustomer: () -> Unit,
     navigateToProduct: () -> Unit,
-    navigateToSetting: () -> Unit,
+    navigateToCartsInactive: () -> Unit,
     setLoading: (Boolean) -> Unit,
 ) {
     val menuSections = provideMenu(
-        onSearchClick = navigateToSearch,
         onSalesClick = navigateToSale,
         onPaymentsClick = navigateToPayment,
-        onCustomersClick = navigateToCustomer,
         onProductsClick = navigateToProduct,
-        onSettingsClick = navigateToSetting
     )
     Column(
         modifier = Modifier
+            .padding(12.dp)
             .fillMaxSize()
-            .padding(16.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        HomeHeader(name = "Nick")
-        Spacer(modifier = Modifier.height(24.dp))
+        SearchBar(query = "", onClick = navigateToSearch, onQueryChange = {})
+
+        if (uiState.cartUiState is CartUiState.Success) {
+            val cartCount = uiState.cartUiState.carts.size
+            ActionItemCard(
+                stringResource(Res.string.tx_cart_pending, cartCount),
+                icon = Icons.Default.ShoppingCart,
+                onClick = {
+                    navigateToCartsInactive()
+                }
+            )
+        }
+        BannerSection(
+            path = "/data/user/0/com.rgk.ingenieros/files/IMG_1756692810261.png",
+            modifier = Modifier
+                .height(180.dp)
+        )
         menuSections.forEach { section ->
             SectionHeader(section.title)
-            LazyRow(
+
+            FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.padding(vertical = 8.dp)
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
-                items(section.actions) { action ->
-                    ActionItemCard(
-                        text = stringResource(action.text),
-                        icon = action.icon,
-                        onClick = action.navigateTo
-                    )
+                section.actions.forEach { action ->
+                    Box(
+                        modifier = Modifier.width(160.dp)
+                    ) {
+                        ActionItemCard(
+                            text = stringResource(action.text),
+                            icon = action.icon,
+                            onClick = action.navigateTo
+                        )
+                    }
                 }
             }
         }
     }
-    setLoading(uiState is HomeUiState.Loading)
+    setLoading(uiState.homeUiState is HomeUiState.Loading)
 }

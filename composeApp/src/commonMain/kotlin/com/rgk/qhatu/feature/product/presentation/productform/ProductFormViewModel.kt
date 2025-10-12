@@ -9,12 +9,10 @@ import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.usecase.GetAllProductsUseCase
-import com.rgk.qhatu.feature.product.domain.usecase.GetStorageTypeUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SaveImageProductUseCase
 import com.rgk.qhatu.feature.product.domain.usecase.SyncProductUseCase
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 import com.rgk.qhatu.feature.setting.domain.model.Category
-import com.rgk.qhatu.feature.setting.domain.model.Configuration
 import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
 import com.rgk.qhatu.feature.setting.domain.usecase.GetBrandsUseCase
 import com.rgk.qhatu.feature.setting.domain.usecase.GetCategoriesUseCase
@@ -35,7 +33,6 @@ class ProductFormViewModel(
     private val getBrandsUseCase: GetBrandsUseCase,
     private val getAllProductsUseCase: GetAllProductsUseCase,
     private val syncProductUseCase: SyncProductUseCase,
-    private val getStorageTypeUseCase: GetStorageTypeUseCase,
     private val saveImageProductUseCase: SaveImageProductUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -57,13 +54,11 @@ class ProductFormViewModel(
     val brandList: StateFlow<List<Brand>> = _brandList.asStateFlow()
     private val _unitMeasureList = MutableStateFlow<List<UnitMeasure>>(emptyList())
     val unitMeasureList: StateFlow<List<UnitMeasure>> = _unitMeasureList.asStateFlow()
-    private val _storageList = MutableStateFlow<List<Configuration>>(emptyList())
-    val storageList: StateFlow<List<Configuration>> = _storageList.asStateFlow()
 
     private var allItemsCategory: List<Category> = emptyList()
     private var allItemsUnitMeasure: List<UnitMeasure> = emptyList()
     private var allItemsBrand: List<Brand> = emptyList()
-    private var allItemsStorage: List<Configuration> = emptyList()
+   // private var allItemsStorage: List<Configuration> = emptyList()
 
     private val _isEditing = MutableStateFlow(false)
     val isEditing: StateFlow<Boolean> = _isEditing
@@ -220,25 +215,25 @@ class ProductFormViewModel(
     }
 
     fun loadStorageType() {
-        viewModelScope.launch {
-            val result = getStorageTypeUseCase()
-            when (result) {
-                is SyncResult.Error -> {
-                    _storageList.value = emptyList()
-                }
-
-                is SyncResult.Success<List<Configuration>> -> {
-                    _storageList.value = result.data
-                    allItemsStorage = result.data
-                }
-            }
-        }
+//        viewModelScope.launch {
+//            val result = getStorageTypeUseCase()
+//            when (result) {
+//                is SyncResult.Error -> {
+//                    _storageList.value = emptyList()
+//                }
+//
+//                is SyncResult.Success<List<Configuration>> -> {
+//                    _storageList.value = result.data
+//                    allItemsStorage = result.data
+//                }
+//            }
+//        }
     }
 
     fun onSearchStorage(query: String) {
-        val filtered = if (query.isBlank()) allItemsStorage
-        else allItemsStorage.filter { it.name.contains(query, ignoreCase = true) }
-        _storageList.value = filtered
+//        val filtered = if (query.isBlank()) allItemsStorage
+//        else allItemsStorage.filter { it.name.contains(query, ignoreCase = true) }
+//        _storageList.value = filtered
     }
 
     fun newImageCaptured(result: SharedImage) {
@@ -273,4 +268,5 @@ class ProductFormViewModel(
             }
         }
     }
+
 }

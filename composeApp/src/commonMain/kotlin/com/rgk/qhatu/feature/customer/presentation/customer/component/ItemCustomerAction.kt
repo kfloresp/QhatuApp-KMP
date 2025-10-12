@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
@@ -23,10 +22,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.theme.QhatuTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -52,7 +49,7 @@ fun ItemCustomerAction(
             modifier = Modifier
                 .size(48.dp)
                 .clip(RoundedCornerShape(12.dp))
-                .background(Color.Black.copy(alpha = 0.05f)),
+                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f)),
             contentAlignment = Alignment.Center
         ) {
             Text(firstLetter,
@@ -80,14 +77,14 @@ fun ItemCustomerAction(
                 Text(
                     text = subTitle,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Gray
+                    color = MaterialTheme.colorScheme.outline
                 )
             }
             IconButton(onClick = onActionClick, modifier = Modifier.size(48.dp)) {
                 Icon(
                     imageVector = imageVector,
                     contentDescription = null,
-                    tint = Color.Gray
+                    tint = MaterialTheme.colorScheme.outline
                 )
             }
         }
@@ -98,7 +95,7 @@ fun ItemCustomerAction(
 @Composable
 private fun ItemActionPreview() {
     QhatuTheme {
-        Column(modifier = Modifier.background(Color.White)) {
+        Column(modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
             ItemCustomerAction(
                 firstLetter = "AM",
                 title = "Ana Martínez",

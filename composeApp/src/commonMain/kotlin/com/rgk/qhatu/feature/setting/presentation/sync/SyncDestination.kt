@@ -22,13 +22,16 @@ internal fun NavGraphBuilder.syncDestination() {
         val viewModel: SyncViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
 
-        ProvideAppBar(actions = {
-            IconButton(onClick = {
-                viewModel.syncAll()
-            }) {
-                Icon(Icons.Default.Update, contentDescription = null)
-            }
-        })
+        ProvideAppBar(
+            actions = {
+                IconButton(onClick = {
+                    viewModel.syncAll()
+                }) {
+                    Icon(Icons.Default.Update, contentDescription = null)
+                }
+            },
+            showBackNavigation = true
+        )
 
         val currentOptions = remember(uiState.itemStates) {
             getSyncsOptions().mapIndexed { index, item ->

@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.rgk.qhatu.common.components.button.ButtonActions
 import com.rgk.qhatu.common.components.dialog.ConfirmDialog
 import com.rgk.qhatu.common.components.error.ErrorSection
-import com.rgk.qhatu.common.components.imagepicker.ImagePicker
 import com.rgk.qhatu.common.components.loading.LoadingSection
 import com.rgk.qhatu.common.components.textfield.ClickableTextField
 import com.rgk.qhatu.common.components.textfield.CustomTextField
@@ -33,9 +32,9 @@ import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
 import com.rgk.qhatu.feature.payment.presentation.paymentform.PATTERNS
 import com.rgk.qhatu.feature.product.domain.model.ImageProduct
 import com.rgk.qhatu.feature.product.domain.model.Product
+import com.rgk.qhatu.feature.product.domain.model.StorageType
 import com.rgk.qhatu.feature.setting.domain.model.Brand
 import com.rgk.qhatu.feature.setting.domain.model.Category
-import com.rgk.qhatu.feature.setting.domain.model.Configuration
 import com.rgk.qhatu.feature.setting.domain.model.UnitMeasure
 import org.jetbrains.compose.resources.stringResource
 import qhatuapp.composeapp.generated.resources.Res
@@ -76,7 +75,7 @@ fun ProductFormScreen(
     selectedUnitMeasure: UnitMeasure? = null,
     selectedCategory: Category? = null,
     selectedBrand: Brand? = null,
-    selectedStorage: Configuration? = null,
+    selectedStorage: StorageType? = null,
     onBackPopUp: () -> Unit,
     onImagePickerClick: () -> Unit,
 ) {
@@ -122,8 +121,8 @@ fun ProductFormScreen(
                     )
                 }
             }
-            val selectedStorageName = selectedStorage?.nameFull.orEmpty()
-            val selectedStorageId = selectedStorage?.id.orEmpty()
+            val selectedStorageName = selectedStorage?.name.orEmpty()
+            val selectedStorageId = selectedStorage?.value.orEmpty()
             if (selectedStorageId.isNotEmpty()) {
                 onFieldChange {
                     copy(
@@ -269,14 +268,17 @@ fun ProductFormScreen(
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
-                    ImagePicker(
-                        images = fields.imageProduct,
-                        onDeleteClick = { imageToDelete ->
-                            selectedImageProduct = imageToDelete
-                        }, onUploadClick = {
-                            onImagePickerClick()
-                        }
-                    )
+//                    ImagePicker(
+//                        images = fields.imageProduct,
+//                        onDeleteClick = { imageToDelete ->
+//                            selectedImageProduct = imageToDelete
+//                        }, onUploadClick = {
+//                            onImagePickerClick()
+//                        },
+//                        title = "Agregar fotos",
+//                        description = "Muestra tu producto desde diferentes ángulos",
+//                        buttonText = "Añadir fotos"
+//                    )
                 }
 
                 if (isNew) {

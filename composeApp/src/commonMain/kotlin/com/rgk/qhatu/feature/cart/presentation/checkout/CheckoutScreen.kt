@@ -40,6 +40,7 @@ import com.rgk.qhatu.common.components.textfield.CustomTextFieldParams
 import com.rgk.qhatu.feature.cart.domain.model.CartSummary
 import com.rgk.qhatu.feature.cart.presentation.checkout.component.ItemProductCheckout
 import com.rgk.qhatu.feature.customer.domain.model.Customer
+import com.rgk.qhatu.feature.customer.domain.model.CustomerWithDetails
 import com.rgk.qhatu.feature.payment.presentation.paymentform.PATTERNS
 import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.product.domain.model.toOperationDetail
@@ -68,7 +69,7 @@ fun CheckoutScreen(
     formState: CheckoutFormValidationState,
     onFieldChange: (SaleWithOperation.() -> SaleWithOperation) -> Unit,
     onClearCustomer: () -> Unit,
-    selectedCustomer: Customer? = null,
+    selectedCustomer: CustomerWithDetails? = null,
     onCustomerClick: () -> Unit,
     cartSummary: CartSummary?,
     onBackPopUp: () -> Unit,
@@ -76,8 +77,23 @@ fun CheckoutScreen(
     setLoading: (Boolean) -> Unit,
 ) {
     val fields = formState.fields
-    val selectedName = selectedCustomer?.nameCustomer.orEmpty()
-    val selectedId = selectedCustomer?.id.orEmpty()
+    var selectedName = ""
+    var selectedId = ""
+    when (selectedCustomer){
+        is CustomerWithDetails.CompanyWithCustomer -> {
+            selectedName = selectedCustomer.company.fullName
+            selectedId = selectedCustomer.customer.customerId
+        }
+        is CustomerWithDetails.PersonWithCustomer -> {
+            selectedName = selectedCustomer.person.fullName
+            selectedId = selectedCustomer.customer.customerId
+        }
+        null -> {
+            selectedName = "Usuario general"
+            selectedId = "1"
+        }
+    }
+
     val vouchers: List<SaleVoucherType> = SaleVoucherType.entries
     val methodPayments: List<SalePaymentMethod> = SalePaymentMethod.entries
     val saleAmountCash: List<SaleAmountCash> = SaleAmountCash.entries

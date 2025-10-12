@@ -8,4 +8,7 @@ data class UnitMeasure(
     val isSynced: Boolean = false,
     val isDeleted: Boolean = false,
     val lastUpdated: Long = 0,
-)
+){
+    val isNew: Boolean
+        get() = id.isEmpty()
+}

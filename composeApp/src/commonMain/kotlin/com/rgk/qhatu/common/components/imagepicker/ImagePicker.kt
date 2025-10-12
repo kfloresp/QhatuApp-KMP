@@ -21,7 +21,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.rgk.qhatu.common.theme.QhatuTheme
-import com.rgk.qhatu.feature.product.domain.model.ImageProduct
+import com.rgk.qhatu.feature.image_store.domain.model.ImageStore
+import com.rgk.qhatu.feature.image_store.domain.model.TableStore
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import qhatuapp.composeapp.generated.resources.Res
@@ -29,9 +30,13 @@ import qhatuapp.composeapp.generated.resources.image_place_holder
 
 @Composable
 fun ImagePicker(
-    images: List<ImageProduct>,
+    images: List<ImageStore>,
     modifier: Modifier = Modifier,
-    onDeleteClick: (ImageProduct) -> Unit,
+    title: String,
+    description: String,
+    buttonText: String,
+    limitImages: Int = 5,
+    onDeleteClick: (ImageStore) -> Unit,
     onUploadClick: () -> Unit,
 ) {
     Column(
@@ -41,7 +46,11 @@ fun ImagePicker(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (images.isEmpty()) {
-            DottedBox {
+            DottedBox(
+                title = title,
+                description = description,
+                buttonText = buttonText,
+            ) {
                 onUploadClick()
             }
         } else {
@@ -65,7 +74,7 @@ fun ImagePicker(
                                     .size(150.dp)
                                     .clip(RoundedCornerShape(8.dp))
                             ) {
-                                if (image.isLoading){
+                                if (image.isLoading) {
                                     Box(
                                         modifier = Modifier
                                             .fillMaxSize()
@@ -74,10 +83,10 @@ fun ImagePicker(
                                     ) {
                                         CircularProgressIndicator()
                                     }
-                                }else{
+                                } else {
                                     AsyncImage(
                                         model = image.filename,
-                                        contentDescription = image.productId,
+                                        contentDescription = image.entityId,
                                         contentScale = ContentScale.Crop,
                                         modifier = Modifier
                                             .fillMaxSize(),
@@ -98,7 +107,7 @@ fun ImagePicker(
                                     ) {
                                         Icon(
                                             imageVector = Icons.Default.Close,
-                                            contentDescription = "Eliminar",
+                                            contentDescription = null,
                                             tint = Color.White,
                                             modifier = Modifier.size(18.dp)
                                         )
@@ -109,8 +118,8 @@ fun ImagePicker(
                     }
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    Button(onClick = onUploadClick) {
-                        Text(text = "Añadir fotos")
+                    Button(onClick = onUploadClick, enabled = images.size < limitImages) {
+                        Text(text = buttonText)
                     }
                 }
             }
@@ -119,7 +128,13 @@ fun ImagePicker(
 }
 
 @Composable
-internal fun DottedBox(onUploadClick: () -> Unit) {
+internal fun DottedBox(
+    title: String,
+    description: String,
+    buttonText: String,
+    buttonEnabled: Boolean = true,
+    onUploadClick: () -> Unit,
+) {
     val borderColor = MaterialTheme.colorScheme.onSurface
     val borderWidth = 2.dp
     val cornerRadius = 12.dp
@@ -149,14 +164,14 @@ internal fun DottedBox(onUploadClick: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Agregar fotos", style = MaterialTheme.typography.titleMedium)
+            Text(text = title, style = MaterialTheme.typography.titleMedium)
             Text(
-                text = "Muestra tu producto desde diferentes ángulos.",
+                text = description,
                 style = MaterialTheme.typography.bodySmall
             )
             Spacer(modifier = Modifier.height(12.dp))
-            Button(onClick = onUploadClick) {
-                Text(text = "Añadir fotos")
+            Button(onClick = onUploadClick, enabled = buttonEnabled) {
+                Text(text = buttonText)
             }
         }
     }
@@ -168,8 +183,11 @@ fun ImagePickerCardPreviewEmpty() {
     QhatuTheme {
         ImagePicker(
             images = emptyList(),
+            title = "Agregar fotos del producto",
+            description = "Puedes agregar hasta 5 fotos",
+            buttonText = "Añadir fotos",
             onUploadClick = {},
-            onDeleteClick = {}
+            onDeleteClick = {},
         )
     }
 }
@@ -180,15 +198,20 @@ fun ImagePickerCardPreviewWithImages() {
     QhatuTheme {
         ImagePicker(
             images = listOf(
-                ImageProduct(
-                    productId = "P0001",
+                ImageStore(
+                    entityId = "P0001",
+                    tableStore = TableStore.PRODUCT,
                     filename = "/data/user/0/com.rgk.ingenieros/files/P0001_0.png"
                 ),
-                ImageProduct(
-                    productId = "P0002",
+                ImageStore(
+                    entityId = "P0002",
+                    tableStore = TableStore.PRODUCT,
                     filename = "/data/user/0/com.rgk.ingenieros/files/P0002_0.png"
                 ),
             ),
+            title = "Agregar fotos del producto",
+            description = "Puedes agregar hasta 5 fotos",
+            buttonText = "Añadir fotos",
             onUploadClick = {},
             onDeleteClick = {}
         )

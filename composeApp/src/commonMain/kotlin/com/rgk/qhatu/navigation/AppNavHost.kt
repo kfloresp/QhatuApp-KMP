@@ -17,7 +17,6 @@ import com.rgk.qhatu.feature.auth.presentation.authGraph
 import com.rgk.qhatu.feature.cart.presentation.cartGraph
 import com.rgk.qhatu.feature.cart.presentation.navigateToCartGraph
 import com.rgk.qhatu.feature.customer.presentation.customerGraph
-import com.rgk.qhatu.feature.customer.presentation.navigateToCustomerGraph
 import com.rgk.qhatu.feature.home.presentation.homeGraph
 import com.rgk.qhatu.feature.home.presentation.navigateToHomeGraph
 import com.rgk.qhatu.feature.payment.presentation.navigateToPaymentGraph
@@ -28,7 +27,6 @@ import com.rgk.qhatu.feature.sale.presentation.navigateToSaleGraph
 import com.rgk.qhatu.feature.sale.presentation.saleGraph
 import com.rgk.qhatu.feature.search.presentation.navigateToSearchGraph
 import com.rgk.qhatu.feature.search.presentation.searchGraph
-import com.rgk.qhatu.feature.setting.presentation.navigateToSettingGraph
 import com.rgk.qhatu.feature.setting.presentation.settingGraph
 import com.rgk.qhatu.feature.splash.presentation.SplashGraph
 import com.rgk.qhatu.feature.splash.presentation.splashGraph
@@ -54,10 +52,8 @@ fun AppNavHost(
             setLoading = setLoading,
             navigateToSearch = { navController.navigateToSearchGraph() },
             navigateToSale = { navController.navigateToSaleGraph() },
-            navigateToSetting = { navController.navigateToSettingGraph() },
             navigateToPayment = { navController.navigateToPaymentGraph() },
             navigateToProduct = { navController.navigateToProductGraph() },
-            navigateToCustomer = { navController.navigateToCustomerGraph() },
             navigateToCart = { navController.navigateToCartGraph() })
         searchGraph(navigateToCart = { navController.navigateToCartGraph() }, openScanQR = {})
         saleGraph()

@@ -20,10 +20,12 @@ class CartRepositoryImpl(
 ) : CartRepository {
 
     private val _observeCartSummary = MutableStateFlow<CartSummary?>(null)
-    override val observeCartSummary: StateFlow<CartSummary?> get() = _observeCartSummary.asStateFlow()
+    override val observeCartSummary: StateFlow<CartSummary?>
+        get() = _observeCartSummary.asStateFlow()
 
     private val _observeCartItems = MutableStateFlow<List<CartItem>?>(null)
-    override val observeCartItems: StateFlow<List<CartItem>?> get() = _observeCartItems.asStateFlow()
+    override val observeCartItems: StateFlow<List<CartItem>?>
+        get() = _observeCartItems.asStateFlow()
 
     override suspend fun resumeCart(): SyncResult<Unit> = safeCall {
         val activeCart = cartDao.getActiveCart()
@@ -113,6 +115,10 @@ class CartRepositoryImpl(
 
     override suspend fun getCartItems(cartId: String): List<CartItem> {
         return cartItemDao.getItemsByCart(cartId).map { it.toDomain() }
+    }
+
+    override suspend fun getCartsInactive(): SyncResult<List<Cart>> = safeCall {
+        cartDao.getAllCartsInactive().map { it.toDomain() }
     }
 
     override suspend fun refreshCartSummary(): SyncResult<Unit> = safeCall {

@@ -93,17 +93,19 @@ fun TopBarApp(
         )
         val shouldShowTopBar = routesWithoutTopBar.none { currentRoute.hasRoute(it) }
         if (shouldShowTopBar) {
+            val onBackStack =
+                if (viewModel.showBackNavigation) {
+                    viewModel.onBackStack ?: {
+                        navController.popBackStack()
+                    }
+                } else {
+                    null
+                }
             QhatuToolbar(
                 title = viewModel.title ?: getTitleDestination(currentRoute.route),
                 showAppIcon = viewModel.showAppIcon,
                 showBackNavigation = viewModel.showBackNavigation,
-                onBackNavigationClick = {
-                    viewModel.onBackStack?.let {
-                        it()
-                    } ?: run {
-                        navController.popBackStack()
-                    }
-                },
+                onBackNavigationClick = onBackStack as (() -> Unit)?,
                 actions = viewModel.actions,
             )
         }
@@ -145,6 +147,6 @@ private class TopBarAppViewModel : ViewModel() {
     var actions by mutableStateOf<@Composable RowScope.() -> Unit>({ }, referentialEqualityPolicy())
     var title by mutableStateOf<String?>(null, referentialEqualityPolicy())
     var showAppIcon by mutableStateOf(false, referentialEqualityPolicy())
-    var showBackNavigation by mutableStateOf(true, referentialEqualityPolicy())
+    var showBackNavigation by mutableStateOf(false, referentialEqualityPolicy())
     var onBackStack by mutableStateOf<(() -> Unit)?>(null, referentialEqualityPolicy())
 }

@@ -24,7 +24,7 @@ fun <T> ChipGroup(
     keySelector: (T) -> String,
     valueSelector: (T) -> String,
     selectedKey: String,
-    errorText: String? = null,
+    showIcon: Boolean = false,
     modifier: Modifier = Modifier,
     onChipClick: ((T) -> Unit)? = null,
 ) {
@@ -33,6 +33,7 @@ fun <T> ChipGroup(
             items.forEach { item ->
                 RoundedChip(
                     text = valueSelector(item),
+                    showIcon = showIcon,
                     isSelected = keySelector(item) == selectedKey,
                     modifier = Modifier
                         .clickable { onChipClick?.invoke(item) }
@@ -40,9 +41,6 @@ fun <T> ChipGroup(
             }
         }
         Spacer(Modifier.height(4.dp))
-        errorText?.let {
-            Text(errorText, color = Color.Red, modifier = Modifier.padding(horizontal = 4.dp), fontSize = 14.sp)
-        }
     }
 }
 
@@ -68,7 +66,6 @@ private fun RoundedRectChipPreview() {
                 onChipClick = { method ->
                     println("Clicked: ${method.name}")
                 },
-                errorText = "Debes seleccionar una opción"
             )
         }
     }
