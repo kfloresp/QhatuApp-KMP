@@ -6,7 +6,6 @@ import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.cart.domain.model.CartSummary
 import com.rgk.qhatu.feature.cart.domain.usecase.GetRefreshCartSummaryUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartSummaryUseCase
-import com.rgk.qhatu.feature.product.domain.model.Product
 import com.rgk.qhatu.feature.sale.domain.model.SaleWithOperation
 import com.rgk.qhatu.feature.sale.domain.usecase.GetSalesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow

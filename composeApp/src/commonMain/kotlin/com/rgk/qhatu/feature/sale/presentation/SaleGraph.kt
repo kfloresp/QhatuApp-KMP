@@ -26,8 +26,8 @@ fun NavGraphBuilder.saleGraph(
     ) {
         saleDestination(
             navigateToCart = navigateToCart,
-            navigateToSaleDetail = { navController.navigate(SaleDetailDestination) }
+            navigateToSaleDetail = { navController.navigate(SaleDetailDestination(it)) }
         )
-        saleDetailDestination(onBackPopUp = { navController.popBackStack() })
+        saleDetailDestination()
     }
 }

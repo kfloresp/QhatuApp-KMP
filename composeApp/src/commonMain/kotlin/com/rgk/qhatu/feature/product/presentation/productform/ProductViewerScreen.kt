@@ -149,7 +149,7 @@ fun SectionHeader(text: String) {
 }
 
 @Composable
-private fun DetailRow(
+fun DetailRow(
     label: String,
     value: String,
     valueEmphasis: Boolean = false

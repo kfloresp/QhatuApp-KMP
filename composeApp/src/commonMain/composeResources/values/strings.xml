@@ -168,8 +168,7 @@
 
     <!-- Sales -->
     <string name="tx_sales_title">Historial de ventas</string>
-
-    <!-- Sales -->
+    <string name="tx_sales_detail_title">Detalles de venta</string>
 
     <!-- Image Picker -->
     <string name="tx_image_picker_add_photos">Añadir fotos</string>

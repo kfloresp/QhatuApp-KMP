@@ -27,6 +27,7 @@ import com.rgk.qhatu.feature.payment.presentation.paymentform.PaymentFormDestina
 import com.rgk.qhatu.feature.product.presentation.product.ProductDestination
 import com.rgk.qhatu.feature.product.presentation.productform.ProductFormDestination
 import com.rgk.qhatu.feature.sale.presentation.sale.SaleDestination
+import com.rgk.qhatu.feature.sale.presentation.saledetail.SaleDetailDestination
 import com.rgk.qhatu.feature.search.presentation.search.SearchDestination
 import com.rgk.qhatu.feature.setting.presentation.brand.BrandDestination
 import com.rgk.qhatu.feature.setting.presentation.category.CategoryDestination
@@ -49,6 +50,7 @@ import qhatuapp.composeapp.generated.resources.tx_customer_title
 import qhatuapp.composeapp.generated.resources.tx_payment_customer_title
 import qhatuapp.composeapp.generated.resources.tx_product_title
 import qhatuapp.composeapp.generated.resources.tx_profile_title
+import qhatuapp.composeapp.generated.resources.tx_sales_detail_title
 import qhatuapp.composeapp.generated.resources.tx_sales_title
 import qhatuapp.composeapp.generated.resources.tx_sync_title
 import qhatuapp.composeapp.generated.resources.tx_units_title
@@ -70,6 +72,7 @@ private val allDestinations = mapOf(
     ProductFormDestination::class.qualifiedName to Res.string.tx_product_title,
     CartDestination::class.qualifiedName to Res.string.tx_cart_title,
     SaleDestination::class.qualifiedName to Res.string.tx_sales_title,
+    SaleDetailDestination::class.qualifiedName to Res.string.tx_sales_detail_title,
     SearchDestination::class.qualifiedName to Res.string.title_search,
     CheckoutDestination::class.qualifiedName to Res.string.tx_checkout_title,
 )
