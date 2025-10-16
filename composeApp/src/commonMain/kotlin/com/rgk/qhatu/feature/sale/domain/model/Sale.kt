@@ -16,6 +16,20 @@ data class Sale(
     val changeReturned: Double? = null,
 ) {
     val operationIdFormatted: String = "#${operationId.take(4)}"
+    val voucherTypeFormatted: String = voucherType.value
+        .trim()
+        .split(" ")
+        .filter { it.isNotBlank() }
+        .let { words ->
+            when {
+                words.size >= 2 -> (words[0].firstOrNull()?.toString() ?: "") +
+                        (words[1].firstOrNull()?.toString() ?: "")
+                words.size == 1 -> words[0].take(2)
+                else -> ""
+            }
+        }
+        .uppercase()
+
     val hasValidPayment: Boolean
         get() {
             val paid = amountPaid?.toDoubleOrNull() ?: 0.0

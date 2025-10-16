@@ -61,7 +61,7 @@ fun SaleScreen(
                             top = data.sale.operationIdFormatted + " - " + data.operation.status.value,
                             title = data.operation.operationDate.toFormattedDate(),
                             subTitle = data.sale.amountPaidFormatted + " - " + data.sale.paymentMethod.value,
-                            firstLetter = data.operation.type.value,
+                            firstLetter = data.sale.voucherTypeFormatted,
                             onItemClick = onClick,
                             onActionClick = { onActionClick(data.sale.operationId) },
                         )

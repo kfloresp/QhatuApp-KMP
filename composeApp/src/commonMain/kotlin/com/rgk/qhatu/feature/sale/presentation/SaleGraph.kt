@@ -6,6 +6,8 @@ import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import com.rgk.qhatu.feature.sale.presentation.sale.SaleDestination
 import com.rgk.qhatu.feature.sale.presentation.sale.saleDestination
+import com.rgk.qhatu.feature.sale.presentation.saledetail.SaleDetailDestination
+import com.rgk.qhatu.feature.sale.presentation.saledetail.saleDetailDestination
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,11 +18,16 @@ fun NavController.navigateToSaleGraph(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.saleGraph(
+    navController: NavController,
     navigateToCart: () -> Unit,
 ) {
     navigation<SaleGraph>(
         startDestination = SaleDestination
     ) {
-        saleDestination(navigateToCart)
+        saleDestination(
+            navigateToCart = navigateToCart,
+            navigateToSaleDetail = { navController.navigate(SaleDetailDestination) }
+        )
+        saleDetailDestination(onBackPopUp = { navController.popBackStack() })
     }
 }

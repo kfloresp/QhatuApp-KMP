@@ -13,6 +13,7 @@ data object SaleDestination
 
 internal fun NavGraphBuilder.saleDestination(
     navigateToCart: () -> Unit,
+    navigateToSaleDetail: (String) -> Unit,
 ) {
     composable<SaleDestination> {
         val viewModel: SaleViewModel = koinViewModel()
@@ -30,9 +31,13 @@ internal fun NavGraphBuilder.saleDestination(
         )
         SaleScreen(
             uiState,
-            onQueryChange = {},
-            onItemClick = {},
-            onActionClick = {}
+            onQueryChange = viewModel::onQueryChanged,
+            onItemClick = {
+                navigateToSaleDetail(it)
+            },
+            onActionClick = {
+                //show bottom sheet
+            }
         )
     }
 }

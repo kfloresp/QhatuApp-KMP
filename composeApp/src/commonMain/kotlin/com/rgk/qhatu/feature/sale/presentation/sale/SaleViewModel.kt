@@ -6,6 +6,8 @@ import com.rgk.qhatu.common.model.SyncResult
 import com.rgk.qhatu.feature.cart.domain.model.CartSummary
 import com.rgk.qhatu.feature.cart.domain.usecase.GetRefreshCartSummaryUseCase
 import com.rgk.qhatu.feature.cart.domain.usecase.ObserveCartSummaryUseCase
+import com.rgk.qhatu.feature.product.domain.model.Product
+import com.rgk.qhatu.feature.sale.domain.model.SaleWithOperation
 import com.rgk.qhatu.feature.sale.domain.usecase.GetSalesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,6 +23,8 @@ class SaleViewModel(
     private val getSalesUseCase: GetSalesUseCase,
 ) : ViewModel() {
 
+    private var allItems: List<SaleWithOperation> = emptyList()
+
     private val _cartSummary = MutableStateFlow<CartSummary?>(null)
     val cartSummary: StateFlow<CartSummary?> = _cartSummary.asStateFlow()
 
@@ -30,6 +34,18 @@ class SaleViewModel(
     init {
         refreshCartSummary()
         getSales()
+    }
+
+    fun onQueryChanged(query: String) {
+        if (_uiState.value !is SaleUiState.Success) return
+
+        val filtered = if (query.isBlank()) allItems
+        else allItems.filter { it.operation.operationId.contains(query, ignoreCase = true) }
+
+        _uiState.value = SaleUiState.Success(
+            result = filtered,
+            query = query
+        )
     }
 
     private fun getSales() {
@@ -53,6 +69,7 @@ class SaleViewModel(
             }
         }
     }
+
     private fun refreshCartSummary() {
         viewModelScope.launch {
             val result = getRefreshCartSummaryUseCase()
