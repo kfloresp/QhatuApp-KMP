@@ -12,15 +12,17 @@ import org.koin.compose.viewmodel.koinViewModel
 data class SaleDetailDestination(val operationId: String)
 
 internal fun NavGraphBuilder.saleDetailDestination(
+    setLoading: (Boolean) -> Unit,
 ) {
     composable<SaleDetailDestination> {
         val viewModel: SaleDetailViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
 
         ProvideAppBar(
-            showBackNavigation = false,
+            title = "Detalle de venta",
+            showBackNavigation = true,
         )
 
-        SaleDetailScreen(uiState)
+        SaleDetailScreen(uiState, setLoading = setLoading)
     }
 }

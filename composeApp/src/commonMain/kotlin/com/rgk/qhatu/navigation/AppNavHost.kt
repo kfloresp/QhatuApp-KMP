@@ -59,6 +59,7 @@ fun AppNavHost(
         saleGraph(
             navController = navController,
             navigateToCart = { navController.navigateToCartGraph() },
+            setLoading = setLoading,
         )
         cartGraph(
             navController = navController,

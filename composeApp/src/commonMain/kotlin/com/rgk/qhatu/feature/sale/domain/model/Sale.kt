@@ -44,7 +44,10 @@ data class Sale(
             val paid = amountPaid?.toDoubleOrNull() ?: 0.0
             return paid.formatAmount()
         }
-
+    val grandTotalFormatted: String
+        get() {
+            return grandTotal.formatAmount()
+        }
     val changeReturnedFormatted: String
         get() {
             val paid = amountPaid?.toDoubleOrNull() ?: 0.0

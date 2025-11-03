@@ -23,10 +23,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.rgk.qhatu.common.theme.QhatuTheme
-import com.rgk.qhatu.feature.cart.domain.model.CartItem
 import com.rgk.qhatu.feature.operation.domain.model.OperationDetail
-import com.rgk.qhatu.feature.product.domain.model.ImageProduct
-import com.rgk.qhatu.feature.product.domain.model.Product
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
